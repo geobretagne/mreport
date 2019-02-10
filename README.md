@@ -26,3 +26,11 @@ title | Titre du document
 ### DATASOURCE
 
 Json file or csv file.
+
+
+### PRINCIPE
+
+Each report stored in mviewer/reports is a folder containing :
+
+* Required `config.json` which is the configuration file
+* Required `report.html` which is the html strutured document to render report
