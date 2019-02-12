@@ -13,7 +13,7 @@ Where
 
 ### DATAVIZ
 
-5 Dataviz types
+8 Dataviz types
 
 Dataviz | Description
 --------|------------
@@ -22,6 +22,9 @@ figure | Chiffre clé (key figure)
 map | Carte
 table | Tableau
 title | Titre du document
+text | Texte, résumé, description
+image | Picture, Image, Photo
+iframe | Embeded content, Iframe
 
 ### DATASOURCE
 
