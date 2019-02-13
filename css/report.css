@@ -1,0 +1,28 @@
+.report {
+    opacity:0;
+}
+
+.report-alert {
+    display:none;
+}
+
+.report-chart, .report-figure {
+    padding-top: 20px;
+}
+
+button.report-share {
+    display: none;
+}
+
+button.report-share.btn.btn-outline-info {
+    top: 100px;
+    position: absolute;
+    float:right;
+    right: 50px;
+}
+
+.report-chart:hover button.report-share {
+    display: block;
+}
+
+

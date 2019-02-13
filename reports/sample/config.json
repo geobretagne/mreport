@@ -1,0 +1,85 @@
+{
+  "data_url": "data.json",
+  "data_type": "static",
+  "data_format": "json",
+  "dataid": "ecluse",
+  "data_other_parameters": [],
+  "debug": true,
+  "share": false,
+  "charts": [
+    {
+      "id": "viz_2",
+      "type": "bar",
+      "label": "Passages par plage horaire",
+      "options": {},
+      "colors": [
+        "#fdcb6e"
+      ]
+    },
+    {
+      "id": "viz_3",
+      "type": "radar",
+      "label": "Traffic par jour de la semaine",
+      "options": {
+        "scale": {
+          "ticks": {
+            "beginAtZero": true
+          }
+        }
+      },
+      "colors": [
+        "#a29bfe"
+      ]
+    },
+    {
+      "id": "viz_4",
+      "type": "doughnut",
+      "label": "Type d'embarcation",
+      "options": {
+        "title": {
+          "text": "Type d'embarcation",
+          "display": "true"
+        }
+      },
+      "colors": [
+        "#d63031",
+        "#fdcb6e",
+        "#00b894",
+        "#a29bfe"
+      ]
+    }
+  ],
+  "figures": [
+    {
+      "id": "viz_1"
+    }
+  ],
+  "title": {
+    "id": "title"
+  },
+  "maps": [
+    {
+      "id": "viz_5"
+    }
+  ],
+  "tables": [
+    {
+      "id": "viz_6"
+    }
+  ],
+  "images": [
+    {
+      "id": "viz_7"
+    }
+  ],
+  "iframes": [
+    {
+      "id": "viz_8"
+    }
+  ],
+  "texts": [
+    {
+      "id": "viz_9"
+    }
+  ]
+}
