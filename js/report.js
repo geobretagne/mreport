@@ -270,13 +270,19 @@ report = (function() {
         /* Listing des données non valorisées dans ce rapport  */
 
         $.each(data, function(id) {
-            var vizs = ["charts", "figures", "texts", "maps", "images", "iframes", "tables"];
+            var vizs = ["charts", "figures", "texts", "maps", "images", "iframes", "tables", "title"];
             var used = false;
             vizs.forEach(function(viz) {
-                if (_config[viz] && _config[viz].filter(function(item) {
-                        return item.id === id
-                    }).length > 0) {
-                    used = true;
+                if (viz === "title") {
+                    if (_config[viz] && _config[viz].id === id) {
+                        used = true;
+                    }
+                } else {
+                    if (_config[viz] && _config[viz].filter(function(item) {
+                            return item.id === id
+                        }).length > 0) {
+                        used = true;
+                    }
                 }
             });
             if (!used) {
