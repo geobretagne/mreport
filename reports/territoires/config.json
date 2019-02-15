@@ -1,0 +1,36 @@
+{
+  "data_url": "data.php",
+  "data_type": "dynamic",
+  "dataid": "dataid",
+  "data_other_parameters": [],
+  "debug": true,
+  "share": true,
+  "title": {"id": "d1"},  
+  "figures": [{"id": "d2"},{"id": "d4"}],  
+  "images": [{"id": "d3"}],
+  "tables": [{"id": "d6", "label": ["Tranches", "Habitant.e.s", "Pourcentage"]}],
+  "texts": [],
+  "charts": [{
+      "id": "d5",      
+      "type": "bar",
+      "label": "soldes",
+      "options": {},
+      "opacity": 0.5,
+      "colors": [
+        "#00b894"
+      ]
+  },
+  {
+      "id": "d7",      
+      "type": "bar",
+      "label": ["EPCI" ,"Pays"],
+      
+      "options": {
+      },
+      "opacity": 1,      
+      "colors": [       
+        "#00b894","#2D4059"
+      ]
+  }
+  ]
+}
