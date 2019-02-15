@@ -33,7 +33,7 @@ report = (function() {
         var error_msg = "";
         if (el) {
             error_msg = "erreur " + id + "\n pas de données pour cette dataviz";
-        } else if (data[chiffrecle.id]) {
+        } else if (data[id]) {
             error_msg = "erreur " + id + "\n Elément html manquant";
         } else {
             error_msg = "erreur " + id + "\n Elément html et données manquants pour cette dataviz";
@@ -109,92 +109,97 @@ report = (function() {
         }
     };
 
-    var _parseCSV = function(csv) {
-        var json = {};
-        var result = {};
+    var _parseCSV = function(csv) {        
         var tmp = Papa.parse(csv, {
             header: true
         });
-        tmp.data.forEach(function(raw, id) {
-            /* ecriture d'un nouvel objet json de la forme {ecluse1: {chart1: {data:[1,2,3], label:[v1,v2,v3]}, chart2: {...}}}
-            Si plusieurs datasets présents data est de la forme data: [[dataset1], [dataset2]] --> [[1,2,3], [4,5,6]]*/
-            // merge dataid, dataviz, dataset
-            if (json[raw.dataid]) {
-                // test dataviz
-                if (json[raw.dataid].dataviz[raw.dataviz]) {
-                    // test dataset
-                    if (json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset]) {
-                        json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset].data.push(raw.data);
-                        json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset].label.push(raw.label);
-                    } else {
-                        //creation du dataset et alimentation data et label
-                        json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
-                            label: [raw.label],
-                            data: [raw.data]
-                        };
-                    }
-
+        return _mergeJSON(tmp.data);
+    };
+    
+    var _mergeJSON = function (obj) {
+        var json = {};
+        var result = {};
+        obj.forEach(function(raw, id) {
+        /* ecriture d'un nouvel objet json de la forme {ecluse1: {chart1: {data:[1,2,3], label:[v1,v2,v3]}, chart2: {...}}}
+        Si plusieurs datasets présents data est de la forme data: [[dataset1], [dataset2]] --> [[1,2,3], [4,5,6]]*/
+        // merge dataid, dataviz, dataset
+        if (json[raw.dataid]) {
+            // test dataviz
+            if (json[raw.dataid].dataviz[raw.dataviz]) {
+                // test dataset
+                if (json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset]) {
+                    json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset].data.push(raw.data);
+                    json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset].label.push(raw.label);
                 } else {
-                    // new dataviz
-                    json[raw.dataid].dataviz[raw.dataviz] = {
-                        "dataset": {}
-                    };
                     //creation du dataset et alimentation data et label
                     json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
                         label: [raw.label],
                         data: [raw.data]
                     };
+                }
 
-                }
             } else {
-                if (raw.dataid) {
-                    // new dataid
-                    json[raw.dataid] = {
-                        "dataviz": {}
-                    };
-                    //creation du dataviz
-                    json[raw.dataid].dataviz[raw.dataviz] = {
-                        "dataset": {}
-                    };
-                    //creation du dataset et alimentation data et label
-                    json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
-                        label: [raw.label],
-                        data: [raw.data]
-                    };
-                }
+                // new dataviz
+                json[raw.dataid].dataviz[raw.dataviz] = {
+                    "dataset": {}
+                };
+                //creation du dataset et alimentation data et label
+                json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
+                    label: [raw.label],
+                    data: [raw.data]
+                };
 
             }
-        });
-
-
-
-        // merge data and labels for each dataset
-        $.each(json, function(dataid, a) {
-            result[dataid] = {};
-            $.each(a.dataviz, function(dataviz, b) {
-                result[dataid][dataviz] = {
-                    "label": [],
-                    "data": []
+        } else {
+            if (raw.dataid) {
+                // new dataid
+                json[raw.dataid] = {
+                    "dataviz": {}
                 };
-                ndataset = 0;
-                $.each(b.dataset, function(dataset, c) {
-                    ndataset += 1;
-                    result[dataid][dataviz].data.push(c.data);
-                    result[dataid][dataviz].label.push(c.label);
+                //creation du dataviz
+                json[raw.dataid].dataviz[raw.dataviz] = {
+                    "dataset": {}
+                };
+                //creation du dataset et alimentation data et label
+                json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
+                    label: [raw.label],
+                    data: [raw.data]
+                };
+            }
 
-                });
-                if (ndataset === 1) {
-                    result[dataid][dataviz].data = result[dataid][dataviz].data[0];
-                }
-                result[dataid][dataviz].label = result[dataid][dataviz].label[0];
+        }
+    });
+
+
+
+    // merge data and labels for each dataset
+    $.each(json, function(dataid, a) {
+        result[dataid] = {};
+        $.each(a.dataviz, function(dataviz, b) {
+            result[dataid][dataviz] = {
+                "label": [],
+                "data": []
+            };
+            ndataset = 0;
+            $.each(b.dataset, function(dataset, c) {
+                ndataset += 1;
+                result[dataid][dataviz].data.push(c.data);
+                result[dataid][dataviz].label.push(c.label);
+
             });
-
+            if (ndataset === 1) {
+                result[dataid][dataviz].data = result[dataid][dataviz].data[0];
+            }
+            result[dataid][dataviz].label = result[dataid][dataviz].label[0];
         });
+
+    });
 
 
         return result;
-
-    };
+        
+    };    
+    
 
     var _getData = function() {
         var request_parameters = {};
@@ -224,10 +229,13 @@ report = (function() {
             success: function(data) {
                 if (format === "text") {
                     data = _parseCSV(data);
+                } else if (format === "json") {
+                    data = _mergeJSON(data);
                 }
-                if (_config.data_type === "static") {
-                    data = data[APIRequest.dataid];
-                }
+                
+                data = data[APIRequest.dataid];
+                console.log(data);
+                
                 if (data && typeof data === 'object' && Object.getOwnPropertyNames(data).length > 1) {
                     report.drawViz(data, APIRequest.dataviz);
                     if (data[_config.title.id]) {
@@ -302,7 +310,9 @@ report = (function() {
                 }
                 if (el && data[chiffrecle.id]) {
                     el.getElementsByClassName("report-figure-chiffre")[0].textContent = data[chiffrecle.id].data[0];
-                    el.getElementsByClassName("report-figure-caption")[0].textContent = data[chiffrecle.id].label[0];
+                    if (el.getElementsByClassName("report-figure-caption").length > 0) {
+                        el.getElementsByClassName("report-figure-caption")[0].textContent = data[chiffrecle.id].label[0];
+                    }
                 } else {
                     _handleVizError(el, chiffrecle.id, data);
                 }
@@ -337,27 +347,51 @@ report = (function() {
                         colors = chart.colors;
                     }
                     colors.forEach(function(color) {
-                        backgroundColors.push('rgba(' + hexToRgb(color).join(',') + ', 0.5)');
+                        backgroundColors.push('rgba(' + hexToRgb(color).join(',') + ',' + (chart.opacity || 0.5) + ')');
                         borderColors.push('rgba(' + hexToRgb(color).join(',') + ', 1)');
                     });
-                    if (colors.length === 1) {
-                        backgroundColors = backgroundColors[0];
-                        borderColors = borderColors[0];
+                    console
+                    
+                    var datasets = [];
+                    // test if one or many datasets
+                    if (Array.isArray( data[chart.id].data[0] )) {
+                        // many datasets
+                        console.log(chart.id + "many datasets");
+                        var _datasets = data[chart.id].data;
+                        _datasets.forEach(function (dataset, id) {
+                            datasets.push({
+                                label: chart.label[id],
+                                data: dataset,
+                                backgroundColor: backgroundColors[id],
+                                borderColor: borderColors[id],
+                                borderWidth: 1
+                            });
+                        });
+                        
+                        
+                    } else {
+                        // one dataset
+                        if (colors.length === 1) {
+                            backgroundColors = backgroundColors[0];
+                            borderColors = borderColors[0];
+                        }
+                        datasets.push({
+                                label: chart.label,
+                                data: data[chart.id].data,
+                                backgroundColor: backgroundColors,
+                                borderColor: borderColors,
+                                borderWidth: 1
+                       });
                     }
-                    $(el).append('<canvas id="' + chart.id + '-canvas" width="400" height="400"></canvas>');
+                    
+                    $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
                     var options = $.extend({}, commonOptions, chart.options);
                     var ctx = document.getElementById(chart.id + "-canvas").getContext('2d');
                     var chart = new Chart(ctx, {
                         type: chart.type || 'bar',
                         data: {
                             labels: data[chart.id].label,
-                            datasets: [{
-                                label: chart.label,
-                                data: data[chart.id].data,
-                                backgroundColor: backgroundColors,
-                                borderColor: borderColors,
-                                borderWidth: 1
-                            }]
+                            datasets: datasets
                         },
                         options: options
                     });
@@ -369,27 +403,41 @@ report = (function() {
         }
 
         if (_config.tables) {
+            
+            //ATTENTION POUR LES TABLEAUX, 1 DATASET est le contenu d'une colonne.
             _config.tables.forEach(function(table) {
                 var el = document.getElementById(table.id);
                 if (filteredDataviz.indexOf(table.id) > -1) {
                     $(el).appendTo(".report-filtered .row");
                     $(el).removeClass().addClass("report-table col-sm-12 col-md-12 col-lg-12");
                 }
-                if (el && data[table.id]) {
+                if (el && data[table.id] && table.label) {
                     // construction auto de la table
-                    var columns = [];
-                    data[table.id].label.forEach(function(col, id) {
-                        columns.push('<th scope="col">' + col + '</th>');
+                    var columns = [];                                 
+                    table.label.forEach(function(col, id) {
+                        columns.push('<th scope="col">' + col + '</th>');                        
                     });
-
-                    var rows = [];
-                    data[table.id].data.forEach(function(col, id) {
-                        // contenu de chaque colonne
+                    
+                    var data_rows = [];       
+                    // Use first colun data to collect other columns data
+                    data[table.id].data[0].forEach(function(value, id) {
+                        var values = [];
+                        table.label.forEach(function(col, cid) {
+                            values.push(data[table.id].data[cid][id]);                        
+                        });
+                        data_rows.push(values);
+                    });
+                    
+                    console.log(data_rows, data[table.id]);
+                                        
+                    rows = [];
+                    data_rows.forEach(function (row, id ) {
                         var elements = [];
-                        col.forEach(function(row) {
-                            elements.push('<td>' + row + '</td>');
+                        row.forEach(function(column) {
+                            elements.push('<td>' + column + '</td>');
                         });
                         rows.push('<tr>' + elements.join("") + '</tr>');
+                    
                     });
 
                     var html = ['<table class="table table-bordered">',
@@ -523,5 +571,8 @@ report = (function() {
 })();
 
 $(document).ready(function() {
-    report.init();
+    report.init();    
+});
+$(window).load(function(){
+	$('#preloader').fadeOut('slow',function(){$(this).remove();});
 });

@@ -1,7 +1,6 @@
 {
-  "data_url": "data.json",
-  "data_type": "static",
-  "data_format": "json",
+  "data_url": "data.csv",  
+  "data_format": "csv",
   "dataid": "ecluse",
   "data_other_parameters": [],
   "debug": true,
@@ -64,7 +63,8 @@
   ],
   "tables": [
     {
-      "id": "viz_6"
+      "id": "viz_6",
+      "label": ["Mois", "Passages"]
     }
   ],
   "images": [
