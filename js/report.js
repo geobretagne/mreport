@@ -20,6 +20,14 @@ report = (function() {
     var _home = "reports/";
 
     var errors = false;
+    
+    var _format = function (value) {
+        if (!isNaN(value)) {
+            return parseFloat(value).toLocaleString();
+        } else {
+            return value;
+        }
+    }
 
     var _alert = function(msg, alert, show) {
         $("body").append('<div class="report-alert alert alert-' + alert + '" role="alert">' + msg + '</div>');
@@ -309,7 +317,7 @@ report = (function() {
                     $(el).removeClass().addClass("report-chart col-sm-12 col-md-12 col-lg-12");
                 }
                 if (el && data[chiffrecle.id]) {
-                    el.getElementsByClassName("report-figure-chiffre")[0].textContent = data[chiffrecle.id].data[0];
+                    el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]);
                     if (el.getElementsByClassName("report-figure-caption").length > 0) {
                         el.getElementsByClassName("report-figure-caption")[0].textContent = data[chiffrecle.id].label[0];
                     }
@@ -423,7 +431,7 @@ report = (function() {
                     data[table.id].data[0].forEach(function(value, id) {
                         var values = [];
                         table.label.forEach(function(col, cid) {
-                            values.push(data[table.id].data[cid][id]);                        
+                            values.push(_format(data[table.id].data[cid][id]));                        
                         });
                         data_rows.push(values);
                     });
