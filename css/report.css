@@ -15,10 +15,10 @@ button.report-share {
 }
 
 button.report-share.btn.btn-outline-info {
-    top: 100px;
+    top: 30px;
     position: absolute;
     float:right;
-    right: 50px;
+    right: 20px;
 }
 
 .report-chart:hover button.report-share {
