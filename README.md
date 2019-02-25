@@ -97,6 +97,8 @@ ECLUSE_1 | table_1 | 2 | 2 | Passage | 22 |
 ECLUSE_1 | table_1 | 1 | 3 | Mois | Mars | 
 ECLUSE_1 | table_1 | 2 | 2 | Passage | 222
 
+![table_1](img/table_1.png?raw=true "table_1")
+
 
 **Figure sample** - dataset & order are not used
 
@@ -114,6 +116,8 @@ dataid | dataviz | dataset | order | label | data
 ECLUSE_1 | map_1 | point_1 | 1 | Latitude ECLUSE N°1 | 48.2
 ECLUSE_1 | map_1 | point_1 | 2 | Longitude ECLUSE N°1 | -1.5
 ECLUSE_1 | map_1 | point_1 | 3 | Zoom ECLUSE N°1 | 14
+
+![map_1](img/map_1.png?raw=true "map_1")
 
 
 **Image sample** - dataset & order are not used
