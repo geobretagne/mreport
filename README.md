@@ -82,6 +82,8 @@ ECLUSE_1 | chart_1 | 1 | 9 | 17h-18h | 45
 ECLUSE_1 | chart_1 | 1 | 10 | 18h-19h | 18
 ECLUSE_1 | chart_1 | 1 | 11 | 19h-20h | 1
 
+![chart_1](img/chart_1.png?raw=true "chart_1")
+
 
 **Table sample** one dataset is a column content
 
