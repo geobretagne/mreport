@@ -34,19 +34,39 @@ Json file or csv file.
 
 #### CSV
 
+One CSV file per report
+
+Each feature is represented by differents dataviz. Each dataviz contains one or many datasets and one or more data.
+
+dataid | dataviz | dataset | order | label | data
+-------|---------|---------|------|--------|-----
+feature_1 | figure_1 | 1 | 1 | chiens | 28
+feature_1 | figure_2 | 1 | 1 | chats | 72
+feature_2 | figure_1 | 1 | 1 | chiens | 28
+feature_2 | figure_2 | 1 | 1 | chats | 72
+
+
+
+
+
 **Title sample** dataset & data & order are not used
+
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | title | 1 | 1 |ECLUSE N°1 |
 
+
 **Text sample** dataset & order are not used
+
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | text_1 | 1 | 1 | Descriptif 1 | Lorem ipsum dolor sit amet. consectetur adipiscing elit. Ut id urna faucibus. blandit tellus a. aliquet massa. Vivamus non mollis arcu. Phasellus nec sem eget massa fa...
 
+
 **Chart sample** one dataset is one dataset
+
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
@@ -65,6 +85,7 @@ ECLUSE_1 | chart_1 | 1 | 11 | 19h-20h | 1
 
 **Table sample** one dataset is a column content
 
+
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | table_1 | 1 | 1 | Mois | Janvier | 
@@ -74,11 +95,14 @@ ECLUSE_1 | table_1 | 2 | 2 | Passage | 22 |
 ECLUSE_1 | table_1 | 1 | 3 | Mois | Mars | 
 ECLUSE_1 | table_1 | 2 | 2 | Passage | 222
 
+
 **Figure sample** - dataset & order are not used
+
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 483
+
 
 
 **Map sample** - one dataset is a location (Y,X,Z)
@@ -89,20 +113,26 @@ ECLUSE_1 | map_1 | point_1 | 1 | Latitude ECLUSE N°1 | 48.2
 ECLUSE_1 | map_1 | point_1 | 2 | Longitude ECLUSE N°1 | -1.5
 ECLUSE_1 | map_1 | point_1 | 3 | Zoom ECLUSE N°1 | 14
 
+
 **Image sample** - dataset & order are not used
+
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | image_1 | 1 | 1 | Image 1 | http://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_IR33.jpg
 
+
 **Iframe sample** - dataset & order are not used
+
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | iframe_1 | 1 | 1 | Iframe 1 | http://kartenn.region-bretagne.fr/sviewer/?layers=rb:lycee
 
 
+**Full sample**
 
+[CSV file](reports/sample/data.csv)
 
 
 
