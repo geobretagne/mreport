@@ -34,6 +34,18 @@ Json file or csv file.
 
 #### CSV
 
+**Title sample** dataset & data & order are not used
+
+dataid | dataviz | dataset | order | label | data
+-------|---------|---------|------|--------|-----
+ECLUSE_1 | title | 1 | 1 |ECLUSE N°1 |
+
+**Text sample** dataset & order are not used
+
+dataid | dataviz | dataset | order | label | data
+-------|---------|---------|------|--------|-----
+ECLUSE_1 | text_1 | 1 | 1 | Descriptif 1 | Lorem ipsum dolor sit amet. consectetur adipiscing elit. Ut id urna faucibus. blandit tellus a. aliquet massa. Vivamus non mollis arcu. Phasellus nec sem eget massa fa...
+
 **Chart sample** one dataset is one dataset
 
 dataid | dataviz | dataset | order | label | data
