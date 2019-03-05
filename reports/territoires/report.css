@@ -1,4 +1,8 @@
 /* report.css */
+
+.report {
+    background-color:#f5f5f5;
+}
 .report-figure-chiffre {
     font-weight: bolder;
 }
