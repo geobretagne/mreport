@@ -7,11 +7,12 @@
             <div id="d3" class="report-image col-md-6 col-lg-6"></div>
             <div  class="card col-md-6 col-lg-6">
                 <div class="card-body">
-                    <h5>Les chiffres clés du territoire</h5>
-                    <p id="d4">Un territoire composé de <span class="report-figure-chiffre">X</span> communes</p>
-                    <p id="d2"><span class="report-figure-chiffre">X</span> habitant·e·s <span class="report-figure-caption">X</span></p>
-					<p id="d9">Une évolution de <span class="report-figure-chiffre">X</span><b>%</b> de la population entre 2010 et 2015</p>
-					<p id="d10">Densité de <span class="report-figure-chiffre">X</span> <b>hab/km²</b></p>
+                    <h5>La fiche identité du territoire</h5>
+                    <p id="d4" class="report-figure">Un territoire composé de <span class="report-figure-chiffre">X</span> communes</p>
+					<p>zonages : QPV, Pays, SCOT, SAGE...</p>
+                    <p id="d2" class="report-figure"><span class="report-figure-chiffre">X</span> habitant·e·s <span class="report-figure-caption">X</span></p>
+					<p id="d9" class="report-figure" data-unit="%">Une évolution de <span class="report-figure-chiffre">X</span> de la population entre 2010 et 2015</p>
+					<p id="d10" class="report-figure">Densité de <span class="report-figure-chiffre">X</span> <b>hab/km²</b></p>
                 </div>
             </div>
         </div>
@@ -20,6 +21,23 @@
                  <h5>Origine de l'évolution de la population de 2009 à 2014</h5>
                 <figure id="d5" class="report-chart"></figure>
             </div>
+            <div class="col-sm-6 col-md-4 col-lg-4">
+                 <h5>Répartition Femmes / Hommes</h5>
+                <figure id="d28" class="report-chart"></figure>
+
+            </div>
+             <div class="report-group col-sm-6 col-md-4 col-lg-4">
+                <div id="d28a" class="report-figure report-group-item" data-unit="%">
+                    <span class="report-figure-chiffre" ></span>
+                    <p><span class="report-figure-caption"></span></p>
+                </div>
+                <div id="d28b" class="report-figure report-group-item" data-unit="%">
+                    <span class="report-figure-chiffre"></span>
+                    <p><span class="report-figure-caption"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="report-text card col-md-4 col-lg-3">
                 <div  class="card-body">
                     <h5 class="report-text-title">Définitions</h5>
@@ -36,13 +54,26 @@
             </div>
         </div>
         <div class="row">
+            <div  class="card col-md-4 col-lg-4">
+                <div class="card-body">
+                    <h5>Caractéristiques des ménages</h5>
+                    <p id="d24" class="report-figure">La population est composée de <span class="report-figure-chiffre">X</span> ménages. Au sein de ces ménages :</p>
+					<ul>
+					  <li id="d25" class="report-figure"><span class="report-figure-chiffre">X</span>  sont des cellules avec enfants</li>
+					  <li id="d26" class="report-figure"><span class="report-figure-chiffre">X</span> ménages sont des familles monoparentales</li>
+					  <li id="d27" class="report-figure"><span class="report-figure-chiffre">X</span> ménages sont composés d'une personne seule</li>
+					</ul>
+				</div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4">
                  <h5>Répartition de la population selon le niveau de formation (en %) Pour l'année et l'EPCI sélectionné</h5>
-                <figure id="d7" class="report-chart">
+                <div id="d7" class="report-chart">
                 <figcaption>
 
 A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles - Brevet d'études professionnelles, C: Baccalauréat (général - technologique - professionnel), D: Diplôme de l'enseignement supérieur</figcaption>
-                </figure>
+                </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Professions et catégories socioprofessionnelles des habitant·e·s de 15 ans et plus</h5>
@@ -53,10 +84,10 @@ A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles -
             <div  class="card col-md-6 col-lg-6">
                 <div class="card-body">
                     <h5>Les chiffres clés du territoire</h5>
-                    <p id="d11"><span class="report-figure-chiffre">X</span> établissements</p>
-                    <p id="d12"><span class="report-figure-chiffre">X</span> établissements de 50 salarié·e·s et plus</p>
-                    <p id="d13"><span class="report-figure-chiffre">X</span> personnes en emploi (salarié·e·s et indépendant·e·s)</p>
-                    <p id="d14"><span class="report-figure-chiffre">X</span> cherch·eur·euse·s d'emploi (Cat. A, B et C)</p>
+                    <p id="d11" class="report-figure"><span class="report-figure-chiffre">X</span> établissements</p>
+                    <p id="d12" class="report-figure"><span class="report-figure-chiffre">X</span> établissements de 50 salarié·e·s et plus</p>
+                    <p id="d13" class="report-figure"><span class="report-figure-chiffre">X</span> personnes en emploi (salarié·e·s et indépendant·e·s)</p>
+                    <p id="d14" class="report-figure"><span class="report-figure-chiffre">X</span> cherch·eur·euse·s d'emploi (Cat. A, B et C)</p>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
@@ -78,16 +109,16 @@ A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles -
             <div  class="card col-md-4 col-lg-4">
                 <div class="card-body">
                     <h5>Caractéristiques de la demande d'emploi</h5>
-                    <p id="d18">Le nombre de cherch·eur·euse·s d'emploi a évolué de  <span class="report-figure-chiffre">X</span>% entre septembre 2017 et 2018</p>
+                    <p id="d18" class="report-figure">Le nombre de cherch·eur·euse·s d'emploi a évolué de  <span class="report-figure-chiffre">X</span>% entre septembre 2017 et 2018</p>
                     <h5>Typologie des cherch·eur·euse·s d'emploi (Cat. A, B et C)</h5>
 						<ul>
-						  <li id="d19"><span class="report-figure-chiffre">X</span> personnes en cat. A soit</li>
-						  <li id="d20"><span class="report-figure-chiffre">X</span>% femmes</li>
-						  <li id="d21"><span class="report-figure-chiffre">X</span>% de jeunes (moins de 25 ans)</li>
-						  <li id="d22"><span class="report-figure-chiffre">X</span>% de seniors (50 ans ou plus)</li>
-						  <li id="d23"><span class="report-figure-chiffre">X</span>% de demand·eur·euse·s d'emploi de longue durée (DELD)</li>
+						  <li id="d19" class="report-figure"><span class="report-figure-chiffre">X</span> personnes en cat. A soit</li>
+						  <li id="d20" class="report-figure"><span class="report-figure-chiffre">X</span>% femmes</li>
+						  <li id="d21" class="report-figure"><span class="report-figure-chiffre">X</span>% de jeunes (moins de 25 ans)</li>
+						  <li id="d22" class="report-figure"><span class="report-figure-chiffre">X</span>% de seniors (50 ans ou plus)</li>
+						  <li id="d23" class="report-figure"><span class="report-figure-chiffre">X</span>% de demand·eur·euse·s d'emploi de longue durée (DELD)</li>
 						</ul>
-			</div>
+				</div>
 			</div>
             <div class="report-text card col-md-4 col-lg-3">
                 <div  class="card-body">

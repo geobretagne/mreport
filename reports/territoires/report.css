@@ -6,3 +6,28 @@
 figcaption {
     font-size: smaller;
 }
+
+#d28a .report-figure-chiffre {
+    background-image: url(icons/woman.svg);
+    background-repeat: no-repeat;
+    color: #48355f;
+    padding-left: 60px;
+    font-size: 50px;
+}
+
+#d28b .report-figure-chiffre {
+    background-image: url(icons/man.svg);
+    background-repeat: no-repeat;
+    color: #2dabad;
+    padding-left: 60px;
+    font-size: 50px;
+}
+
+#d28a .report-figure-caption {
+    color: #48355f;
+    font-size: smaller;
+}
+#d28b .report-figure-caption {
+    color: #2dabad;
+    font-size: smaller;
+}

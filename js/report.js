@@ -20,7 +20,7 @@ report = (function() {
     var _home = "reports/";
 
     var errors = false;
-    
+
     var _format = function (value) {
         if (!isNaN(value)) {
             return parseFloat(value).toLocaleString();
@@ -117,13 +117,13 @@ report = (function() {
         }
     };
 
-    var _parseCSV = function(csv) {        
+    var _parseCSV = function(csv) {
         var tmp = Papa.parse(csv, {
             header: true
         });
         return _mergeJSON(tmp.data);
     };
-    
+
     var _mergeJSON = function (obj) {
         var json = {};
         var result = {};
@@ -205,9 +205,9 @@ report = (function() {
 
 
         return result;
-        
-    };    
-    
+
+    };
+
 
     var _getData = function() {
         var request_parameters = {};
@@ -240,10 +240,10 @@ report = (function() {
                 } else if (format === "json") {
                     data = _mergeJSON(data);
                 }
-                
+
                 data = data[APIRequest.dataid];
                 console.log(data);
-                
+
                 if (data && typeof data === 'object' && Object.getOwnPropertyNames(data).length > 1) {
                     report.drawViz(data, APIRequest.dataviz);
                     if (data[_config.title.id]) {
@@ -312,12 +312,13 @@ report = (function() {
         if (_config.figures) {
             _config.figures.forEach(function(chiffrecle) {
                 var el = document.getElementById(chiffrecle.id);
+                var unit = $(el).attr("data-unit") || "";
                 if (filteredDataviz.indexOf(chiffrecle.id) > -1) {
                     $(el).appendTo(".report-filtered .row");
                     $(el).removeClass().addClass("report-chart col-sm-12 col-md-12 col-lg-12");
                 }
                 if (el && data[chiffrecle.id]) {
-                    el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]);
+                    el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]) + unit;
                     if (el.getElementsByClassName("report-figure-caption").length > 0) {
                         el.getElementsByClassName("report-figure-caption")[0].textContent = data[chiffrecle.id].label[0];
                     }
@@ -330,13 +331,6 @@ report = (function() {
         /* Création des charts */
 
         var commonOptions = {
-            "scales": {
-                "yAxes": [{
-                    "ticks": {
-                        "beginAtZero": true
-                    }
-                }]
-            },
             "maintainAspectRatio": false
         };
 
@@ -359,7 +353,7 @@ report = (function() {
                         borderColors.push('rgba(' + hexToRgb(color).join(',') + ', 1)');
                     });
                     console
-                    
+
                     var datasets = [];
                     // test if one or many datasets
                     if (Array.isArray( data[chart.id].data[0] )) {
@@ -375,8 +369,8 @@ report = (function() {
                                 borderWidth: 1
                             });
                         });
-                        
-                        
+
+
                     } else {
                         // one dataset
                         if (colors.length === 1) {
@@ -391,7 +385,7 @@ report = (function() {
                                 borderWidth: 1
                        });
                     }
-                    
+
                     $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
                     var options = $.extend({}, commonOptions, chart.options);
                     var ctx = document.getElementById(chart.id + "-canvas").getContext('2d');
@@ -411,7 +405,7 @@ report = (function() {
         }
 
         if (_config.tables) {
-            
+
             //ATTENTION POUR LES TABLEAUX, 1 DATASET est le contenu d'une colonne.
             _config.tables.forEach(function(table) {
                 var el = document.getElementById(table.id);
@@ -421,23 +415,23 @@ report = (function() {
                 }
                 if (el && data[table.id] && table.label) {
                     // construction auto de la table
-                    var columns = [];                                 
+                    var columns = [];
                     table.label.forEach(function(col, id) {
-                        columns.push('<th scope="col">' + col + '</th>');                        
+                        columns.push('<th scope="col">' + col + '</th>');
                     });
-                    
-                    var data_rows = [];       
+
+                    var data_rows = [];
                     // Use first colun data to collect other columns data
                     data[table.id].data[0].forEach(function(value, id) {
                         var values = [];
                         table.label.forEach(function(col, cid) {
-                            values.push(_format(data[table.id].data[cid][id]));                        
+                            values.push(_format(data[table.id].data[cid][id]));
                         });
                         data_rows.push(values);
                     });
-                    
+
                     console.log(data_rows, data[table.id]);
-                                        
+
                     rows = [];
                     data_rows.forEach(function (row, id ) {
                         var elements = [];
@@ -445,7 +439,7 @@ report = (function() {
                             elements.push('<td>' + column + '</td>');
                         });
                         rows.push('<tr>' + elements.join("") + '</tr>');
-                    
+
                     });
 
                     var html = ['<table class="table table-bordered">',
@@ -535,9 +529,19 @@ report = (function() {
                 dataType: "text",
                 success: function(html) {
                     $("body").append(html);
-                    $(".report-chart").prepend('<button type="button" class="report-share btn btn-outline-info" data-toggle="modal" data-target="#share-panel">Partager</button>');
+                    $(".report-chart, .report-table, .report-text, .report-image, .report-group").prepend('<button type="button" class="report-share btn btn-outline-info" data-toggle="modal" data-target="#share-panel">Partager</button>');
                     $(".report-share").click(function(e) {
-                        var url = $(location).attr('href') + "&dataviz=" + $(e.currentTarget).parent().attr("id");
+                        var el = $(e.currentTarget).parent();
+                        var obj = [];
+                        if (el.hasClass("report-group")) {
+                            el.find(".report-group-item").toArray().forEach(function (item) {
+                                obj.push(item.id);
+                            });
+                        } else {
+                            obj.push($(e.currentTarget).parent().attr("id"));
+                        }
+                        var url = $(location).attr('href') + "&dataviz=" + obj.join(",");
+
                         $(".report-share-info").attr("href", url);
 
                         var iframe = ['<div style="position:relative;display:block;height:0;',
@@ -579,7 +583,7 @@ report = (function() {
 })();
 
 $(document).ready(function() {
-    report.init();    
+    report.init();
 });
 $(window).load(function(){
 	$('#preloader').fadeOut('slow',function(){$(this).remove();});
