@@ -157,7 +157,7 @@ Each dataviz is an html element with id equals to dataviz id with a specific css
 css class | target element | description
 ----------|----------------|--------
 report-chart | chart element | todo
-report-figure | report element | add data-unit attribute to add suffix value at the report-figure-chiffre element
+report-figure | report element | add `data-unit` attribute to add suffix value at the report-figure-chiffre element
 report-figure-chiffre | report element child (1) | todo
 report-figure-caption | report element child (1) | todo
 report-map | map element | todo
@@ -169,6 +169,6 @@ report-text-title |  text element child (1) | todo
 report-image |  image element | todo
 report-iframe | iframe element | todo
 report-group | dataviz block | todo
-report-group-item dataviz block chid (n) | todo
+report-group-item | dataviz block chid (n) | todo
 
 
