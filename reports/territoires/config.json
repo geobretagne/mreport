@@ -6,7 +6,7 @@
   "debug": true,
   "share": true,
   "title": {"id": "d1"},
-  "figures": [{"id": "d2"},{"id": "d4"},{"id": "d9"},{"id": "d10"},{"id": "d11"},{"id": "d12"},{"id": "d13"},{"id": "d14"},{"id": "d18"},{"id": "d19"},{"id": "d20"},{"id": "d21"},{"id": "d22"},{"id": "d23"},{"id": "d24"},{"id": "d25"},{"id": "d26"},{"id": "d27"}, {"id": "d28a"}, {"id": "d28b"}],
+  "figures": [{"id": "d2"},{"id": "d4"},{"id": "d9"},{"id": "d10"},{"id": "d11"},{"id": "d12"},{"id": "d13"},{"id": "d14"},{"id": "d18"},{"id": "d19"},{"id": "d20"},{"id": "d21"},{"id": "d22"},{"id": "d23"},{"id": "d24"},{"id": "d25"},{"id": "d26"},{"id": "d27"}, {"id": "d28a"}, {"id": "d28b"}, {"id": "d29"}],
   "images": [{"id": "d3"}],
   "tables": [{"id": "d6", "label": ["Tranches", "Habitant·e·s", "Pourcentage"]},{"id": "d8", "label": ["Professions", "Nombre", "Pourcentage"]},{"id": "d15", "label": ["Etablissements", "Nombre", "Pourcentage"]},{"id": "d16", "label": ["Etablissements par secteur", "Nombre", "Pourcentage"]},{"id": "d17", "label": ["Emploi par secteur", "Nombre", "Pourcentage"]}],
   "texts": [],

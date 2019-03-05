@@ -315,7 +315,7 @@ report = (function() {
                 var unit = $(el).attr("data-unit") || "";
                 if (filteredDataviz.indexOf(chiffrecle.id) > -1) {
                     $(el).appendTo(".report-filtered .row");
-                    $(el).removeClass().addClass("report-chart col-sm-12 col-md-12 col-lg-12");
+                    $(el).removeClass().addClass("report-figure card");
                 }
                 if (el && data[chiffrecle.id]) {
                     el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]) + unit;
@@ -529,7 +529,7 @@ report = (function() {
                 dataType: "text",
                 success: function(html) {
                     $("body").append(html);
-                    $(".report-chart, .report-table, .report-text, .report-image, .report-group").prepend('<button type="button" class="report-share btn btn-outline-info" data-toggle="modal" data-target="#share-panel">Partager</button>');
+                    $(".report-chart, .report-table, .report-text, .report-image, .report-group, .report-figure.card").prepend('<button type="button" class="report-share btn btn-outline-info" data-toggle="modal" data-target="#share-panel">Partager</button>');
                     $(".report-share").click(function(e) {
                         var el = $(e.currentTarget).parent();
                         var obj = [];
