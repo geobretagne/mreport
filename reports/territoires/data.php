@@ -1,23 +1,23 @@
 <?php
    include("/var/php-secure/db-settings.php");
    header('Content-Type: application/json');
-   if (empty($_GET['dataid'])) {
+   if (empty($_GET['dataid']) or strlen($_GET['dataid']) > 9) {
        echo json_encode(array());
        return;
     }
 
-    $dataid = $_GET['dataid'];
-
+    $dataid = $_GET['dataid'];    
+   
     $db = pg_connect($db_territoires);
     unset ($db_territoires);
      if (!$db) {
          echo "Connexion à la Base Impossible avec les paramètres fournis";
          die();
      }
-
-    $sql = "SELECT * FROM observation.tb_all WHERE dataid='$dataid' order by dataviz,dataset,\"order\";";
-
-    $query = pg_query($db, $sql);
+     
+    $ps = pg_prepare($db, "mreport_territoires", "SELECT * FROM observation.tb_all WHERE dataid = $1 order by dataviz,dataset,\"order\"");
+    
+    $query = pg_execute($db, "mreport_territoires", array($dataid));
 
     if (!$query ) {
         echo  pg_last_error($db);
