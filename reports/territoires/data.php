@@ -15,7 +15,7 @@
          die();
      }
      
-    $ps = pg_prepare($db, "mreport_territoires", "SELECT * FROM observation.tb_all WHERE dataid = $1 order by dataviz,dataset,\"order\"");
+    $ps = pg_prepare($db, "mreport_territoires", "SELECT * FROM indicateur._all WHERE dataid = $1 order by dataviz,dataset,\"order\"");
     
     $query = pg_execute($db, "mreport_territoires", array($dataid));
 

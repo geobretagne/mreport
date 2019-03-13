@@ -4,34 +4,34 @@
             <h1 class="report-title"></h1>
         </div>
         <div class="row">
-            <div id="d3" class="report-image col-md-6 col-lg-6"></div>
+            <div id="territoire_carte" class="report-image col-md-6 col-lg-6"></div>
             <div  class="card col-md-6 col-lg-6">
                 <div class="card-body">
                     <h5>La fiche identité du territoire</h5>
-                    <p id="d4" class="report-figure">Un territoire composé de <span class="report-figure-chiffre">X</span> communes</p>
+                    <p id="territoire_nb_communes" class="report-figure">Un territoire composé de <span class="report-figure-chiffre">X</span> communes</p>
 					<p>zonages : QPV, Pays, SCOT, SAGE...</p>
-                    <p id="d2" class="report-figure"><span class="report-figure-chiffre">X</span> habitant·e·s <span class="report-figure-caption">X</span></p>
-					<p id="d9" class="report-figure" data-unit="%">Une évolution de <span class="report-figure-chiffre">X</span> de la population entre 2010 et 2015</p>
-					<p id="d10" class="report-figure">Densité de <span class="report-figure-chiffre">X</span> <b>hab/km²</b></p>
+                    <p id="pop_habitants" class="report-figure"><span class="report-figure-chiffre">X</span> habitant·e·s <span class="report-figure-caption">X</span></p>
+					<p id="pop_evolution_2010_2015" class="report-figure" data-unit="%">Une évolution de <span class="report-figure-chiffre">X</span> de la population entre 2010 et 2015</p>
+					<p id="pop_densite" class="report-figure">Densité de <span class="report-figure-chiffre">X</span> <b>hab/km²</b></p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4">
                  <h5>Origine de l'évolution de la population de 2009 à 2014</h5>
-                <figure id="d5" class="report-chart"></figure>
+                <figure id="pop_solde" class="report-chart"></figure>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                  <h5>Répartition Femmes / Hommes</h5>
-                <figure id="d28" class="report-chart"></figure>
+                <figure id="pop_sexe" class="report-chart"></figure>
 
             </div>
              <div class="report-group col-sm-6 col-md-4 col-lg-4">
-                <div id="d28a" class="report-figure report-group-item" data-unit="%">
+                <div id="pop_sexe_femme" class="report-figure report-group-item" data-unit="%">
                     <span class="report-figure-chiffre" ></span>
                     <p><span class="report-figure-caption"></span></p>
                 </div>
-                <div id="d28b" class="report-figure report-group-item" data-unit="%">
+                <div id="pop_sexe_homme" class="report-figure report-group-item" data-unit="%">
                     <span class="report-figure-chiffre"></span>
                     <p><span class="report-figure-caption"></span></p>
                 </div>
@@ -50,18 +50,18 @@
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Répartition par tranche d'âge de la population</h5>
-                <div id="d6" class="report-table"></div>
+                <div id="pop_age" class="report-table"></div>
             </div>
         </div>
         <div class="row">
             <div  class="card col-md-4 col-lg-4">
                 <div class="card-body">
                     <h5>Caractéristiques des ménages</h5>
-                    <p id="d24" class="report-figure">La population est composée de <span class="report-figure-chiffre">X</span> ménages. Au sein de ces ménages :</p>
+                    <p id="pop_menage" class="report-figure">La population est composée de <span class="report-figure-chiffre">X</span> ménages. Au sein de ces ménages :</p>
 					<ul>
-					  <li id="d25" class="report-figure"><span class="report-figure-chiffre">X</span>  sont des cellules avec enfants</li>
-					  <li id="d26" class="report-figure"><span class="report-figure-chiffre">X</span> ménages sont des familles monoparentales</li>
-					  <li id="d27" class="report-figure"><span class="report-figure-chiffre">X</span> ménages sont composés d'une personne seule</li>
+					  <li id="pop_menage_cpl_enfant" class="report-figure"><span class="report-figure-chiffre">X</span>  sont des cellules avec enfants</li>
+					  <li id="pop_menage_monoparent" class="report-figure"><span class="report-figure-chiffre">X</span> ménages sont des familles monoparentales</li>
+					  <li id="pop_menage_pers_solo" class="report-figure"><span class="report-figure-chiffre">X</span> ménages sont composés d'une personne seule</li>
 					</ul>
 				</div>
             </div>
@@ -69,7 +69,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4">
                  <h5>Répartition de la population selon le niveau de formation (en %) Pour l'année et l'EPCI sélectionné</h5>
-                <div id="d7" class="report-chart">
+                <div id="pop_niv_formation_taux" class="report-chart">
                 <figcaption>
 
 A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles - Brevet d'études professionnelles, C: Baccalauréat (général - technologique - professionnel), D: Diplôme de l'enseignement supérieur</figcaption>
@@ -77,46 +77,46 @@ A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles -
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Professions et catégories socioprofessionnelles des habitant·e·s de 15 ans et plus</h5>
-                <div id="d8" class="report-table"></div>
+                <div id="pop_csp" class="report-table"></div>
             </div>
         </div>
         <div class="row">
             <div  class="card col-md-6 col-lg-6">
                 <div class="card-body">
                     <h5>Les chiffres clés du territoire</h5>
-                    <p id="d11" class="report-figure"><span class="report-figure-chiffre">X</span> établissements</p>
-                    <p id="d12" class="report-figure"><span class="report-figure-chiffre">X</span> établissements de 50 salarié·e·s et plus</p>
-                    <p id="d13" class="report-figure"><span class="report-figure-chiffre">X</span> personnes en emploi (salarié·e·s et indépendant·e·s)</p>
-                    <p id="d14" class="report-figure"><span class="report-figure-chiffre">X</span> cherch·eur·euse·s d'emploi (Cat. A, B et C)</p>
+                    <p id="clap_etablissement" class="report-figure"><span class="report-figure-chiffre">X</span> établissements</p>
+                    <p id="clap_etablissement_p50" class="report-figure"><span class="report-figure-chiffre">X</span> établissements de 50 salarié·e·s et plus</p>
+                    <p id="clap_etablissement_pers_emploi" class="report-figure"><span class="report-figure-chiffre">X</span> personnes en emploi (salarié·e·s et indépendant·e·s)</p>
+                    <p id="dirrecte_emploi_dem" class="report-figure"><span class="report-figure-chiffre">X</span> cherch·eur·euse·s d'emploi (Cat. A, B et C)</p>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Répartition des établissements par taille</h5>
-                <div id="d15" class="report-table"></div>
+                <div id="clap_etablissement_taille" class="report-table"></div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Répartition des établissements par secteur d'activité</h5>
-                <div id="d16" class="report-table"></div>
+                <div id="clap_etablissement_secteur" class="report-table"></div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Répartition des personnes en emploi par secteur d'activité</h5>
-                <div id="d17" class="report-table"></div>
+                <div id="pop_emploi_secteur" class="report-table"></div>
             </div>
         </div>
         <div class="row">
             <div  class="card col-md-4 col-lg-4">
                 <div class="card-body">
                     <h5>Caractéristiques de la demande d'emploi</h5>
-                    <p id="d18" class="report-figure">Le nombre de cherch·eur·euse·s d'emploi a évolué de  <span class="report-figure-chiffre">X</span>% entre septembre 2017 et 2018</p>
+                    <p id="dirrecte_emploi_dem_evol" class="report-figure">Le nombre de cherch·eur·euse·s d'emploi a évolué de  <span class="report-figure-chiffre">X</span>% entre septembre 2017 et 2018</p>
                     <h5>Typologie des cherch·eur·euse·s d'emploi (Cat. A, B et C)</h5>
 						<ul>
-						  <li id="d19" class="report-figure"><span class="report-figure-chiffre">X</span> personnes en cat. A soit</li>
-						  <li id="d20" class="report-figure"><span class="report-figure-chiffre">X</span>% femmes</li>
-						  <li id="d21" class="report-figure"><span class="report-figure-chiffre">X</span>% de jeunes (moins de 25 ans)</li>
-						  <li id="d22" class="report-figure"><span class="report-figure-chiffre">X</span>% de seniors (50 ans ou plus)</li>
-						  <li id="d23" class="report-figure"><span class="report-figure-chiffre">X</span>% de demand·eur·euse·s d'emploi de longue durée (DELD)</li>
+						  <li id="dirrecte_emploi_dem_a" class="report-figure"><span class="report-figure-chiffre">X</span> personnes en cat. A</li>
+						  <li id="dirrecte_emploi_dem_fem" class="report-figure"><span class="report-figure-chiffre">X</span>% femmes</li>
+						  <li id="dirrecte_emploi_dem_jeune" class="report-figure"><span class="report-figure-chiffre">X</span>% de jeunes (moins de 25 ans)</li>
+						  <li id="dirrecte_emploi_dem_senior" class="report-figure"><span class="report-figure-chiffre">X</span>% de seniors (50 ans ou plus)</li>
+						  <li id="dirrecte_emploi_dem_ld" class="report-figure"><span class="report-figure-chiffre">X</span>% de demand·eur·euse·s d'emploi de longue durée (DELD)</li>
 						</ul>
 				</div>
 			</div>
@@ -129,7 +129,7 @@ A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles -
             </div>
         </div>
         <h4>Loisirs, Culture &amp; Patrimoine</h4>
-        <div id="d29" class="report-figure card col-md-2 col-lg-2">
+        <div id="patrimoine_site" class="report-figure card col-md-2 col-lg-2">
             <div class="card-body">
                 <div class="report-icon"/>
                 <p class="report-figure-chiffre text-center">X</p>

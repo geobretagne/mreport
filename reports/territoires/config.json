@@ -5,13 +5,22 @@
   "data_other_parameters": [],
   "debug": true,
   "share": true,
-  "title": {"id": "d1"},
-  "figures": [{"id": "d2"},{"id": "d4"},{"id": "d9"},{"id": "d10"},{"id": "d11"},{"id": "d12"},{"id": "d13"},{"id": "d14"},{"id": "d18"},{"id": "d19"},{"id": "d20"},{"id": "d21"},{"id": "d22"},{"id": "d23"},{"id": "d24"},{"id": "d25"},{"id": "d26"},{"id": "d27"}, {"id": "d28a"}, {"id": "d28b"}, {"id": "d29"}],
-  "images": [{"id": "d3"}],
-  "tables": [{"id": "d6", "label": ["Tranches", "Habitant·e·s", "Pourcentage"]},{"id": "d8", "label": ["Professions", "Nombre", "Pourcentage"]},{"id": "d15", "label": ["Etablissements", "Nombre", "Pourcentage"]},{"id": "d16", "label": ["Etablissements par secteur", "Nombre", "Pourcentage"]},{"id": "d17", "label": ["Emploi par secteur", "Nombre", "Pourcentage"]}],
+  "title": {"id": "territoire_nom"},
+  "figures": [
+    {"id": "pop_habitants"},{"id": "territoire_nb_communes"},{"id": "pop_evolution_2010_2015"},{"id": "pop_densite"},{"id": "clap_etablissement"},
+    {"id": "clap_etablissement_p50"},{"id": "clap_etablissement_pers_emploi"},{"id": "dirrecte_emploi_dem"},{"id": "dirrecte_emploi_dem_evol"},
+    {"id": "dirrecte_emploi_dem_a"},{"id": "dirrecte_emploi_dem_fem"},{"id": "dirrecte_emploi_dem_jeune"},{"id": "dirrecte_emploi_dem_senior"},{"id": "dirrecte_emploi_dem_ld"},
+    {"id": "pop_menage"},{"id": "pop_menage_cpl_enfant"},{"id": "pop_menage_monoparent"},{"id": "pop_menage_pers_solo"}, {"id": "pop_sexe_femme"}, {"id": "pop_sexe_homme"}, {"id": "patrimoine_site"}
+  ],
+  "images": [{"id": "territoire_carte"}],
+  "tables": [
+    {"id": "pop_age", "label": ["Tranches", "Habitant·e·s", "Pourcentage"]},{"id": "pop_csp", "label": ["Professions", "Nombre", "Pourcentage"]},
+    {"id": "clap_etablissement_taille", "label": ["Etablissements", "Nombre", "Pourcentage"]},{"id": "clap_etablissement_secteur", "label": ["Etablissements par secteur", "Nombre", "Pourcentage"]},
+    {"id": "pop_emploi_secteur", "label": ["Emploi par secteur", "Nombre", "Pourcentage"]}
+   ],
   "texts": [],
   "charts": [{
-      "id": "d5",
+      "id": "pop_solde",
       "type": "bar",
       "label": "soldes",
       "options": {},
@@ -21,7 +30,7 @@
       ]
   },
   {
-      "id": "d7",
+      "id": "pop_niv_formation_taux",
       "type": "bar",
       "label": ["EPCI" ,"Pays"],
 
@@ -33,7 +42,7 @@
       ]
   },
   {
-      "id": "d28",
+      "id": "pop_sexe",
       "type": "pie",
       "label": ["Femmes" ,"Hommes"],
       "options": {
