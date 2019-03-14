@@ -177,14 +177,13 @@ each dataviz option can be defined in config.json or in report.html with the sam
   "share": true
 }`
 
-**config.json optionnal parameters**
+**config.json optional parameters**
 
 `{
   "title": {"id": "mytitle"},
   "charts": [{"id": "chart1", "label": "mychart", "type": "bar"}],
   "tables": [{"id": "table1", "label": "column1,column2"}],
   "figures": [{"id": "fig1"}]
-
 }`
 
 
