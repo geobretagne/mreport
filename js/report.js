@@ -97,12 +97,85 @@ report = (function() {
 
     };
 
+    var _merge_config = function () {
+        var dom = {};
+        ["figure", "image", "text", "iframe", "map", "title"].forEach(function (element) {
+            // pas de conf pour ces éléments, il faut juster renseigner l'id
+            dom[element] = $(".report-" + element).toArray();
+            if (dom[element].length > 0) {
+                var properties = dom[element].map(function (item) {
+                    return { "id": item.id };
+                });
+                var conf = _config[element + "s"];
+                if (element === "title") {
+                    _config[element] = properties[0];
+                } else {
+                    if (!conf) {
+                        _config[element +"s"] = [];
+                        conf = _config[element +"s"];
+                    }
+                    $.extend(true, conf, properties);
+                }
+            }
+        });
+
+        ["chart", "table"].forEach(function (element) {
+            var conf = _config[element +"s"];
+            if (!conf) {
+                _config[element +"s"] = [];
+            }
+            dom[element] = $(".report-" + element).toArray();
+            if (dom[element].length > 0) {
+                var properties = dom[element].map(function (item) {
+                    return $.extend( $(item).data(), { "id": item.id });
+                });
+                properties.forEach(function (item) {
+                    //append conf if not in config.json only
+                    var current_element = _config[element + "s"].filter(function (o) { return o.id === item.id });
+                    if (current_element.length === 0) {
+                        var prop = { "id": item.id };
+                        if (element === "chart") {
+                            if (item.label) {
+                                if (item.label.indexOf(",") > 0) {
+                                    prop["label"] = item.label.split(",");
+                                } else {
+                                    prop["label"] = item.label;
+                                }
+                            }
+                            if (item.colors) {
+                                prop["colors"] = item.colors.split(",");
+                            }
+                            if (item.type) {
+                                prop["type"] = item.type;
+                            }
+                            if (item.opacity) {
+                                prop["opacity"] = parseFloat(item.opacity);
+                            }
+
+
+                        } else if (element === "table") {
+                            if (item.label) {
+                                prop["label"] = item.label.split(",");
+                            }
+
+                        }
+                        _config[element + "s"].push(prop);
+                    }
+                });
+            }
+        });
+        console.log("CONFIGURATION", _config);
+
+    };
+
     var _getDom = function() {
         $.ajax({
             url: _home + "report.html",
             dataType: "text",
             success: function(html) {
                 $("body").append(html);
+                //append _config
+                _merge_config();
                 _getData();
             },
             error: function(xhr, status, err) {

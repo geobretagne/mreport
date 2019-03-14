@@ -4,53 +4,5 @@
   "dataid": "dataid",
   "data_other_parameters": [],
   "debug": true,
-  "share": true,
-  "title": {"id": "territoire_nom"},
-  "figures": [
-    {"id": "pop_habitants"},{"id": "territoire_nb_communes"},{"id": "pop_evolution_2010_2015"},{"id": "pop_densite"},{"id": "clap_etablissement"},
-    {"id": "clap_etablissement_p50"},{"id": "clap_etablissement_pers_emploi"},{"id": "dirrecte_emploi_dem"},{"id": "dirrecte_emploi_dem_evol"},
-    {"id": "dirrecte_emploi_dem_a"},{"id": "dirrecte_emploi_dem_fem"},{"id": "dirrecte_emploi_dem_jeune"},{"id": "dirrecte_emploi_dem_senior"},{"id": "dirrecte_emploi_dem_ld"},
-    {"id": "pop_menage"},{"id": "pop_menage_cpl_enfant"},{"id": "pop_menage_monoparent"},{"id": "pop_menage_pers_solo"}, {"id": "pop_sexe_femme"}, {"id": "pop_sexe_homme"}, {"id": "patrimoine_site"}
-  ],
-  "images": [{"id": "territoire_carte"}],
-  "tables": [
-    {"id": "pop_age", "label": ["Tranches", "Habitant·e·s", "Pourcentage"]},{"id": "pop_csp", "label": ["Professions", "Nombre", "Pourcentage"]},
-    {"id": "clap_etablissement_taille", "label": ["Etablissements", "Nombre", "Pourcentage"]},{"id": "clap_etablissement_secteur", "label": ["Etablissements par secteur", "Nombre", "Pourcentage"]},
-    {"id": "pop_emploi_secteur", "label": ["Emploi par secteur", "Nombre", "Pourcentage"]}
-   ],
-  "texts": [],
-  "charts": [{
-      "id": "pop_solde",
-      "type": "bar",
-      "label": "soldes",
-      "options": {},
-      "opacity": 0.5,
-      "colors": [
-        "#00b894"
-      ]
-  },
-  {
-      "id": "pop_niv_formation_taux",
-      "type": "bar",
-      "label": ["EPCI" ,"Pays"],
-
-      "options": {
-      },
-      "opacity": 1,
-      "colors": [
-        "#00b894","#2D4059"
-      ]
-  },
-  {
-      "id": "pop_sexe",
-      "type": "pie",
-      "label": ["Femmes" ,"Hommes"],
-      "options": {
-      },
-      "opacity": 0.75,
-      "colors": [
-        "#48355F","#2DABAD"
-      ]
-  }
-  ]
+  "share": true
 }

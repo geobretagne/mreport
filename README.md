@@ -6,7 +6,7 @@ Simple report generator with simple dataviz
 
 /mreport/#myreport?dataid=1&dataviz=2
 
-Where 
+Where
 * `myreport` corresponds to real folder equals /mreport/reports/myreport
 * `dataid` corresponds to data id in source data
 * `dataviz` correspondst to dataviz representation defined in report
@@ -90,11 +90,11 @@ ECLUSE_1 | chart_1 | 1 | 11 | 19h-20h | 1
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
-ECLUSE_1 | table_1 | 1 | 1 | Mois | Janvier | 
-ECLUSE_1 | table_1 | 2 | 2 | Passage | 12 | 
-ECLUSE_1 | table_1 | 1 | 2 | Mois | Février | 
-ECLUSE_1 | table_1 | 2 | 2 | Passage | 22 | 
-ECLUSE_1 | table_1 | 1 | 3 | Mois | Mars | 
+ECLUSE_1 | table_1 | 1 | 1 | Mois | Janvier |
+ECLUSE_1 | table_1 | 2 | 2 | Passage | 12 |
+ECLUSE_1 | table_1 | 1 | 2 | Mois | Février |
+ECLUSE_1 | table_1 | 2 | 2 | Passage | 22 |
+ECLUSE_1 | table_1 | 1 | 3 | Mois | Mars |
 ECLUSE_1 | table_1 | 2 | 2 | Passage | 222
 
 ![table_1](img/table_1.png?raw=true "table_1")
@@ -148,6 +148,46 @@ Each report stored in mviewer/reports is a folder containing :
 
 * Required `config.json` which is the configuration file
 * Required `report.html` which is the html strutured document to render report
+if dataviz options are both defined in report.html with data-attributes and in config.json, configuration.json will overwrite html configuration.
+each dataviz option can be defined in config.json or in report.html with the same parameter. Eg:
+
+`{
+  "charts": [
+    {
+        "id": "chart1",
+        "label": "soldes",
+        "opacity": 0.5,
+        "type": "bar",
+        "colors":[#00b894]
+    }
+    ]
+}`
+
+`<div id="chart1" class="report-chart" data-type="bar" data-opacity="0.5" data-label="soldes" data-colors="#00b894" ></div>`
+
+
+config.json required parameters
+
+`{
+  "data_url": "data.php",
+  "data_type": "dynamic",
+  "dataid": "dataid",
+  "data_other_parameters": [],
+  "debug": true,
+  "share": true
+
+}`
+
+config.json optionnal parameters
+
+`{
+  "title": {"id": "mytitle"},
+  "charts": [{"id": "chart1", "label": "mychart", "type": "bar"}],
+  "tables": [{"id": "table1", "label": "column1,column2"}],
+  "figures": [{"id": "fig1"}],
+
+
+}`
 
 
 ### HTML STRUCTURE & SYNTAX
@@ -156,12 +196,12 @@ Each dataviz is an html element with id equals to dataviz id with a specific css
 
 css class | target element | description
 ----------|----------------|--------
-report-chart | chart element | todo
+report-chart | chart element | `data-type`, `data-label`, `data-colors`, `data-opacity`
 report-figure | report element | add `data-unit` attribute to add suffix value at the report-figure-chiffre element
 report-figure-chiffre | report element child (1) | todo
 report-figure-caption | report element child (1) | todo
 report-map | map element | todo
-report-table | table element | todo
+report-table | table element | `data-label` attribute to set columns labels
 report-title | title element | todo
 report-text | text element | todo
 report-text-title |  text element child (1) | todo

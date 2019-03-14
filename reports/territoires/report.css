@@ -36,25 +36,25 @@ figcaption {
     font-size: smaller;
 }
 
-#d29  {   
+#patrimoine_site  {
     color: #3db39e;
     padding-top: 0;
 }
 
-#d29 .report-icon {
+#patrimoine_site .report-icon {
     background-image: url(icons/icon-soc10.svg);
     background-repeat: no-repeat;
     background-position: center;
     height: 100px;
-   
+
 }
 
-#d29 .report-figure-chiffre {   
+#patrimoine_site .report-figure-chiffre {
     font-size: 50px;
     margin-bottom: 0;
 }
 
-#d29 .report-figure-caption {    
+#patrimoine_site .report-figure-caption {
     font-size: smaller;
     font-weight: bolder;
 }

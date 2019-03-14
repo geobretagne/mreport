@@ -1,7 +1,7 @@
 
     <div class="report container-fluid">
         <div class="report-header pb-2 mt-4 mb-2 border-bottom">
-            <h1 class="report-title"></h1>
+            <h1 id="territoire_nom" class="report-title"></h1>
         </div>
         <div class="row">
             <div id="territoire_carte" class="report-image col-md-6 col-lg-6"></div>
@@ -19,11 +19,11 @@
         <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4">
                  <h5>Origine de l'évolution de la population de 2009 à 2014</h5>
-                <figure id="pop_solde" class="report-chart"></figure>
+                <figure id="pop_solde" class="report-chart" data-type="bar" data-opacity="0.5" data-label="soldes" data-colors="#00b894" ></figure>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                  <h5>Répartition Femmes / Hommes</h5>
-                <figure id="pop_sexe" class="report-chart"></figure>
+                <figure id="pop_sexe" class="report-chart" data-type="pie" data-opacity="0.75" data-label="Femmes,Hommes" data-colors="#48355F,#2DABAD"></figure>
 
             </div>
              <div class="report-group col-sm-6 col-md-4 col-lg-4">
@@ -38,19 +38,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="report-text card col-md-4 col-lg-3">
+            <div class="card col-md-4 col-lg-3">
                 <div  class="card-body">
-                    <h5 class="report-text-title">Définitions</h5>
-                    <p class="report-text-text">
+                    <h5 >Définitions</h5>
+                    <p >
                     <b>Solde migratoire</b> est la différence entre le nombre de personnes venues habiter sur le territoire et le nombre de personnes qui en sont parties au cours de la période
                     </p>
-                    <p class="report-text-text"><b>Solde naturel</b> est la différence entre le nombre de naissances et le nombre de décès sur le territoire au cours de la période
+                    <p ><b>Solde naturel</b> est la différence entre le nombre de naissances et le nombre de décès sur le territoire au cours de la période
                     </p>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Répartition par tranche d'âge de la population</h5>
-                <div id="pop_age" class="report-table"></div>
+                <div id="pop_age" class="report-table" data-label="Tranches,Habitant·e·s,Pourcentage"></div>
             </div>
         </div>
         <div class="row">
@@ -69,7 +69,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4">
                  <h5>Répartition de la population selon le niveau de formation (en %) Pour l'année et l'EPCI sélectionné</h5>
-                <div id="pop_niv_formation_taux" class="report-chart">
+                <div id="pop_niv_formation_taux" class="report-chart" data-type="bar" data-opacity="1" data-label="EPCI,Pays" data-colors="#00b894,#2D4059">
                 <figcaption>
 
 A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles - Brevet d'études professionnelles, C: Baccalauréat (général - technologique - professionnel), D: Diplôme de l'enseignement supérieur</figcaption>
@@ -77,7 +77,7 @@ A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles -
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Professions et catégories socioprofessionnelles des habitant·e·s de 15 ans et plus</h5>
-                <div id="pop_csp" class="report-table"></div>
+                <div id="pop_csp" class="report-table" data-label="Professions,Nombre,Pourcentage"></div>
             </div>
         </div>
         <div class="row">
@@ -92,17 +92,17 @@ A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles -
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Répartition des établissements par taille</h5>
-                <div id="clap_etablissement_taille" class="report-table"></div>
+                <div id="clap_etablissement_taille" class="report-table" data-label="Etablissements,Nombre,Pourcentage"></div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Répartition des établissements par secteur d'activité</h5>
-                <div id="clap_etablissement_secteur" class="report-table"></div>
+                <div id="clap_etablissement_secteur" class="report-table" data-label="Etablissements par secteur,Nombre,Pourcentage"></div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <h5>Répartition des personnes en emploi par secteur d'activité</h5>
-                <div id="pop_emploi_secteur" class="report-table"></div>
+                <div id="pop_emploi_secteur" class="report-table" data-label="Emploi par secteur,Nombre,Pourcentage"></div>
             </div>
         </div>
         <div class="row">
@@ -120,11 +120,11 @@ A: Aucun diplôme ou au plus BEPC, B: Certificats d'aptitudes professionnelles -
 						</ul>
 				</div>
 			</div>
-            <div class="report-text card col-md-4 col-lg-3">
+            <div class="card col-md-4 col-lg-3">
                 <div  class="card-body">
-                    <h5 class="report-text-title">Définitions</h5>
-                    <p class="report-text-text">Un chercheur d'emploi inscrit en <b>catégorie A</b> est une personne tenue de faire des actes positifs de recherche d'emploi et n'ayant exercé aucune activité au cours du dernier mois.</p>
-                    <p class="report-text-text">Un chercheur d'emploi inscrit en <b>catégorie B ou C</b> est une personne tenue de faire des actes positifs de recherche d'emploi et ayant exercé une activité réduite. </p>
+                    <h5 >Définitions</h5>
+                    <p >Un chercheur d'emploi inscrit en <b>catégorie A</b> est une personne tenue de faire des actes positifs de recherche d'emploi et n'ayant exercé aucune activité au cours du dernier mois.</p>
+                    <p >Un chercheur d'emploi inscrit en <b>catégorie B ou C</b> est une personne tenue de faire des actes positifs de recherche d'emploi et ayant exercé une activité réduite. </p>
                 </div>
             </div>
         </div>
