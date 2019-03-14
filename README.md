@@ -166,7 +166,7 @@ each dataviz option can be defined in config.json or in report.html with the sam
 `<div id="chart1" class="report-chart" data-type="bar" data-opacity="0.5" data-label="soldes" data-colors="#00b894" ></div>`
 
 
-config.json required parameters
+**config.json required parameters**
 
 `{
   "data_url": "data.php",
@@ -175,17 +175,15 @@ config.json required parameters
   "data_other_parameters": [],
   "debug": true,
   "share": true
-
 }`
 
-config.json optionnal parameters
+**config.json optionnal parameters**
 
 `{
   "title": {"id": "mytitle"},
   "charts": [{"id": "chart1", "label": "mychart", "type": "bar"}],
   "tables": [{"id": "table1", "label": "column1,column2"}],
-  "figures": [{"id": "fig1"}],
-
+  "figures": [{"id": "fig1"}]
 
 }`
 
