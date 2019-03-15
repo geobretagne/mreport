@@ -41,4 +41,21 @@ div#preloader {
   background: #333 url('../img/ajax-loader.gif') no-repeat center center;
 }
 
+.wizard-indicateurs {
+    border-right: 1px solid #e9ecef;
+}
+
+.wizard-code {
+    margin-top: 20px;
+    display:none;
+}
+
+.wizard {
+    position: fixed;
+    bottom: 30px;
+    float: right;
+    right: 30px;
+    z-index: 50;
+}
+
 

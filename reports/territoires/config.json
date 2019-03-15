@@ -4,5 +4,6 @@
   "dataid": "dataid",
   "data_other_parameters": [],
   "debug": true,
-  "share": true
+  "share": true,
+  "wizard": false
 }

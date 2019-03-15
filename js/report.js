@@ -21,6 +21,10 @@ report = (function() {
 
     var errors = false;
 
+    var _data;
+
+    var _filteredDataviz = [];
+
     var _format = function (value) {
         if (!isNaN(value)) {
             return parseFloat(value).toLocaleString();
@@ -165,6 +169,56 @@ report = (function() {
             }
         });
         console.log("CONFIGURATION", _config);
+
+    };
+
+    var _showIndicateurProperties = function (ind) {
+        $(".wizard-code").hide();
+        $("#dataviz-attributes").hide();
+        $(".dataviz-attributes").val("");
+        $("#wizard-result div").remove();
+        $("#w_dataviz_type").val("");
+        $("#wizard-code").text("");
+        $("#wizard-parameters").attr("data-dataviz", ind);
+        var options;
+        var data = _data[ind];
+        var dataset_nb = 1;
+        if ( Array.isArray(data.data[0]) ) {
+            dataset_nb = data.data.length;
+        }
+
+        $("#indicateur-metadata").text(dataset_nb + " datasets disponible(s)");
+        if ( dataset_nb > 1 ) {
+            $(".onedataset").hide();
+            $(".manydataset").show();
+        } else {
+            $(".manydataset").hide();
+            $(".onedataset").show();
+        }
+
+        //Show data
+
+
+    };
+
+    var _wizard = function () {
+         var dispo = [];
+         $.each(_data, function (indicateur, properties) {
+             if (!document.getElementById(indicateur)) {
+                dispo.push(indicateur);
+             }
+         });
+         $("#wizard-indicateurs .list-group-item").remove();
+         dispo.forEach(function (item) {
+             $("#wizard-indicateurs").append('<button type="button" data-indicateur="'+item+'" class="list-group-item list-group-item-action">'+item+'</button>');
+         });
+         $("#wizard-indicateurs button").click(function (e) {
+             $("#wizard-indicateurs button").removeClass("active");
+             var btn = $(e.currentTarget);
+             btn.addClass("active");
+            _showIndicateurProperties(btn.attr("data-indicateur"));
+         });
+         $("#dataviz-attributes").hide();
 
     };
 
@@ -315,7 +369,7 @@ report = (function() {
                 }
 
                 data = data[APIRequest.dataid];
-                console.log(data);
+                _data = data;
 
                 if (data && typeof data === 'object' && Object.getOwnPropertyNames(data).length > 1) {
                     report.drawViz(data, APIRequest.dataviz);
@@ -347,10 +401,208 @@ report = (function() {
         document.getElementsByClassName("report-title")[0].textContent = title;
         document.title = title;
     };
+
+    var _createChart = function (data, chart) {
+        var el = _getDomElement("chart",  chart.id);
+        if (el && data[chart.id]) {
+            var commonOptions = {
+                "maintainAspectRatio": false
+            };
+            var colors = ["#36A2EB"];
+            var backgroundColors = []
+            var borderColors = [];
+            if (chart.colors.length > 0) {
+                colors = chart.colors;
+            }
+            colors.forEach(function(color) {
+                backgroundColors.push('rgba(' + hexToRgb(color).join(',') + ',' + (chart.opacity || 0.5) + ')');
+                borderColors.push('rgba(' + hexToRgb(color).join(',') + ', 1)');
+            });
+            var datasets = [];
+            // test if one or many datasets
+            if (Array.isArray( data[chart.id].data[0] )) {
+                // many datasets
+                var _datasets = data[chart.id].data;
+                _datasets.forEach(function (dataset, id) {
+                    datasets.push({
+                        label: chart.label[id],
+                        data: dataset,
+                        backgroundColor: backgroundColors[id],
+                        borderColor: borderColors[id],
+                        borderWidth: 1
+                    });
+                });
+
+
+            } else {
+                // one dataset
+                if (colors.length === 1) {
+                    backgroundColors = backgroundColors[0];
+                    borderColors = borderColors[0];
+                }
+                datasets.push({
+                        label: chart.label,
+                        data: data[chart.id].data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+               });
+            }
+
+            $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
+            var options = $.extend({}, commonOptions, chart.options);
+            var ctx = document.getElementById(chart.id + "-canvas").getContext('2d');
+            var chart = new Chart(ctx, {
+                type: chart.type || 'bar',
+                data: {
+                    labels: data[chart.id].label,
+                    datasets: datasets
+                },
+                options: options
+            });
+        } else {
+            _handleVizError(el, chart.id, data);
+        }
+    };
+
+    var _createFigure = function (data, chiffrecle) {
+        var el = _getDomElement("figure card",  chiffrecle.id);
+        var unit = $(el).attr("data-unit") || "";
+        if (el && data[chiffrecle.id]) {
+            el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]) + unit;
+            if (el.getElementsByClassName("report-figure-caption").length > 0) {
+                el.getElementsByClassName("report-figure-caption")[0].textContent = data[chiffrecle.id].label[0];
+            }
+        } else {
+            _handleVizError(el, chiffrecle.id, data);
+        }
+    };
+
+    var _createTable = function (data, table) {
+        var el = _getDomElement("table",  table.id);
+        if (el && data[table.id] && table.label) {
+            // construction auto de la table
+            var columns = [];
+            table.label.forEach(function(col, id) {
+                columns.push('<th scope="col">' + col + '</th>');
+            });
+
+            var data_rows = [];
+            // Use first colun data to collect other columns data
+            data[table.id].data[0].forEach(function(value, id) {
+                var values = [];
+                table.label.forEach(function(col, cid) {
+                    values.push(_format(data[table.id].data[cid][id]));
+                });
+                data_rows.push(values);
+            });
+
+            rows = [];
+            data_rows.forEach(function (row, id ) {
+                var elements = [];
+                row.forEach(function(column) {
+                    elements.push('<td>' + column + '</td>');
+                });
+                rows.push('<tr>' + elements.join("") + '</tr>');
+
+            });
+
+            var html = ['<table class="table table-bordered">',
+                '<thead class="thead-light">',
+                '<tr>' + columns.join("") + '</tr></thead>',
+                '<tbody>' + rows.join("") + '</tbody></table>'
+            ].join("");
+
+            $(el).append(html);
+
+        } else {
+            _handleVizError(el, table.id, data);
+        }
+    };
+
+    var _createText = function (data, text) {
+        var el = _getDomElement("text",  text.id);
+        if (el && data[text.id]) {
+            el.getElementsByClassName("report-text-text")[0].textContent = data[text.id].data[0];
+            el.getElementsByClassName("report-text-title")[0].textContent = data[text.id].label[0];
+        } else {
+            _handleVizError(el, text.id, data);
+        }
+    };
+
+    var _createImage = function (data, image) {
+        var el = _getDomElement("image",  image.id);
+        if (el && data[image.id]) {
+            $(el).append('<img src="' + data[image.id].data[0] + '" class="img-fluid" alt="' + data[image.id].label[0] + '">');
+        } else {
+            _handleVizError(el, image.id, data);
+        }
+    };
+
+    var _createIframe = function (data, iframe) {
+        var el = _getDomElement("iframe",  iframe.id);
+        if (el && data[iframe.id]) {
+            var html = '<iframe class="embed-responsive-item" src="' + data[iframe.id].data[0] + '"></iframe>';
+
+            $(el).append(html);
+        } else {
+            _handleVizError(el, iframe.id, data);
+        }
+    };
+
+    var _getDomElement = function (classe, id) {
+        var el = document.getElementById(id);
+        if (_filteredDataviz.indexOf(id) > -1) {
+            $(el).appendTo(".report-filtered .row");
+            $(el).removeClass().addClass("report-" + classe +" col-sm-12 col-md-12 col-lg-12");
+        }
+        return el;
+    }
+
+    var _createMap = function (data, map) {
+        var el = _getDomElement("map",  map.id);
+        var id = map.id + "-map";
+        $(el).append('<div id="' + id + '" style="width:auto;height:300px;"><div>');
+        var zoom = data[map.id].data[2];
+        var center = data[map.id].data.slice(0, 2);
+        var _map = L.map(id).setView(center, zoom);
+        _map.zoomControl.remove();
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(_map);
+        L.marker(center).addTo(_map).bindPopup(data[map.id].label[0]);
+    };
+
+    var _testViz = function (data, type, properties) {
+        switch (type) {
+            case "chart":
+                 _createChart(data, properties);
+                 break;
+            case "table":
+                _createTable(data, properties);
+                 break;
+            case "figure":
+                _createFigure(data, properties);
+                 break;
+            case "text":
+                _createText(data, properties);
+                 break;
+            case "image":
+                _createImage(data, properties);
+                 break;
+             case "iframe":
+                _createIframe(data, properties);
+                 break;
+             case "map":
+                _createMap(data, properties);
+                 break;
+        }
+    };
+
+
     var _drawViz = function(data, dataviz) {
-        var filteredDataviz = [];
         if (dataviz) {
-            filteredDataviz = dataviz.split(",");
+            _filteredDataviz = dataviz.split(",");
             $("body").prepend('<div class="report-filtered container-fluid"><div class="row"></div></div>');
             // deactivate share func.
             _config.share = false;
@@ -384,215 +636,44 @@ report = (function() {
         /* Création des chiffres clés */
         if (_config.figures) {
             _config.figures.forEach(function(chiffrecle) {
-                var el = document.getElementById(chiffrecle.id);
-                var unit = $(el).attr("data-unit") || "";
-                if (filteredDataviz.indexOf(chiffrecle.id) > -1) {
-                    $(el).appendTo(".report-filtered .row");
-                    $(el).removeClass().addClass("report-figure card");
-                }
-                if (el && data[chiffrecle.id]) {
-                    el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]) + unit;
-                    if (el.getElementsByClassName("report-figure-caption").length > 0) {
-                        el.getElementsByClassName("report-figure-caption")[0].textContent = data[chiffrecle.id].label[0];
-                    }
-                } else {
-                    _handleVizError(el, chiffrecle.id, data);
-                }
+                _createFigure(data, chiffrecle);
             });
         }
 
         /* Création des charts */
-
-        var commonOptions = {
-            "maintainAspectRatio": false
-        };
-
         if (_config.charts) {
             _config.charts.forEach(function(chart) {
-                var el = document.getElementById(chart.id);
-                if (filteredDataviz.indexOf(chart.id) > -1) {
-                    $(el).appendTo(".report-filtered .row");
-                    $(el).removeClass().addClass("report-chart col-sm-12 col-md-12 col-lg-12");
-                }
-                if (el && data[chart.id]) {
-                    var colors = ["#36A2EB"];
-                    var backgroundColors = []
-                    var borderColors = [];
-                    if (chart.colors.length > 0) {
-                        colors = chart.colors;
-                    }
-                    colors.forEach(function(color) {
-                        backgroundColors.push('rgba(' + hexToRgb(color).join(',') + ',' + (chart.opacity || 0.5) + ')');
-                        borderColors.push('rgba(' + hexToRgb(color).join(',') + ', 1)');
-                    });
-                    console
-
-                    var datasets = [];
-                    // test if one or many datasets
-                    if (Array.isArray( data[chart.id].data[0] )) {
-                        // many datasets
-                        console.log(chart.id + "many datasets");
-                        var _datasets = data[chart.id].data;
-                        _datasets.forEach(function (dataset, id) {
-                            datasets.push({
-                                label: chart.label[id],
-                                data: dataset,
-                                backgroundColor: backgroundColors[id],
-                                borderColor: borderColors[id],
-                                borderWidth: 1
-                            });
-                        });
-
-
-                    } else {
-                        // one dataset
-                        if (colors.length === 1) {
-                            backgroundColors = backgroundColors[0];
-                            borderColors = borderColors[0];
-                        }
-                        datasets.push({
-                                label: chart.label,
-                                data: data[chart.id].data,
-                                backgroundColor: backgroundColors,
-                                borderColor: borderColors,
-                                borderWidth: 1
-                       });
-                    }
-
-                    $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
-                    var options = $.extend({}, commonOptions, chart.options);
-                    var ctx = document.getElementById(chart.id + "-canvas").getContext('2d');
-                    var chart = new Chart(ctx, {
-                        type: chart.type || 'bar',
-                        data: {
-                            labels: data[chart.id].label,
-                            datasets: datasets
-                        },
-                        options: options
-                    });
-                } else {
-                    _handleVizError(el, chart.id, data);
-                }
-
+                _createChart(data, chart);
             });
         }
 
         if (_config.tables) {
-
             //ATTENTION POUR LES TABLEAUX, 1 DATASET est le contenu d'une colonne.
             _config.tables.forEach(function(table) {
-                var el = document.getElementById(table.id);
-                if (filteredDataviz.indexOf(table.id) > -1) {
-                    $(el).appendTo(".report-filtered .row");
-                    $(el).removeClass().addClass("report-table col-sm-12 col-md-12 col-lg-12");
-                }
-                if (el && data[table.id] && table.label) {
-                    // construction auto de la table
-                    var columns = [];
-                    table.label.forEach(function(col, id) {
-                        columns.push('<th scope="col">' + col + '</th>');
-                    });
-
-                    var data_rows = [];
-                    // Use first colun data to collect other columns data
-                    data[table.id].data[0].forEach(function(value, id) {
-                        var values = [];
-                        table.label.forEach(function(col, cid) {
-                            values.push(_format(data[table.id].data[cid][id]));
-                        });
-                        data_rows.push(values);
-                    });
-
-                    console.log(data_rows, data[table.id]);
-
-                    rows = [];
-                    data_rows.forEach(function (row, id ) {
-                        var elements = [];
-                        row.forEach(function(column) {
-                            elements.push('<td>' + column + '</td>');
-                        });
-                        rows.push('<tr>' + elements.join("") + '</tr>');
-
-                    });
-
-                    var html = ['<table class="table table-bordered">',
-                        '<thead class="thead-light">',
-                        '<tr>' + columns.join("") + '</tr></thead>',
-                        '<tbody>' + rows.join("") + '</tbody></table>'
-                    ].join("");
-
-                    $(el).append(html);
-
-                } else {
-                    _handleVizError(el, table.id, data);
-                }
-
-
+                 _createTable(data, table);
             });
         }
 
         if (_config.texts) {
             _config.texts.forEach(function(text) {
-                var el = document.getElementById(text.id);
-                if (filteredDataviz.indexOf(text.id) > -1) {
-                    $(el).appendTo(".report-filtered .row");
-                    $(el).removeClass().addClass("report-text col-sm-12 col-md-12 col-lg-12");
-                }
-                if (el && data[text.id]) {
-                    el.getElementsByClassName("report-text-text")[0].textContent = data[text.id].data[0];
-                    el.getElementsByClassName("report-text-title")[0].textContent = data[text.id].label[0];
-                } else {
-                    _handleVizError(el, text.id, data);
-                }
+                _createText(data, text);
             });
         }
         if (_config.images) {
             _config.images.forEach(function(image) {
-                var el = document.getElementById(image.id);
-                if (filteredDataviz.indexOf(image.id) > -1) {
-                    $(el).appendTo(".report-filtered .row");
-                    $(el).removeClass().addClass("report-image col-sm-12 col-md-12 col-lg-12");
-                }
-                if (el && data[image.id]) {
-                    $(el).append('<img src="' + data[image.id].data[0] + '" class="img-fluid" alt="' + data[image.id].label[0] + '">');
-                } else {
-                    _handleVizError(el, image.id, data);
-                }
-
+                _createImage(data, image);
             });
         }
 
         if (_config.iframes) {
             _config.iframes.forEach(function(iframe) {
-                var el = document.getElementById(iframe.id);
-                if (filteredDataviz.indexOf(iframe.id) > -1) {
-                    $(el).appendTo(".report-filtered .row");
-                    $(el).removeClass().addClass("report-iframe col-sm-12 col-md-12 col-lg-12");
-                }
-                if (el && data[iframe.id]) {
-                    var html = '<iframe class="embed-responsive-item" src="' + data[iframe.id].data[0] + '"></iframe>';
-
-                    $(el).append(html);
-                } else {
-                    _handleVizError(el, iframe.id, data);
-                }
-
+                _createIframe(data, iframe);
             });
         }
 
         if (_config.maps) {
             _config.maps.forEach(function(map) {
-                var el = document.getElementById(map.id);
-                var id = map.id + "-map";
-                $(el).append('<div id="' + id + '" style="width:auto;height:300px;"><div>');
-                var zoom = data[map.id].data[2];
-                var center = data[map.id].data.slice(0, 2);
-                var _map = L.map(id).setView(center, zoom);
-                _map.zoomControl.remove();
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(_map);
-                L.marker(center).addTo(_map).bindPopup(data[map.id].label[0]);
+                _createMap(data, map);
             });
         }
 
@@ -625,6 +706,63 @@ report = (function() {
                         ].join("\n");
 
                         $(".report-share-iframe").text(iframe);
+                    });
+                }
+            });
+
+        }
+
+        if (_config.wizard || APIRequest.wizard) {
+            $.ajax({
+                url: "html/wizard.html",
+                dataType: "text",
+                success: function(html) {
+                    $("body").append(html);
+                    $("body").append('<div class="wizard"><button class="wizard-btn btn btn-primary btn-lg" data-toggle="modal" data-target="#wizard-panel">+</button></div>');
+                    $(".wizard-btn").click(function (e) {
+                        _wizard();
+                    });
+                    $("#w_dataviz_type").change(function() {
+                        var dataviz = $("#w_dataviz_type").val();
+                        $("#dataviz-attributes").show();
+                        $(".dataviz-attributes").closest(".input-group").hide();
+                        $("."+dataviz+".dataviz-attributes").closest(".input-group").show();
+                        if (dataviz === "chart") {
+                            $("#w_label").closest(".input-group").find(".input-group-text").text("séries");
+                        } else if (dataviz === "table") {
+                            $("#w_label").closest(".input-group").find(".input-group-text").text("colonnes");
+                        }
+                    });
+                    $("#wizard_validate").click(function (e) {
+                        var dataviz = $("#wizard-parameters").attr("data-dataviz");
+                        var type = $("#w_dataviz_type").val();
+                        var attributes = [];
+                        var properties = {"id" : dataviz};
+                        $(".dataviz-attributes").each(function (id, attribute) {
+                            var val = $(attribute).val();
+                            var prop = $(attribute).attr("data-prop");
+                            if (val.length >= 1) {
+                                attributes.push( prop + '="' + val +'"');
+                                properties[prop] = val;
+                            }
+                        });
+                        ["colors", "label"].forEach(function (prop) {
+                            if (properties[prop]) {
+                                properties[prop] = properties[prop].split(",");
+                            }
+                        });
+
+                        $("#"+dataviz).remove();
+
+                        var elem = $('<div id="'+dataviz+'" class="report-'+type+'" ' + attributes.join(" ") +'></div>');
+                        if (type === "figure") {
+                            elem.append(['<p class="report-figure-chiffre text-center"></p>',
+                                '<p class="report-figure-caption text-center"></p>'].join(""));
+                        }
+                        $("#wizard-result").append(elem);
+                        $("#wizard-code").text(elem.html());
+                        $(".wizard-code").show();
+                        _testViz(_data, type, properties);
                     });
                 }
             });
