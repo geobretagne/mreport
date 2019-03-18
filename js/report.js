@@ -182,29 +182,11 @@ report = (function() {
         $("#wizard-parameters").attr("data-dataviz", ind);
         var options;
         var data = _data[ind];
-        var dataset_nb = 1;
-        var data_nb = 0;
+        var dataset_nb = data.dataset.length;
+        var data_nb = data.rows;
         var data_type = "text";
-        var significative_label = true;
-        if ( Array.isArray(data.data[0]) ) {
-            dataset_nb = data.data.length;
-            data_nb = data.data[0].length;
-            //test sur les labels
-            // pour les tableaux, les labels ne sont pas significatifs et donc non utilisés
-            //Pour les charts, les labels sont des valeurs.
-            var distinct_labels = [];
-            data.label.forEach(function (label) {
-                 if (!distinct_labels.includes(label)) {
-                     distinct_labels.push(label);
-                 }
-             });
-             if (distinct_labels.length < data_nb) {
-                  significative_label = false;
-             }
-
-        } else {
-            data_nb = data.data.length;
-            // data_type
+        var significative_label = data.significative_label;
+        if ( data.dataset.length === 1 ) {
             var _url = new RegExp(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/);
             if (_url.test(data.data[0])) {
                 data_type = "url";
@@ -214,7 +196,7 @@ report = (function() {
                 data_type = "image";
             }*/
 
-        }
+        } 
         var options =[];
         if ( dataset_nb > 1 ) {
             options.push("table");
@@ -281,28 +263,10 @@ report = (function() {
     };
 
     _autoConfig = function (id, dataviz) {
-        var colors = ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
-        var series = ["Série a", "Série b", "Série c", "Série d", "Série e"];
-        var columns = ["Colonne a", "Colonne b", "Colonne c", "Colonne d", "Colonne e"];
-        var significative_label = true;
-        //test sur les labels
-        // pour les tableaux, les labels ne sont pas significatifs et donc non utilisés
-        //Pour les charts, les labels sont des valeurs.
-        var distinct_labels = [];
-        _data[id].label.forEach(function (label) {
-             if (!distinct_labels.includes(label)) {
-                 distinct_labels.push(label);
-             }
-         });
-         if (distinct_labels.length < _data[id].data[0].length) {
-              significative_label = false;
-         }
-
-
-        var nb_datasets = 1;
-        if ( Array.isArray(_data[id].data[0]) ) {
-            nb_datasets = _data[id].data.length;
-        }
+        var colors = ["#e55039", "#60a3bc", "#78e08f", "#fad390"];        
+        var significative_label = _data[id].significative_label;
+        var nb_datasets = _data[id].rows;        
+        
         switch (dataviz) {
             case "chart":
                 $("#w_chart_opacity").val("0.75");
@@ -311,11 +275,11 @@ report = (function() {
                 if (nb_datasets === 1) {
                     $("#w_label").val("Légende");
                 } else {
-                     $("#w_label").val(series.slice(0,nb_datasets).join(","));
+                     $("#w_label").val(_data[id].dataset.join(","));
                 }
                 break;
             case "table":
-                $("#w_label").val(columns.slice(0,nb_datasets).join(","));
+                $("#w_label").val(_data[id].dataset.join(","));
                 if (significative_label) {
                     $("#w_table_extracolumn").val("#");
                     $("#w_table_extracolumn").closest(".input-group").show();
@@ -416,15 +380,35 @@ report = (function() {
     $.each(json, function(dataid, a) {
         result[dataid] = {};
         $.each(a.dataviz, function(dataviz, b) {
+            var significative_labels = true;
             result[dataid][dataviz] = {
                 "label": [],
-                "data": []
+                "data": [],
+                "dataset": [],
+                "rows": 0,
+                "significative_label": null
             };
             ndataset = 0;
             $.each(b.dataset, function(dataset, c) {
                 ndataset += 1;
+                var rows = c.data.length;
+                if (significative_labels) {
+                    var distinct_labels = [];
+                    c.label.forEach(function(label) {
+                        if (!distinct_labels.includes(label)) {
+                            distinct_labels.push(label);
+                        }
+                    });
+                    if (distinct_labels.length < rows) {
+                        significative_labels = false;
+                    }
+                }
+                
                 result[dataid][dataviz].data.push(c.data);
                 result[dataid][dataviz].label.push(c.label);
+                result[dataid][dataviz].dataset.push(dataset);
+                result[dataid][dataviz].significative_label = significative_labels;
+                result[dataid][dataviz].rows = rows;
 
             });
             if (ndataset === 1) {
