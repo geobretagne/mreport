@@ -16,18 +16,14 @@
                         <div id="wizard-indicateurs" class="list-group"></div>
                     </div>
                     <div id="wizard-parameters" data-dataviz="" class="col-lg-3">
+                         <p id="indicateur-metadata"></p>
                          <h6>Représentation</h6>
-                        <p id="indicateur-metadata"></p>
+
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <label class="input-group-text" for="w_dataviz_type">Dataviz</label>
                           </div>
                           <select class="custom-select" id="w_dataviz_type">
-                                <option selected disabled>...</option>
-                                <option  class="manydataset" value="table">table</option>
-                                <option  class="onedataset manydataset" value="chart">chart</option>
-                                <option  class="onedataset" value="titre">titre</option>
-                                <option  class="onedataset" value="figure">figure</option>
                           </select>
                         </div>
                      <div id="dataviz-attributes">
@@ -36,8 +32,22 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text" >type</span>
                           </div>
-                          <input type="text" data-prop="type" id="w_chart_type" class="chart form-control dataviz-attributes">
+                          <select class="custom-select chart form-control dataviz-attributes" data-prop="type" id="w_chart_type">
+                            <option  selected value="bar">bar</option>
+                            <option  value="pie">pie</option>
+                            <option  value="horizontalBar">horizontalBar</option>
+                          </select>
                         </div>
+
+
+                        <div class="input-group input-group-sm mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">extracolumn</span>
+                          </div>
+                          <input type="text" data-prop="extracolumn" class="table form-control dataviz-attributes" id="w_table_extracolumn">
+                        </div>
+
+
 
                         <div class="input-group input-group-sm mb-3">
                           <div class="input-group-prepend">
@@ -64,10 +74,10 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text" >unit</span>
                           </div>
-                          <input type="text" data-prop="units" class="figure form-control dataviz-attributes" id="w_unit">
+                          <input type="text" data-prop="unit" class="figure form-control dataviz-attributes" id="w_unit">
                         </div>
 
-                        <button id="wizard_validate" class="btn btn-success">Tester</button>
+                        <button id="wizard_validate" class="btn btn-success">Actualiser</button>
 
 
                     </div>

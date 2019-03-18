@@ -183,20 +183,73 @@ report = (function() {
         var options;
         var data = _data[ind];
         var dataset_nb = 1;
+        var data_nb = 0;
+        var data_type = "text";
+        var significative_label = true;
         if ( Array.isArray(data.data[0]) ) {
             dataset_nb = data.data.length;
-        }
+            data_nb = data.data[0].length;
+            //test sur les labels
+            // pour les tableaux, les labels ne sont pas significatifs et donc non utilisés
+            //Pour les charts, les labels sont des valeurs.
+            var distinct_labels = [];
+            data.label.forEach(function (label) {
+                 if (!distinct_labels.includes(label)) {
+                     distinct_labels.push(label);
+                 }
+             });
+             if (distinct_labels.length < data_nb) {
+                  significative_label = false;
+             }
 
-        $("#indicateur-metadata").text(dataset_nb + " datasets disponible(s)");
-        if ( dataset_nb > 1 ) {
-            $(".onedataset").hide();
-            $(".manydataset").show();
         } else {
-            $(".manydataset").hide();
-            $(".onedataset").show();
-        }
+            data_nb = data.data.length;
+            // data_type
+            var _url = new RegExp(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/);
+            if (_url.test(data.data[0])) {
+                data_type = "url";
+            }
+            /*var _img = new RegExp(/([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/);
+            if (_img.test(data.data[0])) {
+                data_type = "image";
+            }*/
 
-        //Show data
+        }
+        var options =[];
+        if ( dataset_nb > 1 ) {
+            options.push("table");
+            if (significative_label) {
+                options.push("chart");
+            }
+        } else {
+            if (data_nb === 1) {
+                // une seule ligne
+                if (data_type === "text") {
+                    options.push("figure");
+                } else if (data_type === "url") {
+                    options.push("iframe");
+                    options.push("image");
+                }
+            } else {
+                // plusieurs lignes
+                options.push("chart");
+            }
+        }
+        var dataviz_options = ['<option class="dataviz-options" selected disabled>...</option>'];
+        options.forEach(function(option) {
+            dataviz_options.push('<option  class="dataviz-options" value="'+option+'">'+option+'</option>');
+        });
+
+        $("#w_dataviz_type .dataviz-options").remove();
+        $("#w_dataviz_type").append(dataviz_options.join(""));
+
+
+
+        return {
+            "datasets": dataset_nb,
+            "rows": data_nb,
+            "significative_labels": significative_label
+        };
 
 
     };
@@ -216,10 +269,62 @@ report = (function() {
              $("#wizard-indicateurs button").removeClass("active");
              var btn = $(e.currentTarget);
              btn.addClass("active");
-            _showIndicateurProperties(btn.attr("data-indicateur"));
+            var metadata = _showIndicateurProperties(btn.attr("data-indicateur"));
+            $("#indicateur-metadata").html("<code>" + [metadata.datasets + " datasets disponible(s)",
+                metadata.rows + " lignes",
+                "Labels utilisables " + metadata.significative_labels].join("<br>") + "</code>"
+            );
+
          });
          $("#dataviz-attributes").hide();
 
+    };
+
+    _autoConfig = function (id, dataviz) {
+        var colors = ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
+        var series = ["Série a", "Série b", "Série c", "Série d", "Série e"];
+        var columns = ["Colonne a", "Colonne b", "Colonne c", "Colonne d", "Colonne e"];
+        var significative_label = true;
+        //test sur les labels
+        // pour les tableaux, les labels ne sont pas significatifs et donc non utilisés
+        //Pour les charts, les labels sont des valeurs.
+        var distinct_labels = [];
+        _data[id].label.forEach(function (label) {
+             if (!distinct_labels.includes(label)) {
+                 distinct_labels.push(label);
+             }
+         });
+         if (distinct_labels.length < _data[id].data[0].length) {
+              significative_label = false;
+         }
+
+
+        var nb_datasets = 1;
+        if ( Array.isArray(_data[id].data[0]) ) {
+            nb_datasets = _data[id].data.length;
+        }
+        switch (dataviz) {
+            case "chart":
+                $("#w_chart_opacity").val("0.75");
+                $("#w_chart_type").val("bar");
+                $("#w_colors").val(colors.slice(0,nb_datasets).join(","));
+                if (nb_datasets === 1) {
+                    $("#w_label").val("Légende");
+                } else {
+                     $("#w_label").val(series.slice(0,nb_datasets).join(","));
+                }
+                break;
+            case "table":
+                $("#w_label").val(columns.slice(0,nb_datasets).join(","));
+                if (significative_label) {
+                    $("#w_table_extracolumn").val("#");
+                    $("#w_table_extracolumn").closest(".input-group").show();
+                } else {
+                    $("#w_table_extracolumn").closest(".input-group").hide();
+                }
+                break;
+
+        }
     };
 
     var _getDom = function() {
@@ -500,6 +605,9 @@ report = (function() {
         if (el && data[table.id] && table.label) {
             // construction auto de la table
             var columns = [];
+            if (table.extracolumn) {
+                columns.push('<th scope="col">'+table.extracolumn+'</th>');
+            }
             table.label.forEach(function(col, id) {
                 columns.push('<th scope="col">' + col + '</th>');
             });
@@ -508,6 +616,9 @@ report = (function() {
             // Use first colun data to collect other columns data
             data[table.id].data[0].forEach(function(value, id) {
                 var values = [];
+                if (table.extracolumn) {
+                    values.push(data[table.id].label[id]);
+                }
                 table.label.forEach(function(col, cid) {
                     values.push(_format(data[table.id].data[cid][id]));
                 });
@@ -750,14 +861,18 @@ report = (function() {
                     });
                     $("#w_dataviz_type").change(function() {
                         var dataviz = $("#w_dataviz_type").val();
+                        $(".dataviz-attributes").val("");
+                        var id = $("#wizard-indicateurs button.active").attr("data-indicateur");
                         $("#dataviz-attributes").show();
                         $(".dataviz-attributes").closest(".input-group").hide();
                         $("."+dataviz+".dataviz-attributes").closest(".input-group").show();
+                        _autoConfig(id, dataviz);
                         if (dataviz === "chart") {
                             $("#w_label").closest(".input-group").find(".input-group-text").text("séries");
                         } else if (dataviz === "table") {
                             $("#w_label").closest(".input-group").find(".input-group-text").text("colonnes");
                         }
+                        $("#wizard_validate").click();
                     });
                     $("#wizard_validate").click(function (e) {
                         var dataviz = $("#wizard-parameters").attr("data-dataviz");
@@ -767,8 +882,8 @@ report = (function() {
                         $(".dataviz-attributes").each(function (id, attribute) {
                             var val = $(attribute).val();
                             var prop = $(attribute).attr("data-prop");
-                            if (val.length >= 1) {
-                                attributes.push( prop + '="' + val +'"');
+                            if (val && val.length >= 1) {
+                                attributes.push( "data-" + prop + '="' + val +'"');
                                 properties[prop] = val;
                             }
                         });
@@ -786,7 +901,7 @@ report = (function() {
                                 '<p class="report-figure-caption text-center"></p>'].join(""));
                         }
                         $("#wizard-result").append(elem);
-                        $("#wizard-code").text(elem.html());
+                        $("#wizard-code").text(elem.prop("outerHTML"));
                         $(".wizard-code").show();
                         _testViz(_data, type, properties);
                     });
