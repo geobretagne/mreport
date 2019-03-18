@@ -1,0 +1,9 @@
+{
+  "data_url": "data.php",
+  "data_type": "dynamic",
+  "dataid": "dataid",
+  "data_other_parameters": [],
+  "debug": true,
+  "share": true,
+  "wizard": true
+}
