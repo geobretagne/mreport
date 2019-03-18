@@ -201,7 +201,7 @@ report = (function() {
 
     };
 
-    var _wizard = function () {
+    var _showIndicateurs = function () {
          var dispo = [];
          $.each(_data, function (indicateur, properties) {
              if (!document.getElementById(indicateur)) {
@@ -402,7 +402,18 @@ report = (function() {
         document.title = title;
     };
 
+    var _vizEnabled = function (id) {
+        var enabled = true;
+        if (_filteredDataviz.length > 0 && !_filteredDataviz.includes(id)) {
+            enabled = false;
+        }
+        return enabled;
+    };
+
     var _createChart = function (data, chart) {
+        if (!_vizEnabled(chart.id)) {
+            return;
+        }
         var el = _getDomElement("chart",  chart.id);
         if (el && data[chart.id]) {
             var commonOptions = {
@@ -466,6 +477,9 @@ report = (function() {
     };
 
     var _createFigure = function (data, chiffrecle) {
+        if (!_vizEnabled(chiffrecle.id)) {
+            return;
+        }
         var el = _getDomElement("figure card",  chiffrecle.id);
         var unit = $(el).attr("data-unit") || "";
         if (el && data[chiffrecle.id]) {
@@ -479,6 +493,9 @@ report = (function() {
     };
 
     var _createTable = function (data, table) {
+        if (!_vizEnabled(table.id)) {
+            return;
+        }
         var el = _getDomElement("table",  table.id);
         if (el && data[table.id] && table.label) {
             // construction auto de la table
@@ -521,6 +538,9 @@ report = (function() {
     };
 
     var _createText = function (data, text) {
+        if (!_vizEnabled(text.id)) {
+            return;
+        }
         var el = _getDomElement("text",  text.id);
         if (el && data[text.id]) {
             el.getElementsByClassName("report-text-text")[0].textContent = data[text.id].data[0];
@@ -531,6 +551,9 @@ report = (function() {
     };
 
     var _createImage = function (data, image) {
+        if (!_vizEnabled(image.id)) {
+            return;
+        }
         var el = _getDomElement("image",  image.id);
         if (el && data[image.id]) {
             $(el).append('<img src="' + data[image.id].data[0] + '" class="img-fluid" alt="' + data[image.id].label[0] + '">');
@@ -540,6 +563,9 @@ report = (function() {
     };
 
     var _createIframe = function (data, iframe) {
+        if (!_vizEnabled(iframe.id)) {
+            return;
+        }
         var el = _getDomElement("iframe",  iframe.id);
         if (el && data[iframe.id]) {
             var html = '<iframe class="embed-responsive-item" src="' + data[iframe.id].data[0] + '"></iframe>';
@@ -720,7 +746,7 @@ report = (function() {
                     $("body").append(html);
                     $("body").append('<div class="wizard"><button class="wizard-btn btn btn-primary btn-lg" data-toggle="modal" data-target="#wizard-panel">+</button></div>');
                     $(".wizard-btn").click(function (e) {
-                        _wizard();
+                        _showIndicateurs();
                     });
                     $("#w_dataviz_type").change(function() {
                         var dataviz = $("#w_dataviz_type").val();
