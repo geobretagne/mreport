@@ -110,13 +110,13 @@ ECLUSE_1 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 483
 
 
 
-**Map sample** - one dataset is a location (Y,X,Z)
+**Map sample** - One marker type by dataset - Data is lat@long
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
-ECLUSE_1 | map_1 | point_1 | 1 | Latitude ECLUSE N°1 | 48.2
-ECLUSE_1 | map_1 | point_1 | 2 | Longitude ECLUSE N°1 | -1.5
-ECLUSE_1 | map_1 | point_1 | 3 | Zoom ECLUSE N°1 | 14
+ECLUSE_1 | map_1 | point_1 | 1 | Latitude ECLUSE N°1a | 48.2@-1.5
+ECLUSE_1 | map_1 | point_1 | 2 | Longitude ECLUSE N°1b | 48.2@-1.5-1.5
+
 
 ![map_1](img/map_1.png?raw=true "map_1")
 

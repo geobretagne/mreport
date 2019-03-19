@@ -47,20 +47,10 @@
         "#a29bfe"
       ]
     }
-  ],
-  "figures": [
-    {
-      "id": "viz_1"
-    }
-  ],
+  ], 
   "title": {
     "id": "title"
-  },
-  "maps": [
-    {
-      "id": "viz_5"
-    }
-  ],
+  },  
   "tables": [
     {
       "id": "viz_6",

@@ -103,7 +103,7 @@ report = (function() {
 
     var _merge_config = function() {
         var dom = {};
-        ["figure", "image", "text", "iframe", "map", "title"].forEach(function(element) {
+        ["figure", "image", "text", "iframe", "title"].forEach(function(element) {
             // pas de conf pour ces éléments, il faut juster renseigner l'id
             dom[element] = $(".report-" + element).toArray();
             if (dom[element].length > 0) {
@@ -125,7 +125,7 @@ report = (function() {
             }
         });
 
-        ["chart", "table"].forEach(function(element) {
+        ["chart", "table", "map"].forEach(function(element) {
             var conf = _config[element + "s"];
             if (!conf) {
                 _config[element + "s"] = [];
@@ -178,6 +178,12 @@ report = (function() {
                                 });
                             }
 
+                        } else if (element === "map") {
+                            if (item.zoom) {
+                                prop["zoom"] = Number(item.zoom);
+                            }
+                        } else {
+                            console.log(element, item);
                         }
                         _config[element + "s"].push(prop);
                     }
@@ -592,14 +598,37 @@ report = (function() {
         var el = _getDomElement("map", map.id);
         var id = map.id + "-map";
         $(el).append('<div id="' + id + '" style="width:auto;height:300px;"><div>');
-        var zoom = data[map.id].data[2];
-        var center = data[map.id].data.slice(0, 2);
+        var zoom = map.zoom || 16;
+        var datasets_nb = data[map.id].dataset.length;
+        var points_nb = data[map.id].rows;
+        var points = [];
+        var center = [48, 0];
+        if (datasets_nb === 1) {
+            // une typologie de points
+            if (points_nb === 1) {
+                //un seul point
+                center = data[map.id].data[0].split("@").map(Number);
+                points.push(data[map.id].data[0].split("@").map(Number));
+            } else {
+                //plusieurs points
+                data[map.id].data.forEach(function(pt) {
+                    points.push(pt.split("@").map(Number));
+                });
+            }
+        } else {
+            // Plusieurs typologies de points
+            //TODO
+        }
         var _map = L.map(id).setView(center, zoom);
         _map.zoomControl.remove();
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(_map);
-        L.marker(center).addTo(_map).bindPopup(data[map.id].label[0]);
+        points.forEach(function(point, id) {
+            L.marker(point).addTo(_map).bindPopup(data[map.id].label[id]);
+        });
+        _map.fitBounds(points);
+
     };
 
     var _testViz = function(data, type, properties) {
