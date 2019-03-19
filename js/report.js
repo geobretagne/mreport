@@ -25,7 +25,7 @@ report = (function() {
 
     var _filteredDataviz = [];
 
-    var _format = function (value) {
+    var _format = function(value) {
         if (!isNaN(value)) {
             return parseFloat(value).toLocaleString();
         } else {
@@ -101,43 +101,51 @@ report = (function() {
 
     };
 
-    var _merge_config = function () {
+    var _merge_config = function() {
         var dom = {};
-        ["figure", "image", "text", "iframe", "map", "title"].forEach(function (element) {
+        ["figure", "image", "text", "iframe", "map", "title"].forEach(function(element) {
             // pas de conf pour ces éléments, il faut juster renseigner l'id
             dom[element] = $(".report-" + element).toArray();
             if (dom[element].length > 0) {
-                var properties = dom[element].map(function (item) {
-                    return { "id": item.id };
+                var properties = dom[element].map(function(item) {
+                    return {
+                        "id": item.id
+                    };
                 });
                 var conf = _config[element + "s"];
                 if (element === "title") {
                     _config[element] = properties[0];
                 } else {
                     if (!conf) {
-                        _config[element +"s"] = [];
-                        conf = _config[element +"s"];
+                        _config[element + "s"] = [];
+                        conf = _config[element + "s"];
                     }
                     $.extend(true, conf, properties);
                 }
             }
         });
 
-        ["chart", "table"].forEach(function (element) {
-            var conf = _config[element +"s"];
+        ["chart", "table"].forEach(function(element) {
+            var conf = _config[element + "s"];
             if (!conf) {
-                _config[element +"s"] = [];
+                _config[element + "s"] = [];
             }
             dom[element] = $(".report-" + element).toArray();
             if (dom[element].length > 0) {
-                var properties = dom[element].map(function (item) {
-                    return $.extend( $(item).data(), { "id": item.id });
+                var properties = dom[element].map(function(item) {
+                    return $.extend($(item).data(), {
+                        "id": item.id
+                    });
                 });
-                properties.forEach(function (item) {
+                properties.forEach(function(item) {
                     //append conf if not in config.json only
-                    var current_element = _config[element + "s"].filter(function (o) { return o.id === item.id });
+                    var current_element = _config[element + "s"].filter(function(o) {
+                        return o.id === item.id
+                    });
                     if (current_element.length === 0) {
-                        var prop = { "id": item.id };
+                        var prop = {
+                            "id": item.id
+                        };
                         if (element === "chart") {
                             if (item.label) {
                                 if (item.label.indexOf(",") > 0) {
@@ -166,7 +174,7 @@ report = (function() {
                             }
                             if (item.columns) {
                                 prop["columns"] = item.columns.split(",").map(function(value) {
-                                    return Number(value) -1;
+                                    return Number(value) - 1;
                                 });
                             }
 
@@ -180,129 +188,6 @@ report = (function() {
 
     };
 
-    var _showIndicateurProperties = function (ind) {
-        $(".wizard-code").hide();
-        $("#dataviz-attributes").hide();
-        $(".dataviz-attributes").val("");
-        $("#wizard-result div").remove();
-        $("#w_dataviz_type").val("");
-        $("#wizard-code").text("");
-        $("#wizard-parameters").attr("data-dataviz", ind);
-        var options;
-        var data = _data[ind];
-        var dataset_nb = data.dataset.length;
-        var data_nb = data.rows;
-        var data_type = "text";
-        var significative_label = data.significative_label;
-        if ( data.dataset.length === 1 ) {
-            var _url = new RegExp(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/);
-            if (_url.test(data.data[0])) {
-                data_type = "url";
-            }
-            /*var _img = new RegExp(/([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/);
-            if (_img.test(data.data[0])) {
-                data_type = "image";
-            }*/
-
-        }
-        var options =[];
-        if ( dataset_nb > 1 ) {
-            options.push("table");
-            if (significative_label) {
-                options.push("chart");
-            }
-        } else {
-            if (data_nb === 1) {
-                // une seule ligne
-                if (data_type === "text") {
-                    options.push("figure");
-                } else if (data_type === "url") {
-                    options.push("iframe");
-                    options.push("image");
-                }
-            } else {
-                // plusieurs lignes
-                options.push("chart");
-            }
-        }
-        var dataviz_options = ['<option class="dataviz-options" selected disabled>...</option>'];
-        options.forEach(function(option) {
-            dataviz_options.push('<option  class="dataviz-options" value="'+option+'">'+option+'</option>');
-        });
-
-        $("#w_dataviz_type .dataviz-options").remove();
-        $("#w_dataviz_type").append(dataviz_options.join(""));
-
-
-
-        return {
-            "datasets": dataset_nb,
-            "rows": data_nb,
-            "significative_labels": significative_label
-        };
-
-
-    };
-
-    var _showIndicateurs = function () {
-         var dispo = [];
-         $.each(_data, function (indicateur, properties) {
-             if (!document.getElementById(indicateur)) {
-                dispo.push(indicateur);
-             }
-         });
-         $("#wizard-indicateurs .list-group-item").remove();
-         dispo.forEach(function (item) {
-             $("#wizard-indicateurs").append('<button type="button" data-indicateur="'+item+'" class="list-group-item list-group-item-action">'+item+'</button>');
-         });
-         $("#wizard-indicateurs button").click(function (e) {
-             $("#wizard-indicateurs button").removeClass("active");
-             var btn = $(e.currentTarget);
-             btn.addClass("active");
-            var metadata = _showIndicateurProperties(btn.attr("data-indicateur"));
-            $("#indicateur-metadata").html("<code>" + [metadata.datasets + " datasets disponible(s)",
-                metadata.rows + " lignes",
-                "Labels utilisables " + metadata.significative_labels].join("<br>") + "</code>"
-            );
-
-         });
-         $("#dataviz-attributes").hide();
-
-    };
-
-    _autoConfig = function (id, dataviz) {
-        var colors = ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
-        var significative_label = _data[id].significative_label;
-        var nb_datasets = _data[id].dataset.length;
-        var columns = [];
-        for (var i = 0; i < nb_datasets; i++) {
-            columns.push(i + 1);
-        }
-
-        switch (dataviz) {
-            case "chart":
-                $("#w_chart_opacity").val("0.75");
-                $("#w_chart_type").val("bar");
-                $("#w_colors").val(colors.slice(0,nb_datasets).join(","));
-                if (nb_datasets === 1) {
-                    $("#w_label").val("Légende");
-                } else {
-                     $("#w_label").val(_data[id].dataset.join(","));
-                }
-                break;
-            case "table":
-                $("#w_label").val(_data[id].dataset.join(","));
-                $("#w_table_column").val(columns.join(","));
-                if (significative_label) {
-                    $("#w_table_extracolumn").val("#");
-                    $("#w_table_extracolumn").closest(".input-group").show();
-                } else {
-                    $("#w_table_extracolumn").closest(".input-group").hide();
-                }
-                break;
-
-        }
-    };
 
     var _getDom = function() {
         $.ajax({
@@ -333,21 +218,50 @@ report = (function() {
         return _mergeJSON(tmp.data);
     };
 
-    var _mergeJSON = function (obj) {
+    var _mergeJSON = function(obj) {
         var json = {};
         var result = {};
         obj.forEach(function(raw, id) {
-        /* ecriture d'un nouvel objet json de la forme {ecluse1: {chart1: {data:[1,2,3], label:[v1,v2,v3]}, chart2: {...}}}
-        Si plusieurs datasets présents data est de la forme data: [[dataset1], [dataset2]] --> [[1,2,3], [4,5,6]]*/
-        // merge dataid, dataviz, dataset
-        if (json[raw.dataid]) {
-            // test dataviz
-            if (json[raw.dataid].dataviz[raw.dataviz]) {
-                // test dataset
-                if (json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset]) {
-                    json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset].data.push(raw.data);
-                    json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset].label.push(raw.label);
+            /* ecriture d'un nouvel objet json de la forme {ecluse1: {chart1: {data:[1,2,3], label:[v1,v2,v3]}, chart2: {...}}}
+            Si plusieurs datasets présents data est de la forme data: [[dataset1], [dataset2]] --> [[1,2,3], [4,5,6]]*/
+            // merge dataid, dataviz, dataset
+            if (json[raw.dataid]) {
+                // test dataviz
+                if (json[raw.dataid].dataviz[raw.dataviz]) {
+                    // test dataset
+                    if (json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset]) {
+                        json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset].data.push(raw.data);
+                        json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset].label.push(raw.label);
+                    } else {
+                        //creation du dataset et alimentation data et label
+                        json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
+                            label: [raw.label],
+                            data: [raw.data]
+                        };
+                    }
+
                 } else {
+                    // new dataviz
+                    json[raw.dataid].dataviz[raw.dataviz] = {
+                        "dataset": {}
+                    };
+                    //creation du dataset et alimentation data et label
+                    json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
+                        label: [raw.label],
+                        data: [raw.data]
+                    };
+
+                }
+            } else {
+                if (raw.dataid) {
+                    // new dataid
+                    json[raw.dataid] = {
+                        "dataviz": {}
+                    };
+                    //creation du dataviz
+                    json[raw.dataid].dataviz[raw.dataviz] = {
+                        "dataset": {}
+                    };
                     //creation du dataset et alimentation data et label
                     json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
                         label: [raw.label],
@@ -355,82 +269,53 @@ report = (function() {
                     };
                 }
 
-            } else {
-                // new dataviz
-                json[raw.dataid].dataviz[raw.dataviz] = {
-                    "dataset": {}
-                };
-                //creation du dataset et alimentation data et label
-                json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
-                    label: [raw.label],
-                    data: [raw.data]
-                };
-
             }
-        } else {
-            if (raw.dataid) {
-                // new dataid
-                json[raw.dataid] = {
-                    "dataviz": {}
-                };
-                //creation du dataviz
-                json[raw.dataid].dataviz[raw.dataviz] = {
-                    "dataset": {}
-                };
-                //creation du dataset et alimentation data et label
-                json[raw.dataid].dataviz[raw.dataviz].dataset[raw.dataset] = {
-                    label: [raw.label],
-                    data: [raw.data]
-                };
-            }
-
-        }
-    });
-
-
-
-    // merge data and labels for each dataset
-    $.each(json, function(dataid, a) {
-        result[dataid] = {};
-        $.each(a.dataviz, function(dataviz, b) {
-            var significative_labels = true;
-            result[dataid][dataviz] = {
-                "label": [],
-                "data": [],
-                "dataset": [],
-                "rows": 0,
-                "significative_label": null
-            };
-            ndataset = 0;
-            $.each(b.dataset, function(dataset, c) {
-                ndataset += 1;
-                var rows = c.data.length;
-                if (significative_labels) {
-                    var distinct_labels = [];
-                    c.label.forEach(function(label) {
-                        if (!distinct_labels.includes(label)) {
-                            distinct_labels.push(label);
-                        }
-                    });
-                    if (distinct_labels.length < rows) {
-                        significative_labels = false;
-                    }
-                }
-
-                result[dataid][dataviz].data.push(c.data);
-                result[dataid][dataviz].label.push(c.label);
-                result[dataid][dataviz].dataset.push(dataset);
-                result[dataid][dataviz].significative_label = significative_labels;
-                result[dataid][dataviz].rows = rows;
-
-            });
-            if (ndataset === 1) {
-                result[dataid][dataviz].data = result[dataid][dataviz].data[0];
-            }
-            result[dataid][dataviz].label = result[dataid][dataviz].label[0];
         });
 
-    });
+
+
+        // merge data and labels for each dataset
+        $.each(json, function(dataid, a) {
+            result[dataid] = {};
+            $.each(a.dataviz, function(dataviz, b) {
+                var significative_labels = true;
+                result[dataid][dataviz] = {
+                    "label": [],
+                    "data": [],
+                    "dataset": [],
+                    "rows": 0,
+                    "significative_label": null
+                };
+                ndataset = 0;
+                $.each(b.dataset, function(dataset, c) {
+                    ndataset += 1;
+                    var rows = c.data.length;
+                    if (significative_labels) {
+                        var distinct_labels = [];
+                        c.label.forEach(function(label) {
+                            if (!distinct_labels.includes(label)) {
+                                distinct_labels.push(label);
+                            }
+                        });
+                        if (distinct_labels.length < rows) {
+                            significative_labels = false;
+                        }
+                    }
+
+                    result[dataid][dataviz].data.push(c.data);
+                    result[dataid][dataviz].label.push(c.label);
+                    result[dataid][dataviz].dataset.push(dataset);
+                    result[dataid][dataviz].significative_label = significative_labels;
+                    result[dataid][dataviz].rows = rows;
+
+                });
+                if (ndataset === 1) {
+                    result[dataid][dataviz].data = result[dataid][dataviz].data[0];
+                }
+                result[dataid][dataviz].label = result[dataid][dataviz].label[0];
+            });
+
+        });
 
 
         return result;
@@ -504,7 +389,7 @@ report = (function() {
         document.title = title;
     };
 
-    var _vizEnabled = function (id) {
+    var _vizEnabled = function(id) {
         var enabled = true;
         if (_filteredDataviz.length > 0 && !_filteredDataviz.includes(id)) {
             enabled = false;
@@ -512,11 +397,11 @@ report = (function() {
         return enabled;
     };
 
-    var _createChart = function (data, chart) {
+    var _createChart = function(data, chart) {
         if (!_vizEnabled(chart.id)) {
             return;
         }
-        var el = _getDomElement("chart",  chart.id);
+        var el = _getDomElement("chart", chart.id);
         if (el && data[chart.id]) {
             var commonOptions = {
                 "maintainAspectRatio": false
@@ -533,10 +418,10 @@ report = (function() {
             });
             var datasets = [];
             // test if one or many datasets
-            if (Array.isArray( data[chart.id].data[0] )) {
+            if (Array.isArray(data[chart.id].data[0])) {
                 // many datasets
                 var _datasets = data[chart.id].data;
-                _datasets.forEach(function (dataset, id) {
+                _datasets.forEach(function(dataset, id) {
                     datasets.push({
                         label: chart.label[id],
                         data: dataset,
@@ -554,12 +439,12 @@ report = (function() {
                     borderColors = borderColors[0];
                 }
                 datasets.push({
-                        label: chart.label,
-                        data: data[chart.id].data,
-                        backgroundColor: backgroundColors,
-                        borderColor: borderColors,
-                        borderWidth: 1
-               });
+                    label: chart.label,
+                    data: data[chart.id].data,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                });
             }
 
             $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
@@ -578,11 +463,11 @@ report = (function() {
         }
     };
 
-    var _createFigure = function (data, chiffrecle) {
+    var _createFigure = function(data, chiffrecle) {
         if (!_vizEnabled(chiffrecle.id)) {
             return;
         }
-        var el = _getDomElement("figure card",  chiffrecle.id);
+        var el = _getDomElement("figure card", chiffrecle.id);
         var unit = $(el).attr("data-unit") || "";
         if (el && data[chiffrecle.id]) {
             el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]) + unit;
@@ -594,11 +479,11 @@ report = (function() {
         }
     };
 
-    var _createTable = function (data, table) {
+    var _createTable = function(data, table) {
         if (!_vizEnabled(table.id)) {
             return;
         }
-        var el = _getDomElement("table",  table.id);
+        var el = _getDomElement("table", table.id);
         if (el && data[table.id] && table.label) {
             // construction auto de la table
             var columns = [];
@@ -613,7 +498,7 @@ report = (function() {
             }
             console.log(datasets_index);
             if (table.extracolumn) {
-                columns.push('<th scope="col">'+table.extracolumn+'</th>');
+                columns.push('<th scope="col">' + table.extracolumn + '</th>');
             }
             table.label.forEach(function(col, id) {
                 columns.push('<th scope="col">' + col + '</th>');
@@ -633,7 +518,7 @@ report = (function() {
             });
 
             rows = [];
-            data_rows.forEach(function (row, id ) {
+            data_rows.forEach(function(row, id) {
                 var elements = [];
                 row.forEach(function(column) {
                     elements.push('<td>' + column + '</td>');
@@ -655,11 +540,11 @@ report = (function() {
         }
     };
 
-    var _createText = function (data, text) {
+    var _createText = function(data, text) {
         if (!_vizEnabled(text.id)) {
             return;
         }
-        var el = _getDomElement("text",  text.id);
+        var el = _getDomElement("text", text.id);
         if (el && data[text.id]) {
             el.getElementsByClassName("report-text-text")[0].textContent = data[text.id].data[0];
             el.getElementsByClassName("report-text-title")[0].textContent = data[text.id].label[0];
@@ -668,11 +553,11 @@ report = (function() {
         }
     };
 
-    var _createImage = function (data, image) {
+    var _createImage = function(data, image) {
         if (!_vizEnabled(image.id)) {
             return;
         }
-        var el = _getDomElement("image",  image.id);
+        var el = _getDomElement("image", image.id);
         if (el && data[image.id]) {
             $(el).append('<img src="' + data[image.id].data[0] + '" class="img-fluid" alt="' + data[image.id].label[0] + '">');
         } else {
@@ -680,11 +565,11 @@ report = (function() {
         }
     };
 
-    var _createIframe = function (data, iframe) {
+    var _createIframe = function(data, iframe) {
         if (!_vizEnabled(iframe.id)) {
             return;
         }
-        var el = _getDomElement("iframe",  iframe.id);
+        var el = _getDomElement("iframe", iframe.id);
         if (el && data[iframe.id]) {
             var html = '<iframe class="embed-responsive-item" src="' + data[iframe.id].data[0] + '"></iframe>';
 
@@ -694,17 +579,17 @@ report = (function() {
         }
     };
 
-    var _getDomElement = function (classe, id) {
+    var _getDomElement = function(classe, id) {
         var el = document.getElementById(id);
         if (_filteredDataviz.indexOf(id) > -1) {
             $(el).appendTo(".report-filtered .row");
-            $(el).removeClass().addClass("report-" + classe +" col-sm-12 col-md-12 col-lg-12");
+            $(el).removeClass().addClass("report-" + classe + " col-sm-12 col-md-12 col-lg-12");
         }
         return el;
     }
 
-    var _createMap = function (data, map) {
-        var el = _getDomElement("map",  map.id);
+    var _createMap = function(data, map) {
+        var el = _getDomElement("map", map.id);
         var id = map.id + "-map";
         $(el).append('<div id="' + id + '" style="width:auto;height:300px;"><div>');
         var zoom = data[map.id].data[2];
@@ -717,29 +602,29 @@ report = (function() {
         L.marker(center).addTo(_map).bindPopup(data[map.id].label[0]);
     };
 
-    var _testViz = function (data, type, properties) {
+    var _testViz = function(data, type, properties) {
         switch (type) {
             case "chart":
-                 _createChart(data, properties);
-                 break;
+                _createChart(data, properties);
+                break;
             case "table":
                 _createTable(data, properties);
-                 break;
+                break;
             case "figure":
                 _createFigure(data, properties);
-                 break;
+                break;
             case "text":
                 _createText(data, properties);
-                 break;
+                break;
             case "image":
                 _createImage(data, properties);
-                 break;
-             case "iframe":
+                break;
+            case "iframe":
                 _createIframe(data, properties);
-                 break;
-             case "map":
+                break;
+            case "map":
                 _createMap(data, properties);
-                 break;
+                break;
         }
     };
 
@@ -794,7 +679,7 @@ report = (function() {
         if (_config.tables) {
             //ATTENTION POUR LES TABLEAUX, 1 DATASET est le contenu d'une colonne.
             _config.tables.forEach(function(table) {
-                 _createTable(data, table);
+                _createTable(data, table);
             });
         }
 
@@ -832,7 +717,7 @@ report = (function() {
                         var el = $(e.currentTarget).parent();
                         var obj = [];
                         if (el.hasClass("report-group")) {
-                            el.find(".report-group-item").toArray().forEach(function (item) {
+                            el.find(".report-group-item").toArray().forEach(function(item) {
                                 obj.push(item.id);
                             });
                         } else {
@@ -857,75 +742,8 @@ report = (function() {
         }
 
         if (_config.wizard || APIRequest.wizard) {
-            $.ajax({
-                url: "html/wizard.html",
-                dataType: "text",
-                success: function(html) {
-                    $("body").append(html);
-                    $("body").append('<div class="wizard"><button class="wizard-btn btn btn-primary btn-lg" data-toggle="modal" data-target="#wizard-panel">+</button></div>');
-                    $(".wizard-btn").click(function (e) {
-                        _showIndicateurs();
-                    });
-                    $("#w_dataviz_type").change(function() {
-                        var dataviz = $("#w_dataviz_type").val();
-                        $(".dataviz-attributes").val("");
-                        var id = $("#wizard-indicateurs button.active").attr("data-indicateur");
-                        $("#dataviz-attributes").show();
-                        $(".dataviz-attributes").closest(".input-group").hide();
-                        $("."+dataviz+".dataviz-attributes").closest(".input-group").show();
-                        _autoConfig(id, dataviz);
-                        if (dataviz === "chart") {
-                            $("#w_label").closest(".input-group").find(".input-group-text").text("séries");
-                        } else if (dataviz === "table") {
-                            $("#w_label").closest(".input-group").find(".input-group-text").text("labels");
-                        }
-                        $("#wizard_validate").click();
-                    });
-                    $("#wizard_validate").click(function (e) {
-                        var dataviz = $("#wizard-parameters").attr("data-dataviz");
-                        var type = $("#w_dataviz_type").val();
-                        var attributes = [];
-                        var properties = {"id" : dataviz};
-                        $(".dataviz-attributes").each(function (id, attribute) {
-                            var val = $(attribute).val();
-                            var prop = $(attribute).attr("data-prop");
-                            if (val && val.length >= 1) {
-                                attributes.push( "data-" + prop + '="' + val +'"');
-                                properties[prop] = val;
-                            }
-                        });
-                        ["colors", "label"].forEach(function (prop) {
-                            if (properties[prop]) {
-                                properties[prop] = properties[prop].split(",");
-                            }
-                        });
-
-                        ["columns"].forEach(function (prop) {
-                            if (properties[prop]) {
-                                properties[prop] = properties[prop].split(",").map(function(val) {
-                                    return Number(val) -1;
-                                });
-                            }
-                        });
-
-                        $("#"+dataviz).remove();
-
-                        var elem = $('<div id="'+dataviz+'" class="report-'+type+'" ' + attributes.join(" ") +'></div>');
-                        if (type === "figure") {
-                            elem.append(['<p class="report-figure-chiffre text-center"></p>',
-                                '<p class="report-figure-caption text-center"></p>'].join(""));
-                        }
-                        $("#wizard-result").append(elem);
-                        $("#wizard-code").text(elem.prop("outerHTML"));
-                        $(".wizard-code").show();
-                        _testViz(_data, type, properties);
-                    });
-                }
-            });
-
+            wizard.init(_data);
         }
-
-
 
         if (errors && _config.debug) {
             $(".report-alert").show();
@@ -942,6 +760,7 @@ report = (function() {
     return {
 
         drawViz: _drawViz,
+        testViz: _testViz,
         setTitle: _setTitle,
         init: _init
 
@@ -952,6 +771,8 @@ report = (function() {
 $(document).ready(function() {
     report.init();
 });
-$(window).load(function(){
-	$('#preloader').fadeOut('slow',function(){$(this).remove();});
+$(window).load(function() {
+    $('#preloader').fadeOut('slow', function() {
+        $(this).remove();
+    });
 });

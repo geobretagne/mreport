@@ -9,7 +9,8 @@ Simple report generator with simple dataviz
 Where
 * `myreport` corresponds to real folder equals /mreport/reports/myreport
 * `dataid` corresponds to data id in source data
-* `dataviz` correspondst to dataviz representation defined in report
+* `dataviz` corresponds to dataviz representation defined in report
+* `wizard` to enable wizard
 
 ### DATAVIZ
 
@@ -187,7 +188,7 @@ each dataviz option can be defined in config.json or in report.html with the sam
 }`
 
 
-### HTML STRUCTURE & SYNTAX
+### HTML STRUCTURE & SYNTAX 
 
 Each dataviz is an html element with id equals to dataviz id with a specific css class.
 
@@ -198,7 +199,7 @@ report-figure | report element | add `data-unit` attribute to add suffix value a
 report-figure-chiffre | report element child (1) | todo
 report-figure-caption | report element child (1) | todo
 report-map | map element | todo
-report-table | table element | `data-label` attribute to set columns labels, `data-columns` to set columns to use, `extracolumn` to add column with labels as data
+report-table | table element | `data-label` attribute to set columns labels, `data-columns` to set columns to use (1,2,4). If not specified, all columns are used, `extracolumn` to add column with labels as data
 report-title | title element | todo
 report-text | text element | todo
 report-text-title |  text element child (1) | todo
