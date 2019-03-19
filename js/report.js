@@ -161,6 +161,14 @@ report = (function() {
                             if (item.label) {
                                 prop["label"] = item.label.split(",");
                             }
+                            if (item.extracolumn) {
+                                prop["extracolumn"] = item.label;
+                            }
+                            if (item.columns) {
+                                prop["columns"] = item.columns.split(",").map(function(value) {
+                                    return Number(value) -1;
+                                });
+                            }
 
                         }
                         _config[element + "s"].push(prop);
@@ -196,7 +204,7 @@ report = (function() {
                 data_type = "image";
             }*/
 
-        } 
+        }
         var options =[];
         if ( dataset_nb > 1 ) {
             options.push("table");
@@ -263,10 +271,14 @@ report = (function() {
     };
 
     _autoConfig = function (id, dataviz) {
-        var colors = ["#e55039", "#60a3bc", "#78e08f", "#fad390"];        
+        var colors = ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
         var significative_label = _data[id].significative_label;
-        var nb_datasets = _data[id].rows;        
-        
+        var nb_datasets = _data[id].dataset.length;
+        var columns = [];
+        for (var i = 0; i < nb_datasets; i++) {
+            columns.push(i + 1);
+        }
+
         switch (dataviz) {
             case "chart":
                 $("#w_chart_opacity").val("0.75");
@@ -280,6 +292,7 @@ report = (function() {
                 break;
             case "table":
                 $("#w_label").val(_data[id].dataset.join(","));
+                $("#w_table_column").val(columns.join(","));
                 if (significative_label) {
                     $("#w_table_extracolumn").val("#");
                     $("#w_table_extracolumn").closest(".input-group").show();
@@ -403,7 +416,7 @@ report = (function() {
                         significative_labels = false;
                     }
                 }
-                
+
                 result[dataid][dataviz].data.push(c.data);
                 result[dataid][dataviz].label.push(c.label);
                 result[dataid][dataviz].dataset.push(dataset);
@@ -589,6 +602,16 @@ report = (function() {
         if (el && data[table.id] && table.label) {
             // construction auto de la table
             var columns = [];
+            var datasets_index = [];
+            if (table.columns && table.columns.length > 0) {
+                datasets_index = table.columns;
+
+            } else {
+                data[table.id].dataset.forEach(function(element, id) {
+                    datasets_index.push(id);
+                });
+            }
+            console.log(datasets_index);
             if (table.extracolumn) {
                 columns.push('<th scope="col">'+table.extracolumn+'</th>');
             }
@@ -603,8 +626,8 @@ report = (function() {
                 if (table.extracolumn) {
                     values.push(data[table.id].label[id]);
                 }
-                table.label.forEach(function(col, cid) {
-                    values.push(_format(data[table.id].data[cid][id]));
+                datasets_index.forEach(function(dataset_index, cid) {
+                    values.push(_format(data[table.id].data[dataset_index][id]));
                 });
                 data_rows.push(values);
             });
@@ -854,7 +877,7 @@ report = (function() {
                         if (dataviz === "chart") {
                             $("#w_label").closest(".input-group").find(".input-group-text").text("séries");
                         } else if (dataviz === "table") {
-                            $("#w_label").closest(".input-group").find(".input-group-text").text("colonnes");
+                            $("#w_label").closest(".input-group").find(".input-group-text").text("labels");
                         }
                         $("#wizard_validate").click();
                     });
@@ -874,6 +897,14 @@ report = (function() {
                         ["colors", "label"].forEach(function (prop) {
                             if (properties[prop]) {
                                 properties[prop] = properties[prop].split(",");
+                            }
+                        });
+
+                        ["columns"].forEach(function (prop) {
+                            if (properties[prop]) {
+                                properties[prop] = properties[prop].split(",").map(function(val) {
+                                    return Number(val) -1;
+                                });
                             }
                         });
 

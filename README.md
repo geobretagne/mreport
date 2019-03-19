@@ -198,7 +198,7 @@ report-figure | report element | add `data-unit` attribute to add suffix value a
 report-figure-chiffre | report element child (1) | todo
 report-figure-caption | report element child (1) | todo
 report-map | map element | todo
-report-table | table element | `data-label` attribute to set columns labels
+report-table | table element | `data-label` attribute to set columns labels, `data-columns` to set columns to use, `extracolumn` to add column with labels as data
 report-title | title element | todo
 report-text | text element | todo
 report-text-title |  text element child (1) | todo
