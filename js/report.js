@@ -317,8 +317,9 @@ report = (function() {
                 });
                 if (ndataset === 1) {
                     result[dataid][dataviz].data = result[dataid][dataviz].data[0];
+                    result[dataid][dataviz].label = result[dataid][dataviz].label[0];
                 }
-                result[dataid][dataviz].label = result[dataid][dataviz].label[0];
+                //result[dataid][dataviz].label = result[dataid][dataviz].label[0];
             });
 
         });
@@ -423,10 +424,12 @@ report = (function() {
                 borderColors.push('rgba(' + hexToRgb(color).join(',') + ', 1)');
             });
             var datasets = [];
+            var _labels;
             // test if one or many datasets
             if (Array.isArray(data[chart.id].data[0])) {
                 // many datasets
                 var _datasets = data[chart.id].data;
+                var _labels = data[chart.id].label[0];
                 _datasets.forEach(function(dataset, id) {
                     datasets.push({
                         label: chart.label[id],
@@ -440,6 +443,7 @@ report = (function() {
 
             } else {
                 // one dataset
+                _labels = data[chart.id].label;
                 if (colors.length === 1) {
                     backgroundColors = backgroundColors[0];
                     borderColors = borderColors[0];
@@ -459,7 +463,7 @@ report = (function() {
             var chart = new Chart(ctx, {
                 type: chart.type || 'bar',
                 data: {
-                    labels: data[chart.id].label,
+                    labels: _labels,
                     datasets: datasets
                 },
                 options: options
@@ -515,7 +519,9 @@ report = (function() {
             data[table.id].data[0].forEach(function(value, id) {
                 var values = [];
                 if (table.extracolumn) {
-                    values.push(data[table.id].label[id]);
+                    // on prends les labels corrspondant au premier dataset
+                    // todo vérifier que ce sont les mêmes labels pour tous les datasets
+                    values.push(data[table.id].label[0][id]);
                 }
                 datasets_index.forEach(function(dataset_index, cid) {
                     values.push(_format(data[table.id].data[dataset_index][id]));
@@ -601,33 +607,76 @@ report = (function() {
         var zoom = map.zoom || 16;
         var datasets_nb = data[map.id].dataset.length;
         var points_nb = data[map.id].rows;
+        var layers = [];
         var points = [];
+        var labels = [];
+        var all_points = [];
+        var icons = [];
         var center = [48, 0];
         if (datasets_nb === 1) {
             // une typologie de points
-            if (points_nb === 1) {
-                //un seul point
-                center = data[map.id].data[0].split("@").map(Number);
-                points.push(data[map.id].data[0].split("@").map(Number));
-            } else {
-                //plusieurs points
-                data[map.id].data.forEach(function(pt) {
-                    points.push(pt.split("@").map(Number));
-                });
-            }
+            icons.push(L.divIcon({
+                className: 'map-marker-circle-1',
+                iconSize:[30, 30]
+            }));
+            //un ou plusieurs points
+            points = [];
+            labels = [];
+            data[map.id].data.forEach(function(pt) {
+                points.push(pt.split("@").map(Number));
+            });
+            data[map.id].label.forEach(function(label) {
+                labels.push(label);
+            });
+            layers.push({
+                "points": points,
+                "labels": labels,
+                "icon": icons[0]
+            });
+            all_points.push(points);
+
         } else {
             // Plusieurs typologies de points
-            //TODO
+            data[map.id].dataset.forEach(function(dataset, id) {
+                icons.push(L.divIcon({
+                    className: 'map-marker-circle-' + (id + 1),
+                    iconSize:[30, 30]
+                }));
+                 //un ou plusieurs points
+                points = [];
+                labels = [];
+                data[map.id].data[id].forEach(function(pt) {
+                    points.push(pt.split("@").map(Number));
+                });
+                data[map.id].label.forEach(function(label) {
+                    labels.push(label);
+                });
+                layers.push({
+                    "points": points,
+                    "labels": labels,
+                    "icon": icons[id]
+                });
+                all_points.push(points);
+            });
         }
         var _map = L.map(id).setView(center, zoom);
         _map.zoomControl.remove();
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(_map);
-        points.forEach(function(point, id) {
-            L.marker(point).addTo(_map).bindPopup(data[map.id].label[id]);
+        layers.forEach(function(layer, idlayer) {
+            layer.points.forEach(function (point, id) {
+                if (datasets_nb === 1) {
+                    label = layer.labels[id];
+                } else {
+                    label = layer.labels[idlayer][id];
+                }
+                var marker = L.marker(point, {icon: layer.icon}).addTo(_map).bindPopup(label);
+            });
+
         });
-        _map.fitBounds(points);
+
+        _map.fitBounds(all_points);
 
     };
 
