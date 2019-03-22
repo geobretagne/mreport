@@ -110,12 +110,12 @@ ECLUSE_1 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 483
 
 
 
-**Map sample** - One marker type by dataset - Data is lat@long
+**Map sample** - One marker type by dataset - Data is WKT POINT.
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
-ECLUSE_1 | map_1 | point_1 | 1 | Latitude ECLUSE N°1a | 48.2@-1.5
-ECLUSE_1 | map_1 | point_1 | 2 | Longitude ECLUSE N°1b | 48.2@-1.5-1.5
+ECLUSE_1 | map_1 | point_1 | 1 | ECLUSE N°1a | POINT(-1.5, 48.2)
+ECLUSE_1 | map_1 | point_1 | 2 | ECLUSE N°1b | POINT(-1.55, 48.25)
 
 
 ![map_1](img/map_1.png?raw=true "map_1")
