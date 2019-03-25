@@ -1,0 +1,39 @@
+/* report.css */
+#chart1a .report-icon,
+#chart1b .report-icon {
+    background-image: url(https://kartenn.region-bretagne.fr/ws/transports/icons/evolution_2.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    background-size: 100% 100%;
+
+}
+
+.report-figure-caption {
+    font-size: smaller;
+}
+
+div#map1-map {
+    height: 350px!important;
+}
+
+#photo1 img {
+    height: 350px;
+}
+
+#chart2,
+#chart4,
+#chart5,
+#chart6,
+#chart9 {
+    height: 350px;
+}
+
+#chart7,
+#chart8 {
+    height: 300px;
+}
+
+#chart9 {
+    height: 350px;
+}

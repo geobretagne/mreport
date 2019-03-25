@@ -1,0 +1,116 @@
+{
+  "data_url": "data.php",
+  "data_type": "dynamic",
+  "dataid": "ecluse",
+  "data_other_parameters": [],
+  "debug": true,
+  "share": false,
+  "charts": [
+    {
+      "id": "chart2",
+      "type": "bar",
+      "label": "Passages par plage horaire",
+      "options": {},
+      "colors": [
+        "#fdcb6e"
+      ]
+    },
+    {
+      "id": "chart3",
+      "type": "radar",
+      "label": "Traffic par jour de la semaine",
+      "options": {
+        "scale": {
+          "ticks": {
+            "beginAtZero": true
+          }
+        }
+      },
+      "colors": [
+        "#a29bfe"
+      ]
+    },
+    {
+      "id": "chart4",
+      "type": "doughnut",
+      "label": "Type d'embarcation",
+      "options": {
+        "title": {
+          "text": "Type d'embarcation",
+          "display": "true"
+        }
+      },
+      "colors": [
+        "#d63031",
+        "#fdcb6e",
+        "#00b894",
+        "#a29bfe"
+      ]
+    },
+    {
+      "id": "chart5",
+      "type": "doughnut",
+      "label": "Sens du passage",
+      "options": {
+        "title": {
+          "text": "Sens du passage",
+          "display": "true"
+        }
+      },
+      "colors": [
+        "#a29bfe",
+        "#00b894"
+      ]
+    },
+    {
+      "id": "chart6",
+      "type": "doughnut",
+      "label": "Agents en charge de l'éclusage",
+      "options": {
+        "title": {
+          "text": "Agent en charge de l'éclusage",
+          "display": "true"
+        }
+      },
+      "colors": [
+        "#d63031",
+        "#fdcb6e",
+        "#00b894",
+        "#a29bfe"
+      ]
+    },
+
+    {
+        "id": "chart7",
+        "type": "line",
+        "label": "Trafic annuel depuis 2002",
+        "options": {},
+        "colors": [
+            "#fdcb6e"
+        ]
+
+    },
+    {
+      "id": "chart9",
+      "type": "line",
+      "label": "Traffic journalier",
+      "options": {},
+      "colors": [
+        "#a29bfe"
+      ]
+    }
+  ],
+  "figures": [
+    {
+      "id": "chart1a"
+    },
+    {
+      "id": "chart1b"
+    }
+  ],
+  "title": {
+    "id": "title"
+  },
+  "maps": [],
+  "tables": []
+}
