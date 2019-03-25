@@ -451,6 +451,7 @@ report = (function() {
                 datasets.push({
                     label: chart.label,
                     data: data[chart.id].data,
+                    fill: false,
                     backgroundColor: backgroundColors,
                     borderColor: borderColors,
                     borderWidth: 1
@@ -600,11 +601,24 @@ report = (function() {
         return el;
     }
 
+    var parseWKT = function (wkt) {
+        var lonlat = [0, 0];
+        // find data beetween ()
+        //var regExp = /\(([^)]+)\)/;
+        // regex get all numeric values
+        var a = /[-+]?\d+(?:\.\d*)?/gi
+        if (wkt.match(a)) {
+            lonlat = wkt.match(a).map(Number);
+            console.log(lonlat);
+        }
+        return lonlat;
+    };
+
     var _createMap = function(data, map) {
         var el = _getDomElement("map", map.id);
         var id = map.id + "-map";
         $(el).append('<div id="' + id + '" style="width:auto;height:300px;"><div>');
-        var zoom = map.zoom || 16;
+        var zoom = map.zoom || false;
         var datasets_nb = data[map.id].dataset.length;
         var points_nb = data[map.id].rows;
         var layers = [];
@@ -623,7 +637,8 @@ report = (function() {
             points = [];
             labels = [];
             data[map.id].data.forEach(function(pt) {
-                points.push(pt.split("@").map(Number));
+                //points.push(pt.split("@").map(Number));
+                points.push(parseWKT(pt).reverse());
             });
             data[map.id].label.forEach(function(label) {
                 labels.push(label);
@@ -646,7 +661,8 @@ report = (function() {
                 points = [];
                 labels = [];
                 data[map.id].data[id].forEach(function(pt) {
-                    points.push(pt.split("@").map(Number));
+                    //points.push(pt.split("@").map(Number));
+                    points.push(parseWKT(pt).reverse());
                 });
                 data[map.id].label.forEach(function(label) {
                     labels.push(label);
@@ -659,7 +675,7 @@ report = (function() {
                 all_points.push(points);
             });
         }
-        var _map = L.map(id).setView(center, zoom);
+        var _map = L.map(id);
         _map.zoomControl.remove();
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -677,6 +693,9 @@ report = (function() {
         });
 
         _map.fitBounds(all_points);
+        if (zoom) {
+            _map.setZoom(zoom);
+        }
 
     };
 
