@@ -5,30 +5,17 @@
   "data_other_parameters": [],
   "debug": true,
   "share": false,
-  "charts": [
-    {
-      "id": "chart2",
-      "type": "bar",
-      "label": "Passages par plage horaire",
-      "options": {},
-      "colors": [
-        "#fdcb6e"
-      ]
-    },
+  "charts": [        
     {
       "id": "chart3",
-      "type": "radar",
-      "label": "Traffic par jour de la semaine",
+    "colors": ["#d63031"],      
       "options": {
         "scale": {
           "ticks": {
             "beginAtZero": true
           }
         }
-      },
-      "colors": [
-        "#a29bfe"
-      ]
+      }
     },
     {
       "id": "chart4",
@@ -84,7 +71,13 @@
         "id": "chart7",
         "type": "line",
         "label": "Trafic annuel depuis 2002",
-        "options": {},
+        "options": {
+            "elements": {
+                "line": {
+                        "fill": false
+                }
+            }
+        },
         "colors": [
             "#fdcb6e"
         ]
@@ -99,18 +92,6 @@
         "#a29bfe"
       ]
     }
-  ],
-  "figures": [
-    {
-      "id": "chart1a"
-    },
-    {
-      "id": "chart1b"
-    }
-  ],
-  "title": {
-    "id": "title"
-  },
-  "maps": [],
-  "tables": []
+  ]
+  
 }

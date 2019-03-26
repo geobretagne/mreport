@@ -101,95 +101,135 @@ report = (function() {
 
     };
 
-    var _merge_config = function() {
-        var dom = {};
-        ["figure", "image", "text", "iframe", "title"].forEach(function(element) {
-            // pas de conf pour ces éléments, il faut juster renseigner l'id
-            dom[element] = $(".report-" + element).toArray();
-            if (dom[element].length > 0) {
-                var properties = dom[element].map(function(item) {
-                    return {
-                        "id": item.id
-                    };
-                });
-                var conf = _config[element + "s"];
-                if (element === "title") {
-                    _config[element] = properties[0];
-                } else {
-                    if (!conf) {
-                        _config[element + "s"] = [];
-                        conf = _config[element + "s"];
+    /**
+     * Overwrites a's values with b's and adds b's if non existent in a
+     * @param a
+     * @param b
+     * @returns c a new object based on a and b
+     */
+
+    var _merge_element_properties = function (a,b) {
+        var c = {};
+        for (var attrname in a) { c[attrname] = a[attrname]; }
+        for (var attrname in b) { c[attrname] = b[attrname]; }
+        return c;
+    };
+
+    var _updateElementsConf = function (a, b) {
+        var c = [];
+        if (Array.isArray(a)) {
+            a.forEach(function (a_element) {
+                if (Array.isArray(b)) {
+                    var b_element = b.filter(function(element) {
+                        return element.id === a_element.id
+                    });
+                    if (b_element.length === 1) {
+                        c.push(_merge_element_properties(a_element, b_element[0]));
+                    } else {
+                        c.push(a_element);
                     }
-                    $.extend(true, conf, properties);
+                } else {
+                    c.push(a_element);
+                }
+
+            });
+        }
+        if (Array.isArray(b)) {
+            b.forEach(function (b_element) {
+                // find all elements not present in a
+                if (Array.isArray(a)) {
+                    var a_element = a.filter(function(element) {
+                        return element.id === b_element.id
+                    });
+                    if (a_element === 0) {
+                        c.push(b_element);
+                    }
+                }
+            });
+        }
+        return c;
+    };
+
+    var _cast_properties = function (element, item) {
+        var properties = {
+            "id": item.id
+        };
+        if (element === "chart") {
+            if (item.label) {
+                if (item.label.indexOf(",") > 0) {
+                    properties["label"] = item.label.split(",");
+                } else {
+                    properties["label"] = item.label;
                 }
             }
-        });
-
-        ["chart", "table", "map"].forEach(function(element) {
-            var conf = _config[element + "s"];
-            if (!conf) {
-                _config[element + "s"] = [];
+            if (item.colors && !Array.isArray(item.colors)) {
+                properties["colors"] = item.colors.split(",");
             }
+            if (item.type) {
+                properties["type"] = item.type;
+            }
+            if (item.opacity) {
+                properties["opacity"] = parseFloat(item.opacity);
+            }
+
+
+        } else if (element === "table") {
+            if (item.label && !Array.isArray(item.label)) {
+                properties["label"] = item.label.split(",");
+            }
+            if (item.extracolumn) {
+                properties["extracolumn"] = item.label;
+            }
+            if (item.columns && !Array.isArray(item.columns)) {
+                properties["columns"] = item.columns.split(",").map(function(value) {
+                    return Number(value) - 1;
+                });
+            }
+
+        } else if (element === "map") {
+            if (item.zoom) {
+                properties["zoom"] = Number(item.zoom);
+            }
+        } else {
+            console.log(element, item);
+        }
+
+        return properties;
+    };
+
+    var _merge_config = function() {
+        //Principe: la conf peut provenir du html via les attributs data- et ou du fichier config.json
+        // Si deux propriétés différentes sont paramétrées dans le html et le json, les 2 propriétés sont conservées.
+        // si une même propriété est paramétrée dans le html et le json, seule la propriété du json est conservée.
+        var dom = {};
+        ["figure", "image", "text", "iframe", "title", "chart", "table", "map"].forEach(function(element) {
+            // pas de conf pour ces éléments, il faut juster renseigner l'id
             dom[element] = $(".report-" + element).toArray();
+            //Récupération des éléments report-figure, report-title ...
+            //avec un id renseigné
             if (dom[element].length > 0) {
-                var properties = dom[element].map(function(item) {
-                    return $.extend($(item).data(), {
+                var html_conf = dom[element].map(function(item) {
+                    return _cast_properties(element, $.extend($(item).data(), {
                         "id": item.id
-                    });
+                    }));
                 });
-                properties.forEach(function(item) {
-                    //append conf if not in config.json only
-                    var current_element = _config[element + "s"].filter(function(o) {
-                        return o.id === item.id
-                    });
-                    if (current_element.length === 0) {
-                        var prop = {
-                            "id": item.id
-                        };
-                        if (element === "chart") {
-                            if (item.label) {
-                                if (item.label.indexOf(",") > 0) {
-                                    prop["label"] = item.label.split(",");
-                                } else {
-                                    prop["label"] = item.label;
-                                }
-                            }
-                            if (item.colors) {
-                                prop["colors"] = item.colors.split(",");
-                            }
-                            if (item.type) {
-                                prop["type"] = item.type;
-                            }
-                            if (item.opacity) {
-                                prop["opacity"] = parseFloat(item.opacity);
-                            }
-
-
-                        } else if (element === "table") {
-                            if (item.label) {
-                                prop["label"] = item.label.split(",");
-                            }
-                            if (item.extracolumn) {
-                                prop["extracolumn"] = item.label;
-                            }
-                            if (item.columns) {
-                                prop["columns"] = item.columns.split(",").map(function(value) {
-                                    return Number(value) - 1;
-                                });
-                            }
-
-                        } else if (element === "map") {
-                            if (item.zoom) {
-                                prop["zoom"] = Number(item.zoom);
-                            }
-                        } else {
-                            console.log(element, item);
-                        }
-                        _config[element + "s"].push(prop);
+                //Récupération de la conf pour chaque type d'élément via le config.json
+                //eg charts:[...]
+                var json_conf = _config[element + "s"];
+                if (element === "title") {
+                    _config[element] = html_conf[0];
+                } else {
+                    if (!json_conf) {
+                        _config[element + "s"] = [];
+                        json_conf = _config[element + "s"];
                     }
-                });
+                }
+            } else {
+                // no element with id
             }
+            _config[element + "s"] = _updateElementsConf(html_conf, json_conf);
         });
+
         console.log("CONFIGURATION", _config);
 
     };
@@ -451,7 +491,6 @@ report = (function() {
                 datasets.push({
                     label: chart.label,
                     data: data[chart.id].data,
-                    fill: false,
                     backgroundColor: backgroundColors,
                     borderColor: borderColors,
                     borderWidth: 1
@@ -860,7 +899,6 @@ report = (function() {
         testViz: _testViz,
         setTitle: _setTitle,
         init: _init
-
     }; // fin return
 
 })();

@@ -1,4 +1,12 @@
 /* report.css */
+
+.report-header {
+    color: #032e46;
+}
+.report-figure {
+    color: #032e46;
+}
+
 #chart1a .report-icon,
 #chart1b .report-icon {
     background-image: url(https://kartenn.region-bretagne.fr/ws/transports/icons/evolution_2.svg);
