@@ -59,6 +59,7 @@ report = (function() {
 
     var _init = function() {
         //API GET PARAMETERS
+        Chart.plugins.unregister(ChartDataLabels);
         if (window.location.hash) {
             try {
                 var hash = window.location.hash;
@@ -475,8 +476,7 @@ report = (function() {
                         label: chart.label[id],
                         data: dataset,
                         backgroundColor: backgroundColors[id],
-                        borderColor: borderColors[id],
-                        borderWidth: 1
+                        borderColor: borderColors[id]
                     });
                 });
 
@@ -492,13 +492,16 @@ report = (function() {
                     label: chart.label,
                     data: data[chart.id].data,
                     backgroundColor: backgroundColors,
-                    borderColor: borderColors,
-                    borderWidth: 1
+                    borderColor: borderColors
                 });
             }
 
             $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
             var options = $.extend({}, commonOptions, chart.options);
+            var plugins = [];
+            if (chart.plugins && chart.plugins[0] === "ChartDataLabels") {
+                plugins = [ChartDataLabels];
+            }
             var ctx = document.getElementById(chart.id + "-canvas").getContext('2d');
             var chart = new Chart(ctx, {
                 type: chart.type || 'bar',
@@ -506,6 +509,7 @@ report = (function() {
                     labels: _labels,
                     datasets: datasets
                 },
+                plugins: plugins,
                 options: options
             });
         } else {
