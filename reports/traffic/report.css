@@ -30,18 +30,18 @@ div#map1-map {
 }
 
 #chart2,
+#chart3 {
+    height: 300px;
+}
+
 #chart4,
 #chart5,
 #chart6,
-#chart9 {
-    height: 350px;
-}
-
 #chart7,
 #chart8 {
     height: 300px;
 }
 
 #chart9 {
-    height: 350px;
+    height: 300px;
 }
