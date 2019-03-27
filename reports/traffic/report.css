@@ -45,3 +45,8 @@ div#map1-map {
 #chart9 {
     height: 300px;
 }
+
+.report-filtered  #chart7,
+.report-filtered  #chart8 {
+    height: 250px;
+}
