@@ -241,7 +241,14 @@ report = (function() {
             url: _home + "report.html",
             dataType: "text",
             success: function(html) {
-                $("body").append(html);
+                if (APIRequest.block && $(html).find("#" + APIRequest.block).length > 0) {
+                    var block = ['<div class="report container-fluid">',
+                    $(html).find("#" + APIRequest.block).prop('outerHTML'),
+                    '</div>'].join("");
+                    $("body").append(block);
+                } else {
+                    $("body").append(html);
+                }
                 //append _config
                 _merge_config();
                 _getData();
@@ -408,7 +415,7 @@ report = (function() {
 
                 if (data && typeof data === 'object' && Object.getOwnPropertyNames(data).length > 1) {
                     report.drawViz(data, APIRequest.dataviz);
-                    if (data[_config.title.id]) {
+                    if (_config.title && data[_config.title.id]) {
                         report.setTitle(data[_config.title.id].label);
                     }
                     _cleanDom(APIRequest.dataviz);
@@ -470,20 +477,20 @@ report = (function() {
             if (Array.isArray(data[chart.id].data[0])) {
                 // many datasets
                 var _datasets = data[chart.id].data;
-                var _labels = data[chart.id].label[0];
+                var _labels = chart.label || data[chart.id].label[0];
                 _datasets.forEach(function(dataset, id) {
                     datasets.push({
                         label: chart.label[id],
                         data: dataset,
-                        backgroundColor: backgroundColors[id],
-                        borderColor: borderColors[id]
+                        backgroundColor: backgroundColors[id]
+                        /*,borderColor: borderColors[id]*/
                     });
                 });
 
 
             } else {
                 // one dataset
-                _labels = data[chart.id].label;
+                _labels = chart.label || data[chart.id].label;
                 if (colors.length === 1) {
                     backgroundColors = backgroundColors[0];
                     borderColors = borderColors[0];
@@ -491,8 +498,8 @@ report = (function() {
                 datasets.push({
                     label: chart.label,
                     data: data[chart.id].data,
-                    backgroundColor: backgroundColors,
-                    borderColor: borderColors
+                    backgroundColor: backgroundColors
+                    /*,borderColor: borderColors*/
                 });
             }
 

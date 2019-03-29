@@ -11,6 +11,7 @@ Where
 * `dataid` corresponds to data id in source data
 * `dataviz` corresponds to dataviz representation defined in report
 * `wizard` to enable wizard
+* `block` to filter on html block
 
 ### DATAVIZ
 
@@ -208,5 +209,6 @@ report-image |  image element | todo
 report-iframe | iframe element | todo
 report-group | dataviz block | todo
 report-group-item | dataviz block chid (n) | todo
+report-block | html block | todo
 
 
