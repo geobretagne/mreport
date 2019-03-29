@@ -477,20 +477,20 @@ report = (function() {
             if (Array.isArray(data[chart.id].data[0])) {
                 // many datasets
                 var _datasets = data[chart.id].data;
-                var _labels = chart.label || data[chart.id].label[0];
+                var _labels = data[chart.id].label[0];
                 _datasets.forEach(function(dataset, id) {
                     datasets.push({
                         label: chart.label[id],
                         data: dataset,
-                        backgroundColor: backgroundColors[id]
-                        /*,borderColor: borderColors[id]*/
+                        backgroundColor: backgroundColors[id],
+                        borderColor: borderColors[id]
                     });
                 });
 
 
             } else {
                 // one dataset
-                _labels = chart.label || data[chart.id].label;
+                _labels = data[chart.id].label;
                 if (colors.length === 1) {
                     backgroundColors = backgroundColors[0];
                     borderColors = borderColors[0];
@@ -498,8 +498,8 @@ report = (function() {
                 datasets.push({
                     label: chart.label,
                     data: data[chart.id].data,
-                    backgroundColor: backgroundColors
-                    /*,borderColor: borderColors*/
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors
                 });
             }
 
