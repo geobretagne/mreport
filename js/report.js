@@ -41,6 +41,10 @@ report = (function() {
         }
     };
 
+    var  _deleteElement = function (id) {
+        $("#" + id).remove();
+    };
+
     var _handleVizError = function(el, id, data) {
         var error_msg = "";
         if (el) {
@@ -413,7 +417,7 @@ report = (function() {
                 data = data[APIRequest.dataid];
                 _data = data;
 
-                if (data && typeof data === 'object' && Object.getOwnPropertyNames(data).length > 1) {
+                if (data && typeof data === 'object' && Object.getOwnPropertyNames(data).length > 0) {
                     report.drawViz(data, APIRequest.dataviz);
                     if (_config.title && data[_config.title.id]) {
                         report.setTitle(data[_config.title.id].label);
@@ -811,45 +815,80 @@ report = (function() {
 
         /* Création des chiffres clés */
         if (_config.figures) {
-            _config.figures.forEach(function(chiffrecle) {
-                _createFigure(data, chiffrecle);
+            _config.figures.forEach(function(dvz) {
+                if (data && dvz.id && data[dvz.id]) {
+                    _createFigure(data, dvz);
+                } else {
+                    // no data
+                    _deleteElement(dvz.id);
+                }
             });
         }
 
         /* Création des charts */
         if (_config.charts) {
-            _config.charts.forEach(function(chart) {
-                _createChart(data, chart);
+            _config.charts.forEach(function(dvz) {
+                if (data && dvz.id && data[dvz.id]) {
+                    _createChart(data, dvz);
+                 } else {
+                    // no data
+                    _deleteElement(dvz.id);
+                }
             });
         }
 
         if (_config.tables) {
             //ATTENTION POUR LES TABLEAUX, 1 DATASET est le contenu d'une colonne.
-            _config.tables.forEach(function(table) {
-                _createTable(data, table);
+            _config.tables.forEach(function(dvz) {
+                if (data && dvz.id && data[dvz.id]) {
+                    _createTable(data, dvz);
+                 } else {
+                    // no data
+                    _deleteElement(dvz.id);
+                }
             });
         }
 
         if (_config.texts) {
-            _config.texts.forEach(function(text) {
-                _createText(data, text);
+            _config.texts.forEach(function(dvz) {
+                if (data && dvz.id && data[dvz.id]) {
+                    _createText(data, dvz);
+                 } else {
+                    // no data
+                    _deleteElement(dvz.id);
+                }
             });
         }
         if (_config.images) {
-            _config.images.forEach(function(image) {
-                _createImage(data, image);
+            _config.images.forEach(function(dvz) {
+                if (data && dvz.id && data[dvz.id]) {
+                    _createImage(data, dvz);
+                 } else {
+                    // no data
+                    _deleteElement(dvz.id);
+                }
             });
         }
 
         if (_config.iframes) {
-            _config.iframes.forEach(function(iframe) {
-                _createIframe(data, iframe);
+            _config.iframes.forEach(function(dvz) {
+                if (data && dvz.id && data[dvz.id]) {
+                    _createIframe(data, dvz);
+                 } else {
+                    // no data
+                    _deleteElement(dvz.id);
+                }
             });
         }
 
         if (_config.maps) {
-            _config.maps.forEach(function(map) {
-                _createMap(data, map);
+            _config.maps.forEach(function(dvz) {
+                if (data && dvz.id && data[dvz.id]) {
+                    _createMap(data, dvz);
+                 } else {
+                    // no data
+                    _deleteElement(dvz.id);
+                }
             });
         }
 
