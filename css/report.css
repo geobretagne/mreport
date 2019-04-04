@@ -15,17 +15,19 @@ button.report-share {
 }
 
 button.report-share.btn.btn-outline-info {
-    /*top: 30px;
+    top: 45%;
     position: absolute;
-    float:right;
-    right: 20px;*/
+    float: right;
+    right: 45%
+    z-index: 1000;
 }
 
 .report-chart:hover button.report-share,
 .report-text:hover button.report-share,
+.report-map:hover button.report-share,
 .report-image:hover button.report-share,
 .report-group:hover button.report-share,
-.report-figure.card:hover button.report-share,
+.report-figure:hover button.report-share,
 .report-table:hover button.report-share {
     display: block;
 }

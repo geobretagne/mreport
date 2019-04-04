@@ -36,12 +36,12 @@ figcaption {
     font-size: smaller;
 }
 
-#patrimoine_site  {
+#territoire_nb_sites_pat  {
     color: #3db39e;
     padding-top: 0;
 }
 
-#patrimoine_site .report-icon {
+#territoire_nb_sites_pat .report-icon {
     background-image: url(icons/icon-soc10.svg);
     background-repeat: no-repeat;
     background-position: center;
@@ -49,12 +49,12 @@ figcaption {
 
 }
 
-#patrimoine_site .report-figure-chiffre {
+#territoire_nb_sites_pat .report-figure-chiffre {
     font-size: 50px;
     margin-bottom: 0;
 }
 
-#patrimoine_site .report-figure-caption {
+#territoire_nb_sites_pat .report-figure-caption {
     font-size: smaller;
     font-weight: bolder;
 }

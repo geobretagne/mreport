@@ -898,7 +898,7 @@ report = (function() {
                 dataType: "text",
                 success: function(html) {
                     $("body").append(html);
-                    $(".report-chart, .report-table, .report-text, .report-image, .report-group, .report-figure.card").prepend('<button type="button" class="report-share btn btn-outline-info" data-toggle="modal" data-target="#share-panel">Partager</button>');
+                    $(".report-chart, .report-table, .report-text, .report-image, .report-map, .report-group, .report-figure.sharable").prepend('<button type="button" class="report-share btn btn-outline-info" data-toggle="modal" data-target="#share-panel">Partager</button>');
                     $(".report-share").click(function(e) {
                         var el = $(e.currentTarget).parent();
                         var obj = [];
