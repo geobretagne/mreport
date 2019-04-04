@@ -2,7 +2,7 @@
   "data_url": "data.php",
   "data_type": "dynamic",
   "dataid": "ecluse",
-  "data_other_parameters": [],
+  "data_other_parameters": ["year"],
   "debug": true,
   "share": true,
   "charts": [
