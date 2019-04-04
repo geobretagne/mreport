@@ -4,7 +4,7 @@
   "dataid": "ecluse",
   "data_other_parameters": [],
   "debug": true,
-  "share": true,
+  "share": false,
   "charts": [
     {
       "id": "viz_2",
