@@ -9,7 +9,7 @@
     $dataid = $_GET['ecluse'];
 
     $db = pg_connect($db_sig);
-    unset ($db_con);
+    unset ($db_sig);
      if (!$db) {
          echo "Connexion à la Base Impossible avec les paramètres fournis";
          die();
