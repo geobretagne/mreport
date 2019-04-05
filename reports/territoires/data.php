@@ -6,23 +6,32 @@
        return;
     }
 
-    $dataid = $_GET['dataid'];    
-   
+    $dataid = $_GET['dataid'];
+    $year = $_GET['year'];
+    $params = array($dataid);
+
     $db = pg_connect($db_territoires);
     unset ($db_territoires);
      if (!$db) {
-         echo "Connexion à la Base Impossible avec les paramètres fournis";
+         echo json_encode(array("Connexion Ã  la Base Impossible avec les paramÃ¨tres fournis"));
          die();
      }
-     
-    $ps = pg_prepare($db, "mreport_territoires", "SELECT * FROM indicateur._all WHERE dataid = $1 order by dataviz,dataset,\"order\"");
-    
-    $query = pg_execute($db, "mreport_territoires", array($dataid));
+
+     $sql = "SELECT * FROM indicateur._all WHERE dataid = $1 order by dataviz,dataset,\"order\"";
+
+     if ($year && strlen($year) == 4) {
+        array_push($params, $year);
+        $sql = "SELECT * FROM indicateur._all WHERE dataid = $1 and (year = $2 OR year IS NULL) order by dataviz,dataset,\"order\"";
+    }
+
+    $ps = pg_prepare($db, "mreport_territoires", $sql);
+
+    $query = pg_execute($db, "mreport_territoires", $params);
 
     if (!$query ) {
-        echo  pg_last_error($db);
+        echo  json_encode(pg_last_error($db));
          die();
-    }    
+    }
     echo json_encode(pg_fetch_all ($query));
     // free memory
     pg_free_result($query);
