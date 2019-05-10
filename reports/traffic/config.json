@@ -63,7 +63,7 @@
           }
         },
         "title": {
-          "text": "Type d'embarcation",
+          "text": "Type d'embarcation en % pour l'année 2018",
           "display": "true"
         }
       },
@@ -90,7 +90,7 @@
           }
         },
         "title": {
-          "text": "Sens du passage",
+          "text": "Sens du passage en % pour l'année 2018",
           "display": "true"
         }
       },
@@ -115,7 +115,7 @@
           }
         },
         "title": {
-          "text": "Agent en charge de l'éclusage",
+          "text": "Agent en charge de l'éclusage en % pour l'année 2018",
           "display": "true"
         }
       },

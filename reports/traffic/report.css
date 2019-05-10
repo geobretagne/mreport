@@ -8,7 +8,8 @@
 }
 
 #chart1a .report-icon,
-#chart1b .report-icon {
+#chart1b .report-icon,
+#chart1c .report-icon {
     background-image: url(https://kartenn.region-bretagne.fr/ws/transports/icons/evolution_2.svg);
     background-repeat: no-repeat;
     background-position: center;
