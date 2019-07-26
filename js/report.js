@@ -418,6 +418,8 @@ report = (function() {
                     data = _mergeJSON(data);
                 }
 
+                console.log("dataid disponibles", Object.keys(data));
+
                 data = data[APIRequest.dataid];
                 _data = data;
 

@@ -1,0 +1,9 @@
+{
+  "data_url": "data_fiche_territoire.csv",  
+  "data_format": "csv",
+  "dataid": "datatid",
+  "data_other_parameters": [],
+  "debug": true,
+  "share": true,
+  "wizard":true
+}
