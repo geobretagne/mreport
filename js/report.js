@@ -12,6 +12,9 @@ report = (function() {
      * Private
      */
 
+	var _rawReport = null;
+
+	var _reportName = "";
 
     var _config;
 
@@ -68,11 +71,11 @@ report = (function() {
             try {
                 var hash = window.location.hash;
                 if (hash.indexOf("?") > -1) {
-                    var reportName = hash.split("?")[0].substring(1);
+                    _reportName = hash.split("?")[0].substring(1);
                     APIRequest = $.parseJSON('{"' + decodeURIComponent(hash.split("?")[1]
                         .replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}');
-                    APIRequest["report"] = reportName;
-                    _home += reportName + "/";
+                    APIRequest["report"] = _reportName;
+                    _home += _reportName + "/";
                     /* test API Request Validity */
                     if (!APIRequest.report || !APIRequest.dataid) {
                         _alert("Paramètres non valides", "danger", true);
@@ -245,6 +248,7 @@ report = (function() {
             url: _home + "report.html",
             dataType: "text",
             success: function(html) {
+				_rawReport = {"name": _reportName, "html": html};
                 if (APIRequest.block && $(html).find("#" + APIRequest.block).length > 0) {
                     var block = ['<div class="report container-fluid">',
                     $(html).find("#" + APIRequest.block).prop('outerHTML'),
@@ -948,6 +952,7 @@ report = (function() {
         drawViz: _drawViz,
         testViz: _testViz,
         setTitle: _setTitle,
+		getReport: function () {return _rawReport;},
         init: _init
     }; // fin return
 

@@ -4,6 +4,8 @@ wizard = (function() {
      */
     var _data;
 
+	_notSavedDataviz = [];
+
     var _showIndicateurProperties = function(ind) {
         $(".wizard-code").hide();
         $("#dataviz-attributes").hide();
@@ -128,6 +130,53 @@ wizard = (function() {
         }
     };
 
+	var _addDataviz = function () {
+		var html = ['<div class="row">',
+			'<div class="wz-temp col-xs-6 col-md-6">',
+			'<h5>Title</h5>',
+		'</div></div>'].join("");
+		$("body>.report").append(html);
+
+		var html_definition = ['<div class="row">',
+			'<div class="col-xs-6 col-md-6">',
+			'<h5>Title</h5>',
+			$("#wizard-code").text(),
+		'</div></div>'].join("");
+
+		var parentElement = $( ".wz-temp" ).last().removeClass("wz-temp");
+		$("#wizard-result").children().appendTo(parentElement);
+
+		_notSavedDataviz.push(html_definition);
+	};
+
+	var _save = function () {
+		var _report = report.getReport();
+		newElements = _notSavedDataviz.join(" ");
+		var newDom = $(_report.html).append(newElements).prop("outerHTML");
+		console.log(newDom);
+		$.ajax({
+            type: "POST",
+            url: "srv/save.php?report=" + _report.name,
+            data: newDom,
+            dataType: 'json',
+            contentType: 'text/html',
+            success: function( response ) {
+				if (response.success) {
+					 _notSavedDataviz = [];
+					document.location.reload(true);
+				} else {
+					alert("enregistrement échec")
+				}
+
+			},
+			error: function( a, b, c) {
+				console.log(a, b, c);
+			}
+		});
+
+
+	};
+
 
     var _init = function(data) {
         _data = data;
@@ -137,6 +186,7 @@ wizard = (function() {
             success: function(html) {
                 $("body").append(html);
                 $("body").append('<div class="wizard"><button class="wizard-btn btn btn-primary btn-lg" data-toggle="modal" data-target="#wizard-panel">+</button></div>');
+				$("body").append('<div class="wizard2"><button class="wizard-btn2 btn btn-success btn-lg" onclick="wizard.save();" >Save</button></div>');
                 $(".wizard-btn").click(function(e) {
                     _showIndicateurs();
                 });
@@ -211,7 +261,9 @@ wizard = (function() {
 
     return {
 
-        init: _init
+        init: _init,
+		addDataviz: _addDataviz,
+		save: _save
 
     }; // fin return
 

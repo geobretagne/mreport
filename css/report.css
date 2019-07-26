@@ -60,6 +60,14 @@ div#preloader {
     z-index: 50;
 }
 
+.wizard2 {
+    position: fixed;
+	float: right;
+    right: 87px;
+    bottom: 30px;
+	z-index: 50;
+}
+
 .map-marker-circle-1 {    
   background-color:#E91E63; 
   border-radius: 18px;
