@@ -2,15 +2,16 @@
    include("/var/php-secure/db-settings.php");
    header('Content-Type: application/json');
    if (empty($_GET['dataid']) or strlen($_GET['dataid']) > 9) {
-       echo json_encode(array());
+       echo json_encode([['dataid' => '242900314'],['dataid' => '200027027']]);
        return;
     }
 
     $dataid = $_GET['dataid'];
-    $year = $_GET['year'];
+
     $params = array($dataid);
 
     $db = pg_connect($db_territoires);
+
     unset ($db_territoires);
      if (!$db) {
          echo json_encode(array("Connexion à la Base Impossible avec les paramètres fournis"));
@@ -19,10 +20,7 @@
 
      $sql = "SELECT * FROM indicateur._all WHERE dataid = $1 order by dataviz,dataset,\"order\"";
 
-     if ($year && strlen($year) == 4) {
-        array_push($params, $year);
-        $sql = "SELECT * FROM indicateur._all WHERE dataid = $1 and (year = $2 OR year IS NULL) order by dataviz,dataset,\"order\"";
-    }
+
 
     $ps = pg_prepare($db, "mreport_territoires", $sql);
 
@@ -36,8 +34,8 @@
     // free memory
     pg_free_result($query);
     // close connection
-     if (!$dbh) {
-        pg_close($dbh);
+     if ($db) {
+        pg_close($db);
      }
 
 ?>

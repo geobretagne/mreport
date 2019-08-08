@@ -16,6 +16,8 @@ report = (function() {
 
 	var _reportName = "";
 
+    var _router = null;
+
     var _config;
 
     var APIRequest = {};
@@ -26,8 +28,6 @@ report = (function() {
 
     var _data;
 
-    var _filteredDataviz = [];
-
     var _format = function(value) {
         if (!isNaN(value)) {
             return parseFloat(value).toLocaleString();
@@ -37,7 +37,7 @@ report = (function() {
     }
 
     var _alert = function(msg, alert, show) {
-        $("body").append('<div class="report-alert alert alert-' + alert + '" role="alert">' + msg + '</div>');
+        $("body").prepend('<div class="report-alert alert alert-' + alert + '" role="alert">' + msg + '</div>');
         errors = true;
         if (show) {
             $(".report-alert").show();
@@ -66,30 +66,38 @@ report = (function() {
 
     var _init = function() {
         //API GET PARAMETERS
-        Chart.plugins.unregister(ChartDataLabels);
-        if (window.location.hash) {
-            try {
-                var hash = window.location.hash;
-                if (hash.indexOf("?") > -1) {
-                    _reportName = hash.split("?")[0].substring(1);
-                    APIRequest = $.parseJSON('{"' + decodeURIComponent(hash.split("?")[1]
-                        .replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}');
-                    APIRequest["report"] = _reportName;
-                    _home += _reportName + "/";
-                    /* test API Request Validity */
-                    if (!APIRequest.report || !APIRequest.dataid) {
-                        _alert("Paramètres non valides", "danger", true);
-                        return;
-                    }
-                } else {
-                    _alert("URL malformée /#monrapport?dataid=xx ", "danger", true);
-                    return;
-                }
-            } catch (error) {
-                _alert("URL malformée /#monrapport?dataid=xx " + error, "danger", true);
-            }
+        _router = new Navigo(document.location.origin + '/mreport/', false);
+        _router
+          .on({
+                '/': function () {
+                    $("body").append('<h4>Sélectionnez un rapport ex: </h4><a href="sample">sample</a>');
+                    errors = true;
+                },
+                '/:report': function (params) {
+                    APIRequest = params;
+                    _home += params.report + "/";
+                },
+                '/:report/:dataid': function (params) {
+                    APIRequest = params;
+                    _home += params.report + "/";
+                },
+                '/:report/:dataid/:dataviz': function (params) {
+                    APIRequest = params;
+                    _home += params.report + "/";
+                },
 
-        }
+            })
+          .resolve();
+          console.log(APIRequest);
+        _router.notFound(function () {
+          // called when there is path specified but
+          // there is no route matching
+          console.log("erreur de route");
+        });
+
+        Chart.plugins.unregister(ChartDataLabels);
+
+
 
         if (!errors) {
             /* get config file*/
@@ -98,6 +106,7 @@ report = (function() {
                 url: _home + "config.json",
                 success: function(conf) {
                     _config = conf;
+                    _config.dataviz = APIRequest.dataviz;
                     _getDom();
                     _getCss();
                 },
@@ -249,11 +258,13 @@ report = (function() {
             dataType: "text",
             success: function(html) {
 				_rawReport = {"name": _reportName, "html": html};
-                if (APIRequest.block && $(html).find("#" + APIRequest.block).length > 0) {
-                    var block = ['<div class="report container-fluid">',
-                    $(html).find("#" + APIRequest.block).prop('outerHTML'),
+                if (APIRequest.dataviz && $(html).find("#" + APIRequest.dataviz).length > 0) {
+                    var block = ['<div class="report container-fluid filtered">',
+                    $(html).find("#" + APIRequest.dataviz).prop('outerHTML'),
                     '</div>'].join("");
                     $("body").append(block);
+                    $(".alert").remove();
+                    _config.share = false;
                 } else {
                     $("body").append(html);
                 }
@@ -265,12 +276,6 @@ report = (function() {
                 _alert("Erreur avec le fichier report.html de " + _home + " " + err, "danger", true);
             }
         });
-    };
-
-    var _cleanDom = function(dataviz) {
-        if (dataviz) {
-            $(".report, .alert").remove();
-        }
     };
 
     var _parseCSV = function(csv) {
@@ -414,21 +419,28 @@ report = (function() {
             success: function(data) {
                 if (format === "text") {
                     data = _parseCSV(data);
-                } else if (format === "json") {
+                } else if (format === "json" && data) {
                     data = _mergeJSON(data);
                 }
+                if (!APIRequest.dataid) {
+                    var links = [];
+                    Object.keys(data).forEach(function(a) {
+                        links.push('<li><a href="'+APIRequest.report+'/' + a +'">'+a+'</a></li>');
+                    });
+                    $(".report, .alert").remove();
+                    $("body").append(['<ul>', links.join(""), '</ul>']);
+                    return;
+                }
 
-                console.log("dataid disponibles", Object.keys(data));
 
                 data = data[APIRequest.dataid];
                 _data = data;
 
                 if (data && typeof data === 'object' && Object.getOwnPropertyNames(data).length > 0) {
-                    report.drawViz(data, APIRequest.dataviz);
+                    report.drawViz(data);
                     if (_config.title && data[_config.title.id]) {
                         report.setTitle(data[_config.title.id].label);
                     }
-                    _cleanDom(APIRequest.dataviz);
                 } else {
                     var msg = "absence de données " + _config.data_url + " : " + request_parameters[_config.dataid];
                     _alert(msg, "warning", true);
@@ -454,18 +466,7 @@ report = (function() {
         document.title = title;
     };
 
-    var _vizEnabled = function(id) {
-        var enabled = true;
-        if (_filteredDataviz.length > 0 && !_filteredDataviz.includes(id)) {
-            enabled = false;
-        }
-        return enabled;
-    };
-
     var _createChart = function(data, chart) {
-        if (!_vizEnabled(chart.id)) {
-            return;
-        }
         var el = _getDomElement("chart", chart.id);
         if (el && data[chart.id]) {
             var commonOptions = {
@@ -535,9 +536,6 @@ report = (function() {
     };
 
     var _createFigure = function(data, chiffrecle) {
-        if (!_vizEnabled(chiffrecle.id)) {
-            return;
-        }
         var el = _getDomElement("figure card", chiffrecle.id);
         var unit = $(el).attr("data-unit") || "";
         if (el && data[chiffrecle.id]) {
@@ -551,9 +549,6 @@ report = (function() {
     };
 
     var _createTable = function(data, table) {
-        if (!_vizEnabled(table.id)) {
-            return;
-        }
         var el = _getDomElement("table", table.id);
         if (el && data[table.id] && table.label) {
             // construction auto de la table
@@ -614,9 +609,6 @@ report = (function() {
     };
 
     var _createText = function(data, text) {
-        if (!_vizEnabled(text.id)) {
-            return;
-        }
         var el = _getDomElement("text", text.id);
         if (el && data[text.id]) {
             el.getElementsByClassName("report-text-text")[0].textContent = data[text.id].data[0];
@@ -627,9 +619,6 @@ report = (function() {
     };
 
     var _createImage = function(data, image) {
-        if (!_vizEnabled(image.id)) {
-            return;
-        }
         var el = _getDomElement("image", image.id);
         if (el && data[image.id]) {
             $(el).append('<img src="' + data[image.id].data[0] + '" class="img-fluid" alt="' + data[image.id].label[0] + '">');
@@ -639,9 +628,6 @@ report = (function() {
     };
 
     var _createIframe = function(data, iframe) {
-        if (!_vizEnabled(iframe.id)) {
-            return;
-        }
         var el = _getDomElement("iframe", iframe.id);
         if (el && data[iframe.id]) {
             var html = '<iframe class="embed-responsive-item" src="' + data[iframe.id].data[0] + '"></iframe>';
@@ -654,10 +640,6 @@ report = (function() {
 
     var _getDomElement = function(classe, id) {
         var el = document.getElementById(id);
-        if (_filteredDataviz.indexOf(id) > -1) {
-            $(el).appendTo(".report-filtered .row");
-            $(el).removeClass().addClass("report-" + classe + " col-sm-12 col-md-12 col-lg-12");
-        }
         return el;
     }
 
@@ -786,14 +768,7 @@ report = (function() {
     };
 
 
-    var _drawViz = function(data, dataviz) {
-        if (dataviz) {
-            _filteredDataviz = dataviz.split(",");
-            $("body").prepend('<div class="report-filtered container-fluid"><div class="row"></div></div>');
-            // deactivate share func.
-            _config.share = false;
-        }
-
+    var _drawViz = function(data) {
         /* Listing des données non valorisées dans ce rapport  */
 
         $.each(data, function(id) {
@@ -812,7 +787,7 @@ report = (function() {
                     }
                 }
             });
-            if (!used) {
+            if (!used && !_config.dataviz) {
                 console.log(id + " n'est pas utilisé dans ce rapport");
             }
 
@@ -915,7 +890,7 @@ report = (function() {
                         } else {
                             obj.push($(e.currentTarget).parent().attr("id"));
                         }
-                        var url = $(location).attr('href') + "&dataviz=" + obj.join(",");
+                        var url = $(location).attr('href') + "/" + obj.join(",");
 
                         $(".report-share-info").attr("href", url);
 
