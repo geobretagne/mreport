@@ -64,13 +64,31 @@ report = (function() {
         $('head').prepend('<link rel="stylesheet" href="' + _home + "report.css" + '" type="text/css" />');
     };
 
+    var _showAvailableReports = function () {
+        $.ajax({
+                dataType: "json",
+                url: 'reports/reports.json',
+                success: function(reports) {
+                    var links = [];
+                    reports.forEach(function (report) {
+                        links.push('<a href="' + report +'" class="list-group-item list-group-item-action">'+report+'</a>');
+                    });
+                    $("body").append('<div class="container"><div class="list-group">'+ links.join("") + '</div></div>');
+                },
+                error: function(xhr, status, err) {
+                    _alert("Erreur avec le rapport " + _home + " " + err, "danger", true);
+                }
+            });
+
+    };
+
     var _init = function() {
         //API GET PARAMETERS
         _router = new Navigo(document.location.origin + '/mreport/', false);
         _router
           .on({
                 '/': function () {
-                    $("body").append('<h4>Sélectionnez un rapport ex: </h4><a href="sample">sample</a>');
+                    _showAvailableReports();
                     errors = true;
                 },
                 '/:report': function (params) {
@@ -425,10 +443,10 @@ report = (function() {
                 if (!APIRequest.dataid) {
                     var links = [];
                     Object.keys(data).forEach(function(a) {
-                        links.push('<li><a href="'+APIRequest.report+'/' + a +'">'+a+'</a></li>');
+                        links.push('<a href="'+APIRequest.report+'/' + a +'" class="list-group-item list-group-item-action">'+a+'</a>');
                     });
                     $(".report, .alert").remove();
-                    $("body").append(['<ul>', links.join(""), '</ul>']);
+                    $("body").append('<div class="container"><div class="list-group">'+ links.join("") + '</div></div>');
                     return;
                 }
 

@@ -1,10 +1,7 @@
 <?php
    include("/var/php-secure/db-settings.php");
    header('Content-Type: application/json');
-   if (empty($_GET['dataid']) or strlen($_GET['dataid']) > 9) {
-       echo json_encode([['dataid' => '242900314'],['dataid' => '200027027']]);
-       return;
-    }
+
 
     $dataid = $_GET['dataid'];
 
@@ -18,7 +15,12 @@
          die();
      }
 
-     $sql = "SELECT * FROM indicateur._all WHERE dataid = $1 order by dataviz,dataset,\"order\"";
+    $sql = "SELECT * FROM indicateur._all WHERE dataid = $1 order by dataviz,dataset,\"order\"";
+
+    if (empty($_GET['dataid'])) {
+       $sql = "SELECT distinct dataid FROM indicateur._all";
+       $params = [];
+    }
 
 
 
