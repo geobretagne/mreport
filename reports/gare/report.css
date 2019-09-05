@@ -1,0 +1,29 @@
+/* report.css */
+.report-figure-chiffre {
+    font-weight: bolder;
+	background-repeat: no-repeat;
+    color: #2dabad;
+    padding-left: 60px;
+    font-size: 50px;
+}
+
+#viz_1_nbre_lycee_public .report-figure-chiffre {
+    background-image: url(https://kartenn.region-bretagne.fr/ws/territoire/icons/diplome.svg);   
+}
+
+#viz_2_nbre_lycee_prive .report-figure-chiffre {
+    background-image: url(https://kartenn.region-bretagne.fr/ws/territoire/icons/diplome_sup.svg);   
+}
+
+#viz_4_surface_batie .report-figure-chiffre {
+    background-image: url(https://kartenn.region-bretagne.fr/ws/territoire/icons/appartement.svg);    
+}
+
+.dataviz {
+    text-align: center;
+	padding-top: 20px;
+}
+
+.dataviz span {
+    font-weight: 600;
+}
