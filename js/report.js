@@ -28,6 +28,8 @@ report = (function() {
 
     var _data;
 
+    var _api_url = "../api";
+
     var _format = function(value) {
         if (!isNaN(value)) {
             return parseFloat(value).toLocaleString();
@@ -67,11 +69,11 @@ report = (function() {
     var _showAvailableReports = function () {
         $.ajax({
                 dataType: "json",
-                url: 'reports/reports.json',
+                url: [_api_url, "store", "reports"].join("/"),
                 success: function(reports) {
                     var links = [];
-                    reports.forEach(function (report) {
-                        links.push('<a href="' + report +'" class="list-group-item list-group-item-action">'+report+'</a>');
+                    reports.reports.forEach(function (report) {
+                        links.push('<a href="' + report.id +'" class="list-group-item list-group-item-action">'+report.title+'</a>');
                     });
                     $("body").append('<div class="container"><div class="list-group">'+ links.join("") + '</div></div>');
                 },
@@ -411,12 +413,29 @@ report = (function() {
 
     var _getData = function() {
         var request_parameters = {};
-        request_parameters[_config.dataid] = APIRequest.dataid;
-        _config.data_other_parameters.forEach(function(parameter) {
-            if (APIRequest[parameter]) {
-                request_parameters[parameter] = APIRequest[parameter];
-            }
-        });
+        var format;
+        if (_config.data_format === "csv") {
+            format = "text";
+        } else {
+            format = "json";
+        }
+
+        var showDataIds = false;
+
+        if (_config.data_format === "api" && APIRequest.dataid) {
+            // no need request parameters
+            _config.data_url = [_config.data_url, "store", "report", APIRequest.report, APIRequest.dataid].join("/");
+        } else if (_config.data_format === "api" && !APIRequest.dataid) {
+            //Show all dataids availables
+            showDataIds = true;
+        } else if (APIRequest.dataid){
+            request_parameters[_config.dataid] = APIRequest.dataid;
+            _config.data_other_parameters.forEach(function(parameter) {
+                if (APIRequest[parameter]) {
+                    request_parameters[parameter] = APIRequest[parameter];
+                }
+            });
+        }
         // test url (relative or absolute)
         var url = "";
         if (/^(?:[a-z]+:)?\/\//i.test(_config.data_url)) {
@@ -425,51 +444,65 @@ report = (function() {
             url = _home + _config.data_url;
         }
 
-        var format = "json";
-        if (_config.data_format === "csv") {
-            format = "text";
-        }
-
-        $.ajax({
-            dataType: format,
-            url: _home + _config.data_url,
-            data: request_parameters,
-            success: function(data) {
-                if (format === "text") {
-                    data = _parseCSV(data);
-                } else if (format === "json" && data) {
-                    data = _mergeJSON(data);
-                }
-                if (!APIRequest.dataid) {
+        if (showDataIds) {
+            $.ajax({
+                dataType: "json",
+                url: [_config.data_url, "store", "report", APIRequest.report].join("/"),
+                success: function(data) {
                     var links = [];
-                    Object.keys(data).forEach(function(a) {
-                        links.push('<a href="'+APIRequest.report+'/' + a +'" class="list-group-item list-group-item-action">'+a+'</a>');
+                    data.items.forEach(function(a) {
+                        links.push('<a href="'+APIRequest.report+'/' + a.dataid +'" class="list-group-item list-group-item-action">'+a.label+'</a>');
                     });
                     $(".report, .alert").remove();
                     $("body").append('<div class="container"><div class="list-group">'+ links.join("") + '</div></div>');
-                    return;
+                },
+                error: function(xhr, status, error) {
+                    var msg = "erreur " + _config.data_url + " : " + error;
+                    _alert(msg, "danger", true);
                 }
-
-
-                data = data[APIRequest.dataid];
-                _data = data;
-
-                if (data && typeof data === 'object' && Object.getOwnPropertyNames(data).length > 0) {
-                    report.drawViz(data);
-                    if (_config.title && data[_config.title.id]) {
-                        report.setTitle(data[_config.title.id].label);
+            });
+        } else {
+            $.ajax({
+                dataType: format,
+                url: url,
+                data: request_parameters,
+                success: function(data) {
+                    if (format === "text") {
+                        data = _parseCSV(data);
+                    } else if (data && (format === "json" || format === "api")) {
+                        data = _mergeJSON(data);
                     }
-                } else {
-                    var msg = "absence de données " + _config.data_url + " : " + request_parameters[_config.dataid];
-                    _alert(msg, "warning", true);
-                }
+                    if (!APIRequest.dataid) {
+                        var links = [];
+                        Object.keys(data).forEach(function(a) {
+                            links.push('<a href="'+APIRequest.report+'/' + a +'" class="list-group-item list-group-item-action">'+a+'</a>');
+                        });
+                        $(".report, .alert").remove();
+                        $("body").append('<div class="container"><div class="list-group">'+ links.join("") + '</div></div>');
+                        return;
+                    }
 
-            },
-            error: function(xhr, status, error) {
-                var msg = "erreur " + _config.data_url + " : " + error;
-                _alert(msg, "danger", true);
-            }
-        });
+
+                    data = data[APIRequest.dataid];
+                    _data = data;
+
+                    if (data && typeof data === 'object' && Object.getOwnPropertyNames(data).length > 0) {
+                        report.drawViz(data);
+                        if (_config.title && data[_config.title.id]) {
+                            report.setTitle(data[_config.title.id].label);
+                        }
+                    } else {
+                        var msg = "absence de données " + _config.data_url + " : " + request_parameters[_config.dataid];
+                        _alert(msg, "warning", true);
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    var msg = "erreur " + _config.data_url + " : " + error;
+                    _alert(msg, "danger", true);
+                }
+            });
+        }
     };
 
     const hexToRgb = hex =>

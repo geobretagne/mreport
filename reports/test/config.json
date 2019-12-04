@@ -1,8 +1,6 @@
 {
-  "data_url": "data_fiche_territoire.csv",  
-  "data_format": "csv",
-  "dataid": "datatid",
-  "data_other_parameters": [],
+  "data_url": "http://localhost/api",
+  "data_format": "api",  
   "debug": true,
   "share": true,
   "wizard":true
