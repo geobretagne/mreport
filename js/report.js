@@ -69,11 +69,11 @@ report = (function() {
     var _showAvailableReports = function () {
         $.ajax({
                 dataType: "json",
-                url: [_api_url, "store", "reports"].join("/"),
+                url: [_api_url,  "report"].join("/"),
                 success: function(reports) {
                     var links = [];
                     reports.reports.forEach(function (report) {
-                        links.push('<a href="' + report.id +'" class="list-group-item list-group-item-action">'+report.title+'</a>');
+                        links.push('<a href="' + report.report +'" class="list-group-item list-group-item-action">'+report.title+'</a>');
                     });
                     $("body").append('<div class="container"><div class="list-group">'+ links.join("") + '</div></div>');
                 },
@@ -424,7 +424,7 @@ report = (function() {
 
         if (_config.data_format === "api" && APIRequest.dataid) {
             // no need request parameters
-            _config.data_url = [_config.data_url, "store", "report", APIRequest.report, APIRequest.dataid].join("/");
+            _config.data_url = [_config.data_url, "report", APIRequest.report, APIRequest.dataid].join("/");
         } else if (_config.data_format === "api" && !APIRequest.dataid) {
             //Show all dataids availables
             showDataIds = true;
@@ -447,7 +447,7 @@ report = (function() {
         if (showDataIds) {
             $.ajax({
                 dataType: "json",
-                url: [_config.data_url, "store", "report", APIRequest.report].join("/"),
+                url: [_config.data_url, "report", APIRequest.report].join("/"),
                 success: function(data) {
                     var links = [];
                     data.items.forEach(function(a) {
@@ -470,7 +470,7 @@ report = (function() {
                     if (format === "text") {
                         data = _parseCSV(data);
                     } else if (data && (format === "json" || format === "api")) {
-                        data = _mergeJSON(data);
+                        data = _mergeJSON(data.data);
                     }
                     if (!APIRequest.dataid) {
                         var links = [];
