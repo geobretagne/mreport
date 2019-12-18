@@ -53,14 +53,16 @@ admin = (function() {
                 data.dataviz.forEach(function (dvz) {
                     lst.push('<li data-dataviz="'+dvz+'" data-report="'+reportId+'" class="list-group-item">'+dvz+'<a type="button" class="btn btn-delete btn-default btn-danger">DELETE</a></li>');
                 });
-                confirmed.attr("onclick","admin.addReport();")
+                confirmed.attr("onclick","admin.addReport();");
+                confirmed.html("Enregistrer");
             } else if(newReport==="new") {
                 title.prop("disabled", false);
                 $("input.dataviz-selection:checked").each(function(id, dvz) {
                     var id = $(dvz).closest(".card.dataviz").attr("data-dataviz-id");
                     lst.push('<li data-dataviz="'+id+'" class="list-group-item">'+id+'</li>');
                 });
-                confirmed.attr("onclick","admin.addReport();")
+                confirmed.attr("onclick","admin.addReport();");
+                confirmed.html("Enregistrer");
             }
             else{
                 var reportId = $(e.relatedTarget).data('report-id');
@@ -70,7 +72,8 @@ admin = (function() {
                 data.dataviz.forEach(function (dvz) {
                     lst.push('<li data-dataviz="'+dvz+'" data-report="'+reportId+'" class="list-group-item">'+dvz);
                 });
-                confirmed.attr("onclick","admin.deleteReport();")
+                confirmed.attr("onclick","admin.deleteReport();");
+                confirmed.html("Supprimer");
             }
             $(".reports-dataviz").append(lst.join(""));
             $(".reports-dataviz .btn-delete").click(function(e) {
@@ -145,7 +148,7 @@ admin = (function() {
                   '<label class="custom-control-label" for="'+id+'-selection">Sélectionner</label>',
                 '</div>',
                 '<a href="#" class="card-link" data-toggle="modal" data-related-id="'+id+'" data-target="#dataviz-modal-form">Editer</a>',
-                '<a href="#" class="card-link">Supprimer</a>',
+                '<a href="#" class="card-link" data-toggle="modal" data-related-id="'+id+'" data-target="#dataviz-delete-modal-form">Supprimer</a>',
               '</div>',
             '</div>'].join("")
             );
@@ -276,24 +279,84 @@ admin = (function() {
         var report_name = $("#reportInputTitre").val();
         var report_id = report_name.replace(/[^\w\s]/gi, '').toLowerCase().replace(/ /g, "");
         //Delete Report in db
-        $.ajax({
-            dataType: "json",
-            contentType:"application/json",
-            type: "DELETE",
-            url: [_api_url, "report", report_id].join("/"),
-            success: function(data) {
-                if (data.response === "success") {
-                    console.log(data.report);
-
-                } else {
-                    console.log(data);
-                }
-            },
-            error: function(xhr, status, error) {
-                var msg = "erreur " + _config.data_url + " : " + error;
-                console.log(msg);
+        Swal.fire({
+            title: 'Voulez vous supprimer le rapport \''+report_name+'\' ?',
+            text: "Vous ne pourrez pas revenir en arrière !",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Annuler',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmer'
+          }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    dataType: "json",
+                    contentType:"application/json",
+                    type: "DELETE",
+                    url: [_api_url, "report", report_id].join("/"),
+                    success: function(data) {
+                        Swal.fire(
+                            'Supprimé',
+                            'Le raport \''+report_name+'\' a été supprimé',
+                            'success'
+                        )
+                    },
+                    error: function(xhr, status, error) {
+                        var err = eval("(" + xhr.responseText + ")");
+                        Swal.fire(
+                            'Une erreur s\'est produite',
+                            err.response,
+                            'error'
+                        )
+                    }
+                });
+              
             }
-        });
+          })
+        
+
+    };
+    _deleteDataviz = function () {
+        var dataviz_title = $("#reportInputTitre").val();
+        var report_id = dataviz_title.replace(/[^\w\s]/gi, '').toLowerCase().replace(/ /g, "");
+        //Delete Report in db
+        Swal.fire({
+            title: 'Voulez vous supprimer la dataviz \''+dataviz_title+'\' ?',
+            text: "Vous ne pourrez pas revenir en arrière !",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Annuler',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmer'
+          }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    dataType: "json",
+                    contentType:"application/json",
+                    type: "DELETE",
+                    url: [_api_url, "report", report_id].join("/"),
+                    success: function(data) {
+                        Swal.fire(
+                            'Supprimé',
+                            'Le raport \''+dataviz_title+'\' a été supprimé',
+                            'success'
+                        )
+                    },
+                    error: function(xhr, status, error) {
+                        var err = eval("(" + xhr.responseText + ")");
+                        Swal.fire(
+                            'Une erreur s\'est produite',
+                            err.response,
+                            'error'
+                        )
+                    }
+                });
+              
+            }
+          })
+        
 
     };
 
@@ -305,7 +368,8 @@ admin = (function() {
         initCatalog: _initCatalog,
         initReports: _initReports,
         addReport: _addReport,
-        deleteReport: _deleteReport
+        deleteReport: _deleteReport,
+        deleteDataviz: _deleteDataviz
     }; // fin return
 
 })();
