@@ -72,7 +72,8 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="datavizModalLabel">Dataviz</h5>
+            <h5 class="modal-title" id="datavizModalLabel"><span class="dataviz-title"></span></span><span class="badge badge-success">New</span><span
+              class="badge badge-warning">Edition</span><span class="badge badge-danger">Supression</span></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -116,7 +117,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            <button type="button" class="form-save btn btn-primary">Enregistrer</button>
+            <button id="dataviz_confirmed" type="button" class="btn btn-primary">Enregistrer</button>
           </div>
         </div>
       </div>
@@ -147,7 +148,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            <button id="confirmed" type="button" class="btn btn-primary"
+            <button id="report_confirmed" type="button" class="btn btn-primary"
               onclick="admin.addReport();">Enregistrer</button>
           </div>
         </div>
@@ -245,6 +246,43 @@
       }
 
       .modal[data-report-state="edit"] .badge-danger {
+        display: none;
+      }
+
+
+      .modal[data-dataviz-state="new"] .badge-success {
+        display: inline-block;
+      }
+
+      .modal[data-dataviz-state="edit"] .badge-success {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="delete"] .badge-success {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="new"] .badge-warning {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="delete"] .badge-warning {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="edit"] .badge-warning {
+        display: inline-block;
+      }
+
+      .modal[data-dataviz-state="new"] .badge-danger {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="delete"] .badge-danger {
+        display: inline-block;
+      }
+
+      .modal[data-dataviz-state="edit"] .badge-danger {
         display: none;
       }
       

@@ -41,10 +41,12 @@ admin = (function() {
             var newReport = $(e.relatedTarget).attr('data-report-state');
             $(e.currentTarget).attr("data-report-state", newReport);
             var title = $(e.currentTarget).find('input[name="title"]');
-            var confirmed = $("#confirmed");
+            var confirmed = $("#report_confirmed");
+            
             if (newReport==="edit") {
                 //get data-id attribute of the clicked element
                 var reportId = $(e.relatedTarget).data('report-id');
+                confirmed.attr("data-report-id",reportId)
                 var data= _report_data[reportId];
                 //populate data
                 title.val(data.title);
@@ -53,7 +55,7 @@ admin = (function() {
                 data.dataviz.forEach(function (dvz) {
                     lst.push('<li data-dataviz="'+dvz+'" data-report="'+reportId+'" class="list-group-item">'+dvz+'<a type="button" class="btn btn-delete btn-default btn-danger">DELETE</a></li>');
                 });
-                confirmed.attr("onclick","admin.addReport();");
+                confirmed.attr("onclick","admin.updateReport();");
                 confirmed.html("Enregistrer");
             } else if(newReport==="new") {
                 title.prop("disabled", false);
@@ -62,6 +64,7 @@ admin = (function() {
                     lst.push('<li data-dataviz="'+id+'" class="list-group-item">'+id+'</li>');
                 });
                 confirmed.attr("onclick","admin.addReport();");
+                confirmed.attr("data-report-id",reportId)
                 confirmed.html("Enregistrer");
             }
             else{
@@ -73,6 +76,7 @@ admin = (function() {
                     lst.push('<li data-dataviz="'+dvz+'" data-report="'+reportId+'" class="list-group-item">'+dvz);
                 });
                 confirmed.attr("onclick","admin.deleteReport();");
+                confirmed.attr("data-report-id",reportId)
                 confirmed.html("Supprimer");
             }
             $(".reports-dataviz").append(lst.join(""));
@@ -147,8 +151,8 @@ admin = (function() {
                   '<input type="checkbox" id="'+id+'-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">',
                   '<label class="custom-control-label" for="'+id+'-selection">Sélectionner</label>',
                 '</div>',
-                '<a href="#" class="card-link" data-toggle="modal" data-related-id="'+id+'" data-target="#dataviz-modal-form">Editer</a>',
-                '<a href="#" class="card-link" data-toggle="modal" data-related-id="'+id+'" data-target="#dataviz-delete-modal-form">Supprimer</a>',
+                '<a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="'+id+'" data-target="#dataviz-modal-form">Editer</a>',
+                '<a href="#" data-dataviz-state="delete" class="card-link" data-toggle="modal" data-related-id="'+id+'" data-target="#dataviz-modal-form">Supprimer</a>',
               '</div>',
             '</div>'].join("")
             );
@@ -177,45 +181,23 @@ admin = (function() {
             }
         });
         $('#dataviz-modal-form').on('show.bs.modal', function(e) {
+            var newDataviz = $(e.relatedTarget).attr('data-dataviz-state');
+            $(e.currentTarget).attr("data-dataviz-state", newDataviz);
+            var title = $(e.currentTarget).find('.form-control');
+            var confirmed = $("#dataviz_confirmed");
+            if (newDataviz==="edit") {
+                confirmed.attr("onclick","admin.updateDataviz();");
+                title.prop("disabled", false);
+                confirmed.html("Enregistrer");
+            } else if(newDataviz==="delete") {
+                confirmed.attr("onclick","admin.deleteDataviz();");
+                title.prop("disabled", true);
+                confirmed.html("Supprimer");
+            }
             var datavizId = $(e.relatedTarget).attr('data-related-id');
             $(e.currentTarget).attr("data-related-id", datavizId);
-            $(e.currentTarget).find(".modal-title").text(datavizId);
+            $(e.currentTarget).find(".dataviz-title").text(datavizId);
             _populateForm('#dataviz-form',_dataviz_data[datavizId]);
-        });
-
-        $("#dataviz-modal-form .form-save").click(function(e) {
-            var id = $("#dataviz-modal-form").attr("data-related-id");
-            b = {};
-            a = $("#dataviz-form").serializeArray();
-            a.forEach(function (r) {
-                if (r.value) {
-                    b[r.name] = r.value;
-                }
-            });
-            $.ajax({
-                dataType: "json",
-                contentType:"application/json",
-                url: [_api_url, "store", id].join("/"),
-                type: "POST",
-                data: JSON.stringify(b),
-                success: function(data) {
-                    if (data.response === "success") {
-                        //update local data
-                        var dvz = _dataviz_data[data.dataviz];
-                        $.extend( dvz, data.data );
-                        _showDataviz();
-                        $('#dataviz-modal-form').modal('hide');
-                    } else {
-                        console.log(data);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    var msg = "erreur " + _api_url + " : " + error;
-                    console.log(msg);
-                }
-            });
-
-
         });
     };
 
@@ -258,12 +240,22 @@ admin = (function() {
                     //update local data
                     console.log(data.report);
                     //add dataviz to report
+                  
                     var datavizs = [];
                     $(".reports-dataviz .list-group-item").each(function(id, dvz) {
                         datavizs.push({"dataviz": $(dvz).attr("data-dataviz")});
                     });
-                    _addDatavizToReport(data.report, datavizs);
-
+                    $.when( _addDatavizToReport(data.report, datavizs) ).done(function() {
+                        setTimeout(function(){
+                            _initReports();
+                        },500);
+                    });
+                    $('#report-modal-form').modal('hide');
+                    Swal.fire(
+                        'Créé',
+                        'Le rapport \''+report_name+'\' a été créé',
+                        'success'
+                    );
                 } else {
                     console.log(data);
                 }
@@ -275,9 +267,43 @@ admin = (function() {
         });
 
     };
+    _updateReport = function () {
+        var report_name = $("#reportInputTitre").val();
+        var report_id = $("#report_confirmed").attr("data-report-id");
+        //Create Report in db
+        $.ajax({
+            dataType: "json",
+            contentType:"application/json",
+            type: "POST",
+            data:JSON.stringify({"title": report_name}),
+            url: [_api_url, "report", report_id].join("/"),
+            success: function(data) {
+                if (data.response === "success") {
+                    //update local data
+                        $('#report-modal-form').modal('hide');
+                        Swal.fire(
+                            'Modifié',
+                            'Le rapport \''+report_name+'\' a été modifié',
+                            'success'
+                        )
+
+                } else {
+                    console.log(data);
+                }
+            },
+            complete:function(){
+                _initReports();
+            },
+            error: function(xhr, status, error) {
+                var msg = "erreur " + _config.data_url + " : " + error;
+                console.log(msg);
+            }
+        });
+
+    };
     _deleteReport = function () {
         var report_name = $("#reportInputTitre").val();
-        var report_id = report_name.replace(/[^\w\s]/gi, '').toLowerCase().replace(/ /g, "");
+        var report_id = $("#report_confirmed").attr("data-report-id");
         //Delete Report in db
         Swal.fire({
             title: 'Voulez vous supprimer le rapport \''+report_name+'\' ?',
@@ -296,11 +322,16 @@ admin = (function() {
                     type: "DELETE",
                     url: [_api_url, "report", report_id].join("/"),
                     success: function(data) {
+                        
+                        $('#report-modal-form').modal('hide');
                         Swal.fire(
                             'Supprimé',
-                            'Le raport \''+report_name+'\' a été supprimé',
+                            'Le rapport \''+report_name+'\' a été supprimé',
                             'success'
                         )
+                    },
+                    complete:function(){
+                        _initReports();
                     },
                     error: function(xhr, status, error) {
                         var err = eval("(" + xhr.responseText + ")");
@@ -318,8 +349,7 @@ admin = (function() {
 
     };
     _deleteDataviz = function () {
-        var dataviz_title = $("#reportInputTitre").val();
-        var report_id = dataviz_title.replace(/[^\w\s]/gi, '').toLowerCase().replace(/ /g, "");
+        var dataviz_title = $(".dataviz-title").first().text();
         //Delete Report in db
         Swal.fire({
             title: 'Voulez vous supprimer la dataviz \''+dataviz_title+'\' ?',
@@ -336,13 +366,20 @@ admin = (function() {
                     dataType: "json",
                     contentType:"application/json",
                     type: "DELETE",
-                    url: [_api_url, "report", report_id].join("/"),
+                    url: [_api_url, "store", dataviz_title].join("/"),
                     success: function(data) {
                         Swal.fire(
-                            'Supprimé',
-                            'Le raport \''+dataviz_title+'\' a été supprimé',
+                            'Supprimée',
+                            'La dataviz \''+dataviz_title+'\' a été supprimée',
                             'success'
                         )
+                        var dvz = _dataviz_data[data.dataviz];
+                        $.extend( dvz, data.data );
+                        
+                        $('#dataviz-modal-form').modal('hide');
+                    },
+                    complete: function(){
+                        _initCatalog();
                     },
                     error: function(xhr, status, error) {
                         var err = eval("(" + xhr.responseText + ")");
@@ -359,6 +396,46 @@ admin = (function() {
         
 
     };
+    _updateDataviz = function () {
+        var id = $("#dataviz-modal-form").attr("data-related-id");
+        b = {};
+        a = $("#dataviz-form").serializeArray();
+        a.forEach(function (r) {
+            if (r.value) {
+                b[r.name] = r.value;
+            }
+        });
+        $.ajax({
+            dataType: "json",
+            contentType:"application/json",
+            url: [_api_url, "store", id].join("/"),
+            type: "POST",
+            data: JSON.stringify(b),
+            success: function(data) {
+                if (data.response === "success") {
+                    //update local data
+                    Swal.fire(
+                        'Modifiée',
+                        'La Dataviz \''+id+'\' a été modifiée',
+                        'success'
+                    )
+                    var dvz = _dataviz_data[data.dataviz];
+                    $.extend( dvz, data.data );
+                    $('#dataviz-modal-form').modal('hide');
+                } else {
+                    console.log(data);
+                }
+            },
+            complete:function(){
+                _initCatalog();
+            },
+            error: function(xhr, status, error) {
+                var msg = "erreur " + _api_url + " : " + error;
+                console.log(msg);
+            }
+        });
+
+    };
 
 /*
      * Public
@@ -368,8 +445,10 @@ admin = (function() {
         initCatalog: _initCatalog,
         initReports: _initReports,
         addReport: _addReport,
+        updateReport: _updateReport,
         deleteReport: _deleteReport,
-        deleteDataviz: _deleteDataviz
+        deleteDataviz: _deleteDataviz,
+        updateDataviz: _updateDataviz
     }; // fin return
 
 })();
