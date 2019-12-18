@@ -26,13 +26,13 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" data-page="home">
-        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link">Home</a>
       </li>
       <li class="nav-item active" data-page="catalog" >
-        <a class="nav-link"  href="#catalog">Catalogue</a>
+        <a class="nav-link">Catalogue</a>
       </li>
       <li class="nav-item" data-page="reports" >
-        <a class="nav-link"  href="#reports">Rapports</a>
+        <a class="nav-link">Rapports</a>
       </li>
     </ul>
 
@@ -46,7 +46,7 @@
 
   <div class="container page active" id="catalog">
    <h1>Dataviz</h1>
-   <button type="button" class="btn btn-primary" data-toggle="modal" data-report-new="true" data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
+   <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new" data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#report-modal-form2">Ajouter la sélection à un rapport existant</button>
  </div>
 
@@ -113,7 +113,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="reportModalLabel">Rapport<span class="badge badge-success">New</span><span class="badge badge-warning">Edition</span></h5>
+        <h5 class="modal-title" id="reportModalLabel">Rapport<span class="badge badge-success">New</span><span class="badge badge-warning">Edition</span><span class="badge badge-danger">Supprimer</span></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -131,7 +131,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary" onclick="admin.addReport();">Enregistrer</button>
+        <button id="confirmed" type="button" class="btn btn-primary" onclick="admin.addReport();">Enregistrer</button>
       </div>
     </div>
   </div>
@@ -177,6 +177,9 @@ $("ul.navbar-nav li").each(function() {
 
 </script>
 <style>
+  .nav-item > a{
+    cursor: pointer;
+  }
  .container.page {
     display:none;
  }
@@ -189,17 +192,32 @@ $("ul.navbar-nav li").each(function() {
     float: right;
 }
 
-.modal[data-report-new="true"] .badge-success {
+.modal[data-report-state="new"] .badge-success {
     display: inline-block;
 }
-.modal[data-report-new="false"] .badge-success {
+.modal[data-report-state="edit"] .badge-success {
     display: none;
 }
-.modal[data-report-new="true"] .badge-warning {
+.modal[data-report-state="delete"] .badge-success {
     display: none;
 }
-.modal[data-report-new="false"] .badge-warning {
+.modal[data-report-state="new"] .badge-warning {
+    display: none;
+}
+.modal[data-report-state="delete"] .badge-warning {
+    display: none;
+}
+.modal[data-report-state="edit"] .badge-warning {
     display: inline-block;
+}
+.modal[data-report-state="new"] .badge-danger {
+    display: none;
+}
+.modal[data-report-state="delete"] .badge-danger {
+    display: inline-block;
+}
+.modal[data-report-state="edit"] .badge-danger {
+    display: none;
 }
 </style>
 </body>

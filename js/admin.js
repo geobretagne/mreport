@@ -38,26 +38,40 @@ admin = (function() {
         $('#report-modal-form').on('show.bs.modal', function(e) {
             $(".reports-dataviz .list-group-item").remove();
             var lst = [];
-            var newReport = ($(e.relatedTarget).attr('data-report-new') === "true");
-            $(e.currentTarget).attr("data-report-new", newReport);
-            if (!newReport) {
+            var newReport = $(e.relatedTarget).attr('data-report-state');
+            $(e.currentTarget).attr("data-report-state", newReport);
+            var title = $(e.currentTarget).find('input[name="title"]');
+            var confirmed = $("#confirmed");
+            if (newReport==="edit") {
                 //get data-id attribute of the clicked element
                 var reportId = $(e.relatedTarget).data('report-id');
                 var data= _report_data[reportId];
                 //populate data
-                $(e.currentTarget).find('input[name="title"]').val(data.title);
+                title.val(data.title);
+                title.prop("disabled", false);
                 //data.dataviz = ['epci_title', 'epci_pop'];
                 data.dataviz.forEach(function (dvz) {
                     lst.push('<li data-dataviz="'+dvz+'" data-report="'+reportId+'" class="list-group-item">'+dvz+'<a type="button" class="btn btn-delete btn-default btn-danger">DELETE</a></li>');
                 });
-            } else {
+                confirmed.attr("onclick","admin.addReport();")
+            } else if(newReport==="new") {
+                title.prop("disabled", false);
                 $("input.dataviz-selection:checked").each(function(id, dvz) {
                     var id = $(dvz).closest(".card.dataviz").attr("data-dataviz-id");
                     lst.push('<li data-dataviz="'+id+'" class="list-group-item">'+id+'</li>');
                 });
+                confirmed.attr("onclick","admin.addReport();")
             }
-
-
+            else{
+                var reportId = $(e.relatedTarget).data('report-id');
+                var data= _report_data[reportId];
+                title.val(data.title);
+                title.prop("disabled", true);
+                data.dataviz.forEach(function (dvz) {
+                    lst.push('<li data-dataviz="'+dvz+'" data-report="'+reportId+'" class="list-group-item">'+dvz);
+                });
+                confirmed.attr("onclick","admin.deleteReport();")
+            }
             $(".reports-dataviz").append(lst.join(""));
             $(".reports-dataviz .btn-delete").click(function(e) {
                 e.stopPropagation();
@@ -101,8 +115,8 @@ admin = (function() {
             ['<div class="card dataviz" data-dataviz-id="'+id+'" style="width: 18rem;">',
               '<div class="card-body">',
                 '<h5 class="card-title">'+data.title+'</h5>',
-                '<a href="#" class="card-link" data-toggle="modal" data-report-new="false "data-report-id="'+id+'" data-target="#report-modal-form">Editer</a>',
-                '<a href="#" class="card-link">Supprimer</a>',
+                '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="'+id+'" data-target="#report-modal-form">Editer</a>',
+                '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="'+id+'" data-target="#report-modal-form">Supprimer</a>',
               '</div>',
             '</div>'].join("")
             );
@@ -258,6 +272,30 @@ admin = (function() {
         });
 
     };
+    _deleteReport = function () {
+        var report_name = $("#reportInputTitre").val();
+        var report_id = report_name.replace(/[^\w\s]/gi, '').toLowerCase().replace(/ /g, "");
+        //Delete Report in db
+        $.ajax({
+            dataType: "json",
+            contentType:"application/json",
+            type: "DELETE",
+            url: [_api_url, "report", report_id].join("/"),
+            success: function(data) {
+                if (data.response === "success") {
+                    console.log(data.report);
+
+                } else {
+                    console.log(data);
+                }
+            },
+            error: function(xhr, status, error) {
+                var msg = "erreur " + _config.data_url + " : " + error;
+                console.log(msg);
+            }
+        });
+
+    };
 
 /*
      * Public
@@ -266,7 +304,8 @@ admin = (function() {
     return {
         initCatalog: _initCatalog,
         initReports: _initReports,
-        addReport: _addReport
+        addReport: _addReport,
+        deleteReport: _deleteReport
     }; // fin return
 
 })();
