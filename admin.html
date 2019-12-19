@@ -1,206 +1,302 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
-	<meta charset="utf-8">
-		<head>
-			<title>Admin mReport</title>
-			<meta http-equiv="X-UA-Compatible" content="IE=edge">
-			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<meta charset="utf-8">
 
-            <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
-            <script src="js/admin.js"></script>
+<head>
+  <title>Admin mReport</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
+  </script>
 
-        </head>
-    <body>
-    <body>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <script src="js/admin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse-js-latest@3.1.0/dist/fuse.min.js"></script>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Mreport - admin</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+</head>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" data-page="home">
-        <a class="nav-link" href="#home">Home</a>
-      </li>
-      <li class="nav-item active" data-page="catalog" >
-        <a class="nav-link"  href="#catalog">Catalogue</a>
-      </li>
-      <li class="nav-item" data-page="reports" >
-        <a class="nav-link"  href="#reports">Rapports</a>
-      </li>
-    </ul>
+<body>
 
-  </div>
-</nav>
+  <body>
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Mreport - admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-<div class="container page" id="home">
-   <h1>Intro</h1>
- </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item" data-page="home">
+            <a class="nav-link">Home</a>
+          </li>
+          <li class="nav-item active" data-page="catalog">
+            <a class="nav-link">Catalogue</a>
+          </li>
+          <li class="nav-item" data-page="reports">
+            <a class="nav-link">Rapports</a>
+          </li>
+        </ul>
 
-  <div class="container page active" id="catalog">
-   <h1>Dataviz</h1>
-   <button type="button" class="btn btn-primary" data-toggle="modal" data-report-new="true" data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
-   <button type="button" class="btn btn-success" data-toggle="modal" data-target="#report-modal-form2">Ajouter la sélection à un rapport existant</button>
- </div>
-
-  <div class="container page" id="reports">
-   <h1>Rapports</h1>
- </div>
-
- <!-- Modal dataviz -->
-<div class="modal fade" id="dataviz-modal-form" data-related-id="" tabindex="-1" role="dialog" aria-labelledby="datavizModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="datavizModalLabel">Dataviz</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
-      <div class="modal-body">
-        <form class="form" id="dataviz-form" role="form" autocomplete="off">
-            <div class="form-group">
-                <label for="inputTitle">Titre</label>
+    </nav>
+
+
+    <div class="container page" id="home">
+      <h1>Intro</h1>
+    </div>
+
+    <div class="container page active" id="catalog">
+      <h1>Dataviz</h1>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new"
+        data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#report-modal-form2">Ajouter la
+        sélection à un rapport existant</button>
+      <input id="searchbar" type="text" placeholder="Filtrer le catalogue">
+    </div>
+
+    <div class="container page" id="reports">
+      <h1>Rapports</h1>
+    </div>
+
+    <!-- Modal dataviz -->
+    <div class="modal fade" id="dataviz-modal-form" data-related-id="" tabindex="-1" role="dialog"
+      aria-labelledby="datavizModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="datavizModalLabel"><span class="dataviz-title"></span></span><span class="badge badge-success">New</span><span
+              class="badge badge-warning">Edition</span><span class="badge badge-danger">Supression</span></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form" id="dataviz-form" role="form" autocomplete="off">
+              <div class="form-group">
+                <label for="inputTitle">Dataviz</label>
                 <input type="text" class="form-control" name="title" id="inputTitle" placeholder="Nom de la dataviz">
-            </div>
-            <div class="form-group">
+              </div>
+              <div class="form-group">
                 <label for="inputDescription">Description</label>
-                <input type="text" class="form-control" name="description" id="inputDescription" placeholder="Description">
-            </div>
-            <div class="form-group">
+                <input type="text" class="form-control" name="description" id="inputDescription"
+                  placeholder="Description">
+              </div>
+              <div class="form-group">
                 <label for="inputYear">Millésime</label>
                 <input type="text" class="form-control" name="year" id="inputYear" placeholder="Millésime" required="">
-            </div>
-            <div class="form-group">
+              </div>
+              <div class="form-group">
                 <label for="inputLevel">Niveau</label>
                 <input type="text" class="form-control" name="level" id="inputLevel" placeholder="Niveau" required="">
-            </div>
-            <div class="form-group">
+              </div>
+              <div class="form-group">
                 <label for="inputSource">Source</label>
                 <input type="text" class="form-control" name="source" id="inputSource" placeholder="Source" required="">
-            </div>
-            <div class="form-group">
+              </div>
+              <div class="form-group">
                 <label for="inputType">Type</label>
                 <input type="text" class="form-control" name="type" id="inputType" placeholder="Type" required="">
-            </div>
-            <div class="form-group">
+              </div>
+              <div class="form-group">
                 <label for="inputUnit">Unité</label>
                 <input type="text" class="form-control" name="unit" id="inputUnit" placeholder="Type" required="">
-            </div>
-            <div class="form-group">
+              </div>
+              <div class="form-group">
                 <label for="inputUnit">Job</label>
                 <input type="text" class="form-control" name="job" id="inputJob" placeholder="Type" required="">
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="form-save btn btn-primary">Enregistrer</button>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            <button id="dataviz_confirmed" type="button" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
- <!-- Modal Report-->
- <div class="modal fade" id="report-modal-form" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="reportModalLabel">Rapport<span class="badge badge-success">New</span><span class="badge badge-warning">Edition</span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="form" id="report-form" role="form" autocomplete="off">
-            <div class="form-group">
+    <!-- Modal Report-->
+    <div class="modal fade" id="report-modal-form" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reportModalLabel">Rapport<span class="badge badge-success">New</span><span
+                class="badge badge-warning">Edition</span><span class="badge badge-danger">Supression</span></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form" id="report-form" role="form" autocomplete="off">
+              <div class="form-group">
                 <label for="reportInputTitre">Titre du rapport</label>
-                <input type="text" class="form-control" name="title" id="reportInputTitre" placeholder="Titre" required="true">
-            </div>
-            <h5>Dataviz associées</h5>
-            <ul class="reports-dataviz list-group">
-            </ul>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary" onclick="admin.addReport();">Enregistrer</button>
+                <input type="text" class="form-control" name="title" id="reportInputTitre" placeholder="Titre"
+                  required="true">
+              </div>
+              <h5>Dataviz associées</h5>
+              <ul class="reports-dataviz list-group">
+              </ul>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            <button id="report_confirmed" type="button" class="btn btn-primary"
+              onclick="admin.addReport();">Enregistrer</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Modal Report 2-->
- <div class="modal fade" id="report-modal-form2" tabindex="-1" role="dialog" aria-labelledby="report2ModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="report2ModalLabel">Rapport</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="form" id="toto3" role="form" autocomplete="off">
-             <div class="form-group">
+    <!-- Modal Report 2-->
+    <div class="modal fade" id="report-modal-form2" tabindex="-1" role="dialog" aria-labelledby="report2ModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="report2ModalLabel">Rapport</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form" id="toto3" role="form" autocomplete="off">
+              <div class="form-group">
                 <label for="selectedReport">Rapport sélectionné</label>
                 <select class="form-control" id="selectedReport">
                 </select>
               </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary" onclick="admin.createReport();">Enregistrer</button>
+              <h5>Dataviz associées</h5>
+              <ul class="reports-dataviz-exist list-group">
+              </ul>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            <button type="button" class="btn btn-primary" onclick="admin.createReport();">Enregistrer</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
 
-<script>
+    <script>
+      $("ul.navbar-nav li").each(function () {
+        $(this).on("click", function () {
+          $(".container.page, .nav-item").removeClass("active");
+          $("#" + $(this).attr("data-page")).addClass("active");
+          $(this).addClass("active");
+        });
+      });
+    </script>
+    <style>
+      .nav-item>a {
+        cursor: pointer;
+      }
 
-$("ul.navbar-nav li").each(function() {
-    $(this).on("click", function() {
-        $(".container.page, .nav-item").removeClass("active");
-        $("#" + $(this).attr("data-page")).addClass("active");
-        $(this).addClass("active");
-    });
-});
+      .container.page {
+        display: none;
+      }
 
-</script>
-<style>
- .container.page {
-    display:none;
- }
+      .active.container.page {
+        display: block;
+      }
 
- .active.container.page {
-    display:block;
- }
- .reports-dataviz a.btn-default {
-    right: 0px;
-    float: right;
-}
+      .reports-dataviz a.btn-default {
+        right: 0px;
+        float: right;
+      }
+      h5 > .badge{
+        margin-left: 10px;
+      }
+      .modal[data-report-state="new"] .badge-success {
+        display: inline-block;
+      }
 
-.modal[data-report-new="true"] .badge-success {
-    display: inline-block;
-}
-.modal[data-report-new="false"] .badge-success {
-    display: none;
-}
-.modal[data-report-new="true"] .badge-warning {
-    display: none;
-}
-.modal[data-report-new="false"] .badge-warning {
-    display: inline-block;
-}
-</style>
-</body>
+      .modal[data-report-state="edit"] .badge-success {
+        display: none;
+      }
+
+      .modal[data-report-state="delete"] .badge-success {
+        display: none;
+      }
+
+      .modal[data-report-state="new"] .badge-warning {
+        display: none;
+      }
+
+      .modal[data-report-state="delete"] .badge-warning {
+        display: none;
+      }
+
+      .modal[data-report-state="edit"] .badge-warning {
+        display: inline-block;
+      }
+
+      .modal[data-report-state="new"] .badge-danger {
+        display: none;
+      }
+
+      .modal[data-report-state="delete"] .badge-danger {
+        display: inline-block;
+      }
+
+      .modal[data-report-state="edit"] .badge-danger {
+        display: none;
+      }
+
+
+      .modal[data-dataviz-state="new"] .badge-success {
+        display: inline-block;
+      }
+
+      .modal[data-dataviz-state="edit"] .badge-success {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="delete"] .badge-success {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="new"] .badge-warning {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="delete"] .badge-warning {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="edit"] .badge-warning {
+        display: inline-block;
+      }
+
+      .modal[data-dataviz-state="new"] .badge-danger {
+        display: none;
+      }
+
+      .modal[data-dataviz-state="delete"] .badge-danger {
+        display: inline-block;
+      }
+
+      .modal[data-dataviz-state="edit"] .badge-danger {
+        display: none;
+      }
+      .reports-dataviz li:not(.item2keep) .btn-delete{
+        background-color: green;
+      }
+      .reports-dataviz .item2keep .btn-delete{
+        background-color: red;
+      }
+    </style>
+  </body>
+
 </html>
