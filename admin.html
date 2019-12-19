@@ -173,6 +173,9 @@
                 <select class="form-control" id="selectedReport">
                 </select>
               </div>
+              <h5>Dataviz associées</h5>
+              <ul class="reports-dataviz-exist list-group">
+              </ul>
             </form>
           </div>
           <div class="modal-footer">
@@ -285,7 +288,12 @@
       .modal[data-dataviz-state="edit"] .badge-danger {
         display: none;
       }
-      
+      .reports-dataviz li:not(.item2keep) .btn-delete{
+        background-color: green;
+      }
+      .reports-dataviz .item2keep .btn-delete{
+        background-color: red;
+      }
     </style>
   </body>
 
