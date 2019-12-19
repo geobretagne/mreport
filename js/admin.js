@@ -183,7 +183,8 @@ admin = (function () {
                         "description",
                         "year",
                         "level",
-                        "source"
+                        "source",
+                        "job"
                     ]
                 };
                 var fuse = new Fuse(data.datavizs, options);
