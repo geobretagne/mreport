@@ -53,7 +53,7 @@ admin = (function () {
                 title.prop("disabled", false);
                 //data.dataviz = ['epci_title', 'epci_pop'];
                 data.dataviz.forEach(function (dvz) {
-                    if(dvz!=null)
+                    if (dvz != null)
                         lst.push('<li data-dataviz="' + dvz + '" data-report="' + reportId + '" class="list-group-item item2keep"><span>' + dvz + '</span><a type="button" class="btn btn-delete btn-default btn-danger">Delete</a></li>');
                 });
                 confirmed.attr("onclick", "admin.updateReport();");
@@ -73,7 +73,7 @@ admin = (function () {
                 title.val(data.title);
                 title.prop("disabled", true);
                 data.dataviz.forEach(function (dvz) {
-                    if(dvz!=null)
+                    if (dvz != null)
                         lst.push('<li data-dataviz="' + dvz + '" data-report="' + reportId + '" class="list-group-item">' + dvz);
                 });
                 confirmed.attr("onclick", "admin.deleteReport();");
@@ -161,7 +161,9 @@ admin = (function () {
             $(formId + ' .form-control[name="' + key + '"]').val(value);
         }
     };
+    var _filterSearchBar = function (result, divs) {
 
+    };
     var _initCatalog = function () {
         $.ajax({
             dataType: "json",
@@ -169,6 +171,43 @@ admin = (function () {
             success: function (data) {
                 _dataviz_data = _arr2dic(data.datavizs, "dataviz");
                 _showDataviz();
+                var options = {
+                    tokenize: true,
+                    threshold: 0.2,
+                    location: 0,
+                    distance: 200,
+                    maxPatternLength: 40,
+                    minMatchCharLength: 1,
+                    keys: [
+                        "title",
+                        "description",
+                        "year",
+                        "level",
+                        "source"
+                    ]
+                };
+                var fuse = new Fuse(data.datavizs, options);
+                $("#searchbar").on("keyup", function () {
+
+                    var result = fuse.search($(this).val());
+                    var divs = $(".card.dataviz");
+                    if ($(this).val() != "") {
+                        divs.css("display", "none");
+                    } else {
+                        divs.css("display", "block");
+                    }
+                    display = [];
+                    result.forEach(function (elem) {
+                        divs.each(function () {
+                            if (elem.dataviz == $(this).attr("data-dataviz-id")) {
+                                display.push($(this));
+                            }
+                        });
+                    });
+                    display.forEach(function (elem) {
+                        elem.css("display", "block");
+                    });
+                });
             },
             error: function (xhr, status, error) {
                 var msg = "erreur " + _api_url + " : " + error;
@@ -249,10 +288,9 @@ admin = (function () {
                             "dataviz": $(dvz).attr("data-dataviz")
                         });
                     });
-                    if(datavizs.length>0){
+                    if (datavizs.length > 0) {
                         _addDatavizToReport(data.report, datavizs);
-                    }
-                    else{
+                    } else {
                         _initReports();
                     }
                     $('#report-modal-form').modal('hide');

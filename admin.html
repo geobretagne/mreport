@@ -19,6 +19,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <script src="js/admin.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse-js-latest@3.1.0/dist/fuse.min.js"></script>
 
 </head>
 
@@ -60,6 +61,7 @@
         data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
       <button type="button" class="btn btn-success" data-toggle="modal" data-target="#report-modal-form2">Ajouter la
         sélection à un rapport existant</button>
+      <input id="searchbar" type="text" placeholder="Filtrer le catalogue">
     </div>
 
     <div class="container page" id="reports">
