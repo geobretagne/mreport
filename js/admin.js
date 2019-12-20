@@ -4,6 +4,8 @@ admin = (function () {
      */
     var _api_url = "http://localhost/api";
 
+    var _url = "http://localhost/mreport/";
+
     var _dataviz_data = {};
 
     var _report_data = {};
@@ -122,6 +124,7 @@ admin = (function () {
                     '<h5 class="card-title">' + data.title + '</h5>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Editer</a>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + id + '" data-target="#report-modal-form">Supprimer</a>',
+                    '<a href="' + _url + id + '" target="_blank" class="card-link">Composeur</a>',
                     '</div>',
                     '</div>',
                     '</div>'
@@ -142,7 +145,7 @@ admin = (function () {
             var id = a[0];
             var data = a[1];
             cards.push(
-                [   '<div class="col-md-3 py-2">',
+                ['<div class="col-md-3 py-2">',
                     '<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
                     '<div class="card-body">',
                     '<h5 class="card-title">' + data.title + '</h5>',
@@ -303,11 +306,21 @@ admin = (function () {
                         _initReports();
                     }
                     $('#report-modal-form').modal('hide');
-                    Swal.fire(
-                        'Créé',
-                        'Le rapport \'' + report_name + '\' a été créé',
-                        'success'
-                    );
+                    Swal.fire({
+                        title: 'Créé',
+                        text: "Le rapport \'" + report_name + "'\' a été créé",
+                        icon: 'success',
+                        showCancelButton: true,
+                        cancelButtonText: 'Ok',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#32CD32',
+                        confirmButtonText: 'Composeur'
+                    }).then((result) => {
+                        if (result.value) {
+                            window.open(_url+report_id,"_blank");
+                        }
+                    });
+
                 } else {
                     console.log(data);
                 }

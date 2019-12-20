@@ -134,6 +134,7 @@ report = (function() {
                     _getCss();
                 },
                 error: function(xhr, status, err) {
+                    console.log(_home);
                     _alert("Erreur avec le rapport " + _home + " " + err, "danger", true);
                 }
             });
