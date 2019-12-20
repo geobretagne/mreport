@@ -4,8 +4,6 @@ admin = (function () {
      */
     var _api_url = "http://localhost/api";
 
-    var _url = "http://localhost/mreport/";
-
     var _dataviz_data = {};
 
     var _report_data = {};
@@ -122,9 +120,9 @@ admin = (function () {
                     '<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
                     '<div class="card-body">',
                     '<h5 class="card-title">' + data.title + '</h5>',
-                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Editer</a>',
+                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Sourcer</a>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + id + '" data-target="#report-modal-form">Supprimer</a>',
-                    '<a href="' + _url + id + '" target="_blank" class="card-link">Composeur</a>',
+                    '<a href="./' + id + '" target="_blank" class="card-link">Composer</a>',
                     '</div>',
                     '</div>',
                     '</div>'
@@ -317,7 +315,7 @@ admin = (function () {
                         confirmButtonText: 'Composeur'
                     }).then((result) => {
                         if (result.value) {
-                            window.open(_url+report_id,"_blank");
+                            window.open('./' + report_id,"_blank");
                         }
                     });
 
