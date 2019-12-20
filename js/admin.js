@@ -194,20 +194,16 @@ admin = (function () {
                     var divs = $(".card.dataviz");
                     if ($(this).val() != "") {
                         divs.css("display", "none");
+                        result.forEach(function (elem) {
+                            divs.each(function () {
+                                if (elem.dataviz == $(this).attr("data-dataviz-id")) {
+                                    $(this).css("display","block");
+                                }
+                            });
+                        });
                     } else {
                         divs.css("display", "block");
                     }
-                    display = [];
-                    result.forEach(function (elem) {
-                        divs.each(function () {
-                            if (elem.dataviz == $(this).attr("data-dataviz-id")) {
-                                display.push($(this));
-                            }
-                        });
-                    });
-                    display.forEach(function (elem) {
-                        elem.css("display", "block");
-                    });
                 });
             },
             error: function (xhr, status, error) {
