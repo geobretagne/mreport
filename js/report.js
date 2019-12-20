@@ -96,14 +96,17 @@ report = (function() {
                 '/:report': function (params) {
                     APIRequest = params;
                     _home += params.report + "/";
+                    _reportName = params.report;
                 },
                 '/:report/:dataid': function (params) {
                     APIRequest = params;
                     _home += params.report + "/";
+                    _reportName = params.report;
                 },
                 '/:report/:dataid/:dataviz': function (params) {
                     APIRequest = params;
                     _home += params.report + "/";
+                    _reportName = params.report;
                 },
 
             })

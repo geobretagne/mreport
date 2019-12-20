@@ -6,6 +6,8 @@ wizard = (function() {
 
 	_notSavedDataviz = [];
 
+    _api_url = "http://localhost/api"
+
     var _showIndicateurProperties = function(ind) {
         $(".wizard-code").hide();
         $("#dataviz-attributes").hide();
@@ -156,16 +158,16 @@ wizard = (function() {
 		console.log(newDom);
 		$.ajax({
             type: "POST",
-            url: "srv/save.php?report=" + _report.name,
+            url: [_api_url, "report_html", _report.name].join("/"),
             data: newDom,
             dataType: 'json',
             contentType: 'text/html',
             success: function( response ) {
-				if (response.success) {
+				if (response.response === "success") {
 					 _notSavedDataviz = [];
 					document.location.reload(true);
 				} else {
-					alert("enregistrement échec")
+					alert("enregistrement échec :" + response.response)
 				}
 
 			},
