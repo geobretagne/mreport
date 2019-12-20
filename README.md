@@ -93,11 +93,11 @@ ECLUSE_1 | chart_1 | 1 | 11 | 19h-20h | 1
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | table_1 | 1 | 1 | Mois | Janvier |
-ECLUSE_1 | table_1 | 2 | 2 | Passage | 12 |
+ECLUSE_1 | table_1 | 2 | 1 | Passage | 12 |
 ECLUSE_1 | table_1 | 1 | 2 | Mois | Février |
 ECLUSE_1 | table_1 | 2 | 2 | Passage | 22 |
 ECLUSE_1 | table_1 | 1 | 3 | Mois | Mars |
-ECLUSE_1 | table_1 | 2 | 2 | Passage | 222
+ECLUSE_1 | table_1 | 2 | 3 | Passage | 222
 
 ![table_1](img/table_1.png?raw=true "table_1")
 
