@@ -116,11 +116,13 @@ admin = (function () {
             var id = a[0];
             var data = a[1];
             cards.push(
-                ['<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
+                ['<div class="col-md-3 py-2">',
+                    '<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
                     '<div class="card-body">',
                     '<h5 class="card-title">' + data.title + '</h5>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Editer</a>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + id + '" data-target="#report-modal-form">Supprimer</a>',
+                    '</div>',
                     '</div>',
                     '</div>'
                 ].join("")
