@@ -57,11 +57,16 @@
 
     <div class="container page active" id="catalog">
       <h1>Dataviz</h1>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new"
-        data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
-      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#report-modal-form2">Ajouter la
-        sélection à un rapport existant</button>
-      <input id="searchbar" type="text" placeholder="Filtrer le catalogue">
+      <div id="sticky" class="row">
+        <button type="button" class="btn btn-primary col-md-4 marginR10" data-toggle="modal" data-report-state="new"
+          data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
+        <button type="button" class="btn btn-success col-md-4 marginR10" data-toggle="modal" data-target="#report-modal-form2">Ajouter la
+          sélection à un rapport existant</button>
+        <div class="form-group"></div>
+          <input id="searchbar" class="form-control col-md-3" placeholder="Filtrer le catalogue">
+        </div>
+      </div>
+
     </div>
 
     <div class="container page" id="reports">
@@ -74,8 +79,9 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="datavizModalLabel"><span class="dataviz-title"></span></span><span class="badge badge-success">New</span><span
-              class="badge badge-warning">Edition</span><span class="badge badge-danger">Supression</span></h5>
+            <h5 class="modal-title" id="datavizModalLabel"><span class="dataviz-title"></span></span><span
+                class="badge badge-success">New</span><span class="badge badge-warning">Edition</span><span
+                class="badge badge-danger">Supression</span></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -199,6 +205,23 @@
       });
     </script>
     <style>
+      .card {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        border: unset;
+        border-radius: 2px;
+        height: 100%;
+      }
+
+      .btn {
+        letter-spacing: .5px;
+        border: none;
+        border-radius: 2px;
+        line-height: 36px;
+        padding: 0 16px;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+
+      }
+
       .nav-item>a {
         cursor: pointer;
       }
@@ -211,13 +234,15 @@
         display: block;
       }
 
-      .reports-dataviz a.btn-default {
+      .reports-dataviz button.btn-delete {
         right: 0px;
         float: right;
       }
-      h5 > .badge{
+
+      h5>.badge {
         margin-left: 10px;
       }
+
       .modal[data-report-state="new"] .badge-success {
         display: inline-block;
       }
@@ -290,11 +315,33 @@
       .modal[data-dataviz-state="edit"] .badge-danger {
         display: none;
       }
-      .reports-dataviz li:not(.item2keep) .btn-delete{
-        background-color: green;
+
+      .reports-dataviz li:not(.item2keep) .btn-delete {
+        background-color: rgb(24, 218, 24);
       }
-      .reports-dataviz .item2keep .btn-delete{
-        background-color: red;
+
+      .reports-dataviz .item2keep .btn-delete {
+        background-color: rgb(255, 41, 41)(233, 40, 40);
+      }
+      .container{
+        padding: 0;
+      }
+      .marginR10{
+        margin-right: 10px;
+      }
+      .card-body{
+        padding: 0.6rem;
+      }
+      .col-md-3{
+        padding-left: 0;
+      }
+      #sticky{
+        z-index: 2;
+        position: sticky;
+        top: 0;
+        background: white;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+        padding:10px;
       }
     </style>
   </body>
