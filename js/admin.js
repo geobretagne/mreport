@@ -31,8 +31,12 @@ admin = (function () {
                 _appendReports();
             },
             error: function (xhr, status, error) {
-                var msg = "erreur " + _api_url + " : " + error;
-                console.log(msg);
+                var err = eval("(" + xhr.responseText + ")");
+                Swal.fire(
+                    'Une erreur s\'est produite',
+                    err.response,
+                    'error'
+                );
             }
         });
         $('#report-modal-form').on('show.bs.modal', function (e) {
@@ -183,7 +187,8 @@ admin = (function () {
                         "description",
                         "year",
                         "level",
-                        "source"
+                        "source",
+                        "job"
                     ]
                 };
                 var fuse = new Fuse(data.datavizs, options);
@@ -193,25 +198,25 @@ admin = (function () {
                     var divs = $(".card.dataviz");
                     if ($(this).val() != "") {
                         divs.css("display", "none");
+                        result.forEach(function (elem) {
+                            divs.each(function () {
+                                if (elem.dataviz == $(this).attr("data-dataviz-id")) {
+                                    $(this).css("display", "block");
+                                }
+                            });
+                        });
                     } else {
                         divs.css("display", "block");
                     }
-                    display = [];
-                    result.forEach(function (elem) {
-                        divs.each(function () {
-                            if (elem.dataviz == $(this).attr("data-dataviz-id")) {
-                                display.push($(this));
-                            }
-                        });
-                    });
-                    display.forEach(function (elem) {
-                        elem.css("display", "block");
-                    });
                 });
             },
             error: function (xhr, status, error) {
-                var msg = "erreur " + _api_url + " : " + error;
-                console.log(msg);
+                var err = eval("(" + xhr.responseText + ")");
+                Swal.fire(
+                    'Une erreur s\'est produite',
+                    err.response,
+                    'error'
+                );
             }
         });
         $('#dataviz-modal-form').on('show.bs.modal', function (e) {
@@ -340,6 +345,7 @@ admin = (function () {
                 _initReports();
             },
             error: function (xhr, status, error) {
+                $('#report-modal-form2').modal('hide');
                 var err = eval("(" + xhr.responseText + ")");
                 Swal.fire(
                     'Une erreur s\'est produite',
@@ -379,8 +385,13 @@ admin = (function () {
                 }
             },
             error: function (xhr, status, error) {
-                var msg = "erreur " + _config.data_url + " : " + error;
-                console.log(msg);
+                $('#report-modal-form').modal('hide');
+                var err = eval("(" + xhr.responseText + ")");
+                Swal.fire(
+                    'Une erreur s\'est produite',
+                    err.response,
+                    'error'
+                );
             }
         });
     }
@@ -418,8 +429,13 @@ admin = (function () {
                 }
             },
             error: function (xhr, status, error) {
-                var msg = "erreur " + _config.data_url + " : " + error;
-                console.log(msg);
+                $('#report-modal-form').modal('hide');
+                var err = eval("(" + xhr.responseText + ")");
+                Swal.fire(
+                    'Une erreur s\'est produite',
+                    err.response,
+                    'error'
+                )
             }
         });
 
@@ -457,6 +473,7 @@ admin = (function () {
                         _initReports();
                     },
                     error: function (xhr, status, error) {
+                        $('#report-modal-form').modal('hide');
                         var err = eval("(" + xhr.responseText + ")");
                         Swal.fire(
                             'Une erreur s\'est produite',
@@ -505,6 +522,7 @@ admin = (function () {
                         _initCatalog();
                     },
                     error: function (xhr, status, error) {
+                        $('#dataviz-modal-form').modal('hide');
                         var err = eval("(" + xhr.responseText + ")");
                         Swal.fire(
                             'Une erreur s\'est produite',
@@ -553,8 +571,13 @@ admin = (function () {
                 _initCatalog();
             },
             error: function (xhr, status, error) {
-                var msg = "erreur " + _api_url + " : " + error;
-                console.log(msg);
+                $('#dataviz-modal-form').modal('hide');
+                var err = eval("(" + xhr.responseText + ")");
+                Swal.fire(
+                    'Une erreur s\'est produite',
+                    err.response,
+                    'error'
+                )
             }
         });
 
