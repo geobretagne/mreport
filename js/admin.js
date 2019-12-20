@@ -58,7 +58,7 @@ admin = (function () {
                 //data.dataviz = ['epci_title', 'epci_pop'];
                 data.dataviz.forEach(function (dvz) {
                     if (dvz != null)
-                        lst.push('<li data-dataviz="' + dvz + '" data-report="' + reportId + '" class="list-group-item item2keep"><span>' + dvz + '</span><a type="button" class="btn btn-delete btn-default btn-danger">Delete</a></li>');
+                        lst.push('<li data-dataviz="' + dvz + '" data-report="' + reportId + '" class="list-group-item item2keep"><span>' + dvz + '</span><button type="button" class="btn btn-delete btn-danger">Delete</button></li>');
                 });
                 confirmed.attr("onclick", "admin.updateReport();");
                 confirmed.html("Enregistrer");
@@ -116,11 +116,13 @@ admin = (function () {
             var id = a[0];
             var data = a[1];
             cards.push(
-                ['<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
+                ['<div class="col-md-3 py-2">',
+                    '<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
                     '<div class="card-body">',
                     '<h5 class="card-title">' + data.title + '</h5>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Editer</a>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + id + '" data-target="#report-modal-form">Supprimer</a>',
+                    '</div>',
                     '</div>',
                     '</div>'
                 ].join("")
@@ -140,7 +142,8 @@ admin = (function () {
             var id = a[0];
             var data = a[1];
             cards.push(
-                ['<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
+                [   '<div class="col-md-3 py-2">',
+                    '<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
                     '<div class="card-body">',
                     '<h5 class="card-title">' + data.title + '</h5>',
                     '<h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">' + data.level + '</span><span class="badge badge-warning">' + data.job + '</span></h6>',
@@ -151,6 +154,7 @@ admin = (function () {
                     '</div>',
                     '<a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Editer</a>',
                     '<a href="#" data-dataviz-state="delete" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Supprimer</a>',
+                    '</div>',
                     '</div>',
                     '</div>'
                 ].join("")
@@ -197,16 +201,16 @@ admin = (function () {
                     var result = fuse.search($(this).val());
                     var divs = $(".card.dataviz");
                     if ($(this).val() != "") {
-                        divs.css("display", "none");
+                        divs.parent().css("display", "none");
                         result.forEach(function (elem) {
                             divs.each(function () {
                                 if (elem.dataviz == $(this).attr("data-dataviz-id")) {
-                                    $(this).css("display", "block");
+                                    $(this).parent().css("display", "block");
                                 }
                             });
                         });
                     } else {
-                        divs.css("display", "block");
+                        divs.parent().css("display", "block");
                     }
                 });
             },
