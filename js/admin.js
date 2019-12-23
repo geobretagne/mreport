@@ -111,7 +111,7 @@ admin = (function () {
 
         var cards = [];
         var options = [];
-        $("#reports .container").remove();
+        $("#reports .row").remove();
         Object.entries(_report_data).forEach(function (a) {
             var id = a[0];
             var data = a[1];
@@ -138,7 +138,7 @@ admin = (function () {
     var _showDataviz = function () {
 
         var cards = [];
-        $("#catalog .container").remove();
+        $("#catalog .row:nth-of-type(2)").remove();
         Object.entries(_dataviz_data).forEach(function (a) {
             var id = a[0];
             var data = a[1];
@@ -530,7 +530,6 @@ admin = (function () {
                         )
                         var dvz = _dataviz_data[data.dataviz];
                         $.extend(dvz, data.data);
-
                         $('#dataviz-modal-form').modal('hide');
                     },
                     complete: function () {
