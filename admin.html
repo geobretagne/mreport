@@ -49,27 +49,35 @@
 
     <div class="container-fluid page active" id="catalog">
       <h1>Sources de données associées</h1>
-      <div id="sticky" class="row">
-        <div class="col-md-3 col-sm-12">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new"
-            data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
-        </div>
-        <div class="col-md-3 col-sm-12">
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#report-modal-form2">Ajouter la
-            sélection à un rapport existant</button>
-        </div>
-        <div class="col-md-3 col-sm-12">
-          <input id="searchbar" class="form-control" placeholder="Filtrer le catalogue">
-        </div>
-        
-        <div class="col-md-2 col-sm-6">
-          <div class="custom-control custom-checkbox pt-2">
-            <input type="checkbox" id="checkAll" class="custom-control-input" name="checkAll">
-            <label class="custom-control-label" for="checkAll">Tout sélectionner</label>
+      <div id="filterbutton" class="row sticky-sm">
+        <button class="btn d-md-none col-12" data-toggle="collapse" data-target="#stickycollapse">
+          Outils<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div id="stickycollapse" class="collapse d-md-block sticky">
+        <div id="sticky" class="row">
+          <div class="col-md-3 col-12">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new"
+              data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
           </div>
-        </div>
-        <div class="col-md-1 col-sm-6">
-          <button id="resetfilters" type="button" class="btn btn-primary">Reset</button>
+          <div class="col-md-3 col-12">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#report-modal-form2">Ajouter
+              la
+              sélection à un rapport existant</button>
+          </div>
+          <div class="col-md-3 col-12">
+            <input id="searchbar" class="form-control" placeholder="Filtrer le catalogue">
+          </div>
+
+          <div class="col-md-2 col-12">
+            <div class="custom-control custom-checkbox pt-2">
+              <input type="checkbox" id="checkAll" class="custom-control-input" name="checkAll">
+              <label class="custom-control-label" for="checkAll">Tout sélectionner</label>
+            </div>
+          </div>
+          <div class="col-md-1 col-12">
+            <button id="resetfilters" type="button" class="btn btn-primary">Reset</button>
+          </div>
         </div>
       </div>
     </div>
@@ -226,10 +234,12 @@
       padding: 0 16px;
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
     }
-    #sticky .btn{
+
+    #sticky .btn {
       width: 100%;
       font-size: 0.75rem;
     }
+
     .nav-item>a {
       cursor: pointer;
     }
@@ -323,22 +333,28 @@
     .modal[data-dataviz-state="edit"] .badge-danger {
       display: none;
     }
+
     .container-fluid {
       padding: 15px;
       padding-right: 0;
     }
+
     .card-body {
       padding: 0.6rem;
     }
+
     .cards {
       padding-left: 0;
       padding-bottom: 15px;
+      padding-top: 5px;
     }
-    .row{
+
+    .row {
       margin-left: 0;
       margin-right: 0;
     }
-    #sticky {
+
+    .sticky {
       z-index: 2;
       position: sticky;
       top: 0;
@@ -348,8 +364,25 @@
       margin-right: 15px;
       margin-bottom: 15px;
     }
-    .hidden{
+    .sticky-sm {
+      z-index: 2;
+      position: sticky;
+      top: 0;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+      padding: 0;
+      margin-right: 15px;
+    }
+    @media (max-width: 767px){
+      .sticky {
+        top: 36px;
+      }
+    }
+    .hidden {
       display: none;
+    }
+    #filterbutton button{
+      margin-bottom: 0;
+      background-color: white;
     }
   </style>
 </body>
