@@ -90,9 +90,17 @@ admin = (function () {
                 var item = $(this).parent();
                 item.toggleClass("item2keep");
                 if (item.hasClass("item2keep"))
-                    $(this).text("Delete")
-                else
-                    $(this).text("Keep")
+                {
+                    $(this).text("Delete");
+                    $(this).removeClass("btn-success");
+                    $(this).addClass("btn-danger");
+                } 
+                else{
+                    $(this).text("Keep");
+                    $(this).removeClass("btn-danger");
+                    $(this).addClass("btn-success");
+                }
+                    
 
             });
         });
@@ -162,7 +170,7 @@ admin = (function () {
             );
         });
 
-        $("#catalog").append('<div class="row">' + cards.join("") + '</div>');
+        $("#catalog").append('<div id="dataviz-cards" class="row">' + cards.join("") + '</div>');
     };
 
     var _populateForm = function (formId, data) {
@@ -202,16 +210,16 @@ admin = (function () {
                     var result = fuse.search($(this).val());
                     var divs = $(".card.dataviz");
                     if ($(this).val() != "") {
-                        divs.parent().css("display", "none");
+                        divs.parent().addClass("hidden");
                         result.forEach(function (elem) {
                             divs.each(function () {
                                 if (elem.dataviz == $(this).attr("data-dataviz-id")) {
-                                    $(this).parent().css("display", "block");
+                                    $(this).parent().removeClass("hidden");
                                 }
                             });
                         });
                     } else {
-                        divs.parent().css("display", "block");
+                        divs.parent().removeClass("hidden");
                     }
                 });
             },
@@ -242,6 +250,13 @@ admin = (function () {
             $(e.currentTarget).attr("data-related-id", datavizId);
             $(e.currentTarget).find(".dataviz-title").text(datavizId);
             _populateForm('#dataviz-form', _dataviz_data[datavizId]);
+        });
+        $("#checkAll").click(function () {
+            $("#dataviz-cards .cards:not(.hidden) .dataviz-selection").prop('checked', $(this).prop('checked'));
+        });
+        $("#resetfilters").click(function () {
+            $(".dataviz-selection").prop('checked', false);
+            $("#checkAll").prop('checked', false);
         });
     };
 
