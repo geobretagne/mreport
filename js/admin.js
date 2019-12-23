@@ -116,8 +116,8 @@ admin = (function () {
             var id = a[0];
             var data = a[1];
             cards.push(
-                ['<div class="col-md-3 py-2">',
-                    '<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
+                ['<div class="col-md-3 col-sm-12 cards">',
+                    '<div class="card report" data-dataviz-id="' + id + '">',
                     '<div class="card-body">',
                     '<h5 class="card-title">' + data.title + '</h5>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Sourcer</a>',
@@ -131,7 +131,7 @@ admin = (function () {
             options.push('<option value="' + id + '">' + data.title + '</option>');
         });
 
-        $("#reports").append('<div class="container"><div class="row">' + cards.join("") + '</div></div>');
+        $("#reports").append('<div class="row">' + cards.join("") + '</div>');
         $("#selectedReport").html(options.join(""));
     };
 
@@ -143,8 +143,8 @@ admin = (function () {
             var id = a[0];
             var data = a[1];
             cards.push(
-                ['<div class="col-md-3 py-2">',
-                    '<div class="card dataviz" data-dataviz-id="' + id + '" style="width: 18rem;">',
+                ['<div class="col-md-3 col-sm-12 cards">',
+                    '<div class="card dataviz" data-dataviz-id="' + id + '">',
                     '<div class="card-body">',
                     '<h5 class="card-title">' + data.title + '</h5>',
                     '<h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">' + data.level + '</span><span class="badge badge-warning">' + data.job + '</span></h6>',
@@ -162,7 +162,7 @@ admin = (function () {
             );
         });
 
-        $("#catalog").append('<div class="container"><div class="row">' + cards.join("") + '</div></div>');
+        $("#catalog").append('<div class="row">' + cards.join("") + '</div>');
     };
 
     var _populateForm = function (formId, data) {
