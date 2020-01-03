@@ -1,0 +1,208 @@
+﻿.sidenav {
+  height: 100%;
+  width: 170px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+.grid-square {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    background-color: #fff;
+    border: solid 1px rgb(0,0,0,0.2);
+    padding: 10px;
+    margin: 12px;
+}
+
+.builder .lyrow {
+    position: relative;
+}
+
+.builder.edit .composition {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin-left: 0px;
+    margin-top: 10px;
+    padding: 30px 15px 15px;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    position: relative;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.builder.edit .composition .remove {
+    background: #E91E63;
+    font-size: 13px;
+    padding: 6px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+}
+
+.builder .composition .row {
+    background-color: #F5F5F5;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 4px 4px 4px;
+    margin: 15px 0;
+    position: relative;
+    padding: 25px 14px 0;
+}
+
+.builder .column {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 4px 4px 4px;
+    margin: 15px 0;
+    padding: 39px 19px 24px;
+    position: relative;
+}
+
+.builder.edit .column:after {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 4px 0;
+    color: #9DA0A4;
+    content: "Column";
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;
+}
+
+.builder.edit .composition .row:before {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 4px 0;
+    color: #9DA0A4;
+    content: "Row";
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    line-height: 2;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;
+}
+
+.builder.edit .composition .remove {
+    background: #E91E63;
+    font-size: 13px;
+    padding: 6px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+}
+
+.builder .composition .drag, .builder .composition .remove {
+    filter: alpha(opacity=20);
+    opacity: 0.2;
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -ms-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    transition: all 500ms ease;
+}
+
+.builder.edit .composition .lyrow .drag {
+    font-size: 13px;
+    top: 5px;
+    right: 90px;
+    z-index: 10;
+}
+
+
+.builder .composition .drag, .builder .composition .remove {
+    filter: alpha(opacity=20);
+    opacity: 0.2;
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -ms-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    transition: all 500ms ease;
+}
+
+.builder.edit .drag {
+    background: #3095b4;
+    color: white;
+    position: absolute;
+    top: -1px;
+    right: 0;
+    cursor: pointer;
+    padding: 6px;
+    font-size: 14px;
+}
+
+.builder.edit .remove {
+    cursor: pointer;
+}
+
+.builder .composition .lyrow:hover > .drag, .builder .composition .lyrow:hover > .configuration, .builder .composition .lyrow:hover > .remove, .builder .composition .box:hover .drag, .builder .composition .box:hover .configuration, .builder .composition .box:hover .remove {
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+
+.builder .sidenav .view, .builder .sidenav .remove, .builder .sidenav .configuration, .builder .sidenav .boxes {
+    display: none;
+}
+
+.builder .sidenav .sortable-drag .configuration, .builder .sidenav .sortable-drag .boxes {
+    display: block;
+}
+
+.builder .sidenav .sortable-drag .view {
+    display: flex;
+}
+
+
+.builder .composition .preview {
+    display: none;
+}
+
+#structure-models, #dataviz-items {
+    padding: 10px;
+}
+
+.composition {
+    min-height: 250px;
+}

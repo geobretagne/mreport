@@ -22,6 +22,16 @@ admin = (function () {
         return dic;
     };
 
+    var _initMenu = function() {
+        $("ul.navbar-nav li").each(function () {
+          $(this).on("click", function () {
+            $(".container-fluid.page, .nav-item").removeClass("active");
+            $("#" + $(this).attr("data-page")).addClass("active");
+            $(this).addClass("active");
+          });
+        });
+    };
+
     var _initReports = function () {
         $.ajax({
             dataType: "json",
@@ -90,17 +100,9 @@ admin = (function () {
                 var item = $(this).parent();
                 item.toggleClass("item2keep");
                 if (item.hasClass("item2keep"))
-                {
-                    $(this).text("Delete");
-                    $(this).removeClass("btn-success");
-                    $(this).addClass("btn-danger");
-                } 
-                else{
-                    $(this).text("Keep");
-                    $(this).removeClass("btn-danger");
-                    $(this).addClass("btn-success");
-                }
-                    
+                    $(this).text("Delete")
+                else
+                    $(this).text("Keep")
 
             });
         });
@@ -170,7 +172,7 @@ admin = (function () {
             );
         });
 
-        $("#catalog").append('<div id="dataviz-cards" class="row">' + cards.join("") + '</div>');
+        $("#catalog").append('<div class="row">' + cards.join("") + '</div>');
     };
 
     var _populateForm = function (formId, data) {
@@ -210,16 +212,16 @@ admin = (function () {
                     var result = fuse.search($(this).val());
                     var divs = $(".card.dataviz");
                     if ($(this).val() != "") {
-                        divs.parent().addClass("hidden");
+                        divs.parent().css("display", "none");
                         result.forEach(function (elem) {
                             divs.each(function () {
                                 if (elem.dataviz == $(this).attr("data-dataviz-id")) {
-                                    $(this).parent().removeClass("hidden");
+                                    $(this).parent().css("display", "block");
                                 }
                             });
                         });
                     } else {
-                        divs.parent().removeClass("hidden");
+                        divs.parent().css("display", "block");
                     }
                 });
             },
@@ -250,13 +252,6 @@ admin = (function () {
             $(e.currentTarget).attr("data-related-id", datavizId);
             $(e.currentTarget).find(".dataviz-title").text(datavizId);
             _populateForm('#dataviz-form', _dataviz_data[datavizId]);
-        });
-        $("#checkAll").click(function () {
-            $("#dataviz-cards .cards:not(.hidden) .dataviz-selection").prop('checked', $(this).prop('checked'));
-        });
-        $("#resetfilters").click(function () {
-            $(".dataviz-selection").prop('checked', false);
-            $("#checkAll").prop('checked', false);
         });
     };
 
@@ -619,6 +614,7 @@ admin = (function () {
     return {
         initCatalog: _initCatalog,
         initReports: _initReports,
+        initMenu: _initMenu,
         addReport: _addReport,
         updateReport: _updateReport,
         deleteReport: _deleteReport,
@@ -632,4 +628,5 @@ admin = (function () {
 $(document).ready(function () {
     admin.initCatalog();
     admin.initReports();
+    admin.initMenu();
 });
