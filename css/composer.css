@@ -18,6 +18,10 @@
   display: block;
 }
 
+.sidenav h6 {
+    color: #fff;
+}
+
 .sidenav a:hover {
   color: #f1f1f1;
 }
@@ -165,7 +169,7 @@
     background: #3095b4;
     color: white;
     position: absolute;
-    top: -1px;
+    /*top: -1px;*/
     right: 0;
     cursor: pointer;
     padding: 6px;
@@ -205,4 +209,24 @@
 
 .composition {
     min-height: 250px;
+}
+
+span.preview {
+    font-size: small;
+}
+
+.sidenav label {
+    color: #fff;
+}
+
+.sidenav .form {
+    padding: 10px;
+}
+
+.sidenav .tool {
+    display: none;
+}
+
+.dataviz.list-group-item span {
+    font-size: small;
 }

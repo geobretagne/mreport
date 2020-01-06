@@ -20,6 +20,8 @@
     <script src="https://cdn.jsdelivr.net/npm/fuse-js-latest@3.1.0/dist/fuse.min.js"></script>
     <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
     <script src="js/composer.js"></script>
+    <script src="js/wizard.js"></script>
+    <script src="js/report.js"></script>
     <script src="js/admin.js"></script>
 
 </head>
@@ -89,12 +91,16 @@
         <div class="container-fluid page" id="composer">
             <div class="builder edit">
                 <div class="sidenav d-flex flex-column">
-                    <div class="rows list-group" id="structure-models"><!-- appended by code --></div>
-                    <div class="list-group" id="dataviz-items">
+                    <form class="form" role="form" autocomplete="off">
+                        <div class="form-group">
+                            <label for="selectedReportComposer">Rapport sélectionné</label>
+                            <select class="form-control" id="selectedReportComposer">
+                            </select>
+                        </div>
+                    </form>
+                    <div class="rows list-group" id="structure-models"><h6>Blocs structurants</h6><!-- appended by code --></div>
+                    <div class="list-group" id="dataviz-items"><h6>Dataviz disponibles</h6>
                     <!-- appended by code -->
-                        <div class="dataviz list-group-item">dataviz 1</div>
-                        <div class="dataviz list-group-item">dataviz 2</div>
-                        <div class="dataviz list-group-item">dataviz 3</div>
                     </div>
                     <button type="button" id="btn_save_report" class="btn btn-lg btn-block btn-primary mt-auto">Enregistrer</button>
 

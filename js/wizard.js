@@ -8,16 +8,67 @@ wizard = (function() {
 
     _api_url = "http://localhost/api"
 
-    var _showIndicateurProperties = function(ind) {
+    var _getSampleData = function(datavizId) {
+        $.ajax({
+            dataType: "json",
+            type: "GET",
+            url: [_api_url, "store", datavizId, "data/sample"].join("/"),
+            success: function (data) {
+                if (data.data) {
+                    //update local data
+                    var tmp_data = {"dataset":{}};
+                    var formatedData = {"dataset": [], "data": [], "label":[], "rows":0, "significative_label": false};
+                    data.data.forEach(function(item) {
+                        if (tmp_data.dataset[item.dataset]) {
+                            tmp_data.dataset[item.dataset].data.push(item.data);
+                            tmp_data.dataset[item.dataset].label.push(item.label);
+                        } else {
+                            tmp_data.dataset[item.dataset] = {
+                                "data": [item.data],
+                                "label": [item.label]
+                            };
+                            formatedData.dataset.push(item.dataset);
+                        }
+                    });
+                    if (formatedData.dataset.length > 1) {
+                        formatedData.dataset.forEach(function(dataset) {
+                            formatedData.data.push(tmp_data.dataset[dataset].data);
+                            formatedData.label.push(tmp_data.dataset[dataset].label);
+                        });
+                        formatedData.rows = formatedData.data[0].length;
+
+                    } else {
+                        formatedData.data = tmp_data[formatedData.dataset[0]].data;
+                        formatedData.label = tmp_data[formatedData.dataset[0]].label;
+                        formatedData.rows = formatedData.data.length;
+                    }
+                    _data = formatedData;
+                    var metadata = _showIndicateurProperties();
+                    $("#indicateur-metadata").html("<code>" + [metadata.datasets + " datasets disponible(s)",
+                        metadata.rows + " lignes",
+                        "Labels utilisables " + metadata.significative_labels
+                    ].join("<br>") + "</code>");
+
+                } else {
+                    console.log(data);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    };
+
+    var _showIndicateurProperties = function() {
         $(".wizard-code").hide();
         $("#dataviz-attributes").hide();
         $(".dataviz-attributes").val("");
         $("#wizard-result div").remove();
         $("#w_dataviz_type").val("");
         $("#wizard-code").text("");
-        $("#wizard-parameters").attr("data-dataviz", ind);
+        //$("#wizard-parameters").attr("data-dataviz", ind);
         var options;
-        var data = _data[ind];
+        var data = _data;
         var dataset_nb = data.dataset.length;
         var data_nb = data.rows;
         var data_type = "text";
@@ -27,10 +78,6 @@ wizard = (function() {
             if (_url.test(data.data[0])) {
                 data_type = "url";
             }
-            /*var _img = new RegExp(/([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/);
-            if (_img.test(data.data[0])) {
-                data_type = "image";
-            }*/
 
         }
         var options = [];
@@ -100,8 +147,8 @@ wizard = (function() {
 
     _autoConfig = function(id, dataviz) {
         var colors = ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
-        var significative_label = _data[id].significative_label;
-        var nb_datasets = _data[id].dataset.length;
+        var significative_label = _data.significative_label;
+        var nb_datasets = _data.dataset.length;
         var columns = [];
         for (var i = 0; i < nb_datasets; i++) {
             columns.push(i + 1);
@@ -115,11 +162,11 @@ wizard = (function() {
                 if (nb_datasets === 1) {
                     $("#w_label").val("Légende");
                 } else {
-                    $("#w_label").val(_data[id].dataset.join(","));
+                    $("#w_label").val(_data.dataset.join(","));
                 }
                 break;
             case "table":
-                $("#w_label").val(_data[id].dataset.join(","));
+                $("#w_label").val(_data.dataset.join(","));
                 $("#w_table_column").val(columns.join(","));
                 if (significative_label) {
                     $("#w_table_extracolumn").val("#");
@@ -187,11 +234,16 @@ wizard = (function() {
             dataType: "text",
             success: function(html) {
                 $("body").append(html);
-                $("body").append('<div class="wizard"><button class="wizard-btn btn btn-primary btn-lg" data-toggle="modal" data-target="#wizard-panel">+</button></div>');
+                $('#wizard-panel').on('show.bs.modal', function (e) {
+                    var datavizId = $(e.relatedTarget).attr('data-related-id');
+                    $(e.currentTarget).attr("data-related-id", datavizId);
+                    _getSampleData(datavizId);
+                });
+                /*$("body").append('<div class="wizard"><button class="wizard-btn btn btn-primary btn-lg" data-toggle="modal" data-target="#wizard-panel">+</button></div>');
 				$("body").append('<div class="wizard2"><button class="wizard-btn2 btn btn-success btn-lg" onclick="wizard.save();" >Save</button></div>');
                 $(".wizard-btn").click(function(e) {
                     _showIndicateurs();
-                });
+                });*/
                 $("#w_dataviz_type").change(function() {
                     var dataviz = $("#w_dataviz_type").val();
                     $(".dataviz-attributes").val("");
@@ -208,7 +260,7 @@ wizard = (function() {
                     $("#wizard_validate").click();
                 });
                 $("#wizard_validate").click(function(e) {
-                    var dataviz = $("#wizard-parameters").attr("data-dataviz");
+                    var dataviz = $("#wizard-panel").attr("data-related-id");
                     var type = $("#w_dataviz_type").val();
                     var attributes = [];
                     var properties = {
@@ -247,7 +299,9 @@ wizard = (function() {
                     $("#wizard-result").append(elem);
                     $("#wizard-code").text(elem.prop("outerHTML"));
                     $(".wizard-code").show();
-                    report.testViz(_data, type, properties);
+                    var fdata = {};
+                    fdata[dataviz] = _data;
+                    report.testViz(fdata, type, properties);
                 });
             }
         });

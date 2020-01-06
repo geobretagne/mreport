@@ -22,5 +22,13 @@
         </head>
         <body>
             <div id="preloader"></div>
+            <script>
+                $(document).ready(function() {
+                    report.init();
+                    $('#preloader').fadeOut('slow', function() {
+                        $(this).remove();
+                    });
+                });
+            </script>
         </body>
 </html>

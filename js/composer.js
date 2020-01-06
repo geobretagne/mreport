@@ -72,6 +72,23 @@ composer = (function () {
         $("#btn_save_report").click(function (e) {
             console.log(_exportHTML());
         });
+
+        $("#selectedReportComposer").change(function (e) {
+            $("#report-composition .lyrow").remove();
+            var reportId = $( this ).val();
+            //Update dataviz list
+            var lst = [];
+            var dataviz_lst = admin.getReportData(reportId).dataviz;
+            dataviz_lst.forEach(function (dvz) {
+                if (dvz != null)
+                    lst.push(['<li data-dataviz="' + dvz + '" data-report="' + reportId + '" class="dataviz list-group-item">',
+                    '<div class="tool"><button class="btn btn-default" data-toggle="modal" data-related-id="'+dvz+'" ',
+                    'data-target="#wizard-panel"><i class="fas fa-cog"></i></button></div>',
+                    '<span>' + dvz + '</div>'].join(""));
+            });
+            $("#dataviz-items .dataviz.list-group-item").remove();
+            $("#dataviz-items").append(lst.join(""));
+        });
     };
 
     var _makeRowSortable = function(row) {
@@ -107,4 +124,5 @@ composer = (function () {
 
 $(document).ready(function () {
     composer.initComposer();
+    wizard.init();
 });

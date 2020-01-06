@@ -120,7 +120,7 @@ admin = (function () {
     var _appendReports = function () {
 
         var cards = [];
-        var options = [];
+        var options = ['<option value="" selected disabled>Rapport...</option>'];
         $("#reports .row").remove();
         Object.entries(_report_data).forEach(function (a) {
             var id = a[0];
@@ -142,7 +142,7 @@ admin = (function () {
         });
 
         $("#reports").append('<div class="row">' + cards.join("") + '</div>');
-        $("#selectedReport").html(options.join(""));
+        $("#selectedReport, #selectedReportComposer").html(options.join(""));
     };
 
     var _showDataviz = function () {
@@ -607,6 +607,10 @@ admin = (function () {
 
     };
 
+    var _getReportData = function (reportId) {
+        return _report_data[reportId];
+    };
+
     /*
      * Public
      */
@@ -620,7 +624,8 @@ admin = (function () {
         deleteReport: _deleteReport,
         deleteDataviz: _deleteDataviz,
         updateDataviz: _updateDataviz,
-        createReport: _createReport
+        createReport: _createReport,
+        getReportData: _getReportData
     }; // fin return
 
 })();

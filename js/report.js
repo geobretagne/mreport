@@ -989,12 +989,3 @@ report = (function() {
     }; // fin return
 
 })();
-
-$(document).ready(function() {
-    report.init();
-});
-$(window).load(function() {
-    $('#preloader').fadeOut('slow', function() {
-        $(this).remove();
-    });
-});
