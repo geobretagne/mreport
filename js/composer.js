@@ -114,10 +114,17 @@ composer = (function () {
         return html.join("\n");
     };
 
+    var _compose = function (reportId) {
+        console.log(reportId);
+        $("#btn-composer").click();
+        $('#selectedReportComposer option[value="' + reportId + '"]').prop('selected', true).trigger("change");
+    }
+
 
     return {
         initComposer: _initComposer,
-        exportHTML: _exportHTML
+        exportHTML: _exportHTML,
+        compose: _compose
     }; // fin return
 
 })();
