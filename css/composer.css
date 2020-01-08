@@ -230,3 +230,7 @@ span.preview {
 .dataviz.list-group-item span {
     font-size: small;
 }
+
+.view code {
+    display: none;
+}

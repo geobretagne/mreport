@@ -612,6 +612,7 @@ admin = (function () {
         return _report_data[reportId];
     };
 
+
     /*
      * Public
      */

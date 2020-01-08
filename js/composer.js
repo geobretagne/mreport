@@ -70,12 +70,14 @@ composer = (function () {
         });
 
         $("#btn_save_report").click(function (e) {
-            console.log(_exportHTML());
+            _save();
         });
 
         $("#selectedReportComposer").change(function (e) {
             $("#report-composition .lyrow").remove();
             var reportId = $( this ).val();
+            var title = admin.getReportData(reportId).title;
+            $("#composer-report-title").text(reportId);
             //Update dataviz list
             var lst = [];
             var dataviz_lst = admin.getReportData(reportId).dataviz;
@@ -84,7 +86,7 @@ composer = (function () {
                     lst.push(['<li data-dataviz="' + dvz + '" data-report="' + reportId + '" class="dataviz list-group-item">',
                     '<div class="tool"><button class="btn btn-default" data-toggle="modal" data-related-id="'+dvz+'" ',
                     'data-target="#wizard-panel"><i class="fas fa-cog"></i></button></div>',
-                    '<span>' + dvz + '</div>'].join(""));
+                    '<span>' + dvz + '</div><code></code>'].join(""));
             });
             $("#dataviz-items .dataviz.list-group-item").remove();
             $("#dataviz-items").append(lst.join(""));
@@ -108,17 +110,52 @@ composer = (function () {
 
     var _exportHTML = function () {
         var html = [];
-        $("#report-composition .view").each(function(id,element) {
-            html.push(element.innerHTML);
+
+        $("#report-composition .row.model-a").each(function(id,row) {
+            var tmp_row = $(row).clone();
+            //delete extra row attributes
+            ["data-model-title","data-model-description"].forEach(function(attr) {
+                $(tmp_row).removeAttr(attr)
+            });
+            // loop on columns
+            $(tmp_row).find(".column").each(function(id,col) {
+               var dvz = $(col).find("code").text();
+               $(col).html(dvz);
+            });
+            html.push($(tmp_row).get(0).outerHTML);
         });
         return html.join("\n");
     };
 
     var _compose = function (reportId) {
-        console.log(reportId);
         $("#btn-composer").click();
         $('#selectedReportComposer option[value="' + reportId + '"]').prop('selected', true).trigger("change");
     }
+
+    var _save = function () {
+		var _report = $("#selectedReportComposer").val();
+		var newDom = _exportHTML();
+		$.ajax({
+            type: "POST",
+            url: [_api_url, "report_html", _report].join("/"),
+            data: newDom,
+            dataType: 'json',
+            contentType: 'text/html',
+            success: function( response ) {
+				if (response.response === "success") {
+					console.log("Sauvegarde réussie");
+				} else {
+					alert("enregistrement échec :" + response.response)
+				}
+
+			},
+			error: function( a, b, c) {
+				console.log(a, b, c);
+			}
+		});
+
+
+	};
 
 
     return {

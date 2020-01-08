@@ -4,11 +4,26 @@ wizard = (function() {
      */
     var _data;
 
-	_notSavedDataviz = [];
+    var _storeData = {};
 
-    _api_url = "http://localhost/api"
+    _api_url = "http://localhost/api";
 
+    /*
+    * ExistingConfig is a dataviz
+    * conf herited of composition report
+    * this var is used by wizard to initiate itself with existing conf
+    */
+
+    var _exitingConfig = false;
+
+    /* Method to extract a set of data in relation with dataviz
+    * and necessary to configure and visualize a dataviz for a report
+    * Result is stored in _data variable & in _storeData[xxx] to reuse it later
+    */
     var _getSampleData = function(datavizId) {
+        function countUnique(iterable) {
+          return new Set(iterable).size;
+        }
         $.ajax({
             dataType: "json",
             type: "GET",
@@ -18,39 +33,45 @@ wizard = (function() {
                     //update local data
                     var tmp_data = {"dataset":{}};
                     var formatedData = {"dataset": [], "data": [], "label":[], "rows":0, "significative_label": false};
-                    data.data.forEach(function(item) {
-                        if (tmp_data.dataset[item.dataset]) {
-                            tmp_data.dataset[item.dataset].data.push(item.data);
-                            tmp_data.dataset[item.dataset].label.push(item.label);
-                        } else {
-                            tmp_data.dataset[item.dataset] = {
-                                "data": [item.data],
-                                "label": [item.label]
-                            };
-                            formatedData.dataset.push(item.dataset);
-                        }
-                    });
-                    if (formatedData.dataset.length > 1) {
-                        formatedData.dataset.forEach(function(dataset) {
-                            formatedData.data.push(tmp_data.dataset[dataset].data);
-                            formatedData.label.push(tmp_data.dataset[dataset].label);
-                        });
-                        formatedData.rows = formatedData.data[0].length;
-
+                    //test multilines
+                    if (data.data.length === 1) {
+                        var a = data.data[0];
+                        formatedData = {"dataset": [a.dataset], "data": [a.data], "label":[a.label], "rows":1, "significative_label": true};
                     } else {
-                        formatedData.data = tmp_data[formatedData.dataset[0]].data;
-                        formatedData.label = tmp_data[formatedData.dataset[0]].label;
-                        formatedData.rows = formatedData.data.length;
+                        data.data.forEach(function(item) {
+                            if (tmp_data.dataset[item.dataset]) {
+                                tmp_data.dataset[item.dataset].data.push(item.data);
+                                tmp_data.dataset[item.dataset].label.push(item.label);
+                            } else {
+                                tmp_data.dataset[item.dataset] = {
+                                    "data": [item.data],
+                                    "label": [item.label]
+                                };
+                                formatedData.dataset.push(item.dataset);
+                            }
+                        });
+                        if (formatedData.dataset.length > 1) {
+                            formatedData.dataset.forEach(function(dataset) {
+                                formatedData.data.push(tmp_data.dataset[dataset].data);
+                                formatedData.label.push(tmp_data.dataset[dataset].label);
+                            });
+                            formatedData.rows = formatedData.data[0].length;
+                            formatedData.significative_label = (countUnique(formatedData.label[0]) > 1);
+
+                        } else {
+                            formatedData.data = tmp_data[formatedData.dataset[0].data];
+                            formatedData.label = tmp_data[formatedData.dataset[0].label];
+                            formatedData.rows = formatedData.data.length;
+                            formatedData.significative_label = (countUnique(formatedData.label[0]) > 1);
+                        }
                     }
+
                     _data = formatedData;
-                    var metadata = _showIndicateurProperties();
-                    $("#indicateur-metadata").html("<code>" + [metadata.datasets + " datasets disponible(s)",
-                        metadata.rows + " lignes",
-                        "Labels utilisables " + metadata.significative_labels
-                    ].join("<br>") + "</code>");
+                    _storeData[datavizId] = formatedData;
+                    _configureWizardOptions();
 
                 } else {
-                    console.log(data);
+                    console.log("Erreur : Impossible de récupérer l'échantillon de données : " + data);
                 }
             },
             error: function (xhr, status, error) {
@@ -59,94 +80,79 @@ wizard = (function() {
         });
     };
 
-    var _showIndicateurProperties = function() {
-        $(".wizard-code").hide();
+    var _clean = function () {
+        //$(".wizard-code").hide();
         $("#dataviz-attributes").hide();
         $(".dataviz-attributes").val("");
         $("#wizard-result div").remove();
         $("#w_dataviz_type").val("");
         $("#wizard-code").text("");
-        //$("#wizard-parameters").attr("data-dataviz", ind);
-        var options;
-        var data = _data;
-        var dataset_nb = data.dataset.length;
-        var data_nb = data.rows;
+    };
+
+    /*
+    * Method to configure wizard options with dataviz capabilities
+    * Update options in select control #w_dataviz_type"
+    */
+    var _configureWizardOptions = function() {
+        var dataset_nb = _data.dataset.length;
+        var data_nb = _data.rows;
         var data_type = "text";
-        var significative_label = data.significative_label;
-        if (data.dataset.length === 1) {
+        var significative_label = _data.significative_label;
+        if (_data.dataset.length === 1) {
             var _url = new RegExp(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/);
-            if (_url.test(data.data[0])) {
+            if (_url.test(_data.data[0])) {
                 data_type = "url";
             }
 
         }
         var options = [];
         if (dataset_nb > 1) {
-            options.push("table");
+            options.push(["table", "fas fa-table"]);
             if (significative_label) {
-                options.push("chart");
+                options.push(["chart","fas fa-chart-bar"]);
             }
         } else {
             if (data_nb === 1) {
-                // une seule ligne
+                // 1 dataset une seule ligne
                 if (data_type === "text") {
-                    options.push("figure");
+                    options.push(["figure", "fas fa-sort-numeric-down"]);
+                    options.push(["text", "far fa-file-alt"]);
                 } else if (data_type === "url") {
-                    options.push("iframe");
-                    options.push("image");
+                    options.push(["iframe", "far fa-map"]);
+                    options.push(["image", "far fa-image"]);
                 }
             } else {
-                // plusieurs lignes
-                options.push("chart");
+                // 1 dataset plusieurs lignes
+                options.push(["chart",'<i class="fas fa-chart-bar"></i>']);
             }
         }
         var dataviz_options = ['<option class="dataviz-options" selected disabled>...</option>'];
         options.forEach(function(option) {
-            dataviz_options.push('<option  class="dataviz-options" value="' + option + '">' + option + '</option>');
+            dataviz_options.push('<option  data-icon="'+option[1]+'" class="dataviz-options" value="' + option[0] + '">' + option[0] + '</option>');
         });
 
         $("#w_dataviz_type .dataviz-options").remove();
         $("#w_dataviz_type").append(dataviz_options.join(""));
 
-
-
-        return {
-            "datasets": dataset_nb,
-            "rows": data_nb,
-            "significative_labels": significative_label
-        };
-
-
-    };
-
-    var _showIndicateurs = function() {
-        var dispo = [];
-        $.each(_data, function(indicateur, properties) {
-            if (!document.getElementById(indicateur)) {
-                dispo.push(indicateur);
-            }
-        });
-        $("#wizard-indicateurs .list-group-item").remove();
-        dispo.forEach(function(item) {
-            $("#wizard-indicateurs").append('<button type="button" data-indicateur="' + item + '" class="list-group-item list-group-item-action">' + item + '</button>');
-        });
-        $("#wizard-indicateurs button").click(function(e) {
-            $("#wizard-indicateurs button").removeClass("active");
-            var btn = $(e.currentTarget);
-            btn.addClass("active");
-            var metadata = _showIndicateurProperties(btn.attr("data-indicateur"));
-            $("#indicateur-metadata").html("<code>" + [metadata.datasets + " datasets disponible(s)",
-                metadata.rows + " lignes",
-                "Labels utilisables " + metadata.significative_labels
+        $("#indicateur-metadata").html("<code>" + [dataset_nb + " datasets disponible(s)",
+                data_nb + " lignes",
+                "Labels utilisables " + significative_label
             ].join("<br>") + "</code>");
 
-        });
-        $("#dataviz-attributes").hide();
+        $("#wizard-panel").attr("metadata-datasets", dataset_nb);
+        $("#wizard-panel").attr("metadata-rows", data_nb);
+        $("#wizard-panel").attr("metadata-significative-label", significative_label);
+
 
     };
 
+    /*
+    * Method to automaticaly set dataviz parameters
+    */
     _autoConfig = function(id, dataviz) {
+        // TODO : colors should be inherited from model
         var colors = ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
+        //significative label if is true, allow chart and extra column in table
         var significative_label = _data.significative_label;
         var nb_datasets = _data.dataset.length;
         var columns = [];
@@ -170,7 +176,7 @@ wizard = (function() {
                 $("#w_table_column").val(columns.join(","));
                 if (significative_label) {
                     $("#w_table_extracolumn").val("#");
-                    $("#w_table_extracolumn").closest(".input-group").show();
+                    _enableExtraColumnParameter(true);
                 } else {
                     $("#w_table_extracolumn").closest(".input-group").hide();
                 }
@@ -179,130 +185,178 @@ wizard = (function() {
         }
     };
 
-	var _addDataviz = function () {
-		var html = ['<div class="row">',
-			'<div class="wz-temp col-xs-6 col-md-6">',
-			'<h5>Title</h5>',
-		'</div></div>'].join("");
-		$("body>.report").append(html);
+    _enableExtraColumnParameter = function (enable) {
+        if (enable) {
+            $("#w_table_extracolumn").closest(".input-group").show();
+        } else {
+            $("#w_table_extracolumn").closest(".input-group").hide();
+        }
+    }
 
-		var html_definition = ['<div class="row">',
-			'<div class="col-xs-6 col-md-6">',
-			'<h5>Title</h5>',
-			$("#wizard-code").text(),
-		'</div></div>'].join("");
+    /*
+    * Apply dataviz conf from composition report
+    */
 
-		var parentElement = $( ".wz-temp" ).last().removeClass("wz-temp");
-		$("#wizard-result").children().appendTo(parentElement);
+    _applyDatavizConfig = function (cfg) {
+        $("#w_dataviz_type").val(cfg.dataviz_type);
+        $("#w_colors").val(cfg.colors);
+        $("#w_label").val(cfg.label);
+        _showParameters(cfg.dataviz_type);
+        if (cfg.dataviz_type === "chart") {
+            $("#w_chart_opacity").val(cfg.opacity);
+            $("#w_chart_type").val(cfg.type);
+        } else if (cfg.dataviz_type === "table") {
+            $("#w_table_column").val(cfg.columns);
+            if (cfg.extracolumn) {
+                 _enableExtraColumnParameter(true);
+                 $("#w_table_extracolumn").val(cfg.extracolumn);
+            } else {
+                _enableExtraColumnParameter(false);
+            }
 
-		_notSavedDataviz.push(html_definition);
-	};
+        }
+    }
 
-	var _save = function () {
-		var _report = report.getReport();
-		newElements = _notSavedDataviz.join(" ");
-		var newDom = $(_report.html).append(newElements).prop("outerHTML");
-		console.log(newDom);
-		$.ajax({
-            type: "POST",
-            url: [_api_url, "report_html", _report.name].join("/"),
-            data: newDom,
-            dataType: 'json',
-            contentType: 'text/html',
-            success: function( response ) {
-				if (response.response === "success") {
-					 _notSavedDataviz = [];
-					document.location.reload(true);
-				} else {
-					alert("enregistrement échec :" + response.response)
-				}
+    /*
+    * Store dataviz configuration mreport like in virtual html report
+    */
 
-			},
-			error: function( a, b, c) {
-				console.log(a, b, c);
-			}
-		});
+    var _configureDataviz = function (datavizId) {
+        //Get current dataviz id
+        var datavizId = $("#wizard-panel").attr("data-related-id");
+        //copy paste generated code in <code> element
+        $('[data-dataviz="'+ datavizId +'"] code').text($("#wizard-code").text());
+        //get dataviz type
+        var datavizType = $("#w_dataviz_type").val();
+        var ico = $("#w_dataviz_type option:selected").attr("data-icon");
+        $('[data-dataviz="'+ datavizId +'"] button i').get( 0 ).className = ico;
+        //Hide modal
+        $("#wizard-result div").remove();
+        $("#wizard-code").text("");
+        $("#wizard-panel").modal("hide");
+    };
 
 
-	};
+    var _showParameters = function (dataviz) {
+        $("#dataviz-attributes").show();
+        $(".dataviz-attributes").closest(".input-group").hide();
+        $("." + dataviz + ".dataviz-attributes").closest(".input-group").show();
+        if (dataviz === "chart") {
+            $("#w_label").closest(".input-group").find(".input-group-text").text("séries");
+        } else if (dataviz === "table") {
+            $("#w_label").closest(".input-group").find(".input-group-text").text("labels");
+        }
+
+    };
+
+    var _onChangeDatavizType = function() {
+        var dataviz = $("#w_dataviz_type").val();
+        var id = $("#wizard-indicateurs button.active").attr("data-indicateur");
+        $(".dataviz-attributes").val("");
+        _showParameters(dataviz);
+        _autoConfig(id, dataviz);
+        _exitingConfig = false;
+        $("#wizard_validate").click();
+    };
+
+    var _onWizardOpened = function (e) {
+        var datavizId = $(e.relatedTarget).attr('data-related-id');
+        $(e.currentTarget).attr("data-related-id", datavizId);
+        _clean();
+        if (_storeData[datavizId]) {
+            _data = _storeData[datavizId];
+            //check if configuration exists
+            var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code").text() || false;
+            if (yetConfigured){
+                var _code = $.parseHTML($(e.relatedTarget).closest(".dataviz").find("code").text());
+                _exitingConfig = $(_code).data();
+                // Get dataviz type (hugly !)
+                $(_code).attr("class").split(" ").forEach(function (cls) {
+                    var t = cls.split("report-");
+                    if (t.length === 2) {
+                        _exitingConfig.dataviz_type = t[1];
+                    }
+                })
+            } else {
+                _exitingConfig = false;
+            }
+            _configureWizardOptions();
+            if (_exitingConfig) {
+                _applyDatavizConfig(_exitingConfig);
+                setTimeout(_onValidateConfig, 500);
+            }
+        } else {
+            _getSampleData(datavizId);
+        }
 
 
-    var _init = function(data) {
-        _data = data;
+    };
+
+    var _onValidateConfig = function () {
+        var dataviz = $("#wizard-panel").attr("data-related-id");
+        var type = $("#w_dataviz_type").val();
+        var attributes = [];
+        var properties = {
+            "id": dataviz
+        };
+        $(".dataviz-attributes").each(function(id, attribute) {
+            var val = $(attribute).val();
+            var prop = $(attribute).attr("data-prop");
+            if (val && val.length >= 1) {
+                attributes.push("data-" + prop + '="' + val + '"');
+                properties[prop] = val;
+            }
+        });
+        ["colors", "label"].forEach(function(prop) {
+            if (properties[prop]) {
+                properties[prop] = properties[prop].split(",");
+            }
+        });
+
+        ["columns"].forEach(function(prop) {
+            if (properties[prop]) {
+                properties[prop] = properties[prop].split(",").map(function(val) {
+                    return Number(val) - 1;
+                });
+            }
+        });
+
+        //$("#" + dataviz).remove();
+
+        var elem = $('<div id="' + dataviz + '" class="report-' + type + '" ' + attributes.join(" ") + '></div>');
+        if (type === "figure") {
+            elem.append(['<p class="report-figure-chiffre text-center"></p>',
+                '<p class="report-figure-caption text-center"></p>'
+            ].join(""));
+        }
+        if (type === "text") {
+            elem.append(['<h3 class="report-text-title text-center"></h3>',
+                '<p class="report-text-text text-center"></p>'
+            ].join(""));
+        }
+        $("#wizard-result div").remove();
+        $("#wizard-result").append(elem);
+        $("#wizard-code").text(elem.prop("outerHTML"));
+        $(".wizard-code").show();
+        var fdata = {};
+        fdata[dataviz] = _data;
+        report.testViz(fdata, type, properties);
+    };
+
+
+
+    var _init = function() {
         $.ajax({
             url: "html/wizard.html",
             dataType: "text",
             success: function(html) {
                 $("body").append(html);
-                $('#wizard-panel').on('show.bs.modal', function (e) {
-                    var datavizId = $(e.relatedTarget).attr('data-related-id');
-                    $(e.currentTarget).attr("data-related-id", datavizId);
-                    _getSampleData(datavizId);
-                });
-                /*$("body").append('<div class="wizard"><button class="wizard-btn btn btn-primary btn-lg" data-toggle="modal" data-target="#wizard-panel">+</button></div>');
-				$("body").append('<div class="wizard2"><button class="wizard-btn2 btn btn-success btn-lg" onclick="wizard.save();" >Save</button></div>');
-                $(".wizard-btn").click(function(e) {
-                    _showIndicateurs();
-                });*/
+                //Events management
+                $('#wizard-panel').on('show.bs.modal', _onWizardOpened);
                 $("#w_dataviz_type").change(function() {
-                    var dataviz = $("#w_dataviz_type").val();
-                    $(".dataviz-attributes").val("");
-                    var id = $("#wizard-indicateurs button.active").attr("data-indicateur");
-                    $("#dataviz-attributes").show();
-                    $(".dataviz-attributes").closest(".input-group").hide();
-                    $("." + dataviz + ".dataviz-attributes").closest(".input-group").show();
-                    _autoConfig(id, dataviz);
-                    if (dataviz === "chart") {
-                        $("#w_label").closest(".input-group").find(".input-group-text").text("séries");
-                    } else if (dataviz === "table") {
-                        $("#w_label").closest(".input-group").find(".input-group-text").text("labels");
-                    }
-                    $("#wizard_validate").click();
+                    _onChangeDatavizType();
                 });
-                $("#wizard_validate").click(function(e) {
-                    var dataviz = $("#wizard-panel").attr("data-related-id");
-                    var type = $("#w_dataviz_type").val();
-                    var attributes = [];
-                    var properties = {
-                        "id": dataviz
-                    };
-                    $(".dataviz-attributes").each(function(id, attribute) {
-                        var val = $(attribute).val();
-                        var prop = $(attribute).attr("data-prop");
-                        if (val && val.length >= 1) {
-                            attributes.push("data-" + prop + '="' + val + '"');
-                            properties[prop] = val;
-                        }
-                    });
-                    ["colors", "label"].forEach(function(prop) {
-                        if (properties[prop]) {
-                            properties[prop] = properties[prop].split(",");
-                        }
-                    });
-
-                    ["columns"].forEach(function(prop) {
-                        if (properties[prop]) {
-                            properties[prop] = properties[prop].split(",").map(function(val) {
-                                return Number(val) - 1;
-                            });
-                        }
-                    });
-
-                    $("#" + dataviz).remove();
-
-                    var elem = $('<div id="' + dataviz + '" class="report-' + type + '" ' + attributes.join(" ") + '></div>');
-                    if (type === "figure") {
-                        elem.append(['<p class="report-figure-chiffre text-center"></p>',
-                            '<p class="report-figure-caption text-center"></p>'
-                        ].join(""));
-                    }
-                    $("#wizard-result").append(elem);
-                    $("#wizard-code").text(elem.prop("outerHTML"));
-                    $(".wizard-code").show();
-                    var fdata = {};
-                    fdata[dataviz] = _data;
-                    report.testViz(fdata, type, properties);
-                });
+                $("#wizard_validate").click(_onValidateConfig);
             }
         });
 
@@ -318,8 +372,7 @@ wizard = (function() {
     return {
 
         init: _init,
-		addDataviz: _addDataviz,
-		save: _save
+        configureDataviz: _configureDataviz
 
     }; // fin return
 
