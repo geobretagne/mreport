@@ -3,7 +3,9 @@ composer = (function () {
      * Private
      */
 
-    var _models = [];
+    var _blocs = [];
+
+    var dataviz_models = {};
 
     var _row_template = [
         '<div class="lyrow list-group-item">',
@@ -11,7 +13,6 @@ composer = (function () {
                 '<i class="fas fa-times"></i> remove',
             '</span>',
             '<span class="preview">',
-                '<!--<input type="text" value="6 6" placeholder="Enter your own" class="form-control">-->',
                 '{{{preview}}}',
             '</span>',
             '<span class="drag badge badge-default">',
@@ -27,16 +28,23 @@ composer = (function () {
             url: "html/model-a.html",
             dataType: "text",
             success: function(html) {
-                $(html).find(".model-a").each(function (id, elem) {
+                $(html).find("bloc").find(".model-a").each(function (id, elem) {
                     var preview = elem.getAttribute("data-model-title");
-                    _models.push({"view": elem.outerHTML, "preview": preview});
+                    _blocs.push({"view": elem.outerHTML, "preview": preview});
                 });
 				var structure = [];
-                _models.forEach(function(elem) {
+                _blocs.forEach(function(elem) {
                     structure.push(_row_template.replace("{{{view}}}", elem.view).replace("{{{preview}}}", elem.preview));
                 });
                 console.log(structure.join(""));
                 $("#structure-models").append(structure);
+                //Retrieve all dataviz models
+                ["figure", "chart", "table"].forEach(function(model) {
+                    var element = $(html).find("model.report-" + model);
+                    dataviz_models[model] = $.trim(element.html());
+                });
+                console.log(dataviz_models);
+
             },
             error: function(xhr, status, err) {
                 _alert("Erreur avec le fichier html/model-a.html " + err, "danger", true);
@@ -161,7 +169,8 @@ composer = (function () {
     return {
         initComposer: _initComposer,
         exportHTML: _exportHTML,
-        compose: _compose
+        compose: _compose,
+        models: function () { return dataviz_models;}
     }; // fin return
 
 })();

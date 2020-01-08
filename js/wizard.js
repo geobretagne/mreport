@@ -304,6 +304,7 @@ wizard = (function() {
             var prop = $(attribute).attr("data-prop");
             if (val && val.length >= 1) {
                 attributes.push("data-" + prop + '="' + val + '"');
+                attributes.push({"prop" : prop, "value": val});
                 properties[prop] = val;
             }
         });
@@ -323,20 +324,13 @@ wizard = (function() {
 
         //$("#" + dataviz).remove();
 
-        var elem = $('<div id="' + dataviz + '" class="report-' + type + '" ' + attributes.join(" ") + '></div>');
-        if (type === "figure") {
-            elem.append(['<p class="report-figure-chiffre text-center"></p>',
-                '<p class="report-figure-caption text-center"></p>'
-            ].join(""));
-        }
-        if (type === "text") {
-            elem.append(['<h3 class="report-text-title text-center"></h3>',
-                '<p class="report-text-text text-center"></p>'
-            ].join(""));
-        }
+        var elem = $.parseHTML(composer.models()[type].replace("{{dataviz}}", dataviz));
+        attributes.forEach(function(attribute) {
+            $(elem).attr("data-" + attribute.prop, attribute.value);
+        });
         $("#wizard-result div").remove();
         $("#wizard-result").append(elem);
-        $("#wizard-code").text(elem.prop("outerHTML"));
+        $("#wizard-code").text(elem[0].outerHTML);
         $(".wizard-code").show();
         var fdata = {};
         fdata[dataviz] = _data;
