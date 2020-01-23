@@ -234,3 +234,8 @@ span.preview {
 .view code {
     display: none;
 }
+
+.dataviz-container {
+    border: brown solid;
+    min-height: 75px;
+}

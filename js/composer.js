@@ -3,9 +3,9 @@ composer = (function () {
      * Private
      */
 
-    var _blocs = [];
+    var _models = {};
 
-    var dataviz_models = {};
+    var _activeModel = "";
 
     var _row_template = [
         '<div class="lyrow list-group-item">',
@@ -22,34 +22,50 @@ composer = (function () {
         '</div>'
         ].join("");
 
+    var _selectModel = function (m) {
+        _activeModel = m;
+        $("#structure-models .list-group-item").remove();
+        $("#structure-models").append(_models[m].structure);
+    }
+
     var _initComposer = function () {
+        ["a","b"].forEach(function(m) {
+            $.ajax({
+                url: "html/model-" + m + ".html",
+                dataType: "text",
+                success: function(html) {
+                    //Template parsing
+                    var page = $(html).find("template.report").get(0).content.firstElementChild;
+                    var colors = [];
+                    if ($(page).find(".report").attr("data-composer-colors")) {
+                        colors = $(page).find(".report").attr("data-composer-colors").split(",");
+                    }
+                    var blocs = [];
+                    $(html).find("template.report-bloc").each(function (id, template) {
+                        var elem = $(template).prop('content').firstElementChild;
+                        var preview = elem.getAttribute("data-model-title");
+                        blocs.push({"view": elem.outerHTML, "preview": preview});
+                    });
+                    var structure = [];
+                    blocs.forEach(function(elem) {
+                        structure.push(_row_template.replace("{{{view}}}", elem.view).replace("{{{preview}}}", elem.preview));
+                    });
+                    //Retrieve all dataviz models
+                    var dataviz_models = {};
+                    ["figure", "chart", "table"].forEach(function(model) {
+                        var element = $(html).find("template.report-component.report-" + model).prop('content').firstElementChild;
+                        dataviz_models[model] = $.trim(element.outerHTML);
+                    });
+                    _models[m] = {page: page, blocs: blocs, structure: structure, dataviz_models: dataviz_models, colors: colors};
+                    $("#selectedModelComposer").append('<option value="'+m+'">'+m+'</option>');
 
-        $.ajax({
-            url: "html/model-a.html",
-            dataType: "text",
-            success: function(html) {
-                $(html).find("bloc").find(".model-a").each(function (id, elem) {
-                    var preview = elem.getAttribute("data-model-title");
-                    _blocs.push({"view": elem.outerHTML, "preview": preview});
-                });
-				var structure = [];
-                _blocs.forEach(function(elem) {
-                    structure.push(_row_template.replace("{{{view}}}", elem.view).replace("{{{preview}}}", elem.preview));
-                });
-                console.log(structure.join(""));
-                $("#structure-models").append(structure);
-                //Retrieve all dataviz models
-                ["figure", "chart", "table"].forEach(function(model) {
-                    var element = $(html).find("model.report-" + model);
-                    dataviz_models[model] = $.trim(element.html());
-                });
-                console.log(dataviz_models);
-
-            },
-            error: function(xhr, status, err) {
-                _alert("Erreur avec le fichier html/model-a.html " + err, "danger", true);
-            }
+                },
+                error: function(xhr, status, err) {
+                    _alert("Erreur avec le fichier html/model-" + m + ".html " + err, "danger", true);
+                }
+            });
         });
+
 
         new Sortable(document.getElementById("report-composition"), {
             handle: '.drag', // handle's class
@@ -99,10 +115,15 @@ composer = (function () {
             $("#dataviz-items .dataviz.list-group-item").remove();
             $("#dataviz-items").append(lst.join(""));
         });
+
+        $("#selectedModelComposer").change(function (e) {
+            _selectModel($( this ).val());
+        });
+
     };
 
     var _makeRowSortable = function(row) {
-        $(row).find(".column").each(function(id, col) {
+        $(row).find(".dataviz-container").each(function(id, col) {
             new Sortable(col, {
                 group:'dataviz',
                 animation: 150
@@ -118,21 +139,23 @@ composer = (function () {
 
     var _exportHTML = function () {
         var html = [];
-
-        $("#report-composition .row.model-a").each(function(id,row) {
-            var tmp_row = $(row).clone();
+        $("#report-composition .report-bloc").each(function(id,bloc) {
+            var tmp_bloc = $(bloc).clone();
             //delete extra row attributes
             ["data-model-title","data-model-description"].forEach(function(attr) {
-                $(tmp_row).removeAttr(attr)
+                $(tmp_bloc).removeAttr(attr);
             });
-            // loop on columns
-            $(tmp_row).find(".column").each(function(id,col) {
-               var dvz = $(col).find("code").text();
-               $(col).html(dvz);
+            // loop on dataviz-container
+            $(tmp_bloc).find(".dataviz-container").each(function(id,container) {
+               var dvz = $(container).find("code").text();
+               $(container).html(dvz);
             });
-            html.push($(tmp_row).get(0).outerHTML);
+            html.push($(tmp_bloc).get(0).outerHTML);
         });
-        return html.join("\n");
+
+        var _export = $(_models[_activeModel].page).clone().find(".report").append(html.join("\n")).parent();
+
+        return _export.get(0).outerHTML;
     };
 
     var _compose = function (reportId) {
@@ -143,6 +166,7 @@ composer = (function () {
     var _save = function () {
 		var _report = $("#selectedReportComposer").val();
 		var newDom = _exportHTML();
+        console.log(newDom);
 		$.ajax({
             type: "POST",
             url: [_api_url, "report_html", _report].join("/"),
@@ -170,7 +194,9 @@ composer = (function () {
         initComposer: _initComposer,
         exportHTML: _exportHTML,
         compose: _compose,
-        models: function () { return dataviz_models;}
+        colors: function () { return _models[_activeModel].colors;},
+        activeModel: function () { return _models[_activeModel];},
+        models: function () { return _models;}
     }; // fin return
 
 })();

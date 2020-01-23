@@ -151,7 +151,7 @@ wizard = (function() {
     */
     _autoConfig = function(id, dataviz) {
         // TODO : colors should be inherited from model
-        var colors = ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
+        var colors = composer.colors() || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
         //significative label if is true, allow chart and extra column in table
         var significative_label = _data.significative_label;
         var nb_datasets = _data.dataset.length;
@@ -324,9 +324,9 @@ wizard = (function() {
 
         //$("#" + dataviz).remove();
 
-        var elem = $.parseHTML(composer.models()[type].replace("{{dataviz}}", dataviz));
+        var elem = $.parseHTML(composer.activeModel().dataviz_models[type].replace("{{dataviz}}", dataviz));
         attributes.forEach(function(attribute) {
-            $(elem).attr("data-" + attribute.prop, attribute.value);
+            $(elem).find(".dataviz").attr("data-" + attribute.prop, attribute.value);
         });
         $("#wizard-result div").remove();
         $("#wizard-result").append(elem);

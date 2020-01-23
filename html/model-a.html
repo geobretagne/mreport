@@ -1,34 +1,77 @@
-<div>
-<bloc>
-<div class="row model-a" data-model-title="3 colonnes" data-model-description="33%/33%/33%">
-    <div class="col-md-4 column"></div>
-    <div class="col-md-4 column"></div>
-    <div class="col-md-4 column"></div>
+<div id="model-a">
+    <template class="report">
+        <div class="container-fluid model-a">
+            <div class="container report" data-composer-colors="#3db39e,#999999">
+                <h1>Rapport Title</h1>
+                <!-- blocs are injected here -->
+            </div>
+        </div>
+    </template>
+
+    <template class="report-bloc" id="b4-4-4">
+        <div class="report-bloc b4-4-4" data-model-title="3 colonnes" data-model-description="33%/33%/33%">
+            <h4 class="bloc-title">Titre du bloc</h4>
+            <div class="row bloc-content">
+                <div class="dataviz-container col-md-4">
+                    <!--dataviz component is injected here -->
+                </div>
+                <div class="dataviz-container col-md-4" >
+                    <!--dataviz component is injected here -->
+                </div>
+                <div class="dataviz-container col-md-4">
+                    <!--dataviz component is injected here -->
+                </div>
+            </div>
+        </div><!-- fin du bloc -->
+    </template>
+
+     <template class="report-bloc" id="b8-4">
+        <div class="report-bloc b8-4" data-model-title="2 colonnes" data-model-description="66%/33%">
+            <h4 class="bloc-title">Titre du bloc</h4>
+            <div class="row bloc-content">
+                <div class="dataviz-container col-md-8">
+                    <!--dataviz component is injected here -->
+                </div>
+                <div class="dataviz-container col-md-4" >
+                    <!--dataviz component is injected here -->
+                </div>
+            </div>
+        </div><!-- fin du bloc -->
+    </template>
+
+    <template class="report-bloc" id="b12">
+        <div class="report-bloc b12" data-model-title="1 colonne" data-model-description="100%">
+            <h4 class="bloc-title">Titre du bloc</h4>
+            <div class="row bloc-content">
+                <div class="dataviz-container col-md-12">
+                    <!--dataviz component is injected here -->
+                </div>
+            </div>
+        </div><!-- fin du bloc -->
+    </template>
+
+    <template class="report-component report-figure">
+        <div class="report-component.figure card">
+            <div id="{{dataviz}}" class="dataviz report-figure custom-icon icon-default card-body">
+                <figure>
+                    <h1 class="report-figure-chiffre"></h1>
+                    <figcaption class="report-figure-caption"></figcaption>
+                </figure>
+            </div>
+        </div>
+    </template>
+
+    <template class="report-component report-chart">
+        <div class="report-component.chart">
+            <div id="{{dataviz}}" class="dataviz report-chart"></div>
+        </div>
+    </template>
+
+    <template class="report-component report-table">
+        <div class="report-component.chart">
+            <div id="{{dataviz}}" class="dataviz report-table"></div>
+        </div>
+    </template>
+
 </div>
-<div class="row model-a" data-model-title="2 colonnes" data-model-description="66%/33%">
-    <div class="col-md-8 column"></div>
-    <div class="col-md-4 column"></div>
-</div>
-<div class="row model-a" data-model-title="2 colonnes" data-model-description="50%/50%">
-    <div class="col-md-6 column"></div>
-    <div class="col-md-6 column"></div>
-</div>
-<div class="row model-a" data-model-title="1 colonne" data-model-description="100%">
-    <div class="col-md-12 column"></div>    
-</div>
-</bloc>
-<model class="report-figure">
-    <div id="{{dataviz}}" data-unit="" class="report-figure card">
-        <figure class="card-body">
-            <h1 class="report-figure-chiffre"></h1>
-            <figcaption class="report-figure-caption"></figcaption>
-        </figure>
-    </div>
-</model>
-<model class="report-chart">
-    <div id="{{dataviz}}" class="report-chart" ></div>
-</model>
-<model class="report-table">
-    <div id="{{dataviz}}" class="report-table"></div>
-</model>
-</div>
+
