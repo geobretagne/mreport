@@ -1,111 +1,120 @@
 <!-- Modal -->
 <div class="modal fade" id="wizard-panel" tabindex="-1" role="dialog" aria-labelledby="wizard-panel" aria-hidden="true">
-	<div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Assistant</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Assistant</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
                 <div class="container-fluid">
-                <div class="row">
-                    <div id="wizard-parameters" data-dataviz="" class="col-lg-3">
-                         <p id="indicateur-metadata"></p>
-                         <h6>Représentation</h6>
+                    <div class="row">
+                        <div id="wizard-parameters" data-dataviz="" class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p id="indicateur-metadata" style="display:none;"></p>
+                                    <h6 class="card-title">Paramétrage</h6>
 
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <label class="input-group-text" for="w_dataviz_type">Dataviz</label>
-                          </div>
-                          <select class="custom-select" id="w_dataviz_type">
-                          </select>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="w_dataviz_type">Dataviz</label>
+                                        </div>
+                                        <select class="custom-select" id="w_dataviz_type">
+                                        </select>
+                                    </div>
+                                    <div id="dataviz-attributes">
+
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">type</span>
+                                            </div>
+                                            <select class="custom-select chart form-control dataviz-attributes" data-prop="type" id="w_chart_type">
+                                                <option selected value="bar">bar</option>
+                                                <option value="pie">pie</option>
+                                                <option value="horizontalBar">horizontalBar</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">extracolumn</span>
+                                            </div>
+                                            <input type="text" data-prop="extracolumn" class="table form-control dataviz-attributes" id="w_table_extracolumn">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">columns</span>
+                                            </div>
+                                            <input type="text" data-prop="columns" class="table form-control dataviz-attributes" id="w_table_column">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">opacity</span>
+                                            </div>
+                                            <input type="text" data-prop="opacity" class="chart form-control dataviz-attributes" id="w_chart_opacity">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">label</span>
+                                            </div>
+                                            <input type="text" data-prop="label" class="chart table form-control dataviz-attributes" id="w_label">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">colors</span>
+                                            </div>
+                                            <input type="text" data-prop="colors" class="chart form-control dataviz-attributes" id="w_colors">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">unit</span>
+                                            </div>
+                                            <input type="text" data-prop="unit" class="figure form-control dataviz-attributes" id="w_unit">
+                                        </div>
+
+                                        <button id="wizard_validate" class="btn btn-success">Actualiser</button>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                     <div id="dataviz-attributes">
 
-                        <div class="input-group input-group-sm mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" >type</span>
-                          </div>
-                          <select class="custom-select chart form-control dataviz-attributes" data-prop="type" id="w_chart_type">
-                            <option  selected value="bar">bar</option>
-                            <option  value="pie">pie</option>
-                            <option  value="horizontalBar">horizontalBar</option>
-                          </select>
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Affichage</h6>
+                                    <div id="wizard-result">
+                                        <!--dataviz result is injected here -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-
-                        <div class="input-group input-group-sm mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">extracolumn</span>
-                          </div>
-                          <input type="text" data-prop="extracolumn" class="table form-control dataviz-attributes" id="w_table_extracolumn">
-                        </div>
-
-                        <div class="input-group input-group-sm mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">columns</span>
-                          </div>
-                          <input type="text" data-prop="columns" class="table form-control dataviz-attributes" id="w_table_column">
-                        </div>
-
-
-
-                        <div class="input-group input-group-sm mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">opacity</span>
-                          </div>
-                          <input type="text" data-prop="opacity" class="chart form-control dataviz-attributes" id="w_chart_opacity">
-                        </div>
-
-                        <div class="input-group input-group-sm mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" >label</span>
-                          </div>
-                          <input type="text" data-prop="label" class="chart table form-control dataviz-attributes" id="w_label">
-                        </div>
-
-                        <div class="input-group input-group-sm mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" >colors</span>
-                          </div>
-                          <input type="text" data-prop="colors" class="chart form-control dataviz-attributes" id="w_colors">
-                        </div>
-
-                        <div class="input-group input-group-sm mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" >unit</span>
-                          </div>
-                          <input type="text" data-prop="unit" class="figure form-control dataviz-attributes" id="w_unit">
-                        </div>
-
-                        <button id="wizard_validate" class="btn btn-success">Actualiser</button>
-
 
                     </div>
-                    </div>
 
-                    <div class="card col-lg-6">
-                    <h6>Résultat</h6>
-					<div class="card-body">
-						<div id="wizard-result">
+                    <div class="row wizard-code" style="padding-top: 10p;display: none;">
+                        <div class="col">
+                            <div class="card">
+                                <code class="card-body" id="wizard-code"><!--code is injected here --></code>
+                            </div>
                         </div>
-					</div>
-				</div>
-
-
-               </div>
-
-               <div class="wizard-code card">
-					<div class="card-body">
-						<code id="wizard-code"></code>
-					</div>
-					<button id="wizard_add" class="btn btn-primary" onclick="wizard.configureDataviz();" >Sauvegarder</button>
-				</div>
+                    </div>
 
                 </div>
             </div>
+            <div class="modal-footer">
+                <button id="wizard_add" class="btn btn-primary" onclick="wizard.configureDataviz();">Sauvegarder dans le rapport sélectionné</button>
+                <button id="wizard_toggle_code" class="btn btn-danger" onclick="$('.wizard-code').toggle();">code</button>
+                <button id="wizard_default_save" class="btn btn-warning" onclick="alert('TODO');">Définir comme représentation par défaut</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
-	</div>
+    </div>
 </div>

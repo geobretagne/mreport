@@ -107,10 +107,10 @@ composer = (function () {
             var dataviz_lst = admin.getReportData(reportId).dataviz;
             dataviz_lst.forEach(function (dvz) {
                 if (dvz != null)
-                    lst.push(['<li data-dataviz="' + dvz + '" data-report="' + reportId + '" class="dataviz list-group-item">',
+                    lst.push(['<li data-dataviz="' + dvz + '" title="'+dvz+'" data-report="' + reportId + '" class="dataviz list-group-item">',
                     '<div class="tool"><button class="btn btn-default" data-toggle="modal" data-related-id="'+dvz+'" ',
                     'data-target="#wizard-panel"><i class="fas fa-cog"></i></button></div>',
-                    '<span>' + dvz + '</div><code></code>'].join(""));
+                    '<span>' + dvz + '</span></div><code></code>'].join(""));
             });
             $("#dataviz-items .dataviz.list-group-item").remove();
             $("#dataviz-items").append(lst.join(""));
@@ -118,6 +118,19 @@ composer = (function () {
 
         $("#selectedModelComposer").change(function (e) {
             _selectModel($( this ).val());
+        });
+
+        $('#text-edit').on('show.bs.modal', _onTextEdit);
+
+    };
+
+    var _onTextEdit = function(a) {
+        var source = a.relatedTarget.parentNode.firstChild;
+        var btn = $(a.currentTarget).find(".btn-primary");
+        $(btn).click(function(e) {
+            console.log(source);
+            var text = $("#text-edit-value").val();
+            source.nodeValue = text;
         });
 
     };
@@ -135,6 +148,9 @@ composer = (function () {
             $(e.currentTarget).closest(".lyrow").find(".dataviz").appendTo("#dataviz-items");
             $(e.currentTarget).closest(".lyrow").remove();
         });
+        // add edit button
+        var btn = $(row).find(".bloc-title").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i> edit</span>').find(".text-edit");
+
     };
 
     var _exportHTML = function () {
@@ -145,6 +161,8 @@ composer = (function () {
             ["data-model-title","data-model-description"].forEach(function(attr) {
                 $(tmp_bloc).removeAttr(attr);
             });
+            //delete extra controls
+            $(tmp_bloc).find(".to-remove").remove();
             // loop on dataviz-container
             $(tmp_bloc).find(".dataviz-container").each(function(id,container) {
                var dvz = $(container).find("code").text();

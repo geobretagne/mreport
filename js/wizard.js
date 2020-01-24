@@ -185,6 +185,10 @@ wizard = (function() {
         }
     };
 
+    _loadConfig = function (html_config) {
+        console.log(html_config);
+    }
+
     _enableExtraColumnParameter = function (enable) {
         if (enable) {
             $("#w_table_extracolumn").closest(".input-group").show();
@@ -262,13 +266,14 @@ wizard = (function() {
     var _onWizardOpened = function (e) {
         var datavizId = $(e.relatedTarget).attr('data-related-id');
         $(e.currentTarget).attr("data-related-id", datavizId);
+        $(e.currentTarget).find(".modal-title").text(datavizId);
         _clean();
         if (_storeData[datavizId]) {
             _data = _storeData[datavizId];
             //check if configuration exists
             var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code").text() || false;
             if (yetConfigured){
-                var _code = $.parseHTML($(e.relatedTarget).closest(".dataviz").find("code").text());
+                var _code = $($.parseHTML($(e.relatedTarget).closest(".dataviz").find("code").text())).find(".dataviz");
                 _exitingConfig = $(_code).data();
                 // Get dataviz type (hugly !)
                 $(_code).attr("class").split(" ").forEach(function (cls) {
@@ -295,46 +300,48 @@ wizard = (function() {
     var _onValidateConfig = function () {
         var dataviz = $("#wizard-panel").attr("data-related-id");
         var type = $("#w_dataviz_type").val();
-        var attributes = [];
-        var properties = {
-            "id": dataviz
-        };
-        $(".dataviz-attributes").each(function(id, attribute) {
-            var val = $(attribute).val();
-            var prop = $(attribute).attr("data-prop");
-            if (val && val.length >= 1) {
-                attributes.push("data-" + prop + '="' + val + '"');
-                attributes.push({"prop" : prop, "value": val});
-                properties[prop] = val;
-            }
-        });
-        ["colors", "label"].forEach(function(prop) {
-            if (properties[prop]) {
-                properties[prop] = properties[prop].split(",");
-            }
-        });
+        if (type) {
+            var attributes = [];
+            var properties = {
+                "id": dataviz
+            };
+            $(".dataviz-attributes").each(function(id, attribute) {
+                var val = $(attribute).val();
+                var prop = $(attribute).attr("data-prop");
+                if (val && val.length >= 1) {
+                    attributes.push("data-" + prop + '="' + val + '"');
+                    attributes.push({"prop" : prop, "value": val});
+                    properties[prop] = val;
+                }
+            });
+            ["colors", "label"].forEach(function(prop) {
+                if (properties[prop]) {
+                    properties[prop] = properties[prop].split(",");
+                }
+            });
 
-        ["columns"].forEach(function(prop) {
-            if (properties[prop]) {
-                properties[prop] = properties[prop].split(",").map(function(val) {
-                    return Number(val) - 1;
-                });
-            }
-        });
+            ["columns"].forEach(function(prop) {
+                if (properties[prop]) {
+                    properties[prop] = properties[prop].split(",").map(function(val) {
+                        return Number(val) - 1;
+                    });
+                }
+            });
 
-        //$("#" + dataviz).remove();
+            //$("#" + dataviz).remove();
 
-        var elem = $.parseHTML(composer.activeModel().dataviz_models[type].replace("{{dataviz}}", dataviz));
-        attributes.forEach(function(attribute) {
-            $(elem).find(".dataviz").attr("data-" + attribute.prop, attribute.value);
-        });
-        $("#wizard-result div").remove();
-        $("#wizard-result").append(elem);
-        $("#wizard-code").text(elem[0].outerHTML);
-        $(".wizard-code").show();
-        var fdata = {};
-        fdata[dataviz] = _data;
-        report.testViz(fdata, type, properties);
+            var elem = $.parseHTML(composer.activeModel().dataviz_models[type].replace("{{dataviz}}", dataviz));
+            attributes.forEach(function(attribute) {
+                $(elem).find(".dataviz").attr("data-" + attribute.prop, attribute.value);
+            });
+            $("#wizard-result div").remove();
+            $("#wizard-result").append(elem);
+            $("#wizard-code").text(elem[0].outerHTML);
+            //$(".wizard-code").show();
+            var fdata = {};
+            fdata[dataviz] = _data;
+            report.testViz(fdata, type, properties);
+        }
     };
 
 
@@ -366,7 +373,8 @@ wizard = (function() {
     return {
 
         init: _init,
-        configureDataviz: _configureDataviz
+        configureDataviz: _configureDataviz,
+        loadConfig: _loadConfig
 
     }; // fin return
 

@@ -1,13 +1,14 @@
 ﻿.sidenav {
-  height: 100%;
-  width: 170px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 55px;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 60px;
 }
 
 .sidenav a {
@@ -27,7 +28,7 @@
 }
 
 .main {
-  margin-left: 160px; /* Same as the width of the sidenav */
+  margin-left: 230px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
 }
@@ -74,7 +75,7 @@
     z-index: 10;
 }
 
-.builder .composition .row {
+/*.builder .composition .row {
     background-color: #F5F5F5;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -87,18 +88,18 @@
     margin: 15px 0;
     position: relative;
     padding: 25px 14px 0;
-}
+}*/
 
-.builder .column {
+/*.builder .column {
     background-color: #FFFFFF;
     border: 1px solid #DDDDDD;
     border-radius: 4px 4px 4px 4px;
     margin: 15px 0;
     padding: 39px 19px 24px;
     position: relative;
-}
+}*/
 
-.builder.edit .column:after {
+/*.builder.edit .column:after {
     background-color: #F5F5F5;
     border: 1px solid #DDDDDD;
     border-radius: 4px 0 4px 0;
@@ -110,9 +111,9 @@
     padding: 3px 7px;
     position: absolute;
     top: -1px;
-}
+}*/
 
-.builder.edit .composition .row:before {
+/*.builder.edit .composition .row:before {
     background-color: #F5F5F5;
     border: 1px solid #DDDDDD;
     border-radius: 4px 0 4px 0;
@@ -125,7 +126,7 @@
     padding: 3px 7px;
     position: absolute;
     top: -1px;
-}
+}*/
 
 .builder.edit .composition .remove {
     background: #E91E63;
@@ -235,7 +236,21 @@ span.preview {
     display: none;
 }
 
-.dataviz-container {
-    border: brown solid;
+.composition .dataviz-container {
+    border: #007bff;
+    border-style: ridge;
     min-height: 75px;
+}
+
+.composition .bloc-content>.dataviz-container {
+    min-height: 150px;
+}
+
+span.text-edit.badge.badge-warning {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.composition li.dataviz.list-group-item span {
+    display: none;
 }
