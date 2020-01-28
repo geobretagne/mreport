@@ -249,6 +249,7 @@ span.preview {
 span.text-edit.badge.badge-warning {
     margin-left: 10px;
     cursor: pointer;
+    font-size: 13px;
 }
 
 .composition li.dataviz.list-group-item span {

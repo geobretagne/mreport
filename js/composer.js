@@ -125,12 +125,20 @@ composer = (function () {
     };
 
     var _onTextEdit = function(a) {
+        //Get selected text element
         var source = a.relatedTarget.parentNode.firstChild;
-        var btn = $(a.currentTarget).find(".btn-primary");
+        //store old text
+        var oldtext = source.nodeValue;
+        $("#text-edit-value").val(oldtext);
+        //Get save button and remove existing handlers
+        var btn = $(a.currentTarget).find(".text-save").off( "click");
+        //Add new handler to save button
         $(btn).click(function(e) {
-            console.log(source);
+            //get new text value and store it in composition
             var text = $("#text-edit-value").val();
             source.nodeValue = text;
+            //close modal
+            $("#text-edit").modal("hide");
         });
 
     };
@@ -148,8 +156,8 @@ composer = (function () {
             $(e.currentTarget).closest(".lyrow").find(".dataviz").appendTo("#dataviz-items");
             $(e.currentTarget).closest(".lyrow").remove();
         });
-        // add edit button
-        var btn = $(row).find(".bloc-title").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i> edit</span>').find(".text-edit");
+        // add edit button near to editable text elements
+        var btn = $(row).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i> edit</span>').find(".text-edit");
 
     };
 
