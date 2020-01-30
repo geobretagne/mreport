@@ -57,7 +57,7 @@ composer = (function () {
                         colors = parameters.colors.split(",");
                     }
                     var blocs = [];
-                    $(html).find("template.report-bloc, template.report-title").each(function (id, template) {
+                    $(html).find("template.report-bloc, template.report-bloc-title").each(function (id, template) {
                         var elem = $(template).prop('content').firstElementChild;
                         var preview = elem.getAttribute("data-model-title");
                         blocs.push({"view": elem.outerHTML, "preview": preview});
@@ -171,8 +171,7 @@ composer = (function () {
                 animation: 150,
                 onAdd: function (/**Event*/evt) {
                     //Test if title component
-                    var test_title = $(evt.item).closest(".dataviz-container").hasClass("report-component") &&
-                        $(evt.item).closest(".dataviz-container").hasClass("title");
+                    var test_title = $(evt.item).closest(".dataviz-container").parent().hasClass("report-bloc-title");
                     if (test_title) {
                         //No wizard needed
                         var dataviz = $(evt.item).closest(".dataviz").attr("data-dataviz");

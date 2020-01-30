@@ -237,6 +237,7 @@ wizard = (function() {
         var datavizType = $("#w_dataviz_type").val();
         var ico = $("#w_dataviz_type option:selected").attr("data-icon");
         $('[data-dataviz="'+ datavizId +'"] button i').get( 0 ).className = ico;
+        $('[data-dataviz="'+ datavizId +'"] button').closest(".tool").addClass("configured");
         //Hide modal
         $("#wizard-result div").remove();
         $("#wizard-code").text("");

@@ -68,10 +68,18 @@
         </div><!-- fin du bloc -->
     </template>
 
+    <template class="report-bloc-title" id="btitle">
+        <div class="report-bloc-title" data-model-title="Titre" data-model-description="Titre">
+            <div class="dataviz-container">
+                <!--title component is injected here -->
+            </div>
+
+    </template>
+
 
     <!-- REQUERY title component -->
     <template class="report-component report-title">
-        <div class="report-component title dataviz-container" data-model-title="Titre" data-model-description="Titre principal">
+        <div class="report-component.title">
             <h1 id="{{dataviz}}" class="dataviz report-title"></h1>
         </div>
     </template>

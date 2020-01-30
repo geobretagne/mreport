@@ -255,3 +255,8 @@ span.text-edit.badge.badge-warning {
 .composition li.dataviz.list-group-item span {
     display: none;
 }
+
+.tool.configured::after {
+    color: mediumvioletred;
+    content: "  \0040";
+}
