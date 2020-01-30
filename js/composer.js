@@ -180,8 +180,10 @@ composer = (function () {
                         var definition = elem[0].outerHTML;
                         // Inject dataviz definition directy
                         $(evt.item).find("code").text(definition);
-                        //Set title icon
-                        $('[data-dataviz="'+ dataviz +'"] button i').get( 0 ).className = "far fa-comment-dots";
+                        //Set title icon & deactivate wizard button
+                        var btn = $(evt.item).find (".tool button");
+                        $(btn).removeAttr("data-target").removeAttr("data-toggle");
+                        $(btn).find("i").get( 0 ).className = "far fa-comment-dots";
                     }
                 }
             });
