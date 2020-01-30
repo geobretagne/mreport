@@ -1,16 +1,21 @@
-<div id="model-b">
+
+<div id="model-b" data-icons="icon-default,icon-eco5" data-colors="#3db39e,#999999">
+    <!-- REQUERY template report is the main report div -->
     <template class="report">
         <div class="container-fluid model-b">
-            <div class="container report" data-composer-colors="#3db39e,#999999">
-                <h1>Rapport Title</h1>
-                <!-- blocs are injected here -->
+            <div class="container report">
+                <!-- title and blocs are injected here -->
             </div>
         </div>
     </template>
+    <!-- REQUERY (n) template report-bloc is a report bloc -->
     <template class="report-bloc" id="b4-6-2_2">
         <div class="report-bloc b4-6-2_2" data-model-title="3 colonnes" data-model-description="33%/33%/33%">
-            <h4 class="bloc-title editable-text"><!-- this text is editable in composer -->Titre du bloc</h4>
+            <!-- REQUERY bloc-title, editable-text means that is editable in composer -->
+            <h4 class="bloc-title editable-text">Titre du bloc<!-- this text is editable in composer --></h4>
+            <!-- REQUERY bloc-content -->
             <div class="row bloc-content">
+                <!-- REQUERY dataviz-container -->
                 <div class="dataviz-container col-md-4 card">
                     <!--dataviz component is injected here -->
                 </div>
@@ -30,15 +35,48 @@
                     </div>
                 </div>
             </div>
+            <!-- REQUERY bloc-sources -->
             <div class="row bloc-sources">
                 <div class="col">
-                    <p><i class="editable-text"><!-- this text is editable in composer -->SOURCE: xxx</i></p>
+                    <p><i class="editable-text">SOURCE: xxx<!-- this text is editable in composer --></i></p>
+                </div>
+            </div>
+        </div><!-- fin du bloc -->
+    </template>
+
+    <!-- REQUERY (n) template report-bloc is a report bloc -->
+    <template class="report-bloc" id="b6-6">
+        <div class="report-bloc b6-6" data-model-title="2 colonnes" data-model-description="50%/50%">
+            <!-- REQUERY bloc-title, editable-text means that is editable in composer -->
+            <h4 class="bloc-title editable-text">Titre du bloc<!-- this text is editable in composer --></h4>
+            <!-- REQUERY bloc-content -->
+            <div class="row bloc-content">
+                <!-- REQUERY dataviz-container -->
+                <div class="dataviz-container col-md-6 card">
+                    <!--dataviz component is injected here -->
+                </div>
+                <div class="dataviz-container col-md-6 card" >
+                    <!--dataviz component is injected here -->
+                </div>
+            </div>
+            <!-- REQUERY bloc-sources -->
+            <div class="row bloc-sources">
+                <div class="col">
+                    <p><i class="editable-text">SOURCE: xxx<!-- this text is editable in composer --></i></p>
                 </div>
             </div>
         </div><!-- fin du bloc -->
     </template>
 
 
+    <!-- REQUERY title component -->
+    <template class="report-component report-title">
+        <div class="report-component title dataviz-container" data-model-title="Titre" data-model-description="Titre principal">
+            <h1 id="{{dataviz}}" class="dataviz report-title"></h1>
+        </div>
+    </template>
+
+    <!-- REQUERY figure component -->
     <template class="report-component report-figure">
         <div class="report-component.figure card-body">
             <div id="{{dataviz}}" class="dataviz report-figure custom-icon icon-default">
@@ -50,17 +88,90 @@
         </div>
     </template>
 
+    <!-- REQUERY chart component -->
     <template class="report-component report-chart">
         <div class="report-component.chart card-body d-flex flex-column">
             <div id="{{dataviz}}" class="dataviz report-chart"></div>
-            <p class="sub-title-graph mt-auto">Lorem ipsum</p>
         </div>
     </template>
 
+    <!-- REQUERY table component -->
     <template class="report-component report-table">
         <div class="report-component.chart card-body">
             <div id="{{dataviz}}" class="dataviz report-table"></div>
         </div>
     </template>
+    <!-- STYLE USED BY this TEMPLATE -->
+    <style>
+        .model-b {
+    background-color: #f5f5f5;
+}
+
+.report-bloc.b4-6-2_2 {
+    color: #6c757d;
+}
+
+.row.bloc-sources p {
+    padding-left: 20px;
+}
+
+h4.bloc-title {
+    font-weight: 700;
+    padding-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+    color: #213042;
+}
+
+.sub-title-graph {
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.bloc-sources {
+    font-size: 12px;
+}
+
+.report-figure-chiffre {
+    padding-top:50px;
+    color: #3db39e;
+    font-size:40px;
+    font-weight:900;
+    text-align: center;
+}
+
+.report-figure-caption {
+    color: #3db39e;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+}
+
+.report-figure-caption::after {
+    content: ' Pour l\'EPCI sélectionné';
+    color: #666;
+    white-space: pre;
+    font-size:smaller;
+}
+
+.custom-icon {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-y: top;
+    background-size: 75px 45px;
+}
+
+
+.icon-default {
+    background-image: url(http://kartenn.region-bretagne.fr/portail-idd/img/social_diplome.svg);
+}
+
+.icon-eco5 {
+    background-image: url(http://kartenn.region-bretagne.fr/portail-idd/img/icon-eco5.svg);
+}
+
+
+    <style>
 </div>
 

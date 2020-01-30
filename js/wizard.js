@@ -149,7 +149,7 @@ wizard = (function() {
     /*
     * Method to automaticaly set dataviz parameters
     */
-    _autoConfig = function(id, dataviz) {
+    _autoConfig = function(dataviz) {
         // TODO : colors should be inherited from model
         var colors = composer.colors() || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
         //significative label if is true, allow chart and extra column in table
@@ -205,6 +205,9 @@ wizard = (function() {
         $("#w_dataviz_type").val(cfg.dataviz_type);
         $("#w_colors").val(cfg.colors);
         $("#w_label").val(cfg.label);
+        if (cfg.icon) {
+            $("#w_icon").val(cfg.icon);
+        }
         _showParameters(cfg.dataviz_type);
         if (cfg.dataviz_type === "chart") {
             $("#w_chart_opacity").val(cfg.opacity);
@@ -250,15 +253,15 @@ wizard = (function() {
         } else if (dataviz === "table") {
             $("#w_label").closest(".input-group").find(".input-group-text").text("labels");
         }
+        $("#w_icon").val("icon-default");
 
     };
 
     var _onChangeDatavizType = function() {
         var dataviz = $("#w_dataviz_type").val();
-        var id = $("#wizard-indicateurs button.active").attr("data-indicateur");
         $(".dataviz-attributes").val("");
         _showParameters(dataviz);
-        _autoConfig(id, dataviz);
+        _autoConfig(dataviz);
         _exitingConfig = false;
         $("#wizard_validate").click();
     };
@@ -328,16 +331,29 @@ wizard = (function() {
                 }
             });
 
-            //$("#" + dataviz).remove();
-
             var elem = $.parseHTML(composer.activeModel().dataviz_models[type].replace("{{dataviz}}", dataviz));
             attributes.forEach(function(attribute) {
                 $(elem).find(".dataviz").attr("data-" + attribute.prop, attribute.value);
             });
+
+            //icon
+            var icon = $(elem).find(".dataviz").attr("data-icon");
+            if (icon && type === "figure" ) {
+                var element = $(elem).find(".dataviz")[0];
+                //remove existing icon class eg icon-default
+                element.classList.forEach(className => {
+                    if (className.startsWith('icon-')) {
+                        element.classList.remove(className);
+                    }
+                });
+                //add icon class
+                element.classList.add(icon);
+                element.classList.add("custom-icon");
+            }
+
             $("#wizard-result div").remove();
             $("#wizard-result").append(elem);
             $("#wizard-code").text(elem[0].outerHTML);
-            //$(".wizard-code").show();
             var fdata = {};
             fdata[dataviz] = _data;
             report.testViz(fdata, type, properties);

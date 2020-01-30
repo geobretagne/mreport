@@ -22,10 +22,24 @@ composer = (function () {
         '</div>'
         ].join("");
 
+
     var _selectModel = function (m) {
         _activeModel = m;
         $("#structure-models .list-group-item").remove();
         $("#structure-models").append(_models[m].structure);
+        $("#wizard-result style").remove();
+        $("#wizard-result").append(_models[m].style);
+        $("#w_icon option").remove();
+        if (_models[m].parameters.icons) {
+            var icon_options = [];
+            var icons = _models[m].parameters.icons.split(",");
+            icons.forEach(function (i) {
+                icon_options.push('<option value="'+i+'">'+i+'</option>');
+            });
+            $("#w_icon").append(icon_options.join(""));
+        }
+
+
     }
 
     var _initComposer = function () {
@@ -35,28 +49,31 @@ composer = (function () {
                 dataType: "text",
                 success: function(html) {
                     //Template parsing
+                    var parameters = $(html).data(); /* eg data-icons, data-colors... */
                     var page = $(html).find("template.report").get(0).content.firstElementChild;
+                    var style = $(html).find("style")[0];
                     var colors = [];
-                    if ($(page).find(".report").attr("data-composer-colors")) {
-                        colors = $(page).find(".report").attr("data-composer-colors").split(",");
+                    if (parameters.colors) {
+                        colors = parameters.colors.split(",");
                     }
                     var blocs = [];
-                    $(html).find("template.report-bloc").each(function (id, template) {
+                    $(html).find("template.report-bloc, template.report-title").each(function (id, template) {
                         var elem = $(template).prop('content').firstElementChild;
                         var preview = elem.getAttribute("data-model-title");
                         blocs.push({"view": elem.outerHTML, "preview": preview});
                     });
+
                     var structure = [];
                     blocs.forEach(function(elem) {
                         structure.push(_row_template.replace("{{{view}}}", elem.view).replace("{{{preview}}}", elem.preview));
                     });
                     //Retrieve all dataviz models
                     var dataviz_models = {};
-                    ["figure", "chart", "table"].forEach(function(model) {
+                    ["figure", "chart", "table", "title"].forEach(function(model) {
                         var element = $(html).find("template.report-component.report-" + model).prop('content').firstElementChild;
                         dataviz_models[model] = $.trim(element.outerHTML);
                     });
-                    _models[m] = {page: page, blocs: blocs, structure: structure, dataviz_models: dataviz_models, colors: colors};
+                    _models[m] = {parameters: parameters, style: style, page: page, blocs: blocs, structure: structure, dataviz_models: dataviz_models, colors: colors};
                     $("#selectedModelComposer").append('<option value="'+m+'">'+m+'</option>');
 
                 },
@@ -136,7 +153,11 @@ composer = (function () {
         $(btn).click(function(e) {
             //get new text value and store it in composition
             var text = $("#text-edit-value").val();
-            source.nodeValue = text;
+            //get type content (text or html)
+            var type = $('#text-edit input[name=typeedit]:checked').val();
+            if (type === "text") {
+                source.nodeValue = text;
+            }
             //close modal
             $("#text-edit").modal("hide");
         });
@@ -147,7 +168,22 @@ composer = (function () {
         $(row).find(".dataviz-container").each(function(id, col) {
             new Sortable(col, {
                 group:'dataviz',
-                animation: 150
+                animation: 150,
+                onAdd: function (/**Event*/evt) {
+                    //Test if title component
+                    var test_title = $(evt.item).closest(".dataviz-container").hasClass("report-component") &&
+                        $(evt.item).closest(".dataviz-container").hasClass("title");
+                    if (test_title) {
+                        //No wizard needed
+                        var dataviz = $(evt.item).closest(".dataviz").attr("data-dataviz");
+                        var elem = $.parseHTML(composer.activeModel().dataviz_models.title.replace("{{dataviz}}", dataviz));
+                        var definition = elem[0].outerHTML;
+                        // Inject dataviz definition directy
+                        $(evt.item).find("code").text(definition);
+                        //Set title icon
+                        $('[data-dataviz="'+ dataviz +'"] button i').get( 0 ).className = "far fa-comment-dots";
+                    }
+                }
             });
         });
         //enable remove buton
@@ -163,6 +199,12 @@ composer = (function () {
 
     var _exportHTML = function () {
         var html = [];
+        $("#report-composition .report-component.title").each(function(id,title) {
+            if (id === 0) {
+                var dvz = $(title).find("code").text();
+                html.push(dvz);
+            }
+        });
         $("#report-composition .report-bloc").each(function(id,bloc) {
             var tmp_bloc = $(bloc).clone();
             //delete extra row attributes
