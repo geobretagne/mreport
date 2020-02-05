@@ -59,8 +59,8 @@ wizard = (function() {
                             formatedData.significative_label = (countUnique(formatedData.label[0]) > 1);
 
                         } else {
-                            formatedData.data = tmp_data[formatedData.dataset[0].data];
-                            formatedData.label = tmp_data[formatedData.dataset[0].label];
+                            formatedData.data = tmp_data.dataset[formatedData.dataset[0]].data;
+                            formatedData.label = tmp_data.dataset[formatedData.dataset[0]].label;
                             formatedData.rows = formatedData.data.length;
                             formatedData.significative_label = (countUnique(formatedData.label[0]) > 1);
                         }
@@ -94,6 +94,7 @@ wizard = (function() {
     * Update options in select control #w_dataviz_type"
     */
     var _configureWizardOptions = function() {
+        // TODO REFACTOR THIS
         var dataset_nb = _data.dataset.length;
         var data_nb = _data.rows;
         var data_type = "text";
@@ -103,9 +104,19 @@ wizard = (function() {
             if (_url.test(_data.data[0])) {
                 data_type = "url";
             }
-
+            if (_data.data[0] && _data.data[0].startsWith("POINT")) {
+                data_type = "geom";
+            }
+        } else {
+            if (_data.data[0] && _data.data[0][0] && _data.data[0][0].startsWith("POINT")) {
+                data_type = "geom";
+            }
         }
+
         var options = [];
+        if (data_type === "geom") {
+            options.push(["map", "fas fa-map-marker-alt"]);
+        }
         if (dataset_nb > 1) {
             options.push(["table", "fas fa-table"]);
             if (significative_label) {
@@ -123,7 +134,7 @@ wizard = (function() {
                 }
             } else {
                 // 1 dataset plusieurs lignes
-                options.push(["chart",'<i class="fas fa-chart-bar"></i>']);
+                options.push(["chart","fas fa-chart-bar"]);
             }
         }
         var dataviz_options = ['<option class="dataviz-options" selected disabled>...</option>'];
@@ -224,7 +235,7 @@ wizard = (function() {
         }
     }
 
-    /*
+    /*dataviz-options
     * Store dataviz configuration mreport like in virtual html report
     */
 

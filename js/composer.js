@@ -52,6 +52,9 @@ composer = (function () {
                     var parameters = $(html).data(); /* eg data-icons, data-colors... */
                     var page = $(html).find("template.report").get(0).content.firstElementChild;
                     var style = $(html).find("style")[0];
+                    if (style) {
+                        style = style.outerHTML;
+                    }
                     var colors = [];
                     if (parameters.colors) {
                         colors = parameters.colors.split(",");
@@ -69,7 +72,7 @@ composer = (function () {
                     });
                     //Retrieve all dataviz models
                     var dataviz_models = {};
-                    ["figure", "chart", "table", "title"].forEach(function(model) {
+                    ["figure", "chart", "table", "title", "text", "iframe", "image", "map"].forEach(function(model) {
                         var element = $(html).find("template.report-component.report-" + model).prop('content').firstElementChild;
                         dataviz_models[model] = $.trim(element.outerHTML);
                     });
@@ -221,6 +224,10 @@ composer = (function () {
             });
             html.push($(tmp_bloc).get(0).outerHTML);
         });
+
+        if (composer.activeModel().style) {
+            html.push(composer.activeModel().style);
+        }
 
         var _export = $(_models[_activeModel].page).clone().find(".report").append(html.join("\n")).parent();
 
