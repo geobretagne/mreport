@@ -150,7 +150,6 @@ admin = (function () {
 
         var cards = [];
         $("#catalog .row:nth-of-type(2)").remove();
-        var cpt  = 0;
         Object.entries(_dataviz_data).forEach(function (a) {
             var id = a[0];
             var data = a[1];
@@ -174,6 +173,7 @@ admin = (function () {
             );
         });
         $("#catalog").append('<div id="dataviz-cards" class="row">' + cards.join("") + '</div>');
+        /* Add event to all checkbox to add them into the cart */
         $('input[type="checkbox"]').change(function(){
             var id = $(this).parent().parent().parent().data().datavizId;
             if($(this).is(":checked")) {
@@ -189,7 +189,10 @@ admin = (function () {
             }
             $(".green .number").html($(".cd-cart-items li").length);
         });
+        /* Remove event from the 'select all' checkbox because we do not want to add it to the cart */
         $("#checkAll").off("change");
+        /* Bind event to dynamically generated cart items in order to delete them from the cart and unselect 
+        them in the list */
         $(document).on('click',"#cd-cart .cd-cart-items li .cd-item-remove",function(){
             var id = $(this).parent().data().datavizId;
             $("#dataviz-cards div[data-dataviz-id|="+id+"] input[type='checkbox']").prop('checked',false);
@@ -277,6 +280,7 @@ admin = (function () {
             $(e.currentTarget).find(".dataviz-title").text(datavizId);
             _populateForm('#dataviz-form', _dataviz_data[datavizId]);
         });
+        /* Select all visible items in the list and trigger the cahnge event on checkbox to add them in the cart */
         $("#checkAll").click(function () {
             var dvz = $("#dataviz-cards .cards:not(.hidden) .dataviz-selection");
             var checked = $(this).prop('checked');
@@ -289,14 +293,17 @@ admin = (function () {
                 }
             });
         });
+        /* Reset all inputs and cart */
         $("#resetfilters").click(function () {
             $(".dataviz-selection").prop('checked', false).trigger("change");
             $("#checkAll").prop('checked', false);
             $("#searchbar").val("").trigger("keyup");
         });
+        /* Toggle the cart to appear */
         $(".green").click(function(){
             $("#cd-cart").toggleClass("speed-in");
         });
+        /* Toggle the cart to disappear */
         $("#togglePanier").click(function(){
             $("#cd-cart").toggleClass("speed-in");
         });
