@@ -99,10 +99,17 @@ admin = (function () {
             $(".reports-dataviz .btn-delete").click(function (e) {
                 var item = $(this).parent();
                 item.toggleClass("item2keep");
-                if (item.hasClass("item2keep"))
+                if (item.hasClass("item2keep")){
                     $(this).text("Delete")
-                else
-                    $(this).text("Keep")
+                    $(this).removeClass("btn-success");
+                    $(this).addClass("btn-danger");
+                }
+                else{
+                    $(this).text("Keep");
+                    $(this).removeClass("btn-danger");
+                    $(this).addClass("btn-success");
+                }
+                    
 
             });
         });
