@@ -186,7 +186,6 @@ h5>.badge {
 
 @media only screen and (min-width: 1200px) {
 
-  #main-nav,
   #cd-cart {
     width: 30%;
   }
@@ -194,13 +193,11 @@ h5>.badge {
 
 @media only screen and (min-width: 768px) {
 
-  #main-nav,
   #cd-cart {
     width: 350px;
   }
 }
 
-#main-nav,
 #cd-cart {
   position: fixed;
   top: 0;
@@ -248,7 +245,9 @@ h5>.badge {
     padding: 1em 2em;
   }
 }
-
+/*
+* Cart Items
+*/
 #cd-cart .cd-cart-items li {
   position: relative;
   padding: 1em;
@@ -264,7 +263,9 @@ h5>.badge {
     right: 2em;
   }
 }
-
+/*
+* Remove Icon
+*/
 #cd-cart .cd-item-remove {
   position: absolute;
   right: 1em;
@@ -277,6 +278,19 @@ h5>.badge {
   background: url(../img/cd-remove-item.svg) no-repeat center center;
   transition: 0.3s;
 }
+.cd-item-remove:hover{
+  background-color: grey !important;
+  transition: 0.3s !important;
+}
+.cd-img-replace {
+  display: inline-block;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+}
+/*
+* Toggle off cart icon
+*/
 #togglePanier{
   position: sticky;
   background: url(../img/cd-remove-item.svg) no-repeat center center lightskyblue;
@@ -288,21 +302,14 @@ h5>.badge {
   right: 0;
   transition: .3s;
 }
-.cd-item-remove:hover{
-  background-color: grey !important;
-  transition: 0.3s !important;
-}
 #togglePanier:hover{
   cursor: pointer;
   background-color: #007bff;
   transition: 0.3s;
 }
-.cd-img-replace {
-  display: inline-block;
-  overflow: hidden;
-  text-indent: 100%;
-  white-space: nowrap;
-}
+/*
+* Toggle on cart icon
+*/
 .green {
   color: #FFF;
   padding: 4px 12px 4px 12px;
