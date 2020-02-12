@@ -243,7 +243,7 @@ wizard = (function() {
         //Get current dataviz id
         var datavizId = $("#wizard-panel").attr("data-related-id");
         //copy paste generated code in <code> element
-        $('[data-dataviz="'+ datavizId +'"] code').text($("#wizard-code").text());
+        $('[data-dataviz="'+ datavizId +'"] code.dataviz-definition').text($("#wizard-code").text());
         //get dataviz type
         var datavizType = $("#w_dataviz_type").val();
         var ico = $("#w_dataviz_type option:selected").attr("data-icon");
