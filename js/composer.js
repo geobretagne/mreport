@@ -21,7 +21,7 @@ composer = (function () {
      */
 
     var _blockTemplate = [
-        '<div class="lyrow list-group-item">',
+        '<div class="structure-bloc list-group-item">',
             '<span class="remove badge badge-danger">',
                 '<i class="fas fa-times"></i> remove',
             '</span>',
@@ -35,11 +35,23 @@ composer = (function () {
         '</div>'
         ].join("");
 
+    var _datavizTemplate = [
+        '<li data-dataviz="{{dvz}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item">',
+            '<div class="tool">',
+                '<button class="btn btn-default" data-toggle="modal" data-related-id="{{dvz}}" data-target="#wizard-panel">',
+                '<i class="fas fa-cog"></i>',
+                '</button>',
+            '</div>',
+            '<span>{{dvz}}</span>',
+            '<code class="dataviz-definition"></code>',
+        '</li>'];
+
     /*
      * _selectTemplate - templateid. This method is used to update structure, style  and icons store derived from template
      */
 
-    var _selectTemplate = function (m) {
+    var _selectTemplate = function (e) {
+        var m = $(this).val();
         _activeHTMLTemplate = m;
         //Update structure elements choice in composer page
         $("#structure-models .list-group-item").remove();
@@ -151,35 +163,38 @@ composer = (function () {
         });
 
         // save report button action
-        $("#btn_save_report").click(function (e) {
-            _saveReport();
-        });
+        $("#btn_save_report").click( _saveReport );
 
-        $("#selectedReportComposer").change(function (e) {
-            $("#report-composition .lyrow").remove();
-            var reportId = $( this ).val();
-            var title = admin.getReportData(reportId).title;
-            $("#composer-report-title").text(reportId);
-            //Update dataviz list
-            var lst = [];
-            var dataviz_lst = admin.getReportData(reportId).dataviz;
-            dataviz_lst.forEach(function (dvz) {
-                if (dvz != null)
-                    lst.push(['<li data-dataviz="' + dvz + '" title="'+dvz+'" data-report="' + reportId + '" class="dataviz list-group-item">',
-                    '<div class="tool"><button class="btn btn-default" data-toggle="modal" data-related-id="'+dvz+'" ',
-                    'data-target="#wizard-panel"><i class="fas fa-cog"></i></button></div>',
-                    '<span>' + dvz + '</span></div><code></code>'].join(""));
-            });
-            $("#dataviz-items .dataviz.list-group-item").remove();
-            $("#dataviz-items").append(lst.join(""));
-        });
+        // update left menu after report selection with linked dataviz
+        $("#selectedReportComposer").change(_onSelectReport);
 
-        $("#selectedModelComposer").change(function (e) {
-            _selectTemplate($( this ).val());
-        });
+        // update left menu after model selection with linked structure elements
+        $("#selectedModelComposer").change( _selectTemplate );
 
         $('#text-edit').on('show.bs.modal', _onTextEdit);
 
+    };
+
+    var _onSelectReport = function (e) {
+        // clear composition
+        $("#report-composition .structure-bloc").remove();
+        //Get reportid
+        var reportId = $( this ).val();
+        //get and show report title
+        var title = admin.getReportData(reportId).title;
+        $("#composer-report-title").text(reportId);
+        //Update dataviz items in menu list
+        var lst = [];
+        var dataviz_lst = admin.getReportData(reportId).dataviz;
+        dataviz_lst.forEach(function (dvz) {
+            if (dvz != null)
+                var dvztpl =  _datavizTemplate.join("");
+                dvztpl = dvztpl.replace(/{{dvz}}/g, dvz);
+                dvztpl = dvztpl.replace(/{{reportId}}/g, reportId);
+                lst.push(dvztpl);
+        });
+        $("#dataviz-items .dataviz.list-group-item").remove();
+        $("#dataviz-items").append(lst.join(""));
     };
 
     var _onTextEdit = function(a) {
@@ -223,7 +238,7 @@ composer = (function () {
                         var elem = $.parseHTML(composer.activeModel().dataviz_models.title.replace("{{dataviz}}", dataviz));
                         var definition = elem[0].outerHTML;
                         // Inject dataviz definition directy
-                        $(evt.item).find("code").text(definition);
+                        $(evt.item).find("code.dataviz-definition").text(definition);
                         //Set title icon & deactivate wizard button
                         var btn = $(evt.item).find (".tool button");
                         $(btn).removeAttr("data-target").removeAttr("data-toggle");
@@ -235,8 +250,8 @@ composer = (function () {
         //enable remove buton
         $(row).find(".remove").click(function(e) {
             //keep existing dataviz
-            $(e.currentTarget).closest(".lyrow").find(".dataviz").appendTo("#dataviz-items");
-            $(e.currentTarget).closest(".lyrow").remove();
+            $(e.currentTarget).closest(".structure-bloc").find(".dataviz").appendTo("#dataviz-items");
+            $(e.currentTarget).closest(".structure-bloc").remove();
         });
         // add edit button near to editable text elements
         var btn = $(row).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i> edit</span>').find(".text-edit");
@@ -249,7 +264,7 @@ composer = (function () {
         // Get first title
         $("#report-composition .report-bloc-title").each(function(id,title) {
             if (id === 0) {
-                var dvz = $(title).find("code").text();
+                var dvz = $(title).find("code.dataviz-definition").text();
                 html.push(dvz);
             }
         });
@@ -264,7 +279,7 @@ composer = (function () {
             $(tmp_bloc).find(".to-remove").remove();
             // loop on dataviz-container
             $(tmp_bloc).find(".dataviz-container").each(function(id,container) {
-               var dvz = $(container).find("code").text();
+               var dvz = $(container).find("code.dataviz-definition").text();
                $(container).html(dvz);
             });
             html.push($(tmp_bloc).get(0).outerHTML);
