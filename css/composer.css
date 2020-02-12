@@ -224,7 +224,7 @@ span.preview {
     padding: 10px;
 }
 
-.sidenav .tool {
+.sidenav .tool button{
     display: none;
 }
 
@@ -259,6 +259,14 @@ span.text-edit.badge.badge-warning {
 .tool.configured::after {
     color: mediumvioletred;
     content: "  \0040";
+}
+
+.tool.configured {
+    display: inline;
+}
+
+#dataviz-items code.dataviz-definition {
+    display: none;
 }
 
 .map-marker-circle-1 {
