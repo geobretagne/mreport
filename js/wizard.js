@@ -160,6 +160,7 @@ wizard = (function() {
         if (data_type === "geom") {
             options.push(["map", "fas fa-map-marker-alt"]);
         }
+        // Many datasets => table, chart
         if (dataset_nb > 1) {
             options.push(["table", "fas fa-table"]);
             if (significative_label) {
@@ -167,7 +168,7 @@ wizard = (function() {
             }
         } else {
             if (data_nb === 1) {
-                // 1 dataset une seule ligne
+                // 1 dataset une seule ligne => figure, text, iframe, image
                 if (data_type === "text") {
                     options.push(["figure", "fas fa-sort-numeric-down"]);
                     options.push(["text", "far fa-file-alt"]);
@@ -176,8 +177,12 @@ wizard = (function() {
                     options.push(["image", "far fa-image"]);
                 }
             } else {
-                // 1 dataset plusieurs lignes
+                // 1 dataset plusieurs lignes => table, chart
                 options.push(["chart","fas fa-chart-bar"]);
+                // un seul dataset but significative label
+                if (significative_label) {
+                    options.push(["table", "fas fa-table"]);
+                }
             }
         }
         var dataviz_options = ['<option class="dataviz-options" selected disabled>...</option>'];
