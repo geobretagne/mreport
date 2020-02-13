@@ -5,7 +5,8 @@ composer = (function () {
 
 
     /*
-     * _HTMLTemplates - {object}. This var store structured html blocks issued from html template selected
+     * _HTMLTemplates - {object}. This var store structured html blocks issued
+     * from html template selected
      */
 
     var _HTMLTemplates = {};
@@ -17,7 +18,8 @@ composer = (function () {
     var _activeHTMLTemplate = "";
 
     /*
-     * _blockTemplate - string. This var is used to construct elements and append it to dom with selected HTMLTemplate
+     * _blockTemplate - Array. This var is used to construct bloc elements and append it
+     * to dom with selected HTMLTemplate
      */
 
     var _blockTemplate = [
@@ -25,15 +27,20 @@ composer = (function () {
             '<span class="remove badge badge-danger">',
                 '<i class="fas fa-times"></i> remove',
             '</span>',
-            '<span class="preview">',
-                '{{{preview}}}',
+            '<span class="structure-description">',
+                '{{{DESCRIPTION}}}',
             '</span>',
             '<span class="drag badge badge-default">',
                 '<i class="fas fa-arrows-alt"></i> drag',
             '</span>',
-            '<div class="view">{{{view}}}</div>',
+            '<div class="structure-html">{{{HTML}}}</div>',
         '</div>'
         ].join("");
+
+    /*
+     * _datavizTemplate - Array. This var is used to construct dataviz items and append them to dom
+     * in #dataviz-items list
+     */
 
     var _datavizTemplate = [
         '<li data-dataviz="{{dvz}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item">',
@@ -47,7 +54,9 @@ composer = (function () {
         '</li>'];
 
     /*
-     * _selectTemplate - templateid. This method is used to update structure, style  and icons store derived from template
+     * _selectTemplate. This method is used to update structure, style  and icons store derived
+     * from selected template
+     * method linked to #selectedModelComposer change event
      */
 
     var _selectTemplate = function (e) {
@@ -55,7 +64,7 @@ composer = (function () {
         _activeHTMLTemplate = m;
         //Update structure elements choice in composer page
         $("#structure-models .list-group-item").remove();
-        $("#structure-models").append(_HTMLTemplates[m].structure);
+        $("#structure-models").append(_HTMLTemplates[m].elements);
         //update style in wizard modal
         $("#wizard-result style").remove();
         $("#wizard-result").append(_HTMLTemplates[m].style);
@@ -75,39 +84,48 @@ composer = (function () {
 
     /*
      * _parseTemplate. This method is used to parse html template
-     * and update composer ihm with result
+     * and update composer IHM and _HTMLTemplates var with result
      */
 
-
     var _parseTemplate = function (templateid, html) {
+        // get data- linked to the template
         var parameters = $(html).data(); /* eg data-icons, data-colors... */
-        var page = $(html).find("template.report").get(0).content.firstElementChild;
+        if (parameters.colors) {
+            parameters.colors = parameters.colors.split(",");
+        }
+        //get style
         var style = $(html).find("style")[0];
         if (style) {
             style = style.outerHTML;
         }
-        var colors = [];
-        if (parameters.colors) {
-            colors = parameters.colors.split(",");
-        }
+        //get main template div
+        var page = $(html).find("template.report").get(0).content.firstElementChild.outerHTML;
         var blocs = [];
+        //get all report-bloc and report-bloc-title
         $(html).find("template.report-bloc, template.report-bloc-title").each(function (id, template) {
             var elem = $(template).prop('content').firstElementChild;
-            var preview = elem.getAttribute("data-model-title");
-            blocs.push({"view": elem.outerHTML, "preview": preview});
+            var description = elem.getAttribute("data-model-title");
+            blocs.push({"html": elem.outerHTML, "description": description});
         });
-
+        //Store all blocs in structure - Array
         var structure = [];
         blocs.forEach(function(elem) {
-            structure.push(_blockTemplate.replace("{{{view}}}", elem.view).replace("{{{preview}}}", elem.preview));
+            structure.push(_blockTemplate.replace("{{{HTML}}}", elem.html).replace("{{{DESCRIPTION}}}", elem.description));
         });
-        //Retrieve all dataviz models
-        var dataviz_models = {};
-        ["figure", "chart", "table", "title", "text", "iframe", "image", "map"].forEach(function(model) {
-            var element = $(html).find("template.report-component.report-" + model).prop('content').firstElementChild;
-            dataviz_models[model] = $.trim(element.outerHTML);
+        //Retrieve all dataviz components
+        var dataviz_components = {};
+        ["figure", "chart", "table", "title", "text", "iframe", "image", "map"].forEach(function(component) {
+            var element = $(html).find("template.report-component.report-" + component).prop('content').firstElementChild;
+            dataviz_components[component] = $.trim(element.outerHTML);
         });
-        _HTMLTemplates[templateid] = {parameters: parameters, style: style, page: page, blocs: blocs, structure: structure, dataviz_models: dataviz_models, colors: colors};
+        //Populate _HTMLTemplates with object
+        _HTMLTemplates[templateid] = {
+            parameters: parameters,
+            style: style,
+            page: page,
+            elements: structure,
+            dataviz_components: dataviz_components
+        };
         $("#selectedModelComposer").append('<option value="'+templateid+'">'+templateid+'</option>');
 
     };
@@ -171,9 +189,15 @@ composer = (function () {
         // update left menu after model selection with linked structure elements
         $("#selectedModelComposer").change( _selectTemplate );
 
+        //configure modal to edit text
         $('#text-edit').on('show.bs.modal', _onTextEdit);
 
     };
+
+    /*
+     * _onSelectReport. This method is linked to #selectedReportComposer -event change-
+     * to update dataviz items linked to selected report
+     */
 
     var _onSelectReport = function (e) {
         // clear composition
@@ -196,6 +220,11 @@ composer = (function () {
         $("#dataviz-items .dataviz.list-group-item").remove();
         $("#dataviz-items").append(lst.join(""));
     };
+
+    /*
+     * _onTextEdit. This method is linked to #text-edit modal -event show-
+     * to configure modal
+     */
 
     var _onTextEdit = function(a) {
         //Get selected text element
@@ -221,7 +250,8 @@ composer = (function () {
     };
 
     /*
-     * _configureNewBlock. This method configure fresh dropped blocks to be able to receive and configure dataviz.
+     * _configureNewBlock. This method configure fresh dropped blocks to be able to receive
+     * and configure dataviz.
      */
 
     var _configureNewBlock = function(row) {
@@ -233,9 +263,9 @@ composer = (function () {
                     //Test if title component
                     var test_title = $(evt.item).closest(".dataviz-container").parent().hasClass("report-bloc-title");
                     if (test_title) {
-                        //No wizard needed
+                        //No wizard needed. autoconfig this dataviz & deactivate wizard for this dataviz
                         var dataviz = $(evt.item).closest(".dataviz").attr("data-dataviz");
-                        var elem = $.parseHTML(composer.activeModel().dataviz_models.title.replace("{{dataviz}}", dataviz));
+                        var elem = $.parseHTML(composer.activeModel().dataviz_components.title.replace("{{dataviz}}", dataviz));
                         var definition = elem[0].outerHTML;
                         // Inject dataviz definition directy
                         $(evt.item).find("code.dataviz-definition").text(definition);
@@ -247,6 +277,7 @@ composer = (function () {
                 }
             });
         });
+
         //enable remove buton
         $(row).find(".remove").click(function(e) {
             //keep existing dataviz
@@ -258,7 +289,12 @@ composer = (function () {
 
     };
 
-    //This method is used to convert composer composition into valid html ready to use in mreport
+    /*
+     * __exportHTML. This method is used to convert composer composition
+     * into valid html ready to use in mreport.
+     * Method is used by _saveReport method.
+     */
+
     var _exportHTML = function () {
         var html = [];
         // Get first title
@@ -291,13 +327,17 @@ composer = (function () {
         }
 
         //generate html definition from template and composer elements
-        var _page = $(_HTMLTemplates[_activeHTMLTemplate].page).clone();
-        var _export = _page.find(".report").append(html.join("\n")).parent().get(0).outerHTML;
+        var _page = $.parseHTML(_HTMLTemplates[_activeHTMLTemplate].page);
+        var _export = $(_page).find(".report").append(html.join("\n")).parent().get(0).outerHTML;
 
         return _export;
     };
 
-    //_compose. This method is used to activate composer for a given report
+    /*
+     * _compose.  This public method is used to activate composer for a given report
+     * eg composer.compose("test");
+     */
+
     var _compose = function (reportId) {
         //Show composeur page
         $("#btn-composer").click();
@@ -305,7 +345,11 @@ composer = (function () {
         $('#selectedReportComposer option[value="' + reportId + '"]').prop('selected', true).trigger("change");
     }
 
-    //Save report in report.html
+    /*
+     * _saveTeport.  This method is used by #btn_save_report to
+     * save active composition into dedicated report.html
+     */
+
     var _saveReport = function () {
 		var _report = $("#selectedReportComposer").val();
 		var newDom = _exportHTML();
@@ -335,11 +379,10 @@ composer = (function () {
 
     return {
         initComposer: _initComposer,
-        exportHTML: _exportHTML,
-        compose: _compose,
-        colors: function () { return _HTMLTemplates[_activeHTMLTemplate].colors;},
-        activeModel: function () { return _HTMLTemplates[_activeHTMLTemplate];},
-        models: function () { return _HTMLTemplates;}
+        compose: /* used by admin.js */ _compose,
+        colors: /* used by wizard.js */ function () { return _HTMLTemplates[_activeHTMLTemplate].parameters.colors;},
+        activeModel: /* used by wizard.js */ function () { return _HTMLTemplates[_activeHTMLTemplate];},
+        models: /* used for test pupose */ function () { return _HTMLTemplates;}
     }; // fin return
 
 })();

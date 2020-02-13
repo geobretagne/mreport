@@ -343,7 +343,7 @@ wizard = (function() {
                 }
             });
 
-            var elem = $.parseHTML(composer.activeModel().dataviz_models[type].replace("{{dataviz}}", dataviz));
+            var elem = $.parseHTML(composer.activeModel().dataviz_components[type].replace("{{dataviz}}", dataviz));
             attributes.forEach(function(attribute) {
                 $(elem).find(".dataviz").attr("data-" + attribute.prop, attribute.value);
             });
