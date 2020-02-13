@@ -2,6 +2,13 @@ wizard = (function() {
     /*
      * Private
      */
+
+    /*
+     * Wizard needs data to vizualize dataviz configuration
+     * each data sample linked to dataviz is stored for next usage
+     * in _satoreData and active dataviz data is stored in _data
+     */
+
     var _data;
 
     var _storeData = {};
@@ -14,16 +21,18 @@ wizard = (function() {
     * this var is used by wizard to initiate itself with existing conf
     */
 
-    var _exitingConfig = false;
+    var _existingConfig = false;
 
     /* Method to extract a set of data in relation with dataviz
     * and necessary to configure and visualize a dataviz for a report
     * Result is stored in _data variable & in _storeData[xxx] to reuse it later
     */
     var _getSampleData = function(datavizId) {
+        // function countUnique is used to test if labels linked to dataviz are unique or not.
         function countUnique(iterable) {
           return new Set(iterable).size;
         }
+        //get sample data linked to dataviz, format it and store it for later
         $.ajax({
             dataType: "json",
             type: "GET",
@@ -32,12 +41,30 @@ wizard = (function() {
                 if (data.data) {
                     //update local data
                     var tmp_data = {"dataset":{}};
-                    var formatedData = {"dataset": [], "data": [], "label":[], "rows":0, "significative_label": false};
-                    //test multilines
+                    var formatedData = {
+                        "dataset": [],
+                        "data": [],
+                        "label":[],
+                        "rows":0,
+                        "significative_label": false
+                    };
+                    //test multilines and format data and populate formatedData
                     if (data.data.length === 1) {
+                        //eg figure : data = {"data":"1984","dataset":"bigbrother","label":"Roman de G. Orwell","order":1}
                         var a = data.data[0];
                         formatedData = {"dataset": [a.dataset], "data": [a.data], "label":[a.label], "rows":1, "significative_label": true};
                     } else {
+                        /* eg graph with 2 datasets: data = [
+                            {"data":"10","dataset":"voitures","label":"2019","order":1},
+                            {"data":"15","dataset":"voitures","label":"2020","order":2},
+                            {"data":"12","dataset":"vélos","label":"2019","order":1},
+                            {"data":"13","dataset":"vélos","label":"2020","order":2}
+                        ]
+                           or graph with one dataset  : data = [
+                            {"data":"75%","dataset":"budget","label":"disponible","order":1},
+                            {"data":"25%","dataset":"budget","label":"dépensé","order":2}
+                           ]
+                        */
                         data.data.forEach(function(item) {
                             if (tmp_data.dataset[item.dataset]) {
                                 tmp_data.dataset[item.dataset].data.push(item.data);
@@ -50,18 +77,29 @@ wizard = (function() {
                                 formatedData.dataset.push(item.dataset);
                             }
                         });
+                        /* if more than one dataset store data and labels in this model :
+                         *   [
+                                [dataset1.value1, dataset1.value2],
+                                [dataset2.value1, dataset2.value2]
+                            ]
+                        */
                         if (formatedData.dataset.length > 1) {
                             formatedData.dataset.forEach(function(dataset) {
                                 formatedData.data.push(tmp_data.dataset[dataset].data);
                                 formatedData.label.push(tmp_data.dataset[dataset].label);
                             });
                             formatedData.rows = formatedData.data[0].length;
+                            // Test if labels are significative. If then labels can be used as column in table dataviz
                             formatedData.significative_label = (countUnique(formatedData.label[0]) > 1);
 
                         } else {
+                            /* Put directly data and labels from the unique dataset
+                                [value1, value2]
+                            */
                             formatedData.data = tmp_data.dataset[formatedData.dataset[0]].data;
                             formatedData.label = tmp_data.dataset[formatedData.dataset[0]].label;
                             formatedData.rows = formatedData.data.length;
+                            // Test if labels are significative. If then labels can be used as column in table dataviz
                             formatedData.significative_label = (countUnique(formatedData.label[0]) > 1);
                         }
                     }
@@ -80,11 +118,16 @@ wizard = (function() {
         });
     };
 
+    /*
+    * _clean Method to clear wizard form
+    */
+
     var _clean = function () {
-        //$(".wizard-code").hide();
         $("#dataviz-attributes").hide();
-        $(".dataviz-attributes").val("");
+        //remove existing result
         $("#wizard-result div").remove();
+        //remove all form values
+        $(".dataviz-attributes").val("");
         $("#w_dataviz_type").val("");
         $("#wizard-code").text("");
     };
@@ -158,10 +201,10 @@ wizard = (function() {
     };
 
     /*
-    * Method to automaticaly set dataviz parameters
+    * Method to automaticaly set dataviz parameters in #wizard-parameters form
+    * this method is called by  _onChangeDatavizType linked to w_dataviz_type change event
     */
     _autoConfig = function(dataviz) {
-        // TODO : colors should be inherited from model
         var colors = composer.colors() || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
         //significative label if is true, allow chart and extra column in table
         var significative_label = _data.significative_label;
@@ -173,9 +216,12 @@ wizard = (function() {
 
         switch (dataviz) {
             case "chart":
+                // chart parameters
                 $("#w_chart_opacity").val("0.75");
+                // set chart type
                 $("#w_chart_type").val("bar");
                 $("#w_colors").val(colors.slice(0, nb_datasets).join(","));
+                // set chart label(s)
                 if (nb_datasets === 1) {
                     $("#w_label").val("Légende");
                 } else {
@@ -183,12 +229,16 @@ wizard = (function() {
                 }
                 break;
             case "table":
+                // set table headers
                 $("#w_label").val(_data.dataset.join(","));
+                //select columns (datasets) to render tin table
                 $("#w_table_column").val(columns.join(","));
                 if (significative_label) {
                     $("#w_table_extracolumn").val("#");
+                    //show extra columns parameters
                     _enableExtraColumnParameter(true);
                 } else {
+                     //hide extra columns parameters
                     $("#w_table_extracolumn").closest(".input-group").hide();
                 }
                 break;
@@ -196,10 +246,7 @@ wizard = (function() {
         }
     };
 
-    _loadConfig = function (html_config) {
-        console.log(html_config);
-    }
-
+    //show or hide  extra columns parameters
     _enableExtraColumnParameter = function (enable) {
         if (enable) {
             $("#w_table_extracolumn").closest(".input-group").show();
@@ -209,16 +256,19 @@ wizard = (function() {
     }
 
     /*
-    * Apply dataviz conf from composition report
+    * Apply dataviz conf from composition report.
+    . By this way on open wizard, dataviz is directly rendered
     */
 
     _applyDatavizConfig = function (cfg) {
+        // get all dataviz parameters from dataviz configuration
         $("#w_dataviz_type").val(cfg.dataviz_type);
         $("#w_colors").val(cfg.colors);
         $("#w_label").val(cfg.label);
         if (cfg.icon) {
             $("#w_icon").val(cfg.icon);
         }
+        //show fields linked to dataviz type (table, figure, chart...)
         _showParameters(cfg.dataviz_type);
         if (cfg.dataviz_type === "chart") {
             $("#w_chart_opacity").val(cfg.opacity);
@@ -226,17 +276,20 @@ wizard = (function() {
         } else if (cfg.dataviz_type === "table") {
             $("#w_table_column").val(cfg.columns);
             if (cfg.extracolumn) {
+                //show and set extracolumn parameter
                  _enableExtraColumnParameter(true);
                  $("#w_table_extracolumn").val(cfg.extracolumn);
             } else {
+                //hide extracolumn parameter
                 _enableExtraColumnParameter(false);
             }
 
         }
     }
 
-    /*dataviz-options
-    * Store dataviz configuration mreport like in virtual html report
+    /*
+    * _configureDataviz. This method get dataviz definition in wizard and put it in dataviz-definition
+    * in the report composition
     */
 
     var _configureDataviz = function (datavizId) {
@@ -247,15 +300,17 @@ wizard = (function() {
         //get dataviz type
         var datavizType = $("#w_dataviz_type").val();
         var ico = $("#w_dataviz_type option:selected").attr("data-icon");
+        //update dataviz element icon (chart for chart, table for table...)
         $('[data-dataviz="'+ datavizId +'"] button i').get( 0 ).className = ico;
+        //Tag dataviz element as yet configured
         $('[data-dataviz="'+ datavizId +'"] button').closest(".tool").addClass("configured");
-        //Hide modal
+        //Reset and hide wizard modal
         $("#wizard-result div").remove();
         $("#wizard-code").text("");
         $("#wizard-panel").modal("hide");
     };
 
-
+    // this method shows fields linked to dataviz type (table, figure, chart...)
     var _showParameters = function (dataviz) {
         $("#dataviz-attributes").show();
         $(".dataviz-attributes").closest(".input-group").hide();
@@ -269,48 +324,79 @@ wizard = (function() {
 
     };
 
+    /*
+     * _onChangeDatavizType. This method is linked to #w_dataviz_type select control event change
+     *
+     */
     var _onChangeDatavizType = function() {
+        // get dataviz representation type
         var dataviz = $("#w_dataviz_type").val();
+        //Reset dataviz parameters form
         $(".dataviz-attributes").val("");
+        //Show fields linked to dataviz type
         _showParameters(dataviz);
+        // automaticaly set dataviz parameters in #wizard-parameters form
         _autoConfig(dataviz);
-        _exitingConfig = false;
-        $("#wizard_validate").click();
+        _existingConfig = false;
+        //Refresh dataviz renderer
+        $("#wizard_refresh").click();
     };
 
+    /*
+     * _onWizardOpened. This method is linked to open wizard modal event.
+     *
+     */
+
     var _onWizardOpened = function (e) {
+        //Get datavizid linked to the wizard modal
         var datavizId = $(e.relatedTarget).attr('data-related-id');
+        //Set datavizid in the modal
         $(e.currentTarget).attr("data-related-id", datavizId);
         $(e.currentTarget).find(".modal-title").text(datavizId);
+        //clear wizard form;
         _clean();
+        //Get data linked to dataviz
         if (_storeData[datavizId]) {
             _data = _storeData[datavizId];
-            //check if configuration exists
-            var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code").text() || false;
+            //check if configuration exists for this dataviz with attributes. eg data-colors...
+            var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
             if (yetConfigured){
-                var _code = $($.parseHTML($(e.relatedTarget).closest(".dataviz").find("code").text())).find(".dataviz");
-                _exitingConfig = $(_code).data();
+                //Get the config
+                var _code = $($.parseHTML($(e.relatedTarget).closest(".dataviz").find("codecode.dataviz-definition").text())).find(".dataviz");
+                _existingConfig = $(_code).data();
                 // Get dataviz type (hugly !)
+                // check class linked to dataviz - eg : from class report-chart" --> extract chart
                 $(_code).attr("class").split(" ").forEach(function (cls) {
                     var t = cls.split("report-");
                     if (t.length === 2) {
-                        _exitingConfig.dataviz_type = t[1];
+                        _existingConfig.dataviz_type = t[1];
                     }
                 })
             } else {
-                _exitingConfig = false;
+                _existingConfig = false;
             }
+            //configure wizard options with dataviz capabilities
             _configureWizardOptions();
-            if (_exitingConfig) {
-                _applyDatavizConfig(_exitingConfig);
+            //Apply config if exists
+            if (_existingConfig) {
+                _applyDatavizConfig(_existingConfig);
+                //Render dataviz in result panel
                 setTimeout(_onValidateConfig, 500);
             }
         } else {
+            //download data for this dataviz
             _getSampleData(datavizId);
         }
 
 
     };
+
+    /*
+     * _onValidateConfig. This method is get values from wizard parameters
+     * and populate a config object passed to the report.testViz method.
+     * Used by #wizard_refresh button and the auto render method in _onWizardOpened
+     *
+     */
 
     var _onValidateConfig = function () {
         var dataviz = $("#wizard-panel").attr("data-related-id");
@@ -343,31 +429,40 @@ wizard = (function() {
                 }
             });
 
+            /* sample properties : {
+                "id":"magasins",
+                "type":"bar",
+                "opacity":"0.75",
+                "label":["Ouvert","Fermé"],
+                "colors":["#3db39e","#999999"]
+            } */
+            //Get dataviz component herited from template and set attributes with properties object
             var elem = $.parseHTML(composer.activeModel().dataviz_components[type].replace("{{dataviz}}", dataviz));
             attributes.forEach(function(attribute) {
                 $(elem).find(".dataviz").attr("data-" + attribute.prop, attribute.value);
             });
 
-            //icon
+            //set icon class from icon attribute for figures components
             var icon = $(elem).find(".dataviz").attr("data-icon");
             if (icon && type === "figure" ) {
-                var element = $(elem).find(".dataviz")[0];
+                var figure = $(elem).find(".dataviz")[0];
                 //remove existing icon class eg icon-default
-                element.classList.forEach(className => {
+                figure.classList.forEach(className => {
                     if (className.startsWith('icon-')) {
-                        element.classList.remove(className);
+                        figure.classList.remove(className);
                     }
                 });
                 //add icon class
-                element.classList.add(icon);
-                element.classList.add("custom-icon");
+                figure.classList.add(icon);
+                figure.classList.add("custom-icon");
             }
-
+            //Render result in wizard modal
             $("#wizard-result div").remove();
             $("#wizard-result").append(elem);
             $("#wizard-code").text(elem[0].outerHTML);
             var fdata = {};
             fdata[dataviz] = _data;
+            //Draw dataviz with data, type and properties
             report.testViz(fdata, type, properties);
         }
     };
@@ -375,6 +470,7 @@ wizard = (function() {
 
 
     var _init = function() {
+        //load wizard html dynamicly and append it admin.html
         $.ajax({
             url: "html/wizard.html",
             dataType: "text",
@@ -382,10 +478,8 @@ wizard = (function() {
                 $("body").append(html);
                 //Events management
                 $('#wizard-panel').on('show.bs.modal', _onWizardOpened);
-                $("#w_dataviz_type").change(function() {
-                    _onChangeDatavizType();
-                });
-                $("#wizard_validate").click(_onValidateConfig);
+                $("#w_dataviz_type").change( _onChangeDatavizType);
+                $("#wizard_refresh").click(_onValidateConfig);
             }
         });
 
@@ -401,9 +495,7 @@ wizard = (function() {
     return {
 
         init: _init,
-        configureDataviz: _configureDataviz,
-        loadConfig: _loadConfig
-
+        configureDataviz: _configureDataviz
     }; // fin return
 
 })();
