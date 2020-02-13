@@ -362,7 +362,7 @@ wizard = (function() {
             var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
             if (yetConfigured){
                 //Get the config
-                var _code = $($.parseHTML($(e.relatedTarget).closest(".dataviz").find("codecode.dataviz-definition").text())).find(".dataviz");
+                var _code = $($.parseHTML($(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text())).find(".dataviz");
                 _existingConfig = $(_code).data();
                 // Get dataviz type (hugly !)
                 // check class linked to dataviz - eg : from class report-chart" --> extract chart
