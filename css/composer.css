@@ -187,7 +187,7 @@
 }
 
 
-.builder .sidenav .view, .builder .sidenav .remove, .builder .sidenav .configuration, .builder .sidenav .boxes {
+.builder .sidenav .structure-html, .builder .sidenav .remove, .builder .sidenav .configuration, .builder .sidenav .boxes {
     display: none;
 }
 
@@ -195,12 +195,12 @@
     display: block;
 }
 
-.builder .sidenav .sortable-drag .view {
+.builder .sidenav .sortable-drag .structure-html {
     display: flex;
 }
 
 
-.builder .composition .preview {
+.builder .composition .structure-description {
     display: none;
 }
 
@@ -212,7 +212,7 @@
     min-height: 250px;
 }
 
-span.preview {
+span.structure-description {
     font-size: small;
 }
 
@@ -232,7 +232,7 @@ span.preview {
     font-size: small;
 }
 
-.view code {
+.structure-html code {
     display: none;
 }
 
