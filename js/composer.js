@@ -356,7 +356,7 @@ composer = (function () {
         console.log(newDom);
 		$.ajax({
             type: "POST",
-            url: [_api_url, "report_html", _report].join("/"),
+            url: [report.getAppConfiguration().api, "report_html", _report].join("/"),
             data: newDom,
             dataType: 'json',
             contentType: 'text/html',
