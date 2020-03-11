@@ -133,6 +133,10 @@ report = (function() {
                 url: _home + "config.json",
                 success: function(conf) {
                     _config = conf;
+                    if (!_config.data_url) {
+                        _config.data_url = report.getAppConfiguration().api;
+                        _config.data_format = "api";
+                    }
                     _config.dataviz = APIRequest.dataviz;
                     _getDom();
                     _getCss();
