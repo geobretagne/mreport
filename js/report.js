@@ -462,11 +462,11 @@ report = (function() {
         }
         // test url (relative or absolute)
         var url = "";
-        if (/^(?:[a-z]+:)?\/\//i.test(_config.data_url)) {
+        /*if (/^(?:[a-z]+:)?\/\//i.test(_config.data_url)) {
             url = _config.data_url;
         } else {
             url = _home + _config.data_url;
-        }
+        }*/
 
         if (showDataIds) {
             $.ajax({
@@ -488,7 +488,7 @@ report = (function() {
         } else {
             $.ajax({
                 dataType: format,
-                url: url,
+                url: _config.data_url,
                 data: request_parameters,
                 success: function(data) {
                     if (format === "text") {
