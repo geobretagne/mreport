@@ -13,8 +13,6 @@ wizard = (function() {
 
     var _storeData = {};
 
-    _api_url = "http://localhost/api";
-
     /*
     * ExistingConfig is a dataviz
     * conf herited of composition report
@@ -36,7 +34,7 @@ wizard = (function() {
         $.ajax({
             dataType: "json",
             type: "GET",
-            url: [_api_url, "store", datavizId, "data/sample"].join("/"),
+            url: [report.getAppConfiguration().api, "store", datavizId, "data/sample"].join("/"),
             success: function (data) {
                 if (data.data) {
                     //update local data

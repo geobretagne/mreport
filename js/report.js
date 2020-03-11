@@ -12,6 +12,9 @@ report = (function() {
      * Private
      */
 
+    // this var is overidded bu app config.json.
+    var _appConf = {"location": "/mreport/", "api": "/api", "title": "MREPORT"};
+
 	var _rawReport = null;
 
 	var _reportName = "";
@@ -28,7 +31,6 @@ report = (function() {
 
     var _data;
 
-    var _api_url = "../api";
 
     var _format = function(value) {
         if (!isNaN(value)) {
@@ -69,7 +71,7 @@ report = (function() {
     var _showAvailableReports = function () {
         $.ajax({
                 dataType: "json",
-                url: [_api_url,  "report"].join("/"),
+                url: [_appConf.api,  "report"].join("/"),
                 success: function(reports) {
                     var links = [];
                     reports.reports.forEach(function (report) {
@@ -84,9 +86,11 @@ report = (function() {
 
     };
 
-    var _init = function() {
+    var _configure = function() {
+        document.title = _appConf.title;
+        $("base").attr("href", _appConf.location);
         //API GET PARAMETERS
-        _router = new Navigo(document.location.origin + '/mreport/', false);
+        _router = new Navigo(document.location.origin + _appConf.location, false);
         _router
           .on({
                 '/': function () {
@@ -139,6 +143,22 @@ report = (function() {
                 }
             });
         }
+    };
+
+    var _init = function() {
+        //CONFIGURATION is stored in _appConf & mreport.getAppConfiguration();
+        $.ajax({
+                dataType: "json",
+                url: "app.json",
+                success: function(cfg) {
+                    _appConf = cfg;
+                    console.log(cfg);
+                    _configure();
+                },
+                error: function(xhr, status, err) {
+                    _alert("Erreur " + err, "danger", true);
+                }
+            });
 
     };
 
@@ -985,6 +1005,7 @@ report = (function() {
         testViz: _testViz,
         setTitle: _setTitle,
 		getReport: function () {return _rawReport;},
+        getAppConfiguration: function () {return _appConf;},
         init: _init
     }; // fin return
 
