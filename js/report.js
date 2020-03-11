@@ -88,7 +88,7 @@ report = (function() {
 
     var _configure = function() {
         document.title = _appConf.title;
-        $("base").attr("href", _appConf.location);
+        _appConf.location = $("base").attr("href");
         //API GET PARAMETERS
         _router = new Navigo(document.location.origin + _appConf.location, false);
         _router
