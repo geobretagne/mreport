@@ -1,7 +1,4 @@
 {
-  "data_url": "http://localhost/api",
-  "data_format": "api",  
   "debug": true,
-  "share": true,
-  "wizard":true
+  "share": true
 }
