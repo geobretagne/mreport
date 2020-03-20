@@ -362,7 +362,7 @@ composer = (function () {
             contentType: 'text/html',
             success: function( response ) {
 				if (response.response === "success") {
-					console.log("Sauvegarde réussie");
+					alert("Sauvegarde réussie");
 				} else {
 					alert("enregistrement échec :" + response.response)
 				}
