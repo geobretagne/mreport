@@ -38,6 +38,21 @@ composer = (function () {
         ].join("");
 
     /*
+     * _extraElementTemplate - Array. This var is used to construct extra elements and append it
+     * to dom with selected HTMLTemplate
+     */
+
+    var _extraElementTemplate = [
+        '<div class="structure-element list-group-item">',
+            '<span><i class="{{{ICON}}}"></i></span>',
+            '<span class="structure-element-description">',
+                '{{{DESCRIPTION}}}',
+            '</span>',
+            '<div class="structure-element-html">{{{HTML}}}</div>',
+        '</div>'
+        ].join("");
+
+    /*
      * _datavizTemplate - Array. This var is used to construct dataviz items and append them to dom
      * in #dataviz-items list
      */
@@ -65,6 +80,8 @@ composer = (function () {
         //Update structure elements choice in composer page
         $("#structure-models .list-group-item").remove();
         $("#structure-models").append(_HTMLTemplates[m].elements);
+        $("#element-models .list-group-item").remove();
+        $("#element-models").append(_HTMLTemplates[m].extra_elements);
         //update style in wizard modal
         $("#wizard-result style").remove();
         $("#wizard-result").append(_HTMLTemplates[m].style);
@@ -118,12 +135,29 @@ composer = (function () {
             var element = $(html).find("template.report-component.report-" + component).prop('content').firstElementChild;
             dataviz_components[component] = $.trim(element.outerHTML);
         });
+        var x_elements = [];
+        //get all report-element
+        $(html).find("template.report-element").each(function (id, template) {
+            var elem = $(template).prop('content').firstElementChild;
+            var description = elem.getAttribute("data-model-title");
+            var icon = elem.getAttribute("data-model-icon");
+            x_elements.push({"html": elem.outerHTML, "description": description, "icon": icon});
+        });
+       //Store all elements in structure - Array
+        var extra_elements = [];
+        x_elements.forEach(function(elem) {
+            extra_elements.push(_extraElementTemplate.replace("{{{HTML}}}", elem.html)
+                .replace("{{{DESCRIPTION}}}", elem.description)
+                .replace("{{{ICON}}}", elem.icon)
+            );
+        });
         //Populate _HTMLTemplates with object
         _HTMLTemplates[templateid] = {
             parameters: parameters,
             style: style,
             page: page,
             elements: structure,
+            extra_elements: extra_elements,
             dataviz_components: dataviz_components
         };
         $("#selectedModelComposer").append('<option value="'+templateid+'">'+templateid+'</option>');
@@ -167,6 +201,17 @@ composer = (function () {
             dragClass: "sortable-drag",
             group: {
                 name: 'structure',
+                pull: 'clone',
+                put: false // Do not allow items to be put into this list
+            },
+            animation: 150,
+            sort: false // To disable sorting: set sort to false
+        });
+
+        // configure #element-models to allow drag with clone option
+        new Sortable(document.getElementById("element-models"), {
+            group: {
+                name: 'dataviz',
                 pull: 'clone',
                 put: false // Do not allow items to be put into this list
             },
@@ -273,6 +318,9 @@ composer = (function () {
                         var btn = $(evt.item).find (".tool button");
                         $(btn).removeAttr("data-target").removeAttr("data-toggle");
                         $(btn).find("i").get( 0 ).className = "far fa-comment-dots";
+                    } else if ($(evt.item).hasClass("structure-element")){
+                        // add edit button near to editable text elements
+                        var btn = $(evt.item).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i> edit</span>').find(".text-edit");
                     }
                 }
             });
@@ -287,6 +335,14 @@ composer = (function () {
         // add edit button near to editable text elements
         var btn = $(row).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i> edit</span>').find(".text-edit");
 
+    };
+
+    /*
+     * _configureNewElement. This method configure fresh dropped element
+     */
+
+    var _configureNewElement = function(elem) {
+        console.log(elem);
     };
 
     /*
@@ -315,8 +371,30 @@ composer = (function () {
             $(tmp_bloc).find(".to-remove").remove();
             // loop on dataviz-container
             $(tmp_bloc).find(".dataviz-container").each(function(id,container) {
-               var dvz = $(container).find("code.dataviz-definition").text();
-               $(container).html(dvz);
+                var pre_content = [];
+                var main_content = [];
+                var post_content = [];
+              //loop on elements and dataviz
+              $(container).find(".list-group-item").each(function(idx, item) {
+                    var main_position = 0;
+                    if ($(item).hasClass("dataviz")) {
+                        var dvz = $(item).find("code.dataviz-definition").text();
+                        main_content.push(dvz);
+                        main_position = idx;
+                    } else if ($(item).hasClass("structure-element")) {
+                        var txt = $(item).find(".structure-element-html").html();
+                        if (idx > main_position) {
+                            post_content.push(txt);
+                        } else {
+                            pre_content.push(txt);
+                        }
+
+                    }
+              });
+              var tmp = $.parseHTML(main_content.join(""));
+              $(tmp).prepend(pre_content.join(""));
+              $(tmp).append(post_content.join(""));
+              $(container).html(tmp);
             });
             html.push($(tmp_bloc).get(0).outerHTML);
         });

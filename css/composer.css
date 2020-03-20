@@ -255,6 +255,11 @@ span.text-edit.badge.badge-warning {
     display: none;
 }
 
+.structure-element-description {
+    font-size: smaller;
+    padding-left: 10px;
+}
+
 .tool.configured::after {
     color: mediumvioletred;
     content: "  \0040";
