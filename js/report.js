@@ -690,7 +690,7 @@ report = (function() {
     var _createText = function(data, text) {
         var el = _getDomElement("text", text.id);
         if (el && data[text.id]) {
-            el.getElementsByClassName("report-text-text")[0].textContent = data[text.id].data[0];
+            el.getElementsByClassName("report-text-text")[0].innerHTML = data[text.id].data[0];
             el.getElementsByClassName("report-text-title")[0].textContent = data[text.id].label[0];
         } else {
             _handleVizError(el, text.id, data);
