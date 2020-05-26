@@ -32,8 +32,22 @@ Edit config.py and set SQLALCHEMY_DATABASE_URI
 
 
 
-Run
----
+Test frontend
+--------------
 
     $ export FLASK_APP=frontend
     $ flask run
+    
+    test http://localhost:5000/mreport/sample/ECLUSE_1
+    
+    test http://localhost:5000/admin/
+    
+Test backend
+--------------
+
+    $ export FLASK_APP=backend
+    $ flask run
+    
+    test http://localhost:5000/api
+    
+    
