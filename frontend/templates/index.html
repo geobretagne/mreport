@@ -21,6 +21,9 @@
         </head>
         <body>
             <div id="preloader"></div>
+            <!-- Flask inject data below -->
+            <div id="backend" data-backend='{{ options|tojson }}'></div>
+            <!---->
             <script>
                 $(document).ready(function() {
                     report.init();

@@ -12,7 +12,6 @@ report = (function() {
      * Private
      */
 
-    // this var is overidded bu app config.json.
     var _appConf = {"location": "/mreport/", "api": "/api", "title": "MREPORT"};
 
 	var _rawReport = null;
@@ -24,8 +23,6 @@ report = (function() {
     var _config;
 
     var APIRequest = {};
-
-    var _home = "reports/";
 
     var errors = false;
 
@@ -65,7 +62,7 @@ report = (function() {
     }
 
     var _getCss = function() {
-        $('head').prepend('<link rel="stylesheet" href="' + _home + "report.css" + '" type="text/css" />');
+        $('head').prepend('<link rel="stylesheet" href="report.css" " type="text/css" />');
     };
 
     var _showAvailableReports = function () {
@@ -80,57 +77,22 @@ report = (function() {
                     $("body").append('<div class="container"><div class="list-group">'+ links.join("") + '</div></div>');
                 },
                 error: function(xhr, status, err) {
-                    _alert("Erreur avec le rapport " + _home + " " + err, "danger", true);
+                    _alert("Erreur avec le rapport " + APIRequest.home + " " + err, "danger", true);
                 }
             });
 
     };
 
     var _configure = function() {
-        document.title = _appConf.title;
-        _appConf.location = $("base").attr("href");
-        //API GET PARAMETERS
-        _router = new Navigo(document.location.origin + _appConf.location, false);
-        _router
-          .on({
-                '/': function () {
-                    _showAvailableReports();
-                    errors = true;
-                },
-                '/:report': function (params) {
-                    APIRequest = params;
-                    _home += params.report + "/";
-                    _reportName = params.report;
-                },
-                '/:report/:dataid': function (params) {
-                    APIRequest = params;
-                    _home += params.report + "/";
-                    _reportName = params.report;
-                },
-                '/:report/:dataid/:dataviz': function (params) {
-                    APIRequest = params;
-                    _home += params.report + "/";
-                    _reportName = params.report;
-                },
-
-            })
-          .resolve();
-          console.log(APIRequest);
-        _router.notFound(function () {
-          // called when there is path specified but
-          // there is no route matching
-          console.log("erreur de route");
-        });
 
         Chart.plugins.unregister(ChartDataLabels);
-
-
 
         if (!errors) {
             /* get config file*/
             $.ajax({
                 dataType: "json",
-                url: _home + "config.json",
+                //url: APIRequest.home + "config.json",
+                url: "config.json",
                 success: function(conf) {
                     _config = conf;
                     if (!_config.data_url) {
@@ -142,28 +104,53 @@ report = (function() {
                     _getCss();
                 },
                 error: function(xhr, status, err) {
-                    console.log(_home);
-                    _alert("Erreur avec le rapport " + _home + " " + err, "danger", true);
+                    console.log(APIRequest.home);
+                    _alert("Erreur avec le rapport " + APIRequest.home + " " + err, "danger", true);
                 }
             });
         }
     };
 
     var _init = function() {
-        //CONFIGURATION is stored in _appConf & mreport.getAppConfiguration();
-        $.ajax({
-                dataType: "json",
-                url: "app.json",
-                success: function(cfg) {
-                    _appConf = cfg;
-                    console.log(cfg);
-                    _configure();
+        var backend = document.getElementById("backend");
+        if (backend && backend.dataset.backend) {
+            APIRequest= JSON.parse(backend.dataset.backend);
+        } else {
+            //API GET PARAMETERS
+            _router = new Navigo(document.location.origin + _appConf.location, false);
+            _router
+            .on({
+                '/': function () {
+                    _showAvailableReports();
+                    errors = true;
                 },
-                error: function(xhr, status, err) {
-                    _alert("Erreur " + err, "danger", true);
-                }
-            });
+                '/:report': function (params) {
+                    APIRequest = params;
+                    APIRequest.home += params.report + "/";
+                    _reportName = params.report;
+                },
+                '/:report/:dataid': function (params) {
+                    APIRequest = params;
+                    APIRequest.home += params.report + "/";
+                    _reportName = params.report;
+                },
+                '/:report/:dataid/:dataviz': function (params) {
+                    APIRequest = params;
+                    APIRequest.home += params.report + "/";
+                    _reportName = params.report;
+                },
 
+            })
+            .resolve();
+            console.log(APIRequest);
+            _router.notFound(function () {
+              // called when there is path specified but
+              // there is no route matching
+              console.log("erreur de route");
+            });
+        }
+
+        _configure();
     };
 
     /**
@@ -302,7 +289,7 @@ report = (function() {
 
     var _getDom = function() {
         $.ajax({
-            url: _home + "report.html",
+            url: "report.html",
             dataType: "text",
             success: function(html) {
 				_rawReport = {"name": _reportName, "html": html};
@@ -321,7 +308,7 @@ report = (function() {
                 _getData();
             },
             error: function(xhr, status, err) {
-                _alert("Erreur avec le fichier report.html de " + _home + " " + err, "danger", true);
+                _alert("Erreur avec le fichier report.html de " + APIRequest.home + " " + err, "danger", true);
             }
         });
     };
@@ -469,7 +456,7 @@ report = (function() {
         /*if (/^(?:[a-z]+:)?\/\//i.test(_config.data_url)) {
             url = _config.data_url;
         } else {
-            url = _home + _config.data_url;
+            url = APIRequest.home + _config.data_url;
         }*/
 
         if (showDataIds) {
@@ -954,7 +941,7 @@ report = (function() {
 
         if (_config.share) {
             $.ajax({
-                url: "html/share.html",
+                url: "/static/html/share.html",
                 dataType: "text",
                 success: function(html) {
                     $("body").append(html);
