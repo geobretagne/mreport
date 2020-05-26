@@ -1,0 +1,23 @@
+FROM python:3.7-slim
+
+RUN useradd -r -m apprunner
+
+USER apprunner
+
+ENV HOME=/home/apprunner
+ENV PATH=$HOME/.local/bin:$PATH
+
+WORKDIR /home/apprunner
+
+COPY requirements.txt .
+COPY config.py .
+RUN pip install --user -r requirements.txt
+
+COPY --chown=apprunner:apprunner backend backend
+RUN pip install --user backend && pip install --user gunicorn
+
+
+VOLUME [ "/home/apprunner/backend/reports" ]
+
+
+CMD ["gunicorn", "-w 4", "-b 0.0.0.0:8000", "backend:app"]
