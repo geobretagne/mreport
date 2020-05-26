@@ -50,4 +50,45 @@ Test backend
     
     test http://localhost:5000/api
     
+
+    
+Tester frontend & backend
+--------------------------
+
+    $ python3 dispatcher.py
+    
+    test http://localhost:5000/api
+    test http://localhost:5000/admin/
+    test http://localhost:5000/mreport/sample/ECLUSE_1
+    
+
+gunicorn
+--------
+
+
+    $ gunicorn -b 0.0.0.0:5000 dispatcher
+    
+ ```Create a .service file for the api. (/etc/systemd/system/mreport.service):```
+
+```
+[Unit]
+Description=mreport
+After=network.target
+
+[Service]
+User=mreport
+Restart=on-failure
+WorkingDirectory=/tmp/
+ExecStart=/home/mreport/mreport/venv/bin/gunicorn -b 0.0.0.0:5000 dispatcher
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
+```Enable and start the service```
+
+    $ sudo systemctl daemon-reload
+    $ sudo systemctl enable mreport
+    $ systemctl start mreport
     
