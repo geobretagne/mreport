@@ -536,7 +536,8 @@ report = (function() {
         var el = _getDomElement("chart", chart.id);
         if (el && data[chart.id]) {
             var commonOptions = {
-                "maintainAspectRatio": false
+                "maintainAspectRatio": false,
+                "responsive": true
             };
             var colors = ["#36A2EB"];
             var backgroundColors = []
@@ -583,7 +584,7 @@ report = (function() {
             $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
              // Add Title and Description to the preview
              $(el).html(_configTitleDesc(chart.title,chart.description,$(el).html()));
-             var options = $.extend({responsive: true,maintainAspectRatio:false}, commonOptions, chart.options);
+             var options = $.extend(commonOptions, chart.options);
              var plugins = [];
              if (chart.plugins && chart.plugins[0] === "ChartDataLabels") {
                  plugins = [ChartDataLabels];
