@@ -82,4 +82,22 @@ div#preloader {
   opacity: 0.50;
 }
 
-
+.dataviz-container{
+    display: flex;
+    height: 100%;
+}
+.card-body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.report-chart{
+    width: 80%;
+    height: 100%;
+}
+.customBaseColumn{
+    margin-bottom: 10px;
+}
+.card-body{
+    flex-direction: column;
+}

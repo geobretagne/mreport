@@ -21,13 +21,13 @@ admin = (function () {
         return dic;
     };
 
-    var _initMenu = function() {
+    var _initMenu = function () {
         $("ul.navbar-nav li").each(function () {
-          $(this).on("click", function () {
-            $(".container-fluid.page, .nav-item").removeClass("active");
-            $("#" + $(this).attr("data-page")).addClass("active");
-            $(this).addClass("active");
-          });
+            $(this).on("click", function () {
+                $(".container-fluid.page, .nav-item").removeClass("active");
+                $("#" + $(this).attr("data-page")).addClass("active");
+                $(this).addClass("active");
+            });
         });
     };
 
@@ -98,17 +98,16 @@ admin = (function () {
             $(".reports-dataviz .btn-delete").click(function (e) {
                 var item = $(this).parent();
                 item.toggleClass("item2keep");
-                if (item.hasClass("item2keep")){
+                if (item.hasClass("item2keep")) {
                     $(this).text("Delete")
                     $(this).removeClass("btn-success");
                     $(this).addClass("btn-danger");
-                }
-                else{
+                } else {
                     $(this).text("Keep");
                     $(this).removeClass("btn-danger");
                     $(this).addClass("btn-success");
                 }
-                    
+
 
             });
         });
@@ -139,7 +138,7 @@ admin = (function () {
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Sourcer</a>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + id + '" data-target="#report-modal-form">Supprimer</a>',
                     '<a href="./' + id + '" target="_blank" class="card-link">Afficher</a>',
-                    '<a href="#" onclick="composer.compose(\''+id+'\')" class="card-link">Composer</a>',
+                    '<a href="#" onclick="composer.compose(\'' + id + '\')" class="card-link">Composer</a>',
                     '</div>',
                     '</div>',
                     '</div>'
@@ -162,36 +161,36 @@ admin = (function () {
             cards.push(
                 ['<div class="col-md-3 col-sm-12 cards">',
                     '<div class="card dataviz" data-dataviz-id="' + id + '">',
-                        '<div class="card-body">',
-                            '<h5 class="card-title">' + data.title + '</h5>',
-                            '<h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">' + data.level + '</span><span class="badge badge-warning">' + data.job + '</span></h6>',
-                            '<p class="card-text">' + data.description + '</p>',
-                            '<div class="custom-control custom-checkbox mb-3">',
-                                '<input type="checkbox" id="' + id + '-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">',
-                                '<label class="custom-control-label" for="' + id + '-selection">Sélectionner</label>',
-                            '</div>',
-                            '<a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Editer</a>',
-                            '<a href="#" data-dataviz-state="delete" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Supprimer</a>',
-                        '</div>',
+                    '<div class="card-body">',
+                    '<h5 class="card-title">' + data.title + '</h5>',
+                    '<h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">' + data.level + '</span><span class="badge badge-warning">' + data.job + '</span></h6>',
+                    '<p class="card-text">' + data.description + '</p>',
+                    '<div class="custom-control custom-checkbox mb-3">',
+                    '<input type="checkbox" id="' + id + '-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">',
+                    '<label class="custom-control-label" for="' + id + '-selection">Sélectionner</label>',
                     '</div>',
-                '</div>'
+                    '<a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Editer</a>',
+                    '<a href="#" data-dataviz-state="delete" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Supprimer</a>',
+                    '</div>',
+                    '</div>',
+                    '</div>'
                 ].join("")
             );
         });
         $("#catalog").append('<div id="dataviz-cards" class="row">' + cards.join("") + '</div>');
         /* Add event to all checkbox to add them into the cart */
-        $('input[type="checkbox"]').change(function(){
+        $('input[type="checkbox"]').change(function () {
             var id = $(this).parent().parent().parent().data().datavizId;
-            if($(this).is(":checked")) {
+            if ($(this).is(":checked")) {
                 $("#cd-cart .cd-cart-items").append(
-                    "<li data-dataviz-id="+id+">\
-                        "+$(this).parent().parent().find("h5")[0].outerHTML+"\
-                        "+$(this).parent().parent().find("h6")[0].outerHTML+"\
+                    "<li data-dataviz-id=" + id + ">\
+                        " + $(this).parent().parent().find("h5")[0].outerHTML + "\
+                        " + $(this).parent().parent().find("h6")[0].outerHTML + "\
                         <a href='#0' class='cd-item-remove cd-img-replace'>Remove</a>\
                     </li>"
                 );
-            }else{
-                $("#cd-cart .cd-cart-items li[data-dataviz-id|="+id+"]").remove();          
+            } else {
+                $("#cd-cart .cd-cart-items li[data-dataviz-id|=" + id + "]").remove();
             }
             $(".green .number").html($(".cd-cart-items li").length);
         });
@@ -199,12 +198,12 @@ admin = (function () {
         $("#checkAll").off("change");
         /* Bind event to dynamically generated cart items in order to delete them from the cart and unselect 
         them in the list */
-        $(document).on('click',"#cd-cart .cd-cart-items li .cd-item-remove",function(){
+        $(document).on('click', "#cd-cart .cd-cart-items li .cd-item-remove", function () {
             var id = $(this).parent().data().datavizId;
-            $("#dataviz-cards div[data-dataviz-id|="+id+"] input[type='checkbox']").prop('checked',false);
+            $("#dataviz-cards div[data-dataviz-id|=" + id + "] input[type='checkbox']").prop('checked', false);
             $(this).parent().remove();
             $(".green .number").html($(".cd-cart-items li").length);
-            
+
         });
     };
 
@@ -290,12 +289,11 @@ admin = (function () {
         $("#checkAll").click(function () {
             var dvz = $("#dataviz-cards .cards:not(.hidden) .dataviz-selection");
             var checked = $(this).prop('checked');
-            dvz.each(function(){
-                if(!$(this).prop('checked')==checked){
-                    $(this).prop('checked',checked).trigger('change');
-                }
-                else{
-                    $(this).prop('checked',checked);
+            dvz.each(function () {
+                if (!$(this).prop('checked') == checked) {
+                    $(this).prop('checked', checked).trigger('change');
+                } else {
+                    $(this).prop('checked', checked);
                 }
             });
         });
@@ -306,14 +304,14 @@ admin = (function () {
             $("#searchbar").val("").trigger("keyup");
         });
         /* Toggle the cart to appear */
-        $(".green").click(function(){
+        $(".green").click(function () {
             $("#cd-cart").toggleClass("speed-in");
         });
         /* Toggle the cart to disappear */
-        $("#togglePanier").click(function(){
+        $("#togglePanier").click(function () {
             $("#cd-cart").toggleClass("speed-in");
         });
-        
+
     };
 
     _addDatavizToReport = function (report_id, report_data) {
@@ -386,7 +384,7 @@ admin = (function () {
                         confirmButtonText: 'Composeur'
                     }).then((result) => {
                         if (result.value) {
-                            window.open('./' + report_id,"_blank");
+                            window.open('./' + report_id, "_blank");
                         }
                     });
 
