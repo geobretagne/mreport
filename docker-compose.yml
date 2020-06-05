@@ -1,0 +1,28 @@
+version: '3'
+volumes:
+  reports:  
+
+services:
+
+  # Select between the next 2 services the backend you want to use by
+  # commenting / uncommenting the 'volume' section &  modify the links alias
+  # on the mviewer-studio service.
+  #
+  # You cannot use both backends at the same time, and you have to be wary if
+  # you switch from one to another, as each comes with a custom config.json
+  # file.
+  #
+  # If you want to switch, make sure either you modify the config.json, or
+  # reinitialize the docker volume.
+
+
+  # Python version
+  mreport-backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile-backend
+    image: mreport/mreport:python-latest
+    volumes:
+      - "reports:/home/apprunner/backend/reports"      
+
+ 

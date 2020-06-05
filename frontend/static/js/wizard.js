@@ -475,7 +475,7 @@ wizard = (function() {
     var _init = function() {
         //load wizard html dynamicly and append it admin.html
         $.ajax({
-            url: "html/wizard.html",
+            url: "/static/html/wizard.html",
             dataType: "text",
             success: function(html) {
                 $("body").append(html);

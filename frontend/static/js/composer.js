@@ -172,7 +172,7 @@ composer = (function () {
         //TODO use config file to load html templates instead of ["a","b"]
         ["a","b"].forEach(function(m) {
             $.ajax({
-                url: "html/model-" + m + ".html",
+                url: "/static/html/model-" + m + ".html",
                 dataType: "text",
                 success: function(html) {
                     //Template parsing
