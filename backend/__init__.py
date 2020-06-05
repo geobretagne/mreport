@@ -39,6 +39,7 @@ tableschema={'schema': schema}
 schema = schema+'.'
 
 db = SQLAlchemy(app)
+
 #MODELS
 
     
@@ -275,8 +276,8 @@ class GetReport(Resource):
                     rep = Report(**data)
                 except TypeError as err:
                     return {"response": str(err)}, 400
-                source = "/".join([app.config['MREPORT_LOCATION'], "reports", "models", "default"])
-                destination = "/".join([app.config['MREPORT_LOCATION'], "reports", report_id])
+                source = "/".join([app.config['MREPORT_LOCATION'], "models", "default"])
+                destination = "/".join([app.config['MREPORT_LOCATION'], report_id])
                 fss = createFileSystemStructure(source, destination)
                 if fss == 'success':
                     db.session.add(rep)
@@ -303,7 +304,7 @@ class GetReport(Resource):
                 return {"response": "report doesn't exists."}, 404
     def delete(self, report_id):
         rep = Report.query.get(report_id)
-        folder = "/".join([app.config['MREPORT_LOCATION'], "reports", report_id])
+        folder = "/".join([app.config['MREPORT_LOCATION'], report_id])
         if rep:
             delete_folder = deleteFileSystemStructure(folder)
             if delete_folder == 'success':
@@ -398,7 +399,7 @@ class GetReportComposition(Resource):
                 data = {"response": "ERROR no data supplied"}
                 return data, 405
             else:
-                up = updateReportHTML("/".join([app.config['MREPORT_LOCATION'], "reports", report_id, "report.html"]), html)
+                up = updateReportHTML("/".join([app.config['MREPORT_LOCATION'], report_id, "report.html"]), html)
                 return {"response": up}
 
 #    return app
