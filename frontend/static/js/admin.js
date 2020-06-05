@@ -223,12 +223,12 @@ admin = (function () {
                 _dataviz_data = _arr2dic(data.datavizs, "dataviz");
                 _showDataviz();
                 var options = {
-                    tokenize: true,
+                    tokenize: false,
                     threshold: 0.2,
                     location: 0,
-                    distance: 200,
-                    maxPatternLength: 40,
-                    minMatchCharLength: 1,
+                    distance:500,
+                    maxPatternLength: 70,
+                    minMatchCharLength: 2,
                     keys: [
                         "title",
                         "description",
