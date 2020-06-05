@@ -30,7 +30,8 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">type</span>
                                             </div>
-                                            <select class="custom-select chart form-control dataviz-attributes" data-prop="type" id="w_chart_type">
+                                            <select class="custom-select chart form-control dataviz-attributes"
+                                                data-prop="type" id="w_chart_type">
                                                 <option selected value="bar">bar</option>
                                                 <option selected value="line">line</option>
                                                 <option selected value="radar">radar</option>
@@ -46,50 +47,73 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">extracolumn</span>
                                             </div>
-                                            <input type="text" data-prop="extracolumn" class="table form-control dataviz-attributes" id="w_table_extracolumn">
+                                            <input type="text" data-prop="extracolumn"
+                                                class="table form-control dataviz-attributes" id="w_table_extracolumn">
                                         </div>
 
                                         <div class="input-group input-group-sm mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">columns</span>
                                             </div>
-                                            <input type="text" data-prop="columns" class="table form-control dataviz-attributes" id="w_table_column">
+                                            <input type="text" data-prop="columns"
+                                                class="table form-control dataviz-attributes" id="w_table_column">
                                         </div>
 
                                         <div class="input-group input-group-sm mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">opacity</span>
                                             </div>
-                                            <input type="text" data-prop="opacity" class="chart form-control dataviz-attributes" id="w_chart_opacity">
+                                            <input type="text" data-prop="opacity"
+                                                class="chart form-control dataviz-attributes" id="w_chart_opacity">
                                         </div>
 
                                         <div class="input-group input-group-sm mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">label</span>
                                             </div>
-                                            <input type="text" data-prop="label" class="chart table form-control dataviz-attributes" id="w_label">
+                                            <input type="text" data-prop="label"
+                                                class="chart table form-control dataviz-attributes" id="w_label">
                                         </div>
-
-                                        <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group input-group-sm mb-3 chosecolors">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">colors</span>
                                             </div>
-                                            <input type="text" data-prop="colors" class="chart form-control dataviz-attributes" id="w_colors">
+                                            <div id="picker-wrapper" class="picker-wrapper"></div>
+                                            <i id="addColor" class="fas fa-plus-circle fa-2x"></i>
+                                            <input type="text" data-prop="colors" class="d-none chart form-control dataviz-attributes" id="w_colors">
+                                            <div class="tooltip_pointer"></div>
                                         </div>
 
                                         <div class="input-group input-group-sm mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">unit</span>
                                             </div>
-                                            <input type="text" data-prop="unit" class="figure form-control dataviz-attributes" id="w_unit">
+                                            <input type="text" data-prop="unit"
+                                                class="figure form-control dataviz-attributes" id="w_unit">
                                         </div>
 
                                         <div class="input-group input-group-sm mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Icone</span>
                                             </div>
-                                            <select class="custom-select figure form-control dataviz-attributes" data-prop="icon" id="w_icon">
+                                            <select class="custom-select figure form-control dataviz-attributes"
+                                                data-prop="icon" id="w_icon">
                                             </select>
+                                        </div>
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Titre</span>
+                                            </div>
+                                            <input type="text" data-prop="title"
+                                                class="figure chart table form-control dataviz-attributes" id="w_title">
+                                        </div>
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Description</span>
+                                            </div>
+                                            <textarea data-prop="description"
+                                                class="figure chart table form-control dataviz-attributes" id="w_desc">
+                                            </textarea>
                                         </div>
 
                                         <button id="wizard_refresh" class="btn btn-success">Actualiser</button>
@@ -115,7 +139,8 @@
                     <div class="row wizard-code" style="padding-top: 10p;display: none;">
                         <div class="col">
                             <div class="card">
-                                <code class="card-body" id="wizard-code"><!--code is injected here --></code>
+                                <code class="card-body" id="wizard-code">
+                                    <!--code is injected here --></code>
                             </div>
                         </div>
                     </div>
@@ -123,9 +148,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="wizard_add" class="btn btn-primary" onclick="wizard.configureDataviz();">Sauvegarder dans le rapport sélectionné</button>
-                <button id="wizard_toggle_code" class="btn btn-danger" onclick="$('.wizard-code').toggle();">code</button>
-                <button id="wizard_default_save" class="btn btn-warning" onclick="alert('TODO');">Définir comme représentation par défaut</button>
+                <button id="wizard_add" class="btn btn-primary" onclick="wizard.configureDataviz();">Sauvegarder dans le
+                    rapport sélectionné</button>
+                <button id="wizard_toggle_code" class="btn btn-danger"
+                    onclick="$('.wizard-code').toggle();">code</button>
+                <button id="wizard_default_save" class="btn btn-warning" onclick="alert('TODO');">Définir comme
+                    représentation par défaut</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

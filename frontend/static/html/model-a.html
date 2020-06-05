@@ -9,50 +9,189 @@
     </template>
 
     <template class="report-bloc" id="b4-4-4">
-        <div class="report-bloc b4-4-4" data-model-title="3 colonnes" data-model-description="33%/33%/33%">
-            <h4 class="bloc-title">Titre du bloc</h4>
-            <div class="row bloc-content">
-                <div class="dataviz-container col-md-4">
-                    <!--dataviz component is injected here -->
-                </div>
-                <div class="dataviz-container col-md-4" >
-                    <!--dataviz component is injected here -->
-                </div>
-                <div class="dataviz-container col-md-4">
-                    <!--dataviz component is injected here -->
+        <div class="lyrow report-bloc b4-4-4" data-model-title="3 colonnes" data-model-description="33%/33%/33%">
+            <h4 class="bloc-title editable-text">Titre du bloc
+                <!-- this text is editable in composer --><span data-toggle="modal" data-target="#text-edit"
+                    class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i>edit</span></h4>
+            <div class="view bloc-content">
+                <div class="row">
+                    <div class="col-md-4 dividedcolumn customBaseColumn">
+                        <div class="edit_columns">
+                            <span class="badge badge badge-success divide_column" data-toggle="modal"
+                                data-target="#divide_form">
+                                <i class="fas fa-columns"></i>
+                                Diviser
+                            </span>
+                            <span class="badge badge badge-danger delete_column">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                        </div>
+                        <div class="dataviz-container card list-group-item">
+                            <!--dataviz component is injected here -->
+                        </div>
+                    </div>
+                    <div class="col-md-4 dividedcolumn customBaseColumn">
+                        <div class="edit_columns">
+                            <span class="badge badge badge-success divide_column" data-toggle="modal"
+                                data-target="#divide_form">
+                                <i class="fas fa-columns"></i>
+                                Diviser
+                            </span>
+                            <span class="badge badge badge-danger delete_column">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                        </div>
+                        <div class="dataviz-container card list-group-item">
+                            <!--dataviz component is injected here -->
+                        </div>
+                    </div>
+                    <div class="col-md-4 dividedcolumn customBaseColumn">
+                        <div class="edit_columns">
+                            <span class="badge badge badge-success divide_column" data-toggle="modal"
+                                data-target="#divide_form">
+                                <i class="fas fa-columns"></i>
+                                Diviser
+                            </span>
+                            <span class="badge badge badge-danger delete_column">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                        </div>
+                        <div class="dataviz-container card list-group-item">
+                            <!--dataviz component is injected here -->
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div><!-- fin du bloc -->
+            <div class="bloc-sources">
+                <div class="col">
+                    <p>
+                        <i class="editable-text">
+                            SOURCE: xxx
+                            <!-- this text is editable in composer -->
+                            <span data-toggle="modal" data-target="#text-edit"
+                                class="to-remove text-edit badge badge-warning">
+                                <i class="fas fa-edit"></i>
+                                edit
+                            </span>
+                        </i>
+                    </p>
+                </div>
+            </div>
+        </div>
     </template>
 
-     <template class="report-bloc" id="b8-4">
-        <div class="report-bloc b8-4" data-model-title="2 colonnes" data-model-description="66%/33%">
-            <h4 class="bloc-title">Titre du bloc</h4>
-            <div class="row bloc-content">
-                <div class="dataviz-container col-md-8">
-                    <!--dataviz component is injected here -->
-                </div>
-                <div class="dataviz-container col-md-4" >
-                    <!--dataviz component is injected here -->
+    <template class="report-bloc" id="b8-4">
+        <div class="lyrow report-bloc b8-4" data-model-title="2 colonnes" data-model-description="66%/33%">
+            <h4 class="bloc-title editable-text">
+                Titre du bloc
+                <!-- this text is editable in composer -->
+                <span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning">
+                    <i class="fas fa-edit"></i>
+                    edit
+                </span>
+            </h4>
+            <div class="view bloc-content">
+                <div class="row">
+                    <div class="col-md-8 dividedcolumn customBaseColumn">
+                        <div class="edit_columns">
+                            <span class="badge badge badge-success divide_column" data-toggle="modal"
+                                data-target="#divide_form">
+                                <i class="fas fa-columns"></i>
+                                Diviser
+                            </span>
+                            <span class="badge badge badge-danger delete_column">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                        </div>
+                        <div class="dataviz-container card list-group-item">
+                            <!--dataviz component is injected here -->
+                        </div>
+                    </div>
+                    <div class="col-md-4 dividedcolumn customBaseColumn">
+                        <div class="edit_columns">
+                            <span class="badge badge badge-success divide_column" data-toggle="modal"
+                                data-target="#divide_form">
+                                <i class="fas fa-columns"></i>
+                                Diviser
+                            </span>
+                            <span class="badge badge badge-danger delete_column">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                        </div>
+                        <div class="dataviz-container card list-group-item">
+                            <!--dataviz component is injected here -->
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div><!-- fin du bloc -->
+            <div class="bloc-sources">
+                <div class="col">
+                    <p>
+                        <i class="editable-text">
+                            SOURCE: xxx
+                            <!-- this text is editable in composer -->
+                            <span data-toggle="modal" data-target="#text-edit"
+                                class="to-remove text-edit badge badge-warning">
+                                <i class="fas fa-edit"></i>
+                                edit
+                            </span>
+                        </i>
+                    </p>
+                </div>
+            </div>
+        </div>
     </template>
 
     <template class="report-bloc" id="b12">
-        <div class="report-bloc b12" data-model-title="1 colonne" data-model-description="100%">
-            <h4 class="bloc-title">Titre du bloc</h4>
-            <div class="row bloc-content">
-                <div class="dataviz-container col-md-12">
-                    <!--dataviz component is injected here -->
+        <div class="lyrow report-bloc b12" data-model-title="1 colonne" data-model-description="100%">
+            <h4 class="bloc-title editable-text">
+                Titre du bloc
+                <!-- this text is editable in composer -->
+                <span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning">
+                    <i class="fas fa-edit"></i>
+                    edit</span>
+            </h4>
+            <div class="view bloc-content">
+                <div class="row">
+                    <div class="col-md-12 dividedcolumn customBaseColumn">
+                        <div class="edit_columns">
+                            <span class="badge badge badge-success divide_column" data-toggle="modal"
+                                data-target="#divide_form">
+                                <i class="fas fa-columns"></i>
+                                Diviser
+                            </span>
+                            <span class="badge badge badge-danger delete_column">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                        </div>
+                        <div class="dataviz-container card list-group-item">
+                            <!--dataviz component is injected here -->
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div><!-- fin du bloc -->
+            <div class="bloc-sources">
+                <div class="col">
+                    <p>
+                        <i class="editable-text">
+                            SOURCE: xxx
+                            <!-- this text is editable in composer -->
+                            <span data-toggle="modal" data-target="#text-edit"
+                                class="to-remove text-edit badge badge-warning">
+                                <i class="fas fa-edit"></i>
+                                edit
+                            </span>
+                        </i>
+                    </p>
+                </div>
+            </div>
+        </div>
     </template>
 
-     <!-- REQUERY title component -->
+    <!-- REQUERY title component -->
     <template class="report-component report-title">
-        <div class="report-component.title dataviz-container" data-model-title="Titre" data-model-description="Titre principal">
+        <div class="report-component.title dataviz-container" data-model-title="Titre"
+            data-model-description="Titre principal">
             <h1 id="{{dataviz}}" class="dataviz report-title"></h1>
         </div>
     </template>
@@ -85,7 +224,7 @@
         <div class="report-component.text">
             <div id="{{dataviz}}" class="dataviz report-text">
                 <h3 class="report-text-title"></h3>
-				<p class="report-text-text"></p>
+                <p class="report-text-text"></p>
             </div>
         </div>
     </template>
@@ -93,20 +232,21 @@
     <template class="report-component report-image">
         <div class="report-component.image">
             <div id="{{dataviz}}" class="dataviz report-image">
-                <img src="" class="img-fluid" alt=""/>
+                <img src="" class="img-fluid" alt="" />
             </div>
         </div>
     </template>
-     <!-- REQUERY map component -->
+    <!-- REQUERY map component -->
     <template class="report-component report-map">
         <div class="report-component.map">
             <div id="{{dataviz}}" class="dataviz report-map"></div>
         </div>
     </template>
-     <!-- REQUERY iframe component -->
+    <!-- REQUERY iframe component -->
     <template class="report-component report-iframe">
         <div class="report-component.iframe">
-            <div id="{{dataviz}}" class="dataviz report-iframe .hidden-md-down embed-responsive embed-responsive-16by9"></div>
+            <div id="{{dataviz}}" class="dataviz report-iframe .hidden-md-down embed-responsive embed-responsive-16by9">
+            </div>
         </div>
     </template>
 

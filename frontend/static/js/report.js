@@ -536,7 +536,8 @@ report = (function() {
         var el = _getDomElement("chart", chart.id);
         if (el && data[chart.id]) {
             var commonOptions = {
-                "maintainAspectRatio": false
+                "maintainAspectRatio": false,
+                "responsive": true
             };
             var colors = ["#36A2EB"];
             var backgroundColors = []
@@ -581,99 +582,121 @@ report = (function() {
             }
 
             $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
-            var options = $.extend({}, commonOptions, chart.options);
-            var plugins = [];
-            if (chart.plugins && chart.plugins[0] === "ChartDataLabels") {
-                plugins = [ChartDataLabels];
-            }
-            var ctx = document.getElementById(chart.id + "-canvas").getContext('2d');
-            var chart = new Chart(ctx, {
-                type: chart.type || 'bar',
-                data: {
-                    labels: _labels,
-                    datasets: datasets
-                },
-                plugins: plugins,
-                options: options
-            });
-        } else {
-            _handleVizError(el, chart.id, data);
-        }
-    };
-
-    var _createFigure = function(data, chiffrecle) {
-        var el = _getDomElement("figure card", chiffrecle.id);
-        var unit = $(el).attr("data-unit") || "";
-        if (el && data[chiffrecle.id]) {
-            el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]) + unit;
-            if (el.getElementsByClassName("report-figure-caption").length > 0) {
-                el.getElementsByClassName("report-figure-caption")[0].textContent = data[chiffrecle.id].label[0];
-            }
-        } else {
-            _handleVizError(el, chiffrecle.id, data);
-        }
-    };
-
-    var _createTable = function(data, table) {
-        var el = _getDomElement("table", table.id);
-        if (el && data[table.id] && table.label) {
-            // construction auto de la table
-            var columns = [];
-            var datasets_index = [];
-            if (table.columns && table.columns.length > 0) {
-                datasets_index = table.columns;
-
-            } else {
-                data[table.id].dataset.forEach(function(element, id) {
-                    datasets_index.push(id);
-                });
-            }
-            console.log(datasets_index);
-            if (table.extracolumn) {
-                columns.push('<th scope="col">' + table.extracolumn + '</th>');
-            }
-            table.label.forEach(function(col, id) {
-                columns.push('<th scope="col">' + col + '</th>');
-            });
-
-            var data_rows = [];
-            // Use first colun data to collect other columns data
-            data[table.id].data[0].forEach(function(value, id) {
-                var values = [];
-                if (table.extracolumn) {
-                    // on prends les labels corrspondant au premier dataset
-                    // todo vérifier que ce sont les mêmes labels pour tous les datasets
-                    values.push(data[table.id].label[0][id]);
-                }
-                datasets_index.forEach(function(dataset_index, cid) {
-                    values.push(_format(data[table.id].data[dataset_index][id]));
-                });
-                data_rows.push(values);
-            });
-
-            rows = [];
-            data_rows.forEach(function(row, id) {
-                var elements = [];
-                row.forEach(function(column) {
-                    elements.push('<td>' + column + '</td>');
-                });
-                rows.push('<tr>' + elements.join("") + '</tr>');
-
-            });
-
-            var html = ['<table class="table table-bordered">',
-                '<thead class="thead-light">',
-                '<tr>' + columns.join("") + '</tr></thead>',
-                '<tbody>' + rows.join("") + '</tbody></table>'
-            ].join("");
-
-            $(el).append(html);
-
-        } else {
-            _handleVizError(el, table.id, data);
-        }
-    };
-
+             // Add Title and Description to the preview
+             $(el).html(_configTitleDesc(chart.title,chart.description,$(el).html()));
+             var options = $.extend(commonOptions, chart.options);
+             var plugins = [];
+             if (chart.plugins && chart.plugins[0] === "ChartDataLabels") {
+                 plugins = [ChartDataLabels];
+             }
+             var ctx = document.getElementById(chart.id + "-canvas").getContext('2d');
+             var chart = new Chart(ctx, {
+                 type: chart.type || 'bar',
+                 data: {
+                     labels: _labels,
+                     datasets: datasets
+                 },
+                 plugins: plugins,
+                 options: options,
+             });
+         } else {
+             _handleVizError(el, chart.id, data);
+         }
+     };
+ 
+     var _createFigure = function(data, chiffrecle) {
+         var el = _getDomElement("figure card", chiffrecle.id);
+         var unit = $(el).attr("data-unit") || "";
+         if (el && data[chiffrecle.id]) {
+             el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]) + unit;
+             if (el.getElementsByClassName("report-figure-caption").length > 0) {
+                 el.getElementsByClassName("report-figure-caption")[0].textContent = data[chiffrecle.id].label[0];
+             }
+             // Add Title and Description to the preview
+             el.outerHTML = _configTitleDesc(chiffrecle.title,chiffrecle.description,el.outerHTML);
+         } else {
+             _handleVizError(el, chiffrecle.id, data);
+         }
+     };
+ 
+     var _createTable = function(data, table) {
+         var el = _getDomElement("table", table.id);
+         if (el && data[table.id] && table.label) {
+             // construction auto de la table
+             var columns = [];
+             var datasets_index = [];
+             if (table.columns && table.columns.length > 0) {
+                 datasets_index = table.columns;
+ 
+             } else {
+                 data[table.id].dataset.forEach(function(element, id) {
+                     datasets_index.push(id);
+                 });
+             }
+             console.log(datasets_index);
+             if (table.extracolumn) {
+                 columns.push('<th scope="col">' + table.extracolumn + '</th>');
+             }
+             table.label.forEach(function(col, id) {
+                 columns.push('<th scope="col">' + col + '</th>');
+             });
+ 
+             var data_rows = [];
+             // Use first colun data to collect other columns data
+             data[table.id].data[0].forEach(function(value, id) {
+                 var values = [];
+                 if (table.extracolumn) {
+                     // on prends les labels corrspondant au premier dataset
+                     // todo vérifier que ce sont les mêmes labels pour tous les datasets
+                     values.push(data[table.id].label[0][id]);
+                 }
+                 datasets_index.forEach(function(dataset_index, cid) {
+                     values.push(_format(data[table.id].data[dataset_index][id]));
+                 });
+                 data_rows.push(values);
+             });
+ 
+             rows = [];
+             data_rows.forEach(function(row, id) {
+                 var elements = [];
+                 row.forEach(function(column) {
+                     elements.push('<td>' + column + '</td>');
+                 });
+                 rows.push('<tr>' + elements.join("") + '</tr>');
+ 
+             });
+             var html = ['<table class="table table-bordered">',
+                 '<thead class="thead-light">',
+                 '<tr>' + columns.join("") + '</tr></thead>',
+                 '<tbody>' + rows.join("") + '</tbody></table>'
+             ].join("");
+             // Add Title and Description to the preview
+             html = _configTitleDesc(table.title,table.description,html);
+             $(el).append(html);
+ 
+         } else {
+             _handleVizError(el, table.id, data);
+         }
+     };
+     var _configTitleDesc = function(title,description,html){
+         // Add title and description
+         if(newtitle = title){
+             html = _addTitle(html,newtitle);
+         }
+         if(newdesc = description){
+             html = _addDescription(html,newdesc);
+         }
+         return html;
+     }
+     var _addTitle = function(html,title){
+         let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text">'+title+'</h6></div>';
+         return titleDiv.concat(html);
+     }
+     var _addDescription = function(html,description){
+         let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text">'+description+'</p></div>';
+         return html.concat(descDiv);
+         
+     }
     var _createText = function(data, text) {
         var el = _getDomElement("text", text.id);
         if (el && data[text.id]) {

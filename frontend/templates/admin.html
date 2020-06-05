@@ -28,6 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse-js-latest@3.1.0/dist/fuse.min.js"></script>
     <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
+    <script src="/static/js/extLibs/piklor.js"></script>
     <script src="/static/js/composer.js"></script>
     <script src="/static/js/wizard.js"></script>
     <script src="/static/js/report.js"></script>
@@ -38,7 +39,7 @@
 <body>
 
     <div>
-
+        <!-- Navigation start -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">MREPORT - beta1</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -61,8 +62,9 @@
 
             </div>
         </nav>
+        <!-- Navigation end -->
 
-
+        <!-- Catalog start -->
         <div class="container-fluid page active" id="catalog">
             <h1>Sources de données associées</h1>
             <div id="filterbutton" class="row sticky-sm">
@@ -91,7 +93,7 @@
                         </div>
                     </div>
                     <div class="col-md-1 col-12">
-                        <a class="green" ><i class="fas fa-shopping-bag"></i> <span class="number">0</span></a>
+                        <a class="green"><i class="fas fa-shopping-bag"></i> <span class="number">0</span></a>
                     </div>
                     <div class="col-md-1 col-12">
                         <button id="resetfilters" type="button" class="btn btn-primary">Reset</button>
@@ -99,11 +101,15 @@
                 </div>
             </div>
         </div>
+        <!-- Catalog start -->
 
+        <!-- Reports start -->
         <div class="container-fluid page" id="reports">
             <h1>Rapports</h1>
         </div>
+        <!-- Reports start -->
 
+        <!-- Composer start -->
         <div class="container-fluid page" id="composer">
             <div class="builder edit">
                 <div class="sidenav d-flex flex-column">
@@ -123,16 +129,17 @@
                         </div>
                     </form>
                     <div class="rows list-group" id="structure-models">
-                        <h6>Blocs structurants</h6><!-- appended by code -->
+                        <h6>Blocs structurants</h6>
+                        <!-- appended by code -->
                     </div>
                     <div class="rows list-group" id="element-models">
-                        <h6>Eléments</h6><!-- appended by code -->
+                        <h6>Eléments</h6>
+                        <!-- appended by code -->
                     </div>
                     <div class="list-group" id="dataviz-items">
                         <h6>Dataviz disponibles</h6>
                         <!-- appended by code -->
                     </div>
-
                 </div>
 
                 <div class="main">
@@ -153,10 +160,9 @@
                 </div>
             </div>
         </div>
-        <!-- End composer -->
+        <!-- Composer end -->
 
     </div>
-
     <!-- Modal dataviz -->
     <div class="modal fade" id="dataviz-modal-form" data-related-id="" tabindex="-1" role="dialog"
         aria-labelledby="datavizModalLabel" aria-hidden="true">
@@ -320,12 +326,49 @@
             </div>
         </div>
     </div>
+    <!-- Cart -->
     <div id="cd-cart">
         <a id="togglePanier" class="cd-img-replace"></a>
         <h2>Selection</h2>
         <ul class="cd-cart-items">
 
         </ul>
+    </div>
+    <!-- Structure dividing modal -->
+    <div class="modal fade" id="divide_form" tabindex="-1" role="dialog" aria-labelledby="divideForm"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="divide_title">Division</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="separation_input">Séparation</label>
+                            <select class="form-control" id="separation_input" name="separation_input">
+                                <option value="0">Horizontale</option>
+                                <option value="1">Verticale</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="dimensions_division">Dimensions</label>
+                                <input type="text" class="form-control orientation_changed" id="dimensions_division" placeholder="Ex : 6 6">
+                                <small id="dimensions_help" class="form-text text-muted orientation_changed">Le total doit être 12</small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button id="divide_modal_btn" type="button" class="text-save btn btn-primary">Enregistrer</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

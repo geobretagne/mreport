@@ -1,6 +1,7 @@
-﻿body{
+﻿body {
   padding: 0 !important;
 }
+
 .card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   border: unset;
@@ -245,6 +246,7 @@ h5>.badge {
     padding: 1em 2em;
   }
 }
+
 /*
 * Cart Items
 */
@@ -254,6 +256,7 @@ h5>.badge {
   border-top: 1px solid #e0e6ef;
   padding-right: 45px;
 }
+
 #cd-cart .cd-cart-items h5 {
   font-size: 1em;
 }
@@ -263,6 +266,7 @@ h5>.badge {
     right: 2em;
   }
 }
+
 /*
 * Remove Icon
 */
@@ -278,23 +282,26 @@ h5>.badge {
   background: url(../img/cd-remove-item.svg) no-repeat center center;
   transition: 0.3s;
 }
-.cd-item-remove:hover{
+
+.cd-item-remove:hover {
   background-color: grey !important;
   transition: 0.3s !important;
 }
+
 .cd-img-replace {
   display: inline-block;
   overflow: hidden;
   text-indent: 100%;
   white-space: nowrap;
 }
+
 /*
 * Toggle off cart icon
 */
-#togglePanier{
+#togglePanier {
   position: sticky;
   background: url(../img/cd-remove-item.svg) no-repeat center center lightskyblue;
-  z-index:5;
+  z-index: 5;
   width: 32px;
   height: 32px;
   width: 100%;
@@ -302,11 +309,13 @@ h5>.badge {
   right: 0;
   transition: .3s;
 }
-#togglePanier:hover{
+
+#togglePanier:hover {
   cursor: pointer;
   background-color: #007bff;
   transition: 0.3s;
 }
+
 /*
 * Toggle on cart icon
 */
@@ -319,6 +328,7 @@ h5>.badge {
   position: relative;
   transition: .4s;
 }
+
 .green .number {
   padding: 3px 6px 4px 8px;
   background: #999faf;
@@ -330,10 +340,57 @@ h5>.badge {
   right: -13px;
   border: 3px solid #FFF;
 }
+
 .green:hover {
   cursor: pointer;
   background: #03C9A9 !important;
   color: #FFF !important;
   border: 3px solid #03C9A9;
   transition: 0.4s;
+}
+
+#wizard-result .dataviz,
+#wizard-result .report-component\.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.colorbtn{
+  background-color: #FFF;
+  border: solid 1px grey;
+}
+.available_colors div:hover,
+.colorbtn:hover,
+#addColor:hover{
+  cursor: pointer;
+  transform: scale(1.15);
+  transition: 0.2s;
+}
+#addColor{
+  transform:scale(1);
+  margin-left: 5px;
+  transition: 0.2s;
+}
+.available_colors div,
+.colorbtn {
+  width: 25px;
+  display: inline-block;
+  height: 25px;
+  margin: 5px;
+  border-radius: 100%;
+  opacity: 0.7;
+  transition: 0.2s;
+}
+.tooltip_pointer{
+  content: "";
+  position: fixed;
+  bottom: 80%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent grey transparent;
+}
+.available_colors{
+  background-color: grey;
 }
