@@ -397,7 +397,8 @@ admin = (function () {
                         confirmButtonText: 'Composeur'
                     }).then((result) => {
                         if (result.value) {
-                            window.open('./' + report_id, "_blank");
+                            $("#btn-composer").click();
+                            $("#selectedReportComposer").val(report_id).change();
                         }
                     });
 
