@@ -137,7 +137,7 @@ report_html = api.namespace('report_html', description='Structure html des rappo
 class GetCatalog(Resource):
     def get(self):
         result = db.session.query(Dataviz).all()
-        data = {'datavizs': json.loads(json.dumps([row2dict(r) for r in result]))}
+        data = {'response':'success','datavizs': json.loads(json.dumps([row2dict(r) for r in result]))}
         return jsonify(**data)
 
 dataviz_put = store.model('Dataviz_put', {
@@ -171,7 +171,7 @@ class DatavizData(Resource):
             .filter(Rawdata.dataid.in_(db.session.query(db.func.max(Rawdata.dataid)).filter(Rawdata.dataviz == dataviz_id).all()))
             .order_by(Rawdata.dataset,Rawdata.order).all()
         '''
-        data = {'data': json.loads(json.dumps(dict_builder(result)))}
+        data = {'response':'success','data': json.loads(json.dumps(dict_builder(result)))}
         return jsonify(**data)
 
 @store.route('/<string:dataviz_id>',doc={'description':'Création/Modification/Suppression d\'une dataviz'})
@@ -239,7 +239,7 @@ class GetReports(Resource):
         data = dict_builder(result)
         res = defaultdict(list)
         for values in data: res[values['report'],values['title']].append(values['dataviz'])
-        data = {'reports': [{'report':report[0],'title':report[1], 'dataviz':dataviz} for report,dataviz in res.items()]}
+        data = {'response':'success','reports': [{'report':report[0],'title':report[1], 'dataviz':dataviz} for report,dataviz in res.items()]}
         return jsonify(**data)
 
 report_fields = api.model('Report', {
@@ -259,7 +259,7 @@ class GetReport(Resource):
                 .order_by(desc(Dataid.label))
                 .all()
         '''
-        data = {'items': json.loads(json.dumps(dict_builder(result)))}
+        data = {'response':'success','items': json.loads(json.dumps(dict_builder(result)))}
         return jsonify(**data)
     @report.expect(report_fields)
     def put(self,report_id):
@@ -328,7 +328,7 @@ class GetReport(Resource):
                 .filter(Rawdata.dataid == idgeo)
                 .all()
         '''
-        data = {'data': json.loads(json.dumps([row2dict(r) for r in result]))}
+        data = {'response':'success','data': json.loads(json.dumps([row2dict(r) for r in result]))}
         return jsonify(**data)
 report_composition_fields = api.model('Report_composition', {
     'dataviz': fields.String(max_length=50,required=True)

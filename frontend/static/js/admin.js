@@ -36,14 +36,24 @@ admin = (function () {
             dataType: "json",
             url: [report.getAppConfiguration().api, "report"].join("/"),
             success: function (data) {
-                _report_data = _arr2dic(data.reports, "report");
-                _appendReports();
+                if (data.response === "success") {
+                    _report_data = _arr2dic(data.reports, "report");
+                    _appendReports();
+                } else {
+                    var err = data.error || data.response;
+                    Swal.fire(
+                        'Une erreur s\'est produite',
+                        'Le catalogue n\'a pas pu être chargé <br> (' + err + ')',
+                        'error'
+                    );
+                }
+
             },
             error: function (xhr, status, error) {
                 var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err,
+                    'L\'API ne réponds pas <br> (' + err + ')',
                     'error'
                 );
             }
@@ -220,48 +230,58 @@ admin = (function () {
             dataType: "json",
             url: [report.getAppConfiguration().api, "store"].join("/"),
             success: function (data) {
-                _dataviz_data = _arr2dic(data.datavizs, "dataviz");
-                _showDataviz();
-                var options = {
-                    tokenize: false,
-                    threshold: 0.2,
-                    location: 0,
-                    distance: 500,
-                    maxPatternLength: 70,
-                    minMatchCharLength: 2,
-                    keys: [
-                        "title",
-                        "description",
-                        "year",
-                        "level",
-                        "source",
-                        "job"
-                    ]
-                };
-                var fuse = new Fuse(data.datavizs, options);
-                $("#searchbar").on("keyup", function () {
-                    $("#checkAll").prop('checked', false);
-                    var result = fuse.search($(this).val());
-                    var divs = $(".card.dataviz");
-                    if ($(this).val() != "") {
-                        divs.parent().addClass("hidden");
-                        result.forEach(function (elem) {
-                            divs.each(function () {
-                                if (elem.dataviz == $(this).attr("data-dataviz-id")) {
-                                    $(this).parent().removeClass("hidden");
-                                }
+                if (data.response === "success") {
+                    _dataviz_data = _arr2dic(data.datavizs, "dataviz");
+                    _showDataviz();
+                    var options = {
+                        tokenize: false,
+                        threshold: 0.2,
+                        location: 0,
+                        distance: 500,
+                        maxPatternLength: 70,
+                        minMatchCharLength: 2,
+                        keys: [
+                            "title",
+                            "description",
+                            "year",
+                            "level",
+                            "source",
+                            "job"
+                        ]
+                    };
+                    var fuse = new Fuse(data.datavizs, options);
+                    $("#searchbar").on("keyup", function () {
+                        $("#checkAll").prop('checked', false);
+                        var result = fuse.search($(this).val());
+                        var divs = $(".card.dataviz");
+                        if ($(this).val() != "") {
+                            divs.parent().addClass("hidden");
+                            result.forEach(function (elem) {
+                                divs.each(function () {
+                                    if (elem.dataviz == $(this).attr("data-dataviz-id")) {
+                                        $(this).parent().removeClass("hidden");
+                                    }
+                                });
                             });
-                        });
-                    } else {
-                        divs.parent().removeClass("hidden");
-                    }
-                });
+                        } else {
+                            divs.parent().removeClass("hidden");
+                        }
+                    });
+                } else {
+                    var err = data.error || data.response;
+                    Swal.fire(
+                        'Une erreur s\'est produite',
+                        'Les rapports n\'ont pas pu être chargés <br> (' + err + ')',
+                        'error'
+                    );
+                }
+
             },
             error: function (xhr, status, error) {
                 var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err,
+                    'L\'API ne réponds pas <br> (' + err + ')',
                     'error'
                 );
             }
@@ -583,7 +603,7 @@ admin = (function () {
                     type: "DELETE",
                     url: [report.getAppConfiguration().api, "report", report_id].join("/"),
                     success: function (data) {
-                        if (data.response == "success") {
+                        if (data.response === "success") {
                             $('#report-modal-form').modal('hide');
                             Swal.fire(
                                 'Supprimé',
