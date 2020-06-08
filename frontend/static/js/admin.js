@@ -60,15 +60,19 @@ admin = (function () {
         });
         $('#report-modal-form').on('show.bs.modal', function (e) {
             $(".reports-dataviz .list-group-item").remove();
+            var titre = $("#report-form .form-group label");
             var lst = [];
             var newReport = $(e.relatedTarget).attr('data-report-state');
             $(e.currentTarget).attr("data-report-state", newReport);
             var title = $(e.currentTarget).find('input[name="title"]');
             var confirmed = $("#report_confirmed");
+            titre.find("b").remove();
 
             if (newReport === "edit") {
                 //get data-id attribute of the clicked element
                 var reportId = $(e.relatedTarget).data('report-id');
+                var titre = $("#report-form .form-group label");
+                titre.html(titre.html()+" <b>"+reportId+"</b>")
                 confirmed.attr("data-report-id", reportId)
                 var data = _report_data[reportId];
                 //populate data
