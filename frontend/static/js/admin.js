@@ -226,7 +226,7 @@ admin = (function () {
                     tokenize: false,
                     threshold: 0.2,
                     location: 0,
-                    distance:500,
+                    distance: 500,
                     maxPatternLength: 70,
                     minMatchCharLength: 2,
                     keys: [
@@ -583,13 +583,22 @@ admin = (function () {
                     type: "DELETE",
                     url: [report.getAppConfiguration().api, "report", report_id].join("/"),
                     success: function (data) {
-
-                        $('#report-modal-form').modal('hide');
-                        Swal.fire(
-                            'Supprimé',
-                            'Le rapport \'' + report_name + '\' a été supprimé',
-                            'success'
-                        )
+                        if (data.response == "success") {
+                            $('#report-modal-form').modal('hide');
+                            Swal.fire(
+                                'Supprimé',
+                                'Le rapport \'' + report_name + '\' a été supprimé',
+                                'success'
+                            )
+                        } else {
+                            $('#report-modal-form').modal('hide');
+                            var err = data.error || data.response;
+                            Swal.fire(
+                                'Une erreur s\'est produite',
+                                err,
+                                'error'
+                            );
+                        }
                     },
                     complete: function () {
                         _initReports();
