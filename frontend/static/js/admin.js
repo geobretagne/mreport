@@ -137,7 +137,7 @@ admin = (function () {
                     '<h5 class="card-title">' + data.title + '</h5>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Sourcer</a>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + id + '" data-target="#report-modal-form">Supprimer</a>',
-                    '<a href="./' + id + '" target="_blank" class="card-link">Afficher</a>',
+                    '<a href="' + report.getAppConfiguration().location + id + '" target="_blank" class="card-link">Afficher</a>',
                     '<a href="#" onclick="composer.compose(\'' + id + '\')" class="card-link">Composer</a>',
                     '</div>',
                     '</div>',
@@ -196,7 +196,7 @@ admin = (function () {
         });
         /* Remove event from the 'select all' checkbox because we do not want to add it to the cart */
         $("#checkAll").off("change");
-        /* Bind event to dynamically generated cart items in order to delete them from the cart and unselect 
+        /* Bind event to dynamically generated cart items in order to delete them from the cart and unselect
         them in the list */
         $(document).on('click', "#cd-cart .cd-cart-items li .cd-item-remove", function () {
             var id = $(this).parent().data().datavizId;
