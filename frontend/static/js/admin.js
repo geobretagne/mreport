@@ -403,7 +403,13 @@ admin = (function () {
                     });
 
                 } else {
-                    console.log(data);
+                    $('#report-modal-form').modal('hide');
+                    var err = data.error;
+                    Swal.fire(
+                        'Une erreur s\'est produite',
+                        err,
+                        'error'
+                    );
                 }
             },
             error: function (xhr, status, error) {
