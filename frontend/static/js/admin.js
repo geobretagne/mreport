@@ -40,10 +40,10 @@ admin = (function () {
                 _appendReports();
             },
             error: function (xhr, status, error) {
-                var err = eval("(" + xhr.responseText + ")");
+                var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err.response,
+                    err,
                     'error'
                 );
             }
@@ -258,10 +258,10 @@ admin = (function () {
                 });
             },
             error: function (xhr, status, error) {
-                var err = eval("(" + xhr.responseText + ")");
+                var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err.response,
+                    err,
                     'error'
                 );
             }
@@ -333,15 +333,28 @@ admin = (function () {
             },
             error: function (xhr, status, error) {
                 $('#report-modal-form').modal('hide');
-                var err = eval("(" + xhr.responseText + ")");
+                var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err.response,
+                    err,
                     'error'
                 );
             }
         });
     };
+
+    _parseError = function (response) {
+        var err = "";
+        try {
+            var json = JSON.parse(response);
+            if (json.response) {
+                err = json.response;
+            }
+        } catch (e) {
+            err = "Parsing error:" + e;
+        }
+        return err;
+    }
 
     _addReport = function () {
         var report_name = $("#reportInputTitre").val();
@@ -394,10 +407,10 @@ admin = (function () {
             },
             error: function (xhr, status, error) {
                 $('#report-modal-form').modal('hide');
-                var err = eval("(" + xhr.responseText + ")");
+                var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err.response,
+                    err,
                     'error'
                 );
             }
@@ -430,10 +443,10 @@ admin = (function () {
             },
             error: function (xhr, status, error) {
                 $('#report-modal-form2').modal('hide');
-                var err = eval("(" + xhr.responseText + ")");
+                var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err.response,
+                    err,
                     'error'
                 )
             }
@@ -470,10 +483,10 @@ admin = (function () {
             },
             error: function (xhr, status, error) {
                 $('#report-modal-form').modal('hide');
-                var err = eval("(" + xhr.responseText + ")");
+                var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err.response,
+                    err,
                     'error'
                 );
             }
@@ -514,10 +527,10 @@ admin = (function () {
             },
             error: function (xhr, status, error) {
                 $('#report-modal-form').modal('hide');
-                var err = eval("(" + xhr.responseText + ")");
+                var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err.response,
+                    err,
                     'error'
                 )
             }
@@ -558,10 +571,10 @@ admin = (function () {
                     },
                     error: function (xhr, status, error) {
                         $('#report-modal-form').modal('hide');
-                        var err = eval("(" + xhr.responseText + ")");
+                        var err = _parseError(xhr.responseText);
                         Swal.fire(
                             'Une erreur s\'est produite',
-                            err.response,
+                            err,
                             'error'
                         )
                     }
@@ -606,10 +619,10 @@ admin = (function () {
                     },
                     error: function (xhr, status, error) {
                         $('#dataviz-modal-form').modal('hide');
-                        var err = eval("(" + xhr.responseText + ")");
+                        var err = _parseError(xhr.responseText);
                         Swal.fire(
                             'Une erreur s\'est produite',
-                            err.response,
+                            err,
                             'error'
                         )
                     }
@@ -655,10 +668,10 @@ admin = (function () {
             },
             error: function (xhr, status, error) {
                 $('#dataviz-modal-form').modal('hide');
-                var err = eval("(" + xhr.responseText + ")");
+                var err = _parseError(xhr.responseText);
                 Swal.fire(
                     'Une erreur s\'est produite',
-                    err.response,
+                    err,
                     'error'
                 )
             }
