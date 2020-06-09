@@ -62,7 +62,7 @@ report = (function() {
     }
 
     var _getCss = function() {
-        $('head').prepend('<link rel="stylesheet" href="report.css" " type="text/css" />');
+        $('head').prepend('<link rel="stylesheet" href="' + _getReportRessource("report.css") + '" type="text/css" />');
     };
 
     var _showAvailableReports = function () {
@@ -91,8 +91,7 @@ report = (function() {
             /* get config file*/
             $.ajax({
                 dataType: "json",
-                //url: APIRequest.home + "config.json",
-                url: "config.json",
+                url: _getReportRessource("config.json"),
                 success: function(conf) {
                     _config = conf;
                     if (!_config.data_url) {
@@ -110,6 +109,28 @@ report = (function() {
             });
         }
     };
+
+    var _getReportRessource = function (file) {
+        // test file (relative or absolute)
+        var url = "";
+        var path = [];
+        if (/^(?:[a-z]+:)?\/\//i.test(file)) {
+            url = file;
+        } else {
+            paths = [APIRequest.base_url,APIRequest.report, file];
+            url = paths.join("/").replace(/\/\/+/g, '/');
+        }
+        console.log(url);
+        return url;
+    }
+
+    var _getAPIURLData = function () {
+        var path = [ _appConf.api, "report", APIRequest.report ];
+        if (APIRequest.dataid) {
+            path.push(APIRequest.dataid);
+        }
+        return path.join("/");
+    }
 
     var _init = function() {
         var backend = document.getElementById("backend");
@@ -289,7 +310,7 @@ report = (function() {
 
     var _getDom = function() {
         $.ajax({
-            url: "report.html",
+            url: _getReportRessource("report.html"),
             dataType: "text",
             success: function(html) {
 				_rawReport = {"name": _reportName, "html": html};
@@ -437,32 +458,33 @@ report = (function() {
 
         var showDataIds = false;
 
-        if (_config.data_format === "api" && APIRequest.dataid) {
-            // no need request parameters
-            _config.data_url = [_config.data_url, "report", APIRequest.report, APIRequest.dataid].join("/");
-        } else if (_config.data_format === "api" && !APIRequest.dataid) {
+        var url = "";
+
+        if (_config.data_format === "api") {
+            url = _getAPIURLData();
+        } else {
+            url = _getReportRessource(_config.data_url);
+            if (APIRequest.dataid){
+                //Data not provided by API (eg. csv file) or php with extra params
+                request_parameters[_config.dataid] = APIRequest.dataid;
+                _config.data_other_parameters.forEach(function(parameter) {
+                    if (APIRequest[parameter]) {
+                        request_parameters[parameter] = APIRequest[parameter];
+                    }
+                });
+            }
+        }
+
+        if (_config.data_format === "api" && !APIRequest.dataid) {
             //Show all dataids availables
             showDataIds = true;
-        } else if (APIRequest.dataid){
-            request_parameters[_config.dataid] = APIRequest.dataid;
-            _config.data_other_parameters.forEach(function(parameter) {
-                if (APIRequest[parameter]) {
-                    request_parameters[parameter] = APIRequest[parameter];
-                }
-            });
         }
-        // test url (relative or absolute)
-        var url = "";
-        /*if (/^(?:[a-z]+:)?\/\//i.test(_config.data_url)) {
-            url = _config.data_url;
-        } else {
-            url = APIRequest.home + _config.data_url;
-        }*/
+
 
         if (showDataIds) {
             $.ajax({
                 dataType: "json",
-                url: [_config.data_url, "report", APIRequest.report].join("/"),
+                url: url,
                 success: function(data) {
                     var links = [];
                     data.items.forEach(function(a) {
@@ -479,7 +501,7 @@ report = (function() {
         } else {
             $.ajax({
                 dataType: format,
-                url: _config.data_url,
+                url: url,
                 data: request_parameters,
                 success: function(data) {
                     if (format === "text") {
@@ -603,7 +625,7 @@ report = (function() {
              _handleVizError(el, chart.id, data);
          }
      };
- 
+
      var _createFigure = function(data, chiffrecle) {
          var el = _getDomElement("figure card", chiffrecle.id);
          var unit = $(el).attr("data-unit") || "";
@@ -618,7 +640,7 @@ report = (function() {
              _handleVizError(el, chiffrecle.id, data);
          }
      };
- 
+
      var _createTable = function(data, table) {
          var el = _getDomElement("table", table.id);
          if (el && data[table.id] && table.label) {
@@ -627,7 +649,7 @@ report = (function() {
              var datasets_index = [];
              if (table.columns && table.columns.length > 0) {
                  datasets_index = table.columns;
- 
+
              } else {
                  data[table.id].dataset.forEach(function(element, id) {
                      datasets_index.push(id);
@@ -640,7 +662,7 @@ report = (function() {
              table.label.forEach(function(col, id) {
                  columns.push('<th scope="col">' + col + '</th>');
              });
- 
+
              var data_rows = [];
              // Use first colun data to collect other columns data
              data[table.id].data[0].forEach(function(value, id) {
@@ -655,7 +677,7 @@ report = (function() {
                  });
                  data_rows.push(values);
              });
- 
+
              rows = [];
              data_rows.forEach(function(row, id) {
                  var elements = [];
@@ -663,7 +685,7 @@ report = (function() {
                      elements.push('<td>' + column + '</td>');
                  });
                  rows.push('<tr>' + elements.join("") + '</tr>');
- 
+
              });
              var html = ['<table class="table table-bordered">',
                  '<thead class="thead-light">',
@@ -673,7 +695,7 @@ report = (function() {
              // Add Title and Description to the preview
              html = _configTitleDesc(table.title,table.description,html);
              $(el).append(html);
- 
+
          } else {
              _handleVizError(el, table.id, data);
          }
@@ -695,7 +717,7 @@ report = (function() {
      var _addDescription = function(html,description){
          let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text">'+description+'</p></div>';
          return html.concat(descDiv);
-         
+
      }
     var _createText = function(data, text) {
         var el = _getDomElement("text", text.id);
