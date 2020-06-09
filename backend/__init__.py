@@ -42,7 +42,7 @@ db = SQLAlchemy(app)
 
 #MODELS
 
-    
+
 class Dataviz(db.Model):
     dataviz = db.Column(db.String(50),primary_key=True)
     title = db.Column(db.String(200),nullable=False)
@@ -110,7 +110,7 @@ try :
     event.listen(db.metadata, 'before_create', CreateSchema(schema))
     event.listen(db.metadata, 'after_drop', DropSchema(schema))
 
-    #  Uncomment these lines to insert sample data when creating the database  
+    #  Uncomment these lines to insert sample data when creating the database
     #  event.listen(db.metadata, "after_create", db.DDL(insertdb("Datainit/alimentation.sql",schema+".")))
 except KeyError :
     # Uncomment these lines to insert sample data when creating the database
@@ -122,7 +122,7 @@ except KeyError :
     event.listen(db.metadata, "after_create", db.DDL(insertdb("Datainit/rawdata.sql","")))
     '''
     print("If you want to add a schema edit config.py with SCHEMA variable")
-    
+
 
 
 app.wsgi_app = CherrokeeFix(app.wsgi_app, app.config['APP_PREFIX'], app.config['APP_SCHEME'])
@@ -276,8 +276,8 @@ class GetReport(Resource):
                     rep = Report(**data)
                 except TypeError as err:
                     return {"response": str(err)}, 400
-                source = "/".join([app.config['MREPORT_LOCATION'], "models", "default"])
-                destination = "/".join([app.config['MREPORT_LOCATION'], report_id])
+                source = "/".join([app.config['MREPORT_REPORTS'], "models", "default"])
+                destination = "/".join([app.config['MREPORT_REPORTS'], report_id])
                 fss = createFileSystemStructure(source, destination)
                 if fss == 'success':
                     db.session.add(rep)
@@ -304,7 +304,7 @@ class GetReport(Resource):
                 return {"response": "report doesn't exists."}, 404
     def delete(self, report_id):
         rep = Report.query.get(report_id)
-        folder = "/".join([app.config['MREPORT_LOCATION'], report_id])
+        folder = "/".join([app.config['MREPORT_REPORTS'], report_id])
         if rep:
             delete_folder = deleteFileSystemStructure(folder)
             if delete_folder == 'success':
@@ -399,7 +399,7 @@ class GetReportComposition(Resource):
                 data = {"response": "ERROR no data supplied"}
                 return data, 405
             else:
-                up = updateReportHTML("/".join([app.config['MREPORT_LOCATION'], report_id, "report.html"]), html)
+                up = updateReportHTML("/".join([app.config['MREPORT_REPORTS'], report_id, "report.html"]), html)
                 return {"response": up}
 
 #    return app
