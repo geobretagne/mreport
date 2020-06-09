@@ -239,7 +239,8 @@ wizard = (function () {
                 basecolors.forEach(function (elem) {
                     _updateColorPicker({
                         "save": true,
-                        "color": elem
+                        "color": elem,
+                        "datasets":nb_datasets
                     })
                 });
                 // set chart label(s)
@@ -289,11 +290,13 @@ wizard = (function () {
         $("#w_desc").val(cfg.description);
         // Set colors for Piklor lib
         $("#w_colors").val(cfg.colors);
+        
         let basecolors = document.getElementById("w_colors").value.split(',');
         basecolors.forEach(function (elem) {
             _updateColorPicker({
                 "save": true,
-                "color": elem
+                "color": elem,
+                "datasets":_data.dataset.length
             })
         });
         if (cfg.icon) {
@@ -510,7 +513,7 @@ wizard = (function () {
     }
     var _updateColorPicker = function (saved) {
         var colorbtn = $("#picker-wrapper .colorbtn").length + 1;
-        if (colorbtn <= 5) {
+        if (colorbtn <= saved.datasets) {
             $("#picker-wrapper").append('<div class="colorbtn colorbtn' + colorbtn + '"></div>');
             if (saved.save)
                 $(".colorbtn" + colorbtn).css('background-color', saved.color);
@@ -559,7 +562,7 @@ wizard = (function () {
                 $('#wizard-panel').on('show.bs.modal', _onWizardOpened);
                 $("#w_dataviz_type").change(_onChangeDatavizType);
                 $("#wizard_refresh").click(_onValidateConfig);
-                $("#addColor").click(_updateColorPicker);
+                // $("#addColor").click(_updateColorPicker);
             }
         });
 
