@@ -125,7 +125,7 @@ except KeyError :
 
 
 
-app.wsgi_app = CherrokeeFix(app.wsgi_app, app.config['APP_PREFIX'], app.config['APP_SCHEME'])
+app.wsgi_app = CherrokeeFix(app.wsgi_app, app.config['API_LOCATION'], app.config['APP_SCHEME'])
 api = Api(app=app, version='0.1', title='MReport Api', description='Test API', validate=True) #,doc=False
 
 store = api.namespace('store', description='Store de dataviz')
