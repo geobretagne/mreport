@@ -2,8 +2,8 @@ Prerequis
 ----------
 
     $ sudo apt-get install python3-venv
- 
- 
+
+
 Install
 ---------
 
@@ -28,7 +28,18 @@ Install Flask and dependencies
 Configure
 ---------
 
-Edit config.py and set SQLALCHEMY_DATABASE_URI
+Edit config.py and set
+
+ * SQLALCHEMY_DATABASE_URI
+
+Another default config params are :
+
+ * API_LOCATION = '/api'
+ * APP_SCHEME = 'http'
+ * MREPORT_REPORTS = "backend/reports"
+ * MREPORT_LOCATION = "/mreport"
+ * ADMIN_LOCATION = "/admin"
+
 
 
 
@@ -37,37 +48,37 @@ Test frontend
 
     $ export FLASK_APP=frontend
     $ flask run
-    
+
     test http://localhost:5000/mreport/sample/ECLUSE_1
-    
+
     test http://localhost:5000/admin/
-    
+
 Test backend
 --------------
 
     $ export FLASK_APP=backend
     $ flask run
-    
-    test http://localhost:5000/api
-    
 
-    
+    test http://localhost:5000/api
+
+
+
 Tester frontend & backend
 --------------------------
 
     $ python3 dispatcher.py
-    
+
     test http://localhost:5000/api
     test http://localhost:5000/admin/
     test http://localhost:5000/mreport/sample/ECLUSE_1
-    
+
 
 gunicorn
 --------
 
 
     $ gunicorn -b 0.0.0.0:5000 dispatcher
-    
+
  ```Create a .service file for the api. (/etc/systemd/system/mreport.service):```
 
 ```
@@ -91,4 +102,3 @@ WantedBy=multi-user.target
     $ sudo systemctl daemon-reload
     $ sudo systemctl enable mreport
     $ systemctl start mreport
-    

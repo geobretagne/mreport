@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, send_from_directory, abort
 
-mreport = Blueprint('mreport', __name__, url_prefix='/mreport', template_folder='templates',
+mreport = Blueprint('mreport', __name__, template_folder='templates',
                      static_url_path='/static', static_folder='static')
 
 #COMMON INDEX.HTML
