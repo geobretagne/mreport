@@ -348,12 +348,10 @@ h5>.badge {
   border: 3px solid #03C9A9;
   transition: 0.4s;
 }
-
-#wizard-result .dataviz,
-#wizard-result .report-component\.figure {
+#wizard-result{
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
 }
 .colorbtn{
   background-color: #FFF;
