@@ -1,12 +1,13 @@
 .report {
-    opacity:0;
+    opacity: 0;
 }
 
 .report-alert {
-    display:none;
+    display: none;
 }
 
-.report-chart, .report-figure {
+.report-chart,
+.report-figure {
     padding-top: 20px;
 }
 
@@ -18,8 +19,7 @@ button.report-share.btn.btn-outline-info {
     top: 45%;
     position: absolute;
     float: right;
-    right: 45%
-    z-index: 1000;
+    right: 45% z-index: 1000;
 }
 
 .report-chart:hover button.report-share,
@@ -33,14 +33,14 @@ button.report-share.btn.btn-outline-info {
 }
 
 div#preloader {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 999;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  background: #ffffff url('../img/loader.svg') no-repeat center center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    background: #ffffff url('../img/loader.svg') no-repeat center center;
 }
 
 .wizard-indicateurs {
@@ -49,7 +49,7 @@ div#preloader {
 
 .wizard-code {
     margin-top: 20px;
-    display:none;
+    display: none;
 }
 
 .wizard {
@@ -62,42 +62,69 @@ div#preloader {
 
 .wizard2 {
     position: fixed;
-	float: right;
+    float: right;
     right: 87px;
     bottom: 30px;
-	z-index: 50;
+    z-index: 50;
 }
 
-.map-marker-circle-1 {    
-  background-color:#E91E63; 
-  border-radius: 18px;
-  border: 4px solid #eaebf0;
-  opacity: 0.50;
+.map-marker-circle-1 {
+    background-color: #E91E63;
+    border-radius: 18px;
+    border: 4px solid #eaebf0;
+    opacity: 0.50;
 }
 
-.map-marker-circle-2 {    
-  background-color:#eaebf0; 
-  border-radius: 18px;
-  border: 4px solid #E91E63;
-  opacity: 0.50;
+.map-marker-circle-2 {
+    background-color: #eaebf0;
+    border-radius: 18px;
+    border: 4px solid #E91E63;
+    opacity: 0.50;
 }
 
-.dataviz-container{
+.dataviz-container {
     display: flex;
     height: 100%;
+    justify-content: center;
 }
-.card-body{
+
+.card-body {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.report-chart{
-    width: 80%;
+
+.report-chart {
+    width: 100%;
     height: 100%;
 }
-.customBaseColumn{
-    margin-bottom: 10px;
-}
-.card-body{
+
+.card-body {
     flex-direction: column;
+}
+
+.report-flex-centered {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.full-width{
+    width: 75%;
+}
+div[class*="list-group-item"]{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+div[class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
+.view{
+    height: 100%;
+}
+.row{
+    margin-left: 0;
+    margin-right: 0;
+    height: 100%;
 }

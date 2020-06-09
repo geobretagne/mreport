@@ -493,7 +493,6 @@ wizard = (function () {
             //Render result in wizard modal
             $("#wizard-result div").remove();
             $("#wizard-result").append(elem);
-            console.log(elem);
             
             $("#wizard-code").text(elem[0].outerHTML);
             var fdata = {};

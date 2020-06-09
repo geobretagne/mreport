@@ -357,6 +357,9 @@ h5>.badge {
   background-color: #FFF;
   border: solid 1px grey;
 }
+.available_colors div{
+  border: solid 1px grey;
+}
 .available_colors div:hover,
 .colorbtn:hover,
 #addColor:hover{
@@ -387,8 +390,8 @@ h5>.badge {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent grey transparent;
+  border-color: transparent transparent #e9ecef transparent;
 }
 .available_colors{
-  background-color: grey;
+  background-color: #e9ecef;
 }

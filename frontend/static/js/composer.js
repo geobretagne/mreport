@@ -50,7 +50,7 @@ composer = (function () {
         '<i class="fas fa-arrows-alt"></i> drag',
         '</span>',
         '<div class="structure-html">',
-        '<div class="row bloc-content">',
+        '<div class="row  bloc-content">',
         '</div>',
         '</div>',
         '</div>'
@@ -427,8 +427,9 @@ composer = (function () {
         // Get first title
         $("#report-composition .report-bloc-title").each(function (id, title) {
             if (id === 0) {
-                var dvz = $(title).find("code.dataviz-definition").text();
-                html.push(dvz);
+                var dvz = $(title).find("code.dataviz-definition");
+                dvz.addClass("full-width");
+                html.push(dvz.text());
             }
         });
         //get blocs with their dataviz configuration
@@ -471,7 +472,6 @@ composer = (function () {
                 $(tmp).prepend(pre_content.join(""));
                 $(tmp).append(post_content.join(""));
                 $(container).html(tmp);
-                console.log(tmp);
 
             });
             html.push($(tmp_bloc).get(0).outerHTML);
@@ -495,13 +495,22 @@ composer = (function () {
      */
     var _addTitleDescription = function (dvz) {
         var dvzHTML = $($.parseHTML(dvz)[0]);
+        var parentDiv = document.createElement("DIV");
+        parentDiv.classList.add("report-flex-centered");
+        var parser = new DOMParser();
+        parentDiv.appendChild(dvzHTML[0]);
+        dvz = parentDiv.outerHTML;
         if (title = dvzHTML.find('.dataviz').data("title")) {
-            dvzHTML.prepend('<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text">' + title + '</h6></div>');
-            dvz = dvzHTML[0].outerHTML;
+            let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text">' + title + '</h6></div>';
+            titleDiv = parser.parseFromString(titleDiv, "text/html").getElementsByClassName("report-chart-title")[0];
+            parentDiv.prepend(titleDiv);
+            dvz = parentDiv.outerHTML;
         }
         if (description = dvzHTML.find('.dataviz').data("description")) {
-            dvzHTML.append('<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text">' + description + '</p></div>');
-            dvz = dvzHTML[0].outerHTML;
+            let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text">' + description + '</p></div>';
+            descDiv = parser.parseFromString(descDiv, "text/html").getElementsByClassName("report-chart-summary")[0];
+            parentDiv.append(descDiv);
+            dvz = parentDiv.outerHTML;
         }
         return dvz;
     }
@@ -581,11 +590,12 @@ composer = (function () {
         if (check.isValid) {
             var columns_number = check.str_array.length;
             columns_number = columns_number > 1 ? columns_number + " colonnes" : columns_number + " colonne";
+            let height  = 100/check.str_array.length;
             var structure = '\
-                <div class="lyrow report-bloc">\
+                <div class="lyrow h-'+height+' report-bloc">\
                     <h4 class="bloc-title editable-text">Titre du bloc<!-- this text is editable in composer --></h4>\
                     <div class="view bloc-content">\
-                    <div class="row">\
+                    <div class="row ">\
             ';
             check.str_array.forEach(elem => {
                 structure +=
@@ -647,11 +657,12 @@ composer = (function () {
             if (check.isValid) {
                 let parent = _selectedCustomColumn.parentNode;
                 parent.classList.remove("dividedcolumn");
-                _selectedCustomColumn.className = "lyrow";
+                let height  = 100/check.str_array.length;
+                _selectedCustomColumn.className = "lyrow h-"+height;
                 _selectedCustomColumn.previousElementSibling.remove();
                 let savedContent = _selectedCustomColumn.querySelectorAll("li, div.structure-element");
                 let saved = false;
-                var structure = "<div class='view'><div class='row'>";
+                var structure = "<div class='view'><div class='row '>";
                 check.str_array.forEach(function (column) {
 
                     structure +=
@@ -694,12 +705,13 @@ composer = (function () {
                 _selectedCustomColumn.remove();
                 let saved = false;
                 var structure = "";
+                let height  = 100/check.str_array.length;
                 check.str_array.forEach(function (row) {
 
                     structure +=
-                        '<div class="lyrow verticalDivision">\
+                        '<div class="lyrow h-'+height+' verticalDivision">\
                         <div class="view">\
-                        <div class="row">\
+                        <div class="row ">\
                         <div class="col-md-12 dividedcolumn customBaseColumn">\
                             <div class="edit_columns">\
                                 <span class="badge badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\

@@ -349,4 +349,7 @@ span.text-edit.badge.badge-warning {
 #element-models{
     margin: 10px;
 }
+.full-width{
+    width: 100%;
+}
 
