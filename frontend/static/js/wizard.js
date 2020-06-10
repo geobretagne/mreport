@@ -9,7 +9,7 @@ wizard = (function () {
      * in _satoreData and active dataviz data is stored in _data
      */
 
-    var _data;
+    var _data = {};
 
     var _storeData = {};
 
@@ -238,7 +238,6 @@ wizard = (function () {
                 let basecolors = document.getElementById("w_colors").value.split(',');
                 basecolors.forEach(function (elem) {
                     _updateColorPicker({
-                        "save": true,
                         "color": elem,
                         "datasets":nb_datasets
                     })
@@ -294,9 +293,8 @@ wizard = (function () {
         let basecolors = document.getElementById("w_colors").value.split(',');
         basecolors.forEach(function (elem) {
             _updateColorPicker({
-                "save": true,
                 "color": elem,
-                "datasets":_data.dataset.length
+                "datasets": _data.dataset.length
             })
         });
         if (cfg.icon) {
@@ -513,10 +511,12 @@ wizard = (function () {
     }
     var _updateColorPicker = function (saved) {
         var colorbtn = $("#picker-wrapper .colorbtn").length + 1;
+        if(typeof saved.datasets === "undefined"){
+            saved.datasets = _data.dataset.length;
+        }
         if (colorbtn <= saved.datasets) {
             $("#picker-wrapper").append('<div class="colorbtn colorbtn' + colorbtn + '"></div>');
-            if (saved.save)
-                $(".colorbtn" + colorbtn).css('background-color', saved.color);
+            $(".colorbtn" + colorbtn).css('background-color', saved.color ? saved.color : "#FFF");
             $(".chosecolors").append('<div class="available_colors color-picker' + colorbtn + '"></div>');
             var pk = new Piklor(".color-picker" + colorbtn, [
                 "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50", "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d", "#FFF"
@@ -562,7 +562,7 @@ wizard = (function () {
                 $('#wizard-panel').on('show.bs.modal', _onWizardOpened);
                 $("#w_dataviz_type").change(_onChangeDatavizType);
                 $("#wizard_refresh").click(_onValidateConfig);
-                // $("#addColor").click(_updateColorPicker);
+                $("#addColor").on("click",_updateColorPicker);
             }
         });
 
