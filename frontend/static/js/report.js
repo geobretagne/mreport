@@ -571,7 +571,7 @@ report = (function () {
         if (el && data[chart.id]) {
             var commonOptions = {
                 "responsive": true,
-                "maintainAspectRatio": false
+                "maintainAspectRatio": true
             };
             var colors = ["#36A2EB"];
             var backgroundColors = []

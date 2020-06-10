@@ -352,4 +352,15 @@ span.text-edit.badge.badge-warning {
 .full-width{
     width: 100%;
 }
+.color-selector-group{
+    display: flex;
+    margin-top: 10px;
+}
+.chosecolors{
+    flex-direction: column;
+}
+.chosecolors .input-group-prepend,
+.chosecolors .input-group-prepend span{
+    flex-grow: 1;
+}
 
