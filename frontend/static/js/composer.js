@@ -364,6 +364,7 @@ composer = (function () {
                             var definition = elem[0].outerHTML;
                             // Inject dataviz definition directy
                             $(evt.item).find("code.dataviz-definition").text(definition);
+                            $(evt.item).addClass("full-width");
                             //Set title icon & deactivate wizard button
                             var btn = $(evt.item).find(".tool button");
                             $(btn).removeAttr("data-target").removeAttr("data-toggle");

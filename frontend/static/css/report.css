@@ -110,7 +110,7 @@ div#preloader {
     justify-content: center;
 }
 .full-width{
-    width: 75%;
+    width: 100%;
 }
 div[class*="list-group-item"]{
     padding-right: 0 !important;
@@ -127,4 +127,19 @@ div[class*='col-'] {
     margin-left: 0;
     margin-right: 0;
     height: 100%;
+}
+.report-chart-title,
+.report-chart-summary{
+    margin-right: 15px;
+    margin-left: 15px;
+}
+.report-chart-title{
+   text-align: center;
+}
+.report-chart-summary{
+    text-align: justify;
+}
+.container-fluid{
+    padding-left: 15vw;
+    padding-right: 15vw;
 }
