@@ -514,6 +514,9 @@ wizard = (function () {
         if(typeof saved.datasets === "undefined"){
             saved.datasets = _data.dataset.length;
         }
+        if(typeof e === "undefined"){
+            e={};
+        }
         if (colorbtn <= saved.datasets || e.type=="click" ) {
             $("#picker-wrapper").append('<div class="colorbtn colorbtn' + colorbtn + '"></div>');
             $(".colorbtn" + colorbtn).css('background-color', saved.color ? saved.color : "#FFF");
