@@ -238,7 +238,7 @@ span.structure-description {
 .composition .dataviz-container {
     border: #007bff;
     border-style: ridge;
-    min-height: 125px;
+    min-height: 200px;
     width: 100%;
 }
 .composition .bloc-content>.dataviz-container {

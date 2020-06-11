@@ -589,10 +589,9 @@ composer = (function () {
         var check = checkHorizontalBootstrap(str);
         if (check.isValid) {
             var columns_number = check.str_array.length;
-            columns_number = columns_number > 1 ? columns_number + " colonnes" : columns_number + " colonne";
-            let height  = 100/check.str_array.length;
+            columns_number = columns_number > 1 ? columns_number + " colonnes" : columns_number + " colonne"
             var structure = '\
-                <div class="lyrow h-'+height+' report-bloc">\
+                <div class="lyrow report-bloc">\
                     <h4 class="bloc-title editable-text">Titre du bloc<!-- this text is editable in composer --></h4>\
                     <div class="view bloc-content">\
                     <div class="row ">\
@@ -657,8 +656,7 @@ composer = (function () {
             if (check.isValid) {
                 let parent = _selectedCustomColumn.parentNode;
                 parent.classList.remove("dividedcolumn");
-                let height  = 100/check.str_array.length;
-                _selectedCustomColumn.className = "lyrow h-"+height;
+                _selectedCustomColumn.className = "lyrow";
                 _selectedCustomColumn.previousElementSibling.remove();
                 let savedContent = _selectedCustomColumn.querySelectorAll("li, div.structure-element");
                 let saved = false;
