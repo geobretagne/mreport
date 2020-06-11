@@ -44,11 +44,15 @@
                 var pointer = document.getElementsByClassName("tooltip_pointer")[0];
                 self.isOpen ? (self.close(), pointer.style.display = "none") : (self.open(), pointer.style.display = "block");
                 var btn = this;
-                var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].substr(-1))[0];
-                var colorsbounds = rect_colors.getBoundingClientRect();
-                var btnbounds = btn.getBoundingClientRect();
-                pointer.style.top = colorsbounds.top - 10 + "px";
-                pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
+                if (parseInt(btn.classList[1].split('btn').pop(), 10) <= 8) {
+                    var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].split('btn').pop())[0];
+                    var colorsbounds = rect_colors.getBoundingClientRect();
+                    var btnbounds = btn.getBoundingClientRect();
+                    pointer.style.top = colorsbounds.top - 10 + "px";
+                    pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
+                }else{
+                    pointer.style.display = "none";
+                }
             });
         }
 
@@ -70,12 +74,12 @@
                     // Set tooltip Arrow on Blur
                     var pointer = document.getElementsByClassName("tooltip_pointer")[0];
                     var btn = ev.target;
-                    if (btn.classList.contains("colorbtn")) {
-                        var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].substr(-1))[0];
-                        var colorsbounds = rect_colors.getBoundingClientRect();
-                        var btnbounds = btn.getBoundingClientRect();
-                        pointer.style.top = colorsbounds.top - 10 + "px";
-                        pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
+                    if (btn.classList.contains("colorbtn") && parseInt(btn.classList[1].split('btn').pop(), 10) <= 8) {
+                            var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].substr(-1))[0];
+                            var colorsbounds = rect_colors.getBoundingClientRect();
+                            var btnbounds = btn.getBoundingClientRect();
+                            pointer.style.top = colorsbounds.top - 10 + "px";
+                            pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
                     } else {
                         pointer.style.display = "none";
                     }

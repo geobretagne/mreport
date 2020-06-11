@@ -509,12 +509,12 @@ wizard = (function () {
     var _hex = function (x, hexDigits) {
         return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
     }
-    var _updateColorPicker = function (saved) {
+    var _updateColorPicker = function (saved,e) {
         var colorbtn = $("#picker-wrapper .colorbtn").length + 1;
         if(typeof saved.datasets === "undefined"){
             saved.datasets = _data.dataset.length;
         }
-        if (colorbtn <= saved.datasets) {
+        if (colorbtn <= saved.datasets || e.type=="click" ) {
             $("#picker-wrapper").append('<div class="colorbtn colorbtn' + colorbtn + '"></div>');
             $(".colorbtn" + colorbtn).css('background-color', saved.color ? saved.color : "#FFF");
             $(".chosecolors").append('<div class="available_colors color-picker' + colorbtn + '"></div>');
@@ -562,7 +562,7 @@ wizard = (function () {
                 $('#wizard-panel').on('show.bs.modal', _onWizardOpened);
                 $("#w_dataviz_type").change(_onChangeDatavizType);
                 $("#wizard_refresh").click(_onValidateConfig);
-                $("#addColor").on("click",_updateColorPicker);
+                $("#addColor").on("click",function(e){_updateColorPicker({},e)});
             }
         });
 
