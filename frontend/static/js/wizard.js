@@ -239,7 +239,7 @@ wizard = (function () {
                 basecolors.forEach(function (elem) {
                     _updateColorPicker({
                         "color": elem,
-                        "datasets":nb_datasets
+                        "datasets": nb_datasets
                     })
                 });
                 // set chart label(s)
@@ -289,12 +289,13 @@ wizard = (function () {
         $("#w_desc").val(cfg.description);
         // Set colors for Piklor lib
         $("#w_colors").val(cfg.colors);
-        
         let basecolors = document.getElementById("w_colors").value.split(',');
         basecolors.forEach(function (elem) {
             _updateColorPicker({
                 "color": elem,
                 "datasets": _data.dataset.length
+            }, {
+                "type" : "click"
             })
         });
         if (cfg.icon) {
@@ -494,7 +495,7 @@ wizard = (function () {
             //Render result in wizard modal
             $("#wizard-result div").remove();
             $("#wizard-result").append(elem);
-            
+
             $("#wizard-code").text(elem[0].outerHTML);
             var fdata = {};
             fdata[dataviz] = _data;
@@ -509,15 +510,15 @@ wizard = (function () {
     var _hex = function (x, hexDigits) {
         return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
     }
-    var _updateColorPicker = function (saved,e) {
+    var _updateColorPicker = function (saved, e) {
         var colorbtn = $("#picker-wrapper .colorbtn").length + 1;
-        if(typeof saved.datasets === "undefined"){
+        if (typeof saved.datasets === "undefined") {
             saved.datasets = _data.dataset.length;
         }
-        if(typeof e === "undefined"){
-            e={};
+        if (typeof e === "undefined") {
+            e = {};
         }
-        if (colorbtn <= saved.datasets || e.type=="click" ) {
+        if (colorbtn <= saved.datasets || e.type == "click") {
             $("#picker-wrapper").append('<div class="colorbtn colorbtn' + colorbtn + '"></div>');
             $(".colorbtn" + colorbtn).css('background-color', saved.color ? saved.color : "#FFF");
             $(".chosecolors").append('<div class="available_colors color-picker' + colorbtn + '"></div>');
@@ -554,18 +555,20 @@ wizard = (function () {
         }
 
     };
-    var _init = function() {
+    var _init = function () {
         //load wizard html dynamicly and append it admin.html
         $.ajax({
             url: "/static/html/wizard.html",
             dataType: "text",
-            success: function(html) {
+            success: function (html) {
                 $("body").append(html);
                 //Events management
                 $('#wizard-panel').on('show.bs.modal', _onWizardOpened);
                 $("#w_dataviz_type").change(_onChangeDatavizType);
                 $("#wizard_refresh").click(_onValidateConfig);
-                $("#addColor").on("click",function(e){_updateColorPicker({},e)});
+                $("#addColor").on("click", function (e) {
+                    _updateColorPicker({}, e)
+                });
             }
         });
 
