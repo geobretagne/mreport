@@ -44,13 +44,16 @@
                 var pointer = document.getElementsByClassName("tooltip_pointer")[0];
                 self.isOpen ? (self.close(), pointer.style.display = "none") : (self.open(), pointer.style.display = "block");
                 var btn = this;
-                if (parseInt(btn.classList[1].split('btn').pop(), 10) <= 8) {
+                if (parseInt(btn.classList[1].split('btn').pop(), 10) <= 8 && ev.target.classList[0]!="textColorEditBtn") {
                     var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].split('btn').pop())[0];
                     var colorsbounds = rect_colors.getBoundingClientRect();
                     var btnbounds = btn.getBoundingClientRect();
                     pointer.style.top = colorsbounds.top - 10 + "px";
                     pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
-                }else{
+                }
+                else if(ev.target.classList[0]=="textColorEditBtn"){
+                }
+                else{
                     pointer.style.display = "none";
                 }
             });

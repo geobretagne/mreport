@@ -363,4 +363,10 @@ span.text-edit.badge.badge-warning {
 .chosecolors .input-group-prepend span{
     flex-grow: 1;
 }
+#w_text_text,
+#w_desc,
+#w_title{
+    height: 100% !important;
+    font-size: 1em;
+}
 

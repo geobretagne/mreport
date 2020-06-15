@@ -82,8 +82,9 @@
                                                 <div id="picker-wrapper" class="picker-wrapper"></div>
                                                 <i id="addColor" class="fas fa-plus-circle fa-2x"></i>
                                             </div>
-                                            
-                                            <input type="text" data-prop="colors" class="d-none chart form-control dataviz-attributes" id="w_colors">
+
+                                            <input type="text" data-prop="colors"
+                                                class="d-none chart form-control dataviz-attributes" id="w_colors">
                                             <div class="tooltip_pointer"></div>
                                         </div>
 
@@ -103,14 +104,17 @@
                                                 data-prop="icon" id="w_icon">
                                             </select>
                                         </div>
-                                        <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group input-group-sm mb-3 text-config">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Titre</span>
                                             </div>
+
                                             <input type="text" data-prop="title"
                                                 class="figure chart table form-control dataviz-attributes" id="w_title">
+                                            
+
                                         </div>
-                                        <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group input-group-sm mb-3 text-config">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Description</span>
                                             </div>
@@ -158,6 +162,61 @@
                 <button id="wizard_default_save" class="btn btn-warning" onclick="alert('TODO');">Définir comme
                     représentation par défaut</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Text Edit Modal -->
+<div class="modal fade" id="textEdit" tabindex="-1" role="dialog" aria-labelledby="textEditLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="textEditLabel">Configuration du texte</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Police</span>
+                    </div>
+                    <select class="custom-select chart form-control dataviz-attributes" data-prop="type"
+                        id="w_text_font">
+
+                    </select>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Taille de police</span>
+                    </div>
+                    <input type="number" class="figure chart table form-control dataviz-attributes"
+                        min="1" id="w_text_fontsize">
+                </div>
+                <div class="textcolor-config-wrapper">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <button class="textColorEditBtn btn btn-warning notdvz">Couleur de police</button>
+                        </div>
+                        <input type="text" data-prop="title_color"
+                            class="figure chart table form-control dataviz-attributes input" id="w_text_color">
+                        <div class="text-color-picker">
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Texte</span>
+                    </div>
+                    <input type="text" data-prop="title_text"
+                        class="figure chart table form-control dataviz-attributes input" id="w_text_text">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button id="saveTextConfig" type="button" class="btn btn-primary">Enregistrer</button>
             </div>
         </div>
     </div>

@@ -295,7 +295,7 @@ wizard = (function () {
                 "color": elem,
                 "datasets": _data.dataset.length
             }, {
-                "type" : "click"
+                "type": "click"
             })
         });
         if (cfg.icon) {
@@ -388,6 +388,8 @@ wizard = (function () {
         $(e.currentTarget).find(".modal-title").text(datavizId);
         //clear wizard form;
         _clean();
+        // Add text config buttons
+        textedit.configureButtons();
         //Get data linked to dataviz
         if (_storeData[datavizId]) {
             _data = _storeData[datavizId];
@@ -523,7 +525,30 @@ wizard = (function () {
             $(".colorbtn" + colorbtn).css('background-color', saved.color ? saved.color : "#FFF");
             $(".chosecolors").append('<div class="available_colors color-picker' + colorbtn + '"></div>');
             var pk = new Piklor(".color-picker" + colorbtn, [
-                "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50", "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d", "#FFF"
+                "#1abc9c",
+                "#2ecc71",
+                "#3498db",
+                "#9b59b6",
+                "#34495e",
+                "#16a085",
+                "#27ae60",
+                "#2980b9",
+                "#8e44ad",
+                "#2c3e50",
+                "#f1c40f",
+                "#e67e22",
+                "#e74c3c",
+                "#ecf0f1",
+                "#95a5a6",
+                "#f39c12",
+                "#d35400",
+                "#c0392b",
+                "#bdc3c7",
+                "#7f8c8d",
+                "#FFF",
+                "#005a66",
+                "#213042",
+                "#0094ab"
             ], {
                 open: ".picker-wrapper .colorbtn" + colorbtn,
                 closeOnBlur: true
@@ -555,6 +580,7 @@ wizard = (function () {
         }
 
     };
+    
     var _init = function () {
         //load wizard html dynamicly and append it admin.html
         $.ajax({
@@ -569,6 +595,7 @@ wizard = (function () {
                 $("#addColor").on("click", function (e) {
                     _updateColorPicker({}, e)
                 });
+                textedit.init();
             }
         });
 
