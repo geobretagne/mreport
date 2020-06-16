@@ -151,7 +151,7 @@ admin = (function () {
                     '<h5 class="card-title">' + data.title + '</h5>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Sourcer</a>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + id + '" data-target="#report-modal-form">Supprimer</a>',
-                    '<a href="' + report.getAppConfiguration().location + id + '" target="_blank" class="card-link">Afficher</a>',
+                    '<a href="' + report.getAppConfiguration().location + '/' + id + '" target="_blank" class="card-link">Afficher</a>',
                     '<a href="#" onclick="composer.compose(\'' + id + '\')" class="card-link">Composer</a>',
                     '</div>',
                     '</div>',
