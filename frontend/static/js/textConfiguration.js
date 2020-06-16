@@ -129,9 +129,6 @@ textedit = (function () {
         var texte = document.getElementById("w_text_text");
         texte.style.fontSize = event.target.value + "em";
     }
-    var _restoreconfig = function(){
-
-    }
     var _clearModal = function(){
        var modal = document.getElementById("textEdit");
        var inputs = modal.getElementsByTagName("input");
