@@ -13,7 +13,9 @@ La configuration apache permet de proxyfier les url disponibles sur le port appl
 
 Utiliser la configuration apache **mreport_conf1.conf** et l'inclure dans la configuration du virtualhost apache2 eg:
 
-``Include /home/spelhate/home/mreport/server_configurations/apache2/mreport_conf1.conf``
+Adapter tous  les chemins  pointant vers le dossier report de votre installation exemple :
+
+``Include /home/mreport/server_configurations/apache2/mreport_conf1.conf``
 
 Cette configuration inclue les configurations nécessaires dans conf/common et conf/flask.
 
@@ -25,6 +27,8 @@ Le frontend est uniquement servi par apache
 
 Utiliser la configuration apache **mreport_conf2.conf** et l'inclure dans la configuration du virtualhost apache2 eg:
 
-``Include /home/spelhate/home/mreport/server_configurations/apache2/mreport_conf2.conf``
+Adapter tous  les chemins  pointant vers le dossier report de votre installation exemple :
+
+``Include /home/mreport/server_configurations/apache2/mreport_conf2.conf``
 
 Cette configuration inclue les configurations nécessaires dans conf/common et conf/noflask.
