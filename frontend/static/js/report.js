@@ -13,7 +13,7 @@ report = (function () {
      */
 
     var _appConf = {
-        "location": "/mreport/",
+        "location": "/mreport",
         "api": "/api",
         "title": "MREPORT"
     };
@@ -81,7 +81,7 @@ report = (function () {
                 $("body").append('<div class="container"><div class="list-group">' + links.join("") + '</div></div>');
             },
             error: function (xhr, status, err) {
-                _alert("Erreur avec le rapport " + APIRequest.home + " " + err, "danger", true);
+                _alert("Erreur avec le rapport " + APIRequest.base_url + " " + err, "danger", true);
             }
         });
 
@@ -107,8 +107,8 @@ report = (function () {
                     _getCss();
                 },
                 error: function (xhr, status, err) {
-                    console.log(APIRequest.home);
-                    _alert("Erreur avec le rapport " + APIRequest.home + " " + err, "danger", true);
+                    console.log(APIRequest.base_url);
+                    _alert("Erreur avec le rapport " + APIRequest.base_url + " " + err, "danger", true);
                 }
             });
         }
@@ -138,11 +138,11 @@ report = (function () {
 
     var _init = function () {
         var backend = document.getElementById("backend");
-        if (backend && backend.dataset.backend) {
+        if (backend && backend.dataset.backend && backend.dataset.backend != '{{ options|tojson }}') {
             APIRequest = JSON.parse(backend.dataset.backend);
         } else {
             //API GET PARAMETERS
-            _router = new Navigo(document.location.origin + _appConf.location, false);
+            _router = new Navigo(document.location.origin + _appConf.location + "/", false);
             _router
                 .on({
                     '/': function () {
@@ -151,17 +151,17 @@ report = (function () {
                     },
                     '/:report': function (params) {
                         APIRequest = params;
-                        APIRequest.home += params.report + "/";
+                        APIRequest.base_url = _appConf.location;
                         _reportName = params.report;
                     },
                     '/:report/:dataid': function (params) {
                         APIRequest = params;
-                        APIRequest.home += params.report + "/";
+                        APIRequest.base_url = _appConf.location;
                         _reportName = params.report;
                     },
                     '/:report/:dataid/:dataviz': function (params) {
                         APIRequest = params;
-                        APIRequest.home += params.report + "/";
+                        APIRequest.base_url = _appConf.location;
                         _reportName = params.report;
                     },
 
@@ -341,7 +341,7 @@ report = (function () {
                 _getData();
             },
             error: function (xhr, status, err) {
-                _alert("Erreur avec le fichier report.html de " + APIRequest.home + " " + err, "danger", true);
+                _alert("Erreur avec le fichier report.html de " + APIRequest.base_url + " " + err, "danger", true);
             }
         });
     };
@@ -500,7 +500,8 @@ report = (function () {
                 success: function (data) {
                     var links = [];
                     data.items.forEach(function (a) {
-                        links.push('<a href="' + APIRequest.report + '/' + a.dataid + '" class="list-group-item list-group-item-action">' + a.label + '</a>');
+                        var _url = [APIRequest.base_url, APIRequest.report, a.dataid].join("/");
+                        links.push('<a href="' + _url + '" class="list-group-item list-group-item-action">' + a.label + '</a>');
                     });
                     $(".report, .alert").remove();
                     $("body").append('<div class="container"><div class="list-group">' + links.join("") + '</div></div>');
@@ -523,8 +524,10 @@ report = (function () {
                     }
                     if (!APIRequest.dataid) {
                         var links = [];
+                        var _url = [];
                         Object.keys(data).forEach(function (a) {
-                            links.push('<a href="' + APIRequest.report + '/' + a + '" class="list-group-item list-group-item-action">' + a + '</a>');
+                            _url = [APIRequest.base_url, APIRequest.report, a].join("/");
+                            links.push('<a href="' + _url + '" class="list-group-item list-group-item-action">' + a + '</a>');
                         });
                         $(".report, .alert").remove();
                         $("body").append('<div class="container"><div class="list-group">' + links.join("") + '</div></div>');
@@ -727,14 +730,14 @@ report = (function () {
         var parser = new DOMParser();
         let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text">' + title + '</h6></div>';
         titleDiv = parser.parseFromString(titleDiv, "text/html").getElementsByClassName("report-chart-title")[0];
-        let result = document.getElementById("wizard-result"); 
+        let result = document.getElementById("wizard-result");
         result.prepend(titleDiv);
     }
     var _addDescription = function (description) {
         var parser = new DOMParser();
         let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text">' + description + '</p></div>';
         descDiv = parser.parseFromString(descDiv, "text/html").getElementsByClassName("report-chart-summary")[0];
-        let result = document.getElementById("wizard-result"); 
+        let result = document.getElementById("wizard-result");
         result.append(descDiv);
 
     }
