@@ -547,7 +547,20 @@ composer = (function () {
             contentType: 'text/html',
             success: function (response) {
                 if (response.response === "success") {
-                    alert("Sauvegarde réussie");
+                    Swal.fire({
+                        title: 'Sauvegardé',
+                        text: "Le rapport \'" + _report + "\' a été sauvegardé",
+                        icon: 'success',
+                        showCancelButton: true,
+                        cancelButtonText: 'Ok',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#32CD32',
+                        confirmButtonText: 'Afficher'
+                    }).then((result) => {
+                        if (result.value) {
+                            window.open("/mreport/"+_report,"_blank");
+                        }
+                    });
                 } else {
                     alert("enregistrement échec :" + response.response)
                 }
