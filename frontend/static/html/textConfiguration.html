@@ -1,0 +1,58 @@
+<!-- Text Edit Modal -->
+<div class="modal fade" id="textEdit" tabindex="-1" role="dialog" aria-labelledby="textEditLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="textEditLabel">Configuration du texte</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Police</span>
+                    </div>
+                    <select class="custom-select chart form-control" data-prop="type"
+                        id="w_text_font">
+
+                    </select>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Taille de police</span>
+                    </div>
+                    <input type="number" class="figure chart table form-control" min="1" step="0.5"
+                        id="w_text_fontsize">
+                    <div class="input-group-append">
+                        <span class="input-group-text">em</span>
+                    </div>
+                </div>
+                <div class="textcolor-config-wrapper">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <button class="textColorEditBtn btn btn-warning notdvz">Couleur de police</button>
+                        </div>
+                        <input type="text" data-prop="title_color"
+                            class="figure chart table form-control input" id="w_text_color">
+                        <div class="text-color-picker">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Texte</span>
+                    </div>
+                    <input type="text" data-prop="title_text"
+                        class="figure chart table form-control input" id="w_text_text">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button id="saveTextConfig" type="button" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>

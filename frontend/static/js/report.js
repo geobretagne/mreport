@@ -724,15 +724,19 @@ report = (function () {
         }
     }
     var _addTitle = function (title) {
+        title = JSON.parse(title);
         var parser = new DOMParser();
-        let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text">' + title + '</h6></div>';
+        let textStyle = 'style="font-size:'+title.style.fontSize+';color:'+title.style.color+';font-family:'+title.style.fontFamily+'"';
+        let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text" '+textStyle+'>' + title.text + '</h6></div>';
         titleDiv = parser.parseFromString(titleDiv, "text/html").getElementsByClassName("report-chart-title")[0];
         let result = document.getElementById("wizard-result"); 
         result.prepend(titleDiv);
     }
     var _addDescription = function (description) {
+        description = JSON.parse(description);
         var parser = new DOMParser();
-        let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text">' + description + '</p></div>';
+        let textStyle = 'style="font-size:'+description.style.fontSize+';color:'+description.style.color+';font-family:'+description.style.fontFamily+'"';
+        let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text" '+textStyle+'>' + description.text + '</p></div>';
         descDiv = parser.parseFromString(descDiv, "text/html").getElementsByClassName("report-chart-summary")[0];
         let result = document.getElementById("wizard-result"); 
         result.append(descDiv);

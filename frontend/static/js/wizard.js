@@ -139,8 +139,16 @@ wizard = (function () {
         $(".colorbtn, .color-picker").each(function (index, elem) {
             elem.remove();
         })
+        _resetTextField(document.getElementById("w_title"));
+        _resetTextField(document.getElementById("w_desc"));
+        
     };
-
+    var _resetTextField = function(textField){
+        var style = textField.style;
+        style.color = "rgb(73, 80, 87)";
+        style.fontSize = "1em"
+        style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"';
+    }
     /*
      * Method to configure wizard options with dataviz capabilities
      * Update options in select control #w_dataviz_type"
@@ -285,8 +293,23 @@ wizard = (function () {
         // get all dataviz parameters from dataviz configuration
         $("#w_dataviz_type").val(cfg.dataviz_type);
         $("#w_label").val(cfg.label);
-        $("#w_title").val(cfg.title);
-        $("#w_desc").val(cfg.description);
+        var title = $("#w_title");
+        var description = $("#w_desc");
+        if (cfg.title) {
+            let cfgTitle = cfg.title;
+            title.val(cfgTitle.text);
+            for (var styleproperty in cfgTitle.style) {
+                title.css(styleproperty, cfgTitle.style[styleproperty]);
+            }
+        }
+        if (cfg.description) {
+            let cfgDesc = cfg.description;
+            description.val(cfgDesc.text);
+            for (var styleproperty in cfgDesc.style) {
+                description.css(styleproperty, cfgDesc.style[styleproperty]);
+            }
+        }
+
         // Set colors for Piklor lib
         $("#w_colors").val(cfg.colors);
         let basecolors = document.getElementById("w_colors").value.split(',');
@@ -397,8 +420,8 @@ wizard = (function () {
             var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
             if (yetConfigured) {
                 //Get the config
-                var _code = $($.parseHTML(yetConfigured)).find(".dataviz");
-                _existingConfig = $(_code).data();
+                var _code = $($.parseHTML(yetConfigured)).find(".dataviz");        
+                _existingConfig = $(_code).data();                
                 // Get dataviz type (hugly !)
                 // check class linked to dataviz - eg : from class report-chart" --> extract chart
                 $(_code).attr("class").split(" ").forEach(function (cls) {
@@ -443,8 +466,19 @@ wizard = (function () {
             };
             $(".dataviz-attributes").each(function (id, attribute) {
                 var val = $(attribute).val();
+                if (attribute.classList.contains("addedText") && val.length >=1) {
+                    let style = window.getComputedStyle(attribute, null);
+                    val = '{\
+                        "text": "'+val+'",\
+                        "style": {\
+                            "fontSize": "'+style.getPropertyValue("font-size")+'",\
+                            "color": "'+style.getPropertyValue("color")+'",\
+                            "fontFamily": "'+style.getPropertyValue("font-family").replace(/"/g,"'")+'"\
+                        }\
+                    }'
+                }
                 var prop = $(attribute).attr("data-prop");
-                if (val && val.length >= 1) {
+                if (val && val.length >= 1 ) {
                     attributes.push("data-" + prop + '="' + val + '"');
                     attributes.push({
                         "prop": prop,
@@ -466,7 +500,6 @@ wizard = (function () {
                     });
                 }
             });
-
             /* sample properties : {
                 "id":"magasins",
                 "type":"bar",
@@ -502,12 +535,16 @@ wizard = (function () {
             var fdata = {};
             fdata[dataviz] = _data;
             //Draw dataviz with data, type and properties
+
             report.testViz(fdata, type, properties);
         }
     };
     var _rgb2hex = function (rgb, hexDigits) {
         rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-        return "#" + _hex(rgb[1], hexDigits) + _hex(rgb[2], hexDigits) + _hex(rgb[3], hexDigits);
+        if (rgb !== null)
+            return "#" + _hex(rgb[1], hexDigits) + _hex(rgb[2], hexDigits) + _hex(rgb[3], hexDigits);
+        else
+            return "";
     }
     var _hex = function (x, hexDigits) {
         return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
@@ -580,7 +617,7 @@ wizard = (function () {
         }
 
     };
-    
+
     var _init = function () {
         //load wizard html dynamicly and append it admin.html
         $.ajax({
@@ -595,7 +632,6 @@ wizard = (function () {
                 $("#addColor").on("click", function (e) {
                     _updateColorPicker({}, e)
                 });
-                textedit.init();
             }
         });
 
@@ -611,7 +647,8 @@ wizard = (function () {
     return {
 
         init: _init,
-        configureDataviz: _configureDataviz
+        configureDataviz: _configureDataviz,
+        rgb2hex: _rgb2hex
     }; // fin return
 
 })();

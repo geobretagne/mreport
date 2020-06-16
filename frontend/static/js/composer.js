@@ -502,13 +502,15 @@ composer = (function () {
         parentDiv.appendChild(dvzHTML[0]);
         dvz = parentDiv.outerHTML;
         if (title = dvzHTML.find('.dataviz').data("title")) {
-            let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text">' + title + '</h6></div>';
+            let textStyle = 'style="font-size:'+title.style.fontSize+';color:'+title.style.color+';font-family:'+title.style.fontFamily+'"';
+            let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text" '+textStyle+'>' + title.text + '</h6></div>';
             titleDiv = parser.parseFromString(titleDiv, "text/html").getElementsByClassName("report-chart-title")[0];
             parentDiv.prepend(titleDiv);
             dvz = parentDiv.outerHTML;
         }
         if (description = dvzHTML.find('.dataviz').data("description")) {
-            let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text">' + description + '</p></div>';
+            let textStyle = 'style="font-size:'+description.style.fontSize+';color:'+description.style.color+';font-family:'+description.style.fontFamily+'"';
+            let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text" '+textStyle+'>' + description.text + '</p></div>';
             descDiv = parser.parseFromString(descDiv, "text/html").getElementsByClassName("report-chart-summary")[0];
             parentDiv.append(descDiv);
             dvz = parentDiv.outerHTML;
@@ -764,6 +766,5 @@ composer = (function () {
 $(document).ready(function () {
     composer.initComposer();
     wizard.init();
-
-
+    textedit.init();
 });
