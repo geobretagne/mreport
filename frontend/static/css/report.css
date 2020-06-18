@@ -19,7 +19,8 @@ button.report-share.btn.btn-outline-info {
     top: 8%;
     position: absolute;
     float: right;
-    right: 45% z-index: 1000;
+    right: 45%;
+    z-index: 1000;
 }
 
 .report-chart:hover button.report-share,
