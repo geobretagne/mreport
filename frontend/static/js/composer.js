@@ -113,14 +113,13 @@ composer = (function () {
         $("#wizard-result").append(_HTMLTemplates[m].style);
         //update icon store in wizard modal
         $("#w_icon option").remove();
-        if (_HTMLTemplates[m].parameters.icons) {
-            var icon_options = [];
-            var icons = _HTMLTemplates[m].parameters.icons.split(",");
-            icons.forEach(function (i) {
-                icon_options.push('<option value="' + i + '">' + i + '</option>');
-            });
-            $("#w_icon").append(icon_options.join(""));
-        }
+        var icon_options = [];
+        var icons = _HTMLTemplates[m].style.match(/icon-\w+/g);
+        icons.forEach(function (i) {
+            icon_options.push('<option value="' + i + '">' + i + '</option>');
+        });
+        $("#w_icon").append(icon_options.join(""));
+
 
 
     }
@@ -132,7 +131,7 @@ composer = (function () {
 
     var _parseTemplate = function (templateid, html) {
         // get data- linked to the template
-        var parameters = $(html).data(); /* eg data-icons, data-colors... */
+        var parameters = $(html).data(); /* eg data-colors... */
         if (parameters.colors) {
             parameters.colors = parameters.colors.split(",");
         }
@@ -491,7 +490,7 @@ composer = (function () {
     };
 
     /**
-     * 
+     *
      * _addTitleDescription. Add to dataviz title and description if specified in the wizard
      */
     var _addTitleDescription = function (dvz) {
@@ -645,7 +644,7 @@ composer = (function () {
 
     }
     var _onlyIntegerInput = function (evt) {
-        // Only ASCII charactar in that range allowed 
+        // Only ASCII charactar in that range allowed
         var ASCIICode = (evt.which) ? evt.which : evt.keyCode
         if (ASCIICode > 31 && ASCIICode != 32 && (ASCIICode < 48 || ASCIICode > 57))
             return false;
