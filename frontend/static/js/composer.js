@@ -477,11 +477,6 @@ composer = (function () {
             html.push($(tmp_bloc).get(0).outerHTML);
         });
 
-        // Get template style and inject it in html
-        if (composer.activeModel().style) {
-            html.push(composer.activeModel().style);
-        }
-
         //generate html definition from template and composer elements
         var _page = $.parseHTML(_HTMLTemplates[_activeHTMLTemplate].page);
         var _export = $(_page).find(".report").append(html.join("\n")).parent().get(0).outerHTML;
@@ -537,13 +532,15 @@ composer = (function () {
     var _saveReport = function () {
         var _report = $("#selectedReportComposer").val();
         var newDom = _exportHTML();
-        console.log(newDom);
+        var _css = composer.activeModel().style;
+        //get String beetwenn <style>...</style>
+        var css = _css.substring(_css.lastIndexOf("<style>") + 7, _css.lastIndexOf("</style")).trim();
         $.ajax({
             type: "POST",
             url: [report.getAppConfiguration().api, "report_html", _report].join("/"),
-            data: newDom,
+            data: JSON.stringify({html: newDom, css: css}),
             dataType: 'json',
-            contentType: 'text/html',
+            contentType: 'application/json',
             success: function (response) {
                 if (response.response === "success") {
                     Swal.fire({

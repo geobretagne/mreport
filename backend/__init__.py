@@ -394,12 +394,18 @@ class GetReportComposition(Resource):
     @report_html.doc(params={'report_id': 'identifiant du rapport'})
     class updateReportStructure(Resource):
         def post(self,report_id):
-            html = request.get_data(as_text=True)
-            if not html:
+            data = request.get_json()
+            if not data:
                 data = {"response": "ERROR no data supplied"}
                 return data, 405
             else:
-                up = updateReportHTML("/".join([app.config['MREPORT_REPORTS'], report_id, "report.html"]), html)
-                return {"response": up}
+                html = data.get('html')
+                css = data.get('css')
+                if (html):
+                    up = updateReportHTML("/".join([app.config['MREPORT_REPORTS'], report_id, "report"]), html, css)
+                    return {"response": up}
+                else:
+                    data = {"response": "ERROR bad data supplied"}
+                    return data, 405
 
 #    return app

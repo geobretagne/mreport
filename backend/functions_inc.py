@@ -52,11 +52,14 @@ def deleteFileSystemStructure(src):
     except IOError as e:
         return "I/O error({0}): {1}".format(e.errno, e.strerror)
 
-def updateReportHTML(src, html):
+def updateReportHTML(src, html, css):
     try:
-        f = open(src, 'w')
-        f.write(html)
-        f.close()
+        f1 = open(src + '.html', 'w')
+        f1.write(html)
+        f1.close()
+        f2 = open(src + '.css', 'w')
+        f2.write(css)
+        f2.close()
         return 'success'
     except IOError as e:
         return "I/O error({0}): {1}".format(e.errno, e.strerror)
