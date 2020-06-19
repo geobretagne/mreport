@@ -11,6 +11,8 @@ wizard = (function () {
 
     var _data = {};
 
+    var _dataviz_infos = {};
+
     var _storeData = {};
 
     /*
@@ -228,6 +230,8 @@ wizard = (function () {
      */
     _autoConfig = function (dataviz) {
         var colors = composer.colors() || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
+        var unit = _dataviz_infos.unit;
+        $("#w_unit").val(unit);
         //significative label if is true, allow chart and extra column in table
         var significative_label = _data.significative_label;
         var nb_datasets = _data.dataset.length;
@@ -442,6 +446,9 @@ wizard = (function () {
     var _onWizardOpened = function (e) {
         //Get datavizid linked to the wizard modal
         var datavizId = $(e.relatedTarget).attr('data-related-id');
+        //Get dataviz infos (description , titile, unit, viz...)
+        _dataviz_infos = admin.getDataviz(datavizId);
+        console.log(_dataviz_infos);
         //Set datavizid in the modal
         $(e.currentTarget).attr("data-related-id", datavizId);
         $(e.currentTarget).find(".modal-title").text(datavizId);
