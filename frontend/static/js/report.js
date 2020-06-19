@@ -571,10 +571,32 @@ report = (function () {
 
     var _createChart = function (data, chart) {
         var el = _getDomElement("chart", chart.id);
+        var unit = el.dataset.unit || false;
         if (el && data[chart.id]) {
             var commonOptions = {
                 "responsive": true,
-                "maintainAspectRatio": true
+                "maintainAspectRatio": true,
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            var value = tooltipItem.yLabel;
+                            // test value if is numeric and then format it
+                            if (!isNaN(parseInt(value))) {
+                                if (unit === "€") {
+                                    value = (Math.round(tooltipItem.yLabel * 100) / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR',});
+                                } else {
+                                    value = (Math.round(tooltipItem.yLabel * 100) / 100).toLocaleString();
+                                }
+                            }
+                            label += value;
+                            return label;
+                        }
+                    }
+                }
             };
             var colors = ["#36A2EB"];
             var backgroundColors = []
