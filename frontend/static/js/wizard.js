@@ -141,7 +141,7 @@ wizard = (function () {
         })
         _resetTextField(document.getElementById("w_title"));
         _resetTextField(document.getElementById("w_desc"));
-        
+
     };
     var _resetTextField = function(textField){
         var style = textField.style;
@@ -366,6 +366,42 @@ wizard = (function () {
         $("#wizard-panel").modal("hide");
     };
 
+    /*
+     * _saveDataviz. This method get dataviz definition in wizard and save it in viz dataiz field
+     *
+     */
+
+    var _saveDataviz = function (datavizId) {
+        //Get current dataviz id
+        var datavizId = $("#wizard-panel").attr("data-related-id");
+        //get generated code in <code> element
+        var html = $("#wizard-code").text();
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json',
+            url: [report.getAppConfiguration().api, "store", datavizId].join("/"),
+            data: JSON.stringify({"viz": html}),
+            success: function (response) {
+                if (response.response === "success") {
+                    Swal.fire({
+                        title: 'Sauvegardé',
+                        text: "La dataviz \'" + datavizId  + "\' a été sauvegardée comme représentation par défaut.",
+                        icon: 'success',
+                        showCancelButton: false
+                    });
+                } else {
+                    alert("enregistrement échec :" + response.response);
+                }
+            },
+            error: function (a, b, c) {
+                console.log(a, b, c);
+            }
+        });
+
+
+    };
+
     // this method shows fields linked to dataviz type (table, figure, chart...)
     var _showParameters = function (dataviz) {
         $("#dataviz-attributes").show();
@@ -420,8 +456,8 @@ wizard = (function () {
             var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
             if (yetConfigured) {
                 //Get the config
-                var _code = $($.parseHTML(yetConfigured)).find(".dataviz");        
-                _existingConfig = $(_code).data();                
+                var _code = $($.parseHTML(yetConfigured)).find(".dataviz");
+                _existingConfig = $(_code).data();
                 // Get dataviz type (hugly !)
                 // check class linked to dataviz - eg : from class report-chart" --> extract chart
                 $(_code).attr("class").split(" ").forEach(function (cls) {
@@ -648,6 +684,7 @@ wizard = (function () {
 
         init: _init,
         configureDataviz: _configureDataviz,
+        saveDataviz: _saveDataviz,
         rgb2hex: _rgb2hex
     }; // fin return
 
