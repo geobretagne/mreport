@@ -747,6 +747,10 @@ admin = (function () {
         return _report_data[reportId];
     };
 
+    var _getDataviz = function (datavizid) {
+        return _dataviz_data[datavizid];
+    };
+
 
     /*
      * Public
@@ -761,6 +765,7 @@ admin = (function () {
         deleteReport: _deleteReport,
         deleteDataviz: _deleteDataviz,
         updateDataviz: _updateDataviz,
+        getDataviz: _getDataviz,
         createReport: _createReport,
         getReportData: _getReportData
     }; // fin return
