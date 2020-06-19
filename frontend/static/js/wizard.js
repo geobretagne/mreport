@@ -448,7 +448,7 @@ wizard = (function () {
         //clear wizard form;
         _clean();
         // Add text config buttons
-        textedit.configureButtons();
+        textedit.configureButtons(e.currentTarget);
         //Get data linked to dataviz
         if (_storeData[datavizId]) {
             _data = _storeData[datavizId];

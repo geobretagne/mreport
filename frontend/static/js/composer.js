@@ -62,19 +62,31 @@ composer = (function () {
      */
 
     var _extraElementTemplate = [
-        '<div class="structure-element list-group-item">',
-        '<span><i class="{{{ICON}}}"></i></span>',
-        '<span class="structure-element-description">',
-        '{{{DESCRIPTION}}}',
-        '</span>',
-        '<div class="structure-element-html">{{{HTML}}}</div>',
-        '<div class="tool">',
-        '<button class="btn btn-default" data-toggle="modal" data-related-id="{{dvz}}" data-target="#wizard-panel">',
-        '<i class="fas fa-cog"></i>',
-        '</button>',
-        '</div>',
-        '</div>'
-    ].join("");
+        [
+            '<div class="structure-element list-group-item titleBloc" draggable="false" style="">',
+            '<p class="editable-text">Title</p>',
+            '<span class="remove badge badge-danger structureElems">',
+            '<i class="fas fa-times"></i> remove',
+            '</span>',
+            '<span class="drag badge badge-default">',
+            '<i class="fas fa-arrows-alt"></i> drag',
+            '</span>',
+            '</div>'
+        ].join(""),
+        [
+            '<div class="structure-element list-group-item descriptionBloc" draggable="false" style="">',
+            '<p class="editable-text">Description</p>',
+            '<span class="remove badge badge-danger structureElems">',
+            '<i class="fas fa-times"></i> remove',
+            '</span>',
+            '<span class="drag badge badge-default">',
+            '<i class="fas fa-arrows-alt"></i> drag',
+            '</span>',
+            '</div>'
+        ].join("")
+        
+    ];
+
 
     /*
      * _datavizTemplate - Array. This var is used to construct dataviz items and append them to dom
@@ -154,6 +166,7 @@ composer = (function () {
         });
         //Store all blocs in structure - Array
         var structure = [];
+        var extra_elements = [];
         blocs.forEach(function (elem) {
             structure.push(_blockTemplate.replace("{{{HTML}}}", elem.html).replace("{{{DESCRIPTION}}}", elem.description));
         });
@@ -164,26 +177,7 @@ composer = (function () {
             var element = $(html).find("template.report-component.report-" + component).prop('content').firstElementChild;
             dataviz_components[component] = $.trim(element.outerHTML);
         });
-        var x_elements = [];
-        //get all report-element
-        $(html).find("template.report-element").each(function (id, template) {
-            var elem = $(template).prop('content').firstElementChild;
-            var description = elem.getAttribute("data-model-title");
-            var icon = elem.getAttribute("data-model-icon");
-            x_elements.push({
-                "html": elem.outerHTML,
-                "description": description,
-                "icon": icon
-            });
-        });
-        //Store all elements in structure - Array
-        var extra_elements = [];
-        x_elements.forEach(function (elem) {
-            extra_elements.push(_extraElementTemplate.replace("{{{HTML}}}", elem.html)
-                .replace("{{{DESCRIPTION}}}", elem.description)
-                .replace("{{{ICON}}}", elem.icon)
-            );
-        });
+        _extraElementTemplate.forEach(elem => extra_elements.push(elem));
         //Populate _HTMLTemplates with object
         _HTMLTemplates[templateid] = {
             parameters: parameters,
@@ -246,8 +240,9 @@ composer = (function () {
 
         // configure #element-models to allow drag with clone option
         new Sortable(document.getElementById("element-models"), {
+            handle: '.drag',
             group: {
-                name: 'dataviz',
+                name: 'structure',
                 pull: 'clone',
                 put: false // Do not allow items to be put into this list
             },
@@ -317,10 +312,13 @@ composer = (function () {
      */
 
     var _onTextEdit = function (a) {
+        textedit.configureButtons(a.currentTarget);
         //Get selected text element
-        var source = a.relatedTarget.parentNode.firstChild;
+        var source = a.relatedTarget.parentNode;
+        var sourceStyle = textedit.getTextStyle(source);
+        textedit.applyTextStyle(a.currentTarget.querySelector("#text-edit-value"), sourceStyle);
         //store old text
-        var oldtext = source.nodeValue;
+        var oldtext = source.firstChild.nodeValue.trim();
         $("#text-edit-value").val(oldtext);
         //Get save button and remove existing handlers
         var btn = $(a.currentTarget).find(".text-save").off("click");
@@ -331,11 +329,14 @@ composer = (function () {
             //get type content (text or html)
             var type = $('#text-edit input[name=typeedit]:checked').val();
             if (type === "text") {
-                source.nodeValue = text;
+                source.firstChild.nodeValue = text.trim();
+                let newStyle = textedit.getTextStyle(a.currentTarget.querySelector("#text-edit-value"));
+                textedit.applyTextStyle(source, newStyle);
             }
             //close modal
             $("#text-edit").modal("hide");
         });
+
 
     };
 
@@ -397,9 +398,25 @@ composer = (function () {
                     // add edit button near to editable text elements
                     var btn = $(row).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i>edit</span>').find(".text-edit");
                 }
-
-
             });
+            $(row).find(".structureElems").click(function (e) {
+                e.currentTarget.parentNode.remove();
+            });
+            if (row.classList.contains("structure-element")) {
+                let item = row;
+                let editText = item.getElementsByClassName("editable-text")[0];
+                if (editText) {
+                    var span = document.createElement("span");
+                    span.classList.add("to-remove", "text-edit", "badge", "badge-warning");
+                    span.dataset.target = "#text-edit";
+                    span.dataset.toggle = "modal";
+                    span.innerHTML = "edit";
+                    var icon = document.createElement("i");
+                    icon.classList.add("fas", "fa-edit");
+                    span.prepend(icon);
+                    editText.appendChild(span);
+                }
+            }
 
         })
 
@@ -496,15 +513,15 @@ composer = (function () {
         parentDiv.appendChild(dvzHTML[0]);
         dvz = parentDiv.outerHTML;
         if (title = dvzHTML.find('.dataviz').data("title")) {
-            let textStyle = 'style="font-size:'+title.style.fontSize+';color:'+title.style.color+';font-family:'+title.style.fontFamily+'"';
-            let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text" '+textStyle+'>' + title.text + '</h6></div>';
+            let textStyle = 'style="font-size:' + title.style.fontSize + ';color:' + title.style.color + ';font-family:' + title.style.fontFamily + '"';
+            let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text" ' + textStyle + '>' + title.text + '</h6></div>';
             titleDiv = parser.parseFromString(titleDiv, "text/html").getElementsByClassName("report-chart-title")[0];
             parentDiv.prepend(titleDiv);
             dvz = parentDiv.outerHTML;
         }
         if (description = dvzHTML.find('.dataviz').data("description")) {
-            let textStyle = 'style="font-size:'+description.style.fontSize+';color:'+description.style.color+';font-family:'+description.style.fontFamily+'"';
-            let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text" '+textStyle+'>' + description.text + '</p></div>';
+            let textStyle = 'style="font-size:' + description.style.fontSize + ';color:' + description.style.color + ';font-family:' + description.style.fontFamily + '"';
+            let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text" ' + textStyle + '>' + description.text + '</p></div>';
             descDiv = parser.parseFromString(descDiv, "text/html").getElementsByClassName("report-chart-summary")[0];
             parentDiv.append(descDiv);
             dvz = parentDiv.outerHTML;
@@ -538,7 +555,10 @@ composer = (function () {
         $.ajax({
             type: "POST",
             url: [report.getAppConfiguration().api, "report_html", _report].join("/"),
-            data: JSON.stringify({html: newDom, css: css}),
+            data: JSON.stringify({
+                html: newDom,
+                css: css
+            }),
             dataType: 'json',
             contentType: 'application/json',
             success: function (response) {
@@ -554,7 +574,7 @@ composer = (function () {
                         confirmButtonText: 'Afficher'
                     }).then((result) => {
                         if (result.value) {
-                            window.open("/mreport/"+_report,"_blank");
+                            window.open("/mreport/" + _report, "_blank");
                         }
                     });
                 } else {
@@ -715,11 +735,11 @@ composer = (function () {
                 _selectedCustomColumn.remove();
                 let saved = false;
                 var structure = "";
-                let height  = 100/check.str_array.length;
+                let height = 100 / check.str_array.length;
                 check.str_array.forEach(function (row) {
 
                     structure +=
-                        '<div class="lyrow h-'+height+' verticalDivision">\
+                        '<div class="lyrow h-' + height + ' verticalDivision">\
                         <div class="view">\
                         <div class="row ">\
                         <div class="col-md-12 dividedcolumn customBaseColumn">\

@@ -8,45 +8,47 @@ textedit = (function () {
 
     var _hexDigits = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
 
-    var _configureButtons = function(){
-
+    var _configureButtons = function (target = null) {
+        if (target === null) {
+            target = document;
+        }
         // All the inputs that needs to be configured
-        var inputs = document.getElementsByClassName("text-config");
+        var inputs = target.getElementsByClassName("text-config");
 
         // Creating the button
         // Div container of the button
         var div = document.createElement("div");
-        div.classList.add("input-group-append","buttonToRemove");
+        div.classList.add("input-group-append", "buttonToRemove");
 
         // Button Itself
-        var configButton = document.createElement("button");
+        var configButton = document.createElement("a");
         configButton.classList.add("btn", "btn-warning", "notdvz");
-        configButton.dataset.toggle="modal";
-        configButton.dataset.target="#textEdit"; 
+        configButton.dataset.toggle = "modal";
+        configButton.dataset.target = "#textEdit";
 
         // Icon of the button 
         var buttonIcon = document.createElement("i");
-        buttonIcon.classList.add("fas","fa-cog");
+        buttonIcon.classList.add("fas", "fa-cog");
 
         // Assembling the button
         configButton.appendChild(buttonIcon);
         div.appendChild(configButton);
 
         // Configure onclick event on the new button
-        div.addEventListener("click",function(){
+        div.addEventListener("click", function () {
 
         });
         // Remove all previous buttons in the modal
-        var previousButtons = document.querySelectorAll(".buttonToRemove");
-        for(button of previousButtons){
+        var previousButtons = target.querySelectorAll(".buttonToRemove");
+        for (button of previousButtons) {
             button.remove();
         }
         // Adding the button to all needed inputs
-        for(input of inputs){
+        for (input of inputs) {
             input.appendChild(div.cloneNode(true));
         }
-        
-                                                
+
+
     }
     var _onTextEditOpened = function (event) {
 
@@ -67,15 +69,12 @@ textedit = (function () {
         modalText.value = editedInput.value;
 
         // Set the editedInput style to the modal fields
-        var editedStyle = window.getComputedStyle(editedInput, null);
-        
-        document.getElementById("w_text_fontsize").value = parseInt(editedStyle.getPropertyValue("font-size").substr(0,2))/16;
-        document.getElementById("w_text_color").value = wizard.rgb2hex(editedStyle.getPropertyValue("color"),_hexDigits);
+        var editedStyle = _getTextStyle(editedInput);
+        document.getElementById("w_text_fontsize").value = editedStyle.fontSize.slice(0, -2);
+        document.getElementById("w_text_color").value = wizard.rgb2hex(editedStyle.color, _hexDigits);
 
         // Set the style of the modal text
-        modalText.style.fontSize = (parseInt(editedStyle.getPropertyValue("font-size").substr(0,2))/16)+"em";
-        modalText.style.color = editedStyle.getPropertyValue("color");
-        modalText.style.fontFamily = editedStyle.getPropertyValue("font-family");
+        _applyTextStyle(modalText,editedStyle);
 
         // Create color picker for the Modal
         var pk = new Piklor(".text-color-picker", [
@@ -85,14 +84,14 @@ textedit = (function () {
             }),
             input = pk.getElm(".textcolor-config-wrapper .input");
         pk.colorChosen(function (col) {
-            document.getElementById("w_text_text").style.color=col;
+            document.getElementById("w_text_text").style.color = col;
             input.value = col;
         });
 
-        
+
 
     }
-    var _saveConfig = function(){
+    var _saveConfig = function () {
 
         // Get modified text input
         var modaltext = document.getElementById("w_text_text")
@@ -102,12 +101,10 @@ textedit = (function () {
 
         // Set new text
         _currentInput.value = modaltext.value;
-     
+
         // Set color to update preview
-        _currentInput.style.color = style.color;
-        _currentInput.style.fontSize = style.fontSize;
-        _currentInput.style.fontFamily = style.fontFamily;
-      
+        _applyTextStyle(_currentInput,style);
+
         // Set data attribute to restore config
         _currentInput.dataset.textColor = style.color;
         _currentInput.dataset.textSize = style.fontSize;
@@ -119,34 +116,51 @@ textedit = (function () {
         // Clear Modal
         _clearModal();
 
-        
+
     }
-    var _updateFontFamily = function(event){
+    var _updateFontFamily = function (event) {
         var texte = document.getElementById("w_text_text");
         texte.style.fontFamily = event.target.value;
     }
-    var _updateFontsize = function(event){
+    var _updateFontsize = function (event) {
         var texte = document.getElementById("w_text_text");
         texte.style.fontSize = event.target.value + "em";
     }
-    var _clearModal = function(){
-       var modal = document.getElementById("textEdit");
-       var inputs = modal.getElementsByTagName("input");
-       for(input of inputs){
-           input.value="";
-       }
+    var _clearModal = function () {
+        var modal = document.getElementById("textEdit");
+        var inputs = modal.getElementsByTagName("input");
+        for (input of inputs) {
+            input.value = "";
+        }
     }
-    var _init = function(){
+    var _getTextStyle = function (elem) {
+        let style = window.getComputedStyle(elem,null);
+        let fontSize = (parseInt(style.getPropertyValue("font-size").substr(0, 2)) / 16) + "em";
+        if(elem.style.fontSize){
+            fontSize=elem.style.fontSize;
+        }
+        return {
+            "color": style.getPropertyValue("color"),
+            "fontSize": fontSize,
+            "fontFamily": style.getPropertyValue("font-family")
+        }
+    }
+    var _applyTextStyle = function(elem,style){
+        elem.style.fontSize = style.fontSize;
+        elem.style.color = style.color;
+        elem.style.fontFamily = style.fontFamily;
+    }
+    var _init = function () {
         $.ajax({
             url: "/static/html/textConfiguration.html",
             dataType: "text",
             success: function (html) {
                 $("body").append(html);
                 //Events management
-                $("#textEdit").on('show.bs.modal',_onTextEditOpened);
-                document.getElementById("saveTextConfig").addEventListener("click",_saveConfig);
-                document.getElementById("w_text_fontsize").addEventListener("change",_updateFontsize);
-                document.getElementById("w_text_font").addEventListener("change",_updateFontFamily);
+                $("#textEdit").on('show.bs.modal', _onTextEditOpened);
+                document.getElementById("saveTextConfig").addEventListener("click", _saveConfig);
+                document.getElementById("w_text_fontsize").addEventListener("change", _updateFontsize);
+                document.getElementById("w_text_font").addEventListener("change", _updateFontFamily);
             }
         });
     }
@@ -157,8 +171,10 @@ textedit = (function () {
 
     return {
         configureButtons: _configureButtons,
-        init:_init
-        
+        init: _init,
+        getTextStyle:_getTextStyle,
+        applyTextStyle:_applyTextStyle
+
     }; // fin return
 
 })();

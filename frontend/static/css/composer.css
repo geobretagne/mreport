@@ -169,13 +169,28 @@
     background: #3095b4;
     color: white;
     position: absolute;
-    /*top: -1px;*/
     right: 0;
     cursor: pointer;
     padding: 6px;
     font-size: 14px;
 }
-
+.structure-element .drag{
+    top: 5px;
+    right: 5px !important;
+    transition: 0.2s;
+}
+.structure-element .drag:hover{
+    transition: 0.2s;
+    opacity: 1;
+}
+.structure-element .remove{
+    right: 80px !important;
+    transition: 0.2s;
+}
+.structure-element .remove:hover{
+    transition: 0.2s;
+    opacity: 1;
+}
 .builder.edit .remove {
     cursor: pointer;
 }
@@ -365,7 +380,8 @@ span.text-edit.badge.badge-warning {
 }
 #w_text_text,
 #w_desc,
-#w_title{
+#w_title,
+#text-edit-value{
     height: 100% !important;
     font-size: 1em;
 }
