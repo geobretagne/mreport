@@ -13,6 +13,8 @@ wizard = (function () {
 
     var _dataviz_infos = {};
 
+    var _dataviz_definition = {};
+
     var _storeData = {};
 
     /*
@@ -375,17 +377,17 @@ wizard = (function () {
      *
      */
 
-    var _saveDataviz = function (datavizId) {
+    var _saveDataviz = function () {
         //Get current dataviz id
         var datavizId = $("#wizard-panel").attr("data-related-id");
-        //get generated code in <code> element
-        var html = $("#wizard-code").text();
+        //get dataviz definition
+        var viz = JSON.stringify(_dataviz_definition);
         $.ajax({
             dataType: "json",
             type: "POST",
             contentType: 'application/json',
             url: [report.getAppConfiguration().api, "store", datavizId].join("/"),
-            data: JSON.stringify({"viz": html}),
+            data: JSON.stringify({ "viz": viz}),
             success: function (response) {
                 if (response.response === "success") {
                     Swal.fire({
@@ -577,6 +579,13 @@ wizard = (function () {
             $("#wizard-code").text(elem[0].outerHTML);
             var fdata = {};
             fdata[dataviz] = _data;
+            //Store config dtatviz in json object
+            _dataviz_definition = {
+                "type": type,
+                "data": _data,
+                "properties": properties
+            };
+            console.log(_dataviz_definition);
             //Draw dataviz with data, type and properties
 
             report.testViz(fdata, type, properties);
