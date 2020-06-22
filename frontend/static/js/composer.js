@@ -84,7 +84,7 @@ composer = (function () {
             '</span>',
             '</div>'
         ].join("")
-        
+
     ];
 
 
@@ -450,7 +450,7 @@ composer = (function () {
             }
         });
         //get blocs with their dataviz configuration
-        $("#report-composition .report-bloc").each(function (id, bloc) {
+        $("#report-composition .report-bloc,#report-composition .structure-element").each(function (id, bloc) {
             var tmp_bloc = $(bloc).clone();
             //delete extra row attributes
             ["data-model-title", "data-model-description"].forEach(function (attr) {
@@ -459,38 +459,48 @@ composer = (function () {
             //delete extra controls
             $(tmp_bloc).find(".to-remove").remove();
             $(tmp_bloc).find(".edit_columns").remove();
-            // loop on dataviz-container
-            $(tmp_bloc).find(".dataviz-container").each(function (id, container) {
-                var pre_content = [];
-                var main_content = [];
-                var post_content = [];
-                //loop on elements and dataviz
-                $(container).find(".list-group-item").each(function (idx, item) {
-                    var main_position = 0;
-                    if ($(item).hasClass("dataviz")) {
-                        var dvz = $(item).find("code.dataviz-definition").text();
-                        dvz = _addTitleDescription(dvz);
-                        main_content.push(dvz);
-                        main_position = idx;
-                    } else if ($(item).hasClass("structure-element")) {
-                        var txt = $(item).find(".structure-element-html").html();
-                        if (idx == 0) {
-                            main_content.push(txt);
-                        } else if (idx > main_position) {
-                            post_content.push(txt);
-                        } else {
-                            pre_content.push(txt);
+            if (tmp_bloc.hasClass("structure-element")) {
+                $(tmp_bloc).find(".badge").remove();
+                tmp_bloc.removeClass("list-group-item");
+                let style = textedit.getTextStyle(tmp_bloc[0]);
+                tmp_bloc[0].style.fontSize = style.fontSize;
+                tmp_bloc[0].style.color = style.color;
+                tmp_bloc[0].style.fontFamily = style.fontFamily;
+                tmp_bloc[0].style.fontWeight = style.fontWeight;
+            } else {
+                // loop on dataviz-container
+                $(tmp_bloc).find(".dataviz-container").each(function (id, container) {
+                    var pre_content = [];
+                    var main_content = [];
+                    var post_content = [];
+                    //loop on elements and dataviz
+                    $(container).find(".list-group-item").each(function (idx, item) {
+                        var main_position = 0;
+                        if ($(item).hasClass("dataviz")) {
+                            var dvz = $(item).find("code.dataviz-definition").text();
+                            dvz = _addTitleDescription(dvz);
+                            main_content.push(dvz);
+                            main_position = idx;
+                        } else if ($(item).hasClass("structure-element")) {
+                            var txt = $(item).find(".structure-element-html").html();
+                            if (idx == 0) {
+                                main_content.push(txt);
+                            } else if (idx > main_position) {
+                                post_content.push(txt);
+                            } else {
+                                pre_content.push(txt);
+                            }
+
                         }
+                    });
+                    var tmp = $.parseHTML(main_content.join(""));
 
-                    }
+                    $(tmp).prepend(pre_content.join(""));
+                    $(tmp).append(post_content.join(""));
+                    $(container).html(tmp);
+
                 });
-                var tmp = $.parseHTML(main_content.join(""));
-
-                $(tmp).prepend(pre_content.join(""));
-                $(tmp).append(post_content.join(""));
-                $(container).html(tmp);
-
-            });
+            }
             html.push($(tmp_bloc).get(0).outerHTML);
         });
 
@@ -513,14 +523,14 @@ composer = (function () {
         parentDiv.appendChild(dvzHTML[0]);
         dvz = parentDiv.outerHTML;
         if (title = dvzHTML.find('.dataviz').data("title")) {
-            let textStyle = 'style="font-size:' + title.style.fontSize + ';color:' + title.style.color + ';font-family:' + title.style.fontFamily + '"';
+            let textStyle = 'style="font-size:' + title.style.fontSize + ';font-weight:' + title.style.fontWeight + ';color:' + title.style.color + ';font-family:' + title.style.fontFamily + '"';
             let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text" ' + textStyle + '>' + title.text + '</h6></div>';
             titleDiv = parser.parseFromString(titleDiv, "text/html").getElementsByClassName("report-chart-title")[0];
             parentDiv.prepend(titleDiv);
             dvz = parentDiv.outerHTML;
         }
         if (description = dvzHTML.find('.dataviz').data("description")) {
-            let textStyle = 'style="font-size:' + description.style.fontSize + ';color:' + description.style.color + ';font-family:' + description.style.fontFamily + '"';
+            let textStyle = 'style="font-size:' + description.style.fontSize + ';font-weight:' + description.style.fontWeight + ';color:' + description.style.color + ';font-family:' + description.style.fontFamily + '"';
             let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text" ' + textStyle + '>' + description.text + '</p></div>';
             descDiv = parser.parseFromString(descDiv, "text/html").getElementsByClassName("report-chart-summary")[0];
             parentDiv.append(descDiv);

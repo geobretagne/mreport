@@ -194,6 +194,9 @@
 .builder.edit .remove {
     cursor: pointer;
 }
+.structure-element .editable-text{
+    font-size: 16px;
+}
 
 .builder .composition .structure-bloc:hover > .drag, .builder .composition .structure-bloc:hover > .configuration, .builder .composition .structure-bloc:hover > .remove, .builder .composition .box:hover .drag, .builder .composition .box:hover .configuration, .builder .composition .box:hover .remove {
     filter: alpha(opacity=100);

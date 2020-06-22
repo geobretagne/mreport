@@ -72,7 +72,7 @@ textedit = (function () {
         var editedStyle = _getTextStyle(editedInput);
         document.getElementById("w_text_fontsize").value = editedStyle.fontSize.slice(0, -2);
         document.getElementById("w_text_color").value = wizard.rgb2hex(editedStyle.color, _hexDigits);
-
+        document.getElementById("w_text_fontweight").value= editedStyle.fontWeight;
         // Set the style of the modal text
         _applyTextStyle(modalText,editedStyle);
 
@@ -109,6 +109,7 @@ textedit = (function () {
         _currentInput.dataset.textColor = style.color;
         _currentInput.dataset.textSize = style.fontSize;
         _currentInput.dataset.textFont = style.fontFamily;
+        _currentInput.dataset.textWeight = style.fontWeight;
 
         // Close modal
         $("#textEdit").modal("hide");
@@ -122,9 +123,13 @@ textedit = (function () {
         var texte = document.getElementById("w_text_text");
         texte.style.fontFamily = event.target.value;
     }
-    var _updateFontsize = function (event) {
+    var _updateFontSize = function (event) {
         var texte = document.getElementById("w_text_text");
         texte.style.fontSize = event.target.value + "em";
+    }
+    var _updateFontWeight = function (event) {
+        var texte = document.getElementById("w_text_text");
+        texte.style.fontWeight = event.target.value;
     }
     var _clearModal = function () {
         var modal = document.getElementById("textEdit");
@@ -142,13 +147,15 @@ textedit = (function () {
         return {
             "color": style.getPropertyValue("color"),
             "fontSize": fontSize,
-            "fontFamily": style.getPropertyValue("font-family")
+            "fontFamily": style.getPropertyValue("font-family"),
+            "fontWeight": style.getPropertyValue("font-weight")
         }
     }
     var _applyTextStyle = function(elem,style){
         elem.style.fontSize = style.fontSize;
         elem.style.color = style.color;
         elem.style.fontFamily = style.fontFamily;
+        elem.style.fontWeight = style.fontWeight;
     }
     var _init = function () {
         $.ajax({
@@ -159,8 +166,10 @@ textedit = (function () {
                 //Events management
                 $("#textEdit").on('show.bs.modal', _onTextEditOpened);
                 document.getElementById("saveTextConfig").addEventListener("click", _saveConfig);
-                document.getElementById("w_text_fontsize").addEventListener("change", _updateFontsize);
+                document.getElementById("w_text_fontsize").addEventListener("change", _updateFontSize);
                 document.getElementById("w_text_font").addEventListener("change", _updateFontFamily);
+                document.getElementById("w_text_fontweight").addEventListener("change",_updateFontWeight);
+
             }
         });
     }
