@@ -248,7 +248,8 @@ wizard = (function () {
                 // chart parameters
                 $("#w_chart_opacity").val("0.75");
                 // set chart type
-                $("#w_chart_type").val("bar");
+                var chart_type = _dataviz_infos.type || 'bar';
+                $("#w_chart_type").val(chart_type);
                 $("#w_colors").val(colors.slice(0, nb_datasets).join(","));
                 let basecolors = document.getElementById("w_colors").value.split(',');
                 basecolors.forEach(function (elem) {
@@ -297,20 +298,30 @@ wizard = (function () {
     */
 
     _applyDatavizConfig = function (cfg) {
+        /*
+        {
+            "type":"figure",
+            "properties": {
+                "unit": "m²",
+                "colors": "orange,blue"
+            }
+        }
+
+        */
         // get all dataviz parameters from dataviz configuration
-        $("#w_dataviz_type").val(cfg.dataviz_type);
-        $("#w_label").val(cfg.label);
+        $("#w_dataviz_type").val(cfg.type);
+        $("#w_label").val(cfg.properties.label);
         var title = $("#w_title");
         var description = $("#w_desc");
-        if (cfg.title) {
-            let cfgTitle = cfg.title;
+        if (cfg.properties.title) {
+            let cfgTitle = cfg.properties.title;
             title.val(cfgTitle.text);
             for (var styleproperty in cfgTitle.style) {
                 title.css(styleproperty, cfgTitle.style[styleproperty]);
             }
         }
-        if (cfg.description) {
-            let cfgDesc = cfg.description;
+        if (cfg.properties.description) {
+            let cfgDesc = cfg.properties.description;
             description.val(cfgDesc.text);
             for (var styleproperty in cfgDesc.style) {
                 description.css(styleproperty, cfgDesc.style[styleproperty]);
@@ -318,7 +329,7 @@ wizard = (function () {
         }
 
         // Set colors for Piklor lib
-        $("#w_colors").val(cfg.colors);
+        $("#w_colors").val(cfg.properties.colors);
         let basecolors = document.getElementById("w_colors").value.split(',');
         basecolors.forEach(function (elem) {
             _updateColorPicker({
@@ -328,20 +339,24 @@ wizard = (function () {
                 "type": "click"
             })
         });
-        if (cfg.icon) {
-            $("#w_icon").val(cfg.icon);
+        if (cfg.properties.icon) {
+            $("#w_icon").val(cfg.properties.icon);
         }
+        if (cfg.properties.unit) {
+            $("#w_unit").val(cfg.properties.unit);
+        }
+
         //show fields linked to dataviz type (table, figure, chart...)
-        _showParameters(cfg.dataviz_type);
-        if (cfg.dataviz_type === "chart") {
-            $("#w_chart_opacity").val(cfg.opacity);
-            $("#w_chart_type").val(cfg.type);
-        } else if (cfg.dataviz_type === "table") {
-            $("#w_table_column").val(cfg.columns);
-            if (cfg.extracolumn) {
+        _showParameters(cfg.type);
+        if (cfg.type === "chart") {
+            $("#w_chart_opacity").val(cfg.properties.opacity);
+            $("#w_chart_type").val(cfg.properties.type);
+        } else if (cfg.type === "table") {
+            $("#w_table_column").val(cfg.properties.columns);
+            if (cfg.properties.extracolumn) {
                 //show and set extracolumn parameter
                 _enableExtraColumnParameter(true);
-                $("#w_table_extracolumn").val(cfg.extracolumn);
+                $("#w_table_extracolumn").val(cfg.properties.extracolumn);
             } else {
                 //hide extracolumn parameter
                 _enableExtraColumnParameter(false);
@@ -419,7 +434,9 @@ wizard = (function () {
         } else if (dataviz === "table") {
             $("#w_label").closest(".input-group").find(".input-group-text").text("labels");
         }
-        $("#w_icon").val("icon-default");
+        if (!$("#w_icon").val()) {
+            $("#w_icon").val("icon-default");
+        }
 
     };
 
@@ -449,7 +466,7 @@ wizard = (function () {
     var _onWizardOpened = function (e) {
         //Get datavizid linked to the wizard modal
         var datavizId = $(e.relatedTarget).attr('data-related-id');
-        //Get dataviz infos (description , titile, unit, viz...)
+        //Get dataviz infos (description , titile, unit, viz...) if exists
         _dataviz_infos = admin.getDataviz(datavizId);
         console.log(_dataviz_infos);
         //Set datavizid in the modal
@@ -459,41 +476,77 @@ wizard = (function () {
         _clean();
         // Add text config buttons
         textedit.configureButtons(e.currentTarget);
-        //Get data linked to dataviz
-        if (_storeData[datavizId]) {
-            _data = _storeData[datavizId];
-            //check if configuration exists for this dataviz with attributes. eg data-colors...
-            var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
-            if (yetConfigured) {
-                //Get the config
-                var _code = $($.parseHTML(yetConfigured)).find(".dataviz");
-                _existingConfig = $(_code).data();
-                // Get dataviz type (hugly !)
-                // check class linked to dataviz - eg : from class report-chart" --> extract chart
-                $(_code).attr("class").split(" ").forEach(function (cls) {
-                    var t = cls.split("report-");
-                    if (t.length === 2) {
-                        _existingConfig.dataviz_type = t[1];
-                    }
-                })
-            } else {
-                _existingConfig = false;
+        //Test if dataviz has a default visualization or is yet configured in active session
+        //check if configuration exists for this dataviz with attributes. eg data-colors...
+        var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
+
+        if (_dataviz_infos.viz && !yetConfigured) {
+            var viz = JSON.parse(_dataviz_infos.viz);
+            _data = viz.data[viz.properties.id];
+            _json2form(viz);
+            _existingConfig= viz;
+        } else if (yetConfigured) {
+            //Get the config
+            var _code = $($.parseHTML(yetConfigured)).find(".dataviz");
+            _existingConfig = html2json(_code[0]);
+        } else {
+            _existingConfig = false;
+            //download data for this dataviz if necessary
+            if (!_storeData[datavizId]) {
+                _getSampleData(datavizId);
             }
+        }
+
+        if (_existingConfig) {
             //configure wizard options with dataviz capabilities
             _configureWizardOptions();
             //Apply config if exists
-            if (_existingConfig) {
-                _applyDatavizConfig(_existingConfig);
-                //Render dataviz in result panel
-                setTimeout(_onValidateConfig, 500);
-            }
-        } else {
-            //download data for this dataviz
-            _getSampleData(datavizId);
+            _applyDatavizConfig(_existingConfig);
+            //Render dataviz in result panel
+            setTimeout(_onValidateConfig, 500);
+
         }
 
 
     };
+
+    var html2json = function (html) {
+        //Get the config from html attributes
+        var properties = {};
+        properties = html.dataset;
+        properties.id = html.id;
+        var cfg = {
+            "type": "",
+            "properties": properties
+        };
+        // Get dataviz type (hugly !)
+        // check class linked to dataviz - eg : from class report-chart" --> extract chart
+        html.classList.forEach(function (cls) {
+            var t = cls.split("report-");
+            if (t.length === 2) {
+                cfg.type = t[1];
+            }
+        })
+        return cfg;
+    };
+
+    /*
+     * _json2form. This methodset values from config
+     * and populate wizard form.
+     *
+     */
+
+    var _json2form = function (viz) {
+        //Update wizard form with default dataviz values
+        _configureWizardOptions();
+        _autoConfig(viz.type);
+        $("#w_dataviz_type").val(viz.type);
+        for (const [attribute, value] of Object.entries(viz.properties)) {
+            if (attribute !== "id") {
+                $("#w_" + attribute).val(value);
+            }
+        }
+    }
 
     /*
      * _form2json. This method is get values from wizard parameters

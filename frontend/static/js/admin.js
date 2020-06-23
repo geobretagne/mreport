@@ -751,6 +751,12 @@ admin = (function () {
         return _dataviz_data[datavizid];
     };
 
+    var _visualizeDataviz = function () {
+        var viz = JSON.parse(visualization.value);
+        console.log(viz);
+        //TODO
+    };
+
 
     /*
      * Public
@@ -767,7 +773,8 @@ admin = (function () {
         updateDataviz: _updateDataviz,
         getDataviz: _getDataviz,
         createReport: _createReport,
-        getReportData: _getReportData
+        getReportData: _getReportData,
+        visualizeDataviz: _visualizeDataviz
     }; // fin return
 
 })();
