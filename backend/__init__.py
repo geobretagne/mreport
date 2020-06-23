@@ -53,7 +53,7 @@ class Dataviz(db.Model):
     type = db.Column(db.String(200),nullable=False)
     level = db.Column(db.String(50),nullable=False)
     job = db.Column(db.String(50))
-    viz = db.Column(db.String(500))
+    viz = db.Column(db.String(2000))
     report_composition_dvz = db.relationship('Report_composition', backref="report1", cascade="all, delete-orphan" , lazy='dynamic')
     rawdata_dvz = db.relationship('Rawdata', backref="rawdata1", cascade="all, delete-orphan", lazy='dynamic')
 
@@ -150,7 +150,7 @@ dataviz_put = store.model('Dataviz_put', {
     'type': fields.String(max_length=200,required=True),
     'level': fields.String(max_length=50,required=True),
     'job': fields.String(max_length=50,required=False),
-    'viz': fields.String(max_length=500,required=False)
+    'viz': fields.String(max_length=2000,required=False)
 })
 dataviz_post = api.model('Dataviz_post', {
     'title': fields.String("the title",max_length=200),
@@ -161,7 +161,7 @@ dataviz_post = api.model('Dataviz_post', {
     'type': fields.String(max_length=200),
     'level': fields.String(max_length=50),
     'job': fields.String(max_length=50),
-    'viz': fields.String(max_length=500)
+    'viz': fields.String(max_length=2000)
 })
 
 @store.route('/<string:dataviz_id>/data/sample',doc={'Données':'Données associées à une dataviz'})
