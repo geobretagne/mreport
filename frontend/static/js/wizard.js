@@ -496,73 +496,92 @@ wizard = (function () {
     };
 
     /*
-     * _onValidateConfig. This method is get values from wizard parameters
-     * and populate a config object passed to the report.testViz method.
+     * _form2json. This method is get values from wizard parameters
+     * and populate a json config object
+     *
+     */
+
+    var _form2json = function () {
+        var dataviz = $("#wizard-panel").attr("data-related-id");
+        var type = $("#w_dataviz_type").val();
+        var attributes = [];
+        var properties = {
+            "id": dataviz
+        };
+        $(".dataviz-attributes").each(function (id, attribute) {
+            var val = $(attribute).val();
+            if (attribute.classList.contains("addedText") && val.length >=1) {
+                let style = window.getComputedStyle(attribute, null);
+                val = '{\
+                    "text": "'+val+'",\
+                    "style": {\
+                        "fontSize": "'+style.getPropertyValue("font-size")+'",\
+                        "color": "'+style.getPropertyValue("color")+'",\
+                        "fontFamily": "'+style.getPropertyValue("font-family").replace(/"/g,"'")+'",\
+                        "fontWeight": "'+style.getPropertyValue("font-weight")+'"\
+                    }\
+                }'
+            }
+            var prop = $(attribute).attr("data-prop");
+            if (val && val.length >= 1 ) {
+                attributes.push("data-" + prop + '="' + val + '"');
+                attributes.push({
+                    "prop": prop,
+                    "value": val
+                });
+                properties[prop] = val;
+            }
+        });
+        ["colors", "label"].forEach(function (prop) {
+            if (properties[prop]) {
+                properties[prop] = properties[prop].split(",");
+            }
+        });
+
+        ["columns"].forEach(function (prop) {
+            if (properties[prop]) {
+                properties[prop] = properties[prop].split(",").map(function (val) {
+                    return Number(val) - 1;
+                });
+            }
+        });
+
+        var fdata = {};
+        fdata[dataviz] = _data;
+        //Store config dtatviz in json object
+        _dataviz_definition = {
+            "type": type,
+            "data": fdata,
+            "properties": properties
+        };
+        return _dataviz_definition;
+
+
+    };
+
+    /*
+     * _onValidateConfig. This method pass a config object to the report.testViz method.
      * Used by #wizard_refresh button and the auto render method in _onWizardOpened
      *
      */
 
     var _onValidateConfig = function () {
-        var dataviz = $("#wizard-panel").attr("data-related-id");
-        var type = $("#w_dataviz_type").val();
-        if (type) {
-            var attributes = [];
-            var properties = {
-                "id": dataviz
-            };
-            $(".dataviz-attributes").each(function (id, attribute) {
-                var val = $(attribute).val();
-                if (attribute.classList.contains("addedText") && val.length >=1) {
-                    let style = window.getComputedStyle(attribute, null);
-                    val = '{\
-                        "text": "'+val+'",\
-                        "style": {\
-                            "fontSize": "'+style.getPropertyValue("font-size")+'",\
-                            "color": "'+style.getPropertyValue("color")+'",\
-                            "fontFamily": "'+style.getPropertyValue("font-family").replace(/"/g,"'")+'",\
-                            "fontWeight": "'+style.getPropertyValue("font-weight")+'"\
-                        }\
-                    }'
-                }
-                var prop = $(attribute).attr("data-prop");
-                if (val && val.length >= 1 ) {
-                    attributes.push("data-" + prop + '="' + val + '"');
-                    attributes.push({
-                        "prop": prop,
-                        "value": val
-                    });
-                    properties[prop] = val;
-                }
-            });
-            ["colors", "label"].forEach(function (prop) {
-                if (properties[prop]) {
-                    properties[prop] = properties[prop].split(",");
-                }
-            });
-
-            ["columns"].forEach(function (prop) {
-                if (properties[prop]) {
-                    properties[prop] = properties[prop].split(",").map(function (val) {
-                        return Number(val) - 1;
-                    });
-                }
-            });
-            /* sample properties : {
-                "id":"magasins",
-                "type":"bar",
-                "opacity":"0.75",
-                "label":["Ouvert","Fermé"],
-                "colors":["#3db39e","#999999"]
-            } */
+        var viz = _form2json();
+        if (viz.type && viz.data && viz.properties) {
             //Get dataviz component herited from template and set attributes with properties object
-            var elem = $.parseHTML(composer.activeModel().dataviz_components[type].replace("{{dataviz}}", dataviz));
-            attributes.forEach(function (attribute) {
-                $(elem).find(".dataviz").attr("data-" + attribute.prop, attribute.value);
-            });
+            var elem = $.parseHTML(composer.activeModel().dataviz_components[viz.type].replace("{{dataviz}}", viz.id));
+            for (const [attribute, value] of Object.entries(viz.properties)) {
+                if (attribute === "id") {
+                    $(elem).find(".dataviz").attr("id", value);
+                } else {
+                    $(elem).find(".dataviz").attr("data-" + attribute, value);
+                }
+
+            }
 
             //set icon class from icon attribute for figures components
             var icon = $(elem).find(".dataviz").attr("data-icon");
-            if (icon && type === "figure") {
+            if (icon && viz.type === "figure") {
                 var figure = $(elem).find(".dataviz")[0];
                 //remove existing icon class eg icon-default
                 figure.classList.forEach(className => {
@@ -577,22 +596,12 @@ wizard = (function () {
             //Render result in wizard modal
             $("#wizard-result div").remove();
             $("#wizard-result").append(elem);
-
             $("#wizard-code").text(elem[0].outerHTML);
-            var fdata = {};
-            fdata[dataviz] = _data;
-            //Store config dtatviz in json object
-            _dataviz_definition = {
-                "type": type,
-                "data": _data,
-                "properties": properties
-            };
-            console.log(_dataviz_definition);
             //Draw dataviz with data, type and properties
-
-            report.testViz(fdata, type, properties);
+            report.testViz(viz.data, viz.type, viz.properties);
         }
     };
+
     var _rgb2hex = function (rgb, hexDigits) {
         rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
         if (rgb !== null)
