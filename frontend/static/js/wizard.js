@@ -530,6 +530,28 @@ wizard = (function () {
         return cfg;
     };
 
+    var _json2html = function (viz) {
+        //TODO save model in viz
+        var modelId = viz.model || "b";
+        var model = composer.models()[modelId];
+        var style = model.style;
+        var component = $.parseHTML(model.dataviz_components[viz.type].replace("{{dataviz}}", viz.properties.id))[0];
+        var container = document.createElement("div");
+        container.innerHTML = style;
+        container.id = "yviz";
+        container.className = "col";
+        container.style.border = "solid";
+        let dataviz = component.querySelector(".dataviz");
+        for (const [attribute, value] of Object.entries(viz.properties)) {
+            if (attribute !== "id") {
+                dataviz.dataset[attribute] = value;
+            }
+        }
+        container.appendChild(component);
+        return container;
+
+    }
+
     /*
      * _json2form. This methodset values from config
      * and populate wizard form.
@@ -539,7 +561,7 @@ wizard = (function () {
     var _json2form = function (viz) {
         //Update wizard form with default dataviz values
         _configureWizardOptions();
-        _autoConfig(viz.type);
+        //_autoConfig(viz.type);
         $("#w_dataviz_type").val(viz.type);
         for (const [attribute, value] of Object.entries(viz.properties)) {
             if (attribute !== "id") {
@@ -740,6 +762,7 @@ wizard = (function () {
         init: _init,
         configureDataviz: _configureDataviz,
         saveDataviz: _saveDataviz,
+        json2html: _json2html,
         rgb2hex: _rgb2hex
     }; // fin return
 

@@ -167,7 +167,7 @@
     <!-- Modal dataviz -->
     <div class="modal fade" id="dataviz-modal-form" data-related-id="" tabindex="-1" role="dialog"
         aria-labelledby="datavizModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="datavizModalLabel"><span class="dataviz-title"></span></span><span
@@ -178,48 +178,63 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="row" id="xviz"></div>
                     <form class="form" id="dataviz-form" role="form" autocomplete="off">
-                        <div class="form-group">
-                            <label for="inputTitle">Dataviz</label>
-                            <input type="text" class="form-control" name="title" id="inputTitle"
-                                placeholder="Nom de la dataviz">
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="inputTitle"><span class="badge badge-dark">Dataviz</span></label>
+                                <input type="text" class="form-control" name="title" id="inputTitle"
+                                    placeholder="Nom de la dataviz">
+                            </div>
+                            <div class="col">
+                                <label for="inputYear"><span class="badge badge-dark">millésime</span></label>
+                                <input type="text" class="form-control" name="year" id="inputYear" placeholder="Millésime"
+                                    required="">
+                            </div>
+                            <div class="col">
+                                <label for="inputSource"><span class="badge badge-dark">Source</span></label>
+                                <input type="text" class="form-control" name="source" id="inputSource" placeholder="Source"
+                                    required="">
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="inputDescription"><span class="badge badge-dark">Description</span></label>
+                                <input type="text" class="form-control" name="description" id="inputDescription"
+                                 placeholder="Description">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputDescription">Description</label>
-                            <input type="text" class="form-control" name="description" id="inputDescription"
-                                placeholder="Description">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputYear">Millésime</label>
-                            <input type="text" class="form-control" name="year" id="inputYear" placeholder="Millésime"
+                            <input type="text" class="form-control hidden" name="viz" id="visualization"
                                 required="">
                         </div>
-                        <div class="form-group">
-                            <label for="inputLevel">Niveau</label>
-                            <input type="text" class="form-control" name="level" id="inputLevel" placeholder="Niveau"
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="inputLevel"><span class="badge badge-dark">Niveau</span></label>
+                                <input type="text" class="form-control" name="level" id="inputLevel" placeholder="Niveau"
+                                    required="">
+                            </div>
+                            <div class="col">
+                                <label for="inputType"><span class="badge badge-dark">Type</span></label>
+                                <input type="text" class="form-control" name="type" id="inputType" placeholder="Type"
                                 required="">
+                            </div>
+                            <div class="col">
+                                <label for="inputUnit"><span class="badge badge-dark">Unité</span></label>
+                                <input type="text" class="form-control" name="unit" id="inputUnit" placeholder="Type"
+                                    required="">
+                            </div>
+                            <div class="col">
+                                <label for="inputJob"><span class="badge badge-dark">Job</span></label>
+                                <input type="text" class="form-control" name="job" id="inputJob" placeholder="Type"
+                                    required="">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="inputSource">Source</label>
-                            <input type="text" class="form-control" name="source" id="inputSource" placeholder="Source"
-                                required="">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputType">Type</label>
-                            <input type="text" class="form-control" name="type" id="inputType" placeholder="Type"
-                                required="">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputUnit">Unité</label>
-                            <input type="text" class="form-control" name="unit" id="inputUnit" placeholder="Type"
-                                required="">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputUnit">Job</label>
-                            <input type="text" class="form-control" name="job" id="inputJob" placeholder="Type"
-                                required="">
-                        </div>
+
+
                     </form>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>

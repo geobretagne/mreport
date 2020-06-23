@@ -308,6 +308,7 @@ admin = (function () {
             $(e.currentTarget).attr("data-related-id", datavizId);
             $(e.currentTarget).find(".dataviz-title").text(datavizId);
             _populateForm('#dataviz-form', _dataviz_data[datavizId]);
+            admin.visualizeDataviz();
         });
         /* Select all visible items in the list and trigger the cahnge event on checkbox to add them in the cart */
         $("#checkAll").click(function () {
@@ -753,8 +754,11 @@ admin = (function () {
 
     var _visualizeDataviz = function () {
         var viz = JSON.parse(visualization.value);
-        console.log(viz);
-        //TODO
+        var dataviz = wizard.json2html(viz);
+        var element = document.getElementById("xviz");
+        element.innerHTML = '';
+        element.appendChild(dataviz);
+        report.testViz(viz.data, viz.type, viz.properties);
     };
 
 
