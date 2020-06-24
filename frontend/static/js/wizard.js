@@ -480,7 +480,7 @@ wizard = (function () {
         //check if configuration exists for this dataviz with attributes. eg data-colors...
         var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
 
-        if (_dataviz_infos.viz && !yetConfigured) {
+        if (_dataviz_infos && _dataviz_infos.viz && !yetConfigured) {
             var viz = JSON.parse(_dataviz_infos.viz);
             _data = viz.data[viz.properties.id];
             _json2form(viz);
@@ -642,9 +642,10 @@ wizard = (function () {
 
     var _onValidateConfig = function () {
         var viz = _form2json();
+        var model = composer.activeModel() || composer.models().b;
         if (viz.type && viz.data && viz.properties) {
             //Get dataviz component herited from template and set attributes with properties object
-            var elem = $.parseHTML(composer.activeModel().dataviz_components[viz.type].replace("{{dataviz}}", viz.id));
+            var elem = $.parseHTML(model.dataviz_components[viz.type].replace("{{dataviz}}", viz.id));
             for (const [attribute, value] of Object.entries(viz.properties)) {
                 if (attribute === "id") {
                     $(elem).find(".dataviz").attr("id", value);
@@ -689,6 +690,7 @@ wizard = (function () {
     }
     var _updateColorPicker = function (saved, e) {
         var colorbtn = $("#picker-wrapper .colorbtn").length + 1;
+        var model = composer.activeModel() || composer.models().b;
         if (typeof saved.datasets === "undefined") {
             saved.datasets = _data.dataset.length;
         }
@@ -699,7 +701,7 @@ wizard = (function () {
             $("#picker-wrapper").append('<div class="colorbtn colorbtn' + colorbtn + '"></div>');
             $(".colorbtn" + colorbtn).css('background-color', saved.color ? saved.color : "#FFF");
             $(".chosecolors").append('<div class="available_colors color-picker' + colorbtn + '"></div>');
-            var pk = new Piklor(".color-picker" + colorbtn, composer.activeModel().parameters.colors, {
+            var pk = new Piklor(".color-picker" + colorbtn, model.parameters.colors, {
                 open: ".picker-wrapper .colorbtn" + colorbtn,
                 closeOnBlur: true
             })

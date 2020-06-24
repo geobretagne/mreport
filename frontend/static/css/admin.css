@@ -416,3 +416,6 @@ h5>.badge {
   transform: scale(1.15);
   transition: 0.2s;
 }
+#yviz .btn {
+  margin-top: 10px;
+}

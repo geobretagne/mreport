@@ -755,8 +755,17 @@ admin = (function () {
     var _visualizeDataviz = function () {
         var viz = JSON.parse(visualization.value);
         var dataviz = wizard.json2html(viz);
-        var element = document.getElementById("xviz");
+        let btn = document.createElement("button");
+        btn.className ="btn btn-default";
+        btn.dataset.toggle = "modal";
+        btn.dataset.target = "#wizard-panel";
+        btn.setAttribute("data-related-id", viz.properties.id);
+        let ico = document.createElement("i");
+        ico.className ="fas fa-cog";
+        btn.appendChild(ico);
+        let element = document.getElementById("xviz");
         element.innerHTML = '';
+        dataviz.insertBefore(btn, dataviz.firstChild);
         element.appendChild(dataviz);
         report.testViz(viz.data, viz.type, viz.properties);
     };
