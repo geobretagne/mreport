@@ -464,6 +464,15 @@ wizard = (function () {
      */
 
     var _onWizardOpened = function (e) {
+        //Detect wich component calls this
+        if (e.relatedTarget.dataset.component === "store") {
+            //deactivate button save in report
+            document.getElementById("wizard_add").classList.add("hidden");
+            let model = composer.activeModel() || composer.models().b;
+            wizard.updateIconList(model);
+        } else {
+            document.getElementById("wizard_add").classList.remove("hidden");
+        }
         //Get datavizid linked to the wizard modal
         var datavizId = $(e.relatedTarget).attr('data-related-id');
         //Get dataviz infos (description , titile, unit, viz...) if exists
@@ -506,6 +515,18 @@ wizard = (function () {
 
         }
 
+
+    };
+
+    var _updateIconList = function (model) {
+        //update icon store in wizard modal
+        $("#w_icon option").remove();
+        var icon_options = [];
+        var icons = model.style.match(/icon-\w+/g);
+        icons.forEach(function (i) {
+            icon_options.push('<option value="' + i + '">' + i + '</option>');
+        });
+        $("#w_icon").append(icon_options.join(""));
 
     };
 
@@ -762,7 +783,8 @@ wizard = (function () {
         configureDataviz: _configureDataviz,
         saveDataviz: _saveDataviz,
         json2html: _json2html,
-        rgb2hex: _rgb2hex
+        rgb2hex: _rgb2hex,
+        updateIconList: _updateIconList
     }; // fin return
 
 })();

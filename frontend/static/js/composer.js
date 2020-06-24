@@ -96,7 +96,7 @@ composer = (function () {
     var _datavizTemplate = [
         '<li data-dataviz="{{dvz}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item">',
         '<div class="tool">',
-        '<button class="btn btn-default" data-toggle="modal" data-related-id="{{dvz}}" data-target="#wizard-panel">',
+        '<button class="btn btn-default" data-toggle="modal" data-component="report" data-related-id="{{dvz}}" data-target="#wizard-panel">',
         '<i class="fas fa-cog"></i>',
         '</button>',
         '</div>',
@@ -124,16 +124,7 @@ composer = (function () {
         $("#wizard-result style").remove();
         $("#wizard-result").append(_HTMLTemplates[m].style);
         //update icon store in wizard modal
-        $("#w_icon option").remove();
-        var icon_options = [];
-        var icons = _HTMLTemplates[m].style.match(/icon-\w+/g);
-        icons.forEach(function (i) {
-            icon_options.push('<option value="' + i + '">' + i + '</option>');
-        });
-        $("#w_icon").append(icon_options.join(""));
-
-
-
+        wizard.updateIconList(_HTMLTemplates[m]);
     }
 
     /*

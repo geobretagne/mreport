@@ -759,6 +759,7 @@ admin = (function () {
         btn.className ="btn btn-default";
         btn.dataset.toggle = "modal";
         btn.dataset.target = "#wizard-panel";
+        btn.dataset.component = "store";
         btn.setAttribute("data-related-id", viz.properties.id);
         let ico = document.createElement("i");
         ico.className ="fas fa-cog";
