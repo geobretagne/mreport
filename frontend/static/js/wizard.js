@@ -468,7 +468,6 @@ wizard = (function () {
         var datavizId = $(e.relatedTarget).attr('data-related-id');
         //Get dataviz infos (description , titile, unit, viz...) if exists
         _dataviz_infos = admin.getDataviz(datavizId);
-        console.log(_dataviz_infos);
         //Set datavizid in the modal
         $(e.currentTarget).attr("data-related-id", datavizId);
         $(e.currentTarget).find(".modal-title").text(datavizId);
@@ -560,8 +559,6 @@ wizard = (function () {
 
     var _json2form = function (viz) {
         //Update wizard form with default dataviz values
-        //_configureWizardOptions();
-        //_autoConfig(viz.type);
         $("#w_dataviz_type").val(viz.type);
         for (const [attribute, value] of Object.entries(viz.properties)) {
             if (attribute !== "id") {

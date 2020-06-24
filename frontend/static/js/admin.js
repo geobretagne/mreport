@@ -768,6 +768,11 @@ admin = (function () {
         dataviz.insertBefore(btn, dataviz.firstChild);
         element.appendChild(dataviz);
         report.testViz(viz.data, viz.type, viz.properties);
+        //Hack to avoid many div with the same id
+        dataviz.querySelector(".dataviz").id += ".tmp";
+        if (dataviz.querySelector("canvas")) {
+            dataviz.querySelector("canvas").id += ".tmp";
+        }
     };
 
 
