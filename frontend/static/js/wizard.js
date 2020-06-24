@@ -560,7 +560,7 @@ wizard = (function () {
 
     var _json2form = function (viz) {
         //Update wizard form with default dataviz values
-        _configureWizardOptions();
+        //_configureWizardOptions();
         //_autoConfig(viz.type);
         $("#w_dataviz_type").val(viz.type);
         for (const [attribute, value] of Object.entries(viz.properties)) {
