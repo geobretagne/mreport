@@ -308,7 +308,9 @@ admin = (function () {
             $(e.currentTarget).attr("data-related-id", datavizId);
             $(e.currentTarget).find(".dataviz-title").text(datavizId);
             _populateForm('#dataviz-form', _dataviz_data[datavizId]);
-            admin.visualizeDataviz();
+            if (visualization.value) {
+                admin.visualizeDataviz();
+            }
         });
         /* Select all visible items in the list and trigger the cahnge event on checkbox to add them in the cart */
         $("#checkAll").click(function () {
