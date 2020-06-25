@@ -468,8 +468,6 @@ wizard = (function () {
         if (e.relatedTarget.dataset.component === "store") {
             //deactivate button save in report
             document.getElementById("wizard_add").classList.add("hidden");
-            let model = composer.activeModel() || composer.models().b;
-            wizard.updateIconList(model);
         } else {
             document.getElementById("wizard_add").classList.remove("hidden");
         }
@@ -489,15 +487,26 @@ wizard = (function () {
         var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
 
         if (_dataviz_infos && _dataviz_infos.viz && !yetConfigured) {
+            //Occurs when wizard is called from store
             var viz = JSON.parse(_dataviz_infos.viz);
+            //Enable the model if defined
+            let modelId = viz.model;
+            let model ="";
+            if (modelId) {
+                model = composer.models()[modelId];
+            } else {
+                model = composer.activeModel() || composer.models().b;
+            }
+            wizard.updateIconList(model);
             _data = viz.data[viz.properties.id];
             _json2form(viz);
             _existingConfig= viz;
         } else if (yetConfigured) {
-            //Get the config
+            //Occurs when wizard is called from report composer and dataviz is yet configured
             var _code = $($.parseHTML(yetConfigured)).find(".dataviz");
             _existingConfig = html2json(_code[0]);
         } else {
+            //Occurs when wizard is called from report composer
             _existingConfig = false;
             //download data for this dataviz if necessary
             if (!_storeData[datavizId]) {
@@ -551,11 +560,25 @@ wizard = (function () {
     };
 
     var _json2html = function (viz) {
-        //TODO save model in viz
         var modelId = viz.model || "b";
         var model = composer.models()[modelId];
         var style = model.style;
+        //TODO Refactore this
         var component = $.parseHTML(model.dataviz_components[viz.type].replace("{{dataviz}}", viz.properties.id))[0];
+        //set icon class from icon attribute for figures components
+        if (viz.properties.icon && viz.type === "figure") {
+            var figure = component.querySelector(".dataviz");
+            //remove existing icon class eg icon-default
+            figure.classList.forEach(className => {
+                if (className.startsWith('icon-')) {
+                    figure.classList.remove(className);
+                }
+            });
+            //add icon class
+            figure.classList.add(viz.properties.icon);
+            figure.classList.add("custom-icon");
+        }
+
         var container = document.createElement("div");
         container.innerHTML = style;
         container.id = "yviz";
@@ -597,9 +620,14 @@ wizard = (function () {
     var _form2json = function () {
         var dataviz = $("#wizard-panel").attr("data-related-id");
         var type = $("#w_dataviz_type").val();
+        var modelId = "b";
+        if (composer.activeModel()) {
+            modelId = composer.activeModel().id;
+        }
         var attributes = [];
         var properties = {
-            "id": dataviz
+            "id": dataviz,
+            "model" : modelId
         };
         $(".dataviz-attributes").each(function (id, attribute) {
             var val = $(attribute).val();

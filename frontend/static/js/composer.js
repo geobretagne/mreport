@@ -171,6 +171,7 @@ composer = (function () {
         _extraElementTemplate.forEach(elem => extra_elements.push(elem));
         //Populate _HTMLTemplates with object
         _HTMLTemplates[templateid] = {
+            id: templateid,
             parameters: parameters,
             style: style,
             page: page,
