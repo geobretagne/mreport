@@ -52,7 +52,7 @@ def deleteFileSystemStructure(src):
     except IOError as e:
         return "I/O error({0}): {1}".format(e.errno, e.strerror)
 
-def updateReportHTML(src, html, css):
+def updateReportHTML(src, html, css, composer):
     try:
         f1 = open(src + '.html', 'w')
         f1.write(html)
@@ -60,6 +60,9 @@ def updateReportHTML(src, html, css):
         f2 = open(src + '.css', 'w')
         f2.write(css)
         f2.close()
+        f3 = open(src + '_composer.html', 'w')
+        f3.write(composer)
+        f3.close()
         return 'success'
     except IOError as e:
         return "I/O error({0}): {1}".format(e.errno, e.strerror)

@@ -295,6 +295,29 @@ composer = (function () {
         });
         $("#dataviz-items .dataviz.list-group-item").remove();
         $("#dataviz-items").append(lst.join(""));
+        $.ajax({
+            type: "GET",
+            url: ["/mreport", reportId, "report_composer.html"].join("/"),
+            success: function (html) {
+                let reportCompo = document.getElementById("report-composition");
+                reportCompo.innerHTML = html;
+                let alldvz = reportCompo.getElementsByClassName("dataviz");
+                for (elem of alldvz) {
+                    wizard.getSampleData(elem.dataset.dataviz);
+                }
+                _configureNewBlock(reportCompo.querySelectorAll(".row"));
+                $("#report-composition .structure-bloc").find(".remove").click(function (e) {
+                    $(e.currentTarget).closest(".structure-bloc").find(".dataviz").appendTo("#dataviz-items");
+                    $(e.currentTarget).closest(".structure-bloc").remove();
+                });
+                $("#report-composition .structure-element").find(".structureElems").click(function (e) {
+                    e.currentTarget.parentNode.remove();
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     };
 
     /*
@@ -551,6 +574,7 @@ composer = (function () {
         var _report = $("#selectedReportComposer").val();
         var newDom = _exportHTML();
         var _css = composer.activeModel().style;
+        var composerHTML = document.getElementById("report-composition").innerHTML;
         //get String beetwenn <style>...</style>
         var css = _css.substring(_css.lastIndexOf("<style>") + 7, _css.lastIndexOf("</style")).trim();
         $.ajax({
@@ -558,7 +582,8 @@ composer = (function () {
             url: [report.getAppConfiguration().api, "report_html", _report].join("/"),
             data: JSON.stringify({
                 html: newDom,
-                css: css
+                css: css,
+                composer: composerHTML
             }),
             dataType: 'json',
             contentType: 'application/json',
