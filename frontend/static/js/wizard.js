@@ -861,7 +861,7 @@ wizard = (function () {
         json2html: _json2html,
         rgb2hex: _rgb2hex,
         updateIconList: _updateIconList,
-        getSampleData: _getSampleData
+        getSampleData: _getSampleData,
         onChangeModel: _onChangeModel,
         updateStyle: _updateStyle
     }; // fin return
