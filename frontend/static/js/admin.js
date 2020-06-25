@@ -308,6 +308,8 @@ admin = (function () {
             $(e.currentTarget).attr("data-related-id", datavizId);
             $("#dataviz_configure").attr("data-related-id", datavizId);
             $(e.currentTarget).find(".dataviz-title").text(datavizId);
+            //Remove existing visualization
+            document.getElementById("xviz").innerHTML = '';
             _populateForm('#dataviz-form', _dataviz_data[datavizId]);
             if (visualization.value) {
                 admin.visualizeDataviz();

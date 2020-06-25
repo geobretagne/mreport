@@ -121,8 +121,7 @@ composer = (function () {
         $("#element-models .list-group-item").remove();
         $("#element-models").append(_HTMLTemplates[m].extra_elements);
         //update style in wizard modal
-        $("#wizard-result style").remove();
-        $("#wizard-result").append(_HTMLTemplates[m].style);
+        wizard.updateStyle(_HTMLTemplates[m]);
         //update icon store in wizard modal
         wizard.updateIconList(_HTMLTemplates[m]);
     }
@@ -781,9 +780,6 @@ composer = (function () {
     return {
         initComposer: _initComposer,
         compose: /* used by admin.js */ _compose,
-        colors: /* used by wizard.js */ function () {
-            return _HTMLTemplates[_activeHTMLTemplate].parameters.colors;
-        },
         activeModel: /* used by wizard.js */ function () {
             return _HTMLTemplates[_activeHTMLTemplate];
         },
