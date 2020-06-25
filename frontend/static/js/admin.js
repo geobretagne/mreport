@@ -306,7 +306,10 @@ admin = (function () {
             }
             var datavizId = $(e.relatedTarget).attr('data-related-id');
             $(e.currentTarget).attr("data-related-id", datavizId);
+            $("#dataviz_configure").attr("data-related-id", datavizId);
             $(e.currentTarget).find(".dataviz-title").text(datavizId);
+            //Remove existing visualization
+            document.getElementById("xviz").innerHTML = '';
             _populateForm('#dataviz-form', _dataviz_data[datavizId]);
             if (visualization.value) {
                 admin.visualizeDataviz();
@@ -757,18 +760,8 @@ admin = (function () {
     var _visualizeDataviz = function () {
         var viz = JSON.parse(visualization.value);
         var dataviz = wizard.json2html(viz);
-        let btn = document.createElement("button");
-        btn.className ="btn btn-default";
-        btn.dataset.toggle = "modal";
-        btn.dataset.target = "#wizard-panel";
-        btn.dataset.component = "store";
-        btn.setAttribute("data-related-id", viz.properties.id);
-        let ico = document.createElement("i");
-        ico.className ="fas fa-cog";
-        btn.appendChild(ico);
         let element = document.getElementById("xviz");
         element.innerHTML = '';
-        dataviz.insertBefore(btn, dataviz.firstChild);
         element.appendChild(dataviz);
         report.testViz(viz.data, viz.type, viz.properties);
         //Hack to avoid many div with the same id

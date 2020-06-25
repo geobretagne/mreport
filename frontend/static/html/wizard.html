@@ -16,7 +16,14 @@
                                 <div class="card-body">
                                     <p id="indicateur-metadata" style="display:none;"></p>
                                     <h6 class="card-title">Paramétrage</h6>
-
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="selectedModelWizard">Modèle</label>
+                                        </div>
+                                        <select class="form-control" disabled id="selectedModelWizard" onchange="wizard.onChangeModel(this.value);">
+                                            <option disabled="" value="" selected="">Modèle</option>
+                                        <option value="a">a</option><option value="b">b</option></select>
+                                    </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <label class="input-group-text" for="w_dataviz_type">Dataviz</label>
@@ -24,6 +31,7 @@
                                         <select class="custom-select" id="w_dataviz_type">
                                         </select>
                                     </div>
+
                                     <div id="dataviz-attributes">
 
                                         <div class="input-group input-group-sm mb-3">

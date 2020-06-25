@@ -6,16 +6,43 @@ wizard = (function () {
     /*
      * Wizard needs data to vizualize dataviz configuration
      * each data sample linked to dataviz is stored for next usage
-     * in _satoreData and active dataviz data is stored in _data
+     * in _storeData and active dataviz data if is stored in _data
      */
 
     var _data = {};
 
+    var _storeData = {};
+
+    /*
+     * _dataviz_infos from admin.getDataviz(datavizId);
+     *
+     * {
+        "dataviz":"epci_surface_batie_lycee",
+        "description":"",
+        "job":"epci_edr",
+        "level":"epci",
+        "source":"région Bretagne",
+        "title":"Surface bâtie lycée par EPCI",
+        "type":"figure",
+        "unit":"m²",
+        "viz":"{
+                    "type":"figure",
+                    "data":{},
+                    "properties":{
+                        "id":"epci_surface_batie_lycee",
+                        "model":"b",
+                        "unit":"m²",
+                        "icon":"icon-appartement"
+                    }
+            },
+        "year":"2020"
+        }
+     */
+
+
     var _dataviz_infos = {};
 
     var _dataviz_definition = {};
-
-    var _storeData = {};
 
     /*
      * ExistingConfig is a dataviz
@@ -232,7 +259,8 @@ wizard = (function () {
      * this method is called by  _onChangeDatavizType linked to w_dataviz_type change event
      */
     _autoConfig = function (dataviz) {
-        var colors = composer.colors() || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
+        let modelId = document.getElementById("selectedModelWizard").value;
+        var colors = composer.models()[modelId].parameters.colors || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
         var unit = _dataviz_infos.unit;
         $("#w_unit").val(unit);
         //significative label if is true, allow chart and extra column in table
@@ -470,10 +498,11 @@ wizard = (function () {
         if (e.relatedTarget.dataset.component === "store") {
             //deactivate button save in report
             document.getElementById("wizard_add").classList.add("hidden");
-            let model = composer.activeModel() || composer.models().b;
-            wizard.updateIconList(model);
+            //activate model selection
+            document.getElementById("selectedModelWizard").disabled = false;
         } else {
             document.getElementById("wizard_add").classList.remove("hidden");
+            document.getElementById("selectedModelWizard").disabled = true;
         }
         //Get datavizid linked to the wizard modal
         var datavizId = $(e.relatedTarget).attr('data-related-id');
@@ -492,15 +521,27 @@ wizard = (function () {
         var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
 
         if (_dataviz_infos && _dataviz_infos.viz && !yetConfigured) {
+            //Occurs when wizard is called from store
             var viz = JSON.parse(_dataviz_infos.viz);
+            //Enable the model if defined
+            let modelId = viz.properties.model || "b";
+            let model ="";
+            if (modelId) {
+                document.getElementById("selectedModelWizard").value = modelId;
+                model = composer.models()[modelId];
+                wizard.updateIconList(model);
+            } else {
+                document.getElementById("selectedModelWizard").value = "";
+            }
             _data = viz.data[viz.properties.id];
             _json2form(viz);
             _existingConfig = viz;
         } else if (yetConfigured) {
-            //Get the config
+            //Occurs when wizard is called from report composer and dataviz is yet configured
             var _code = $($.parseHTML(yetConfigured)).find(".dataviz");
             _existingConfig = html2json(_code[0]);
         } else {
+            //Occurs when wizard is called from report composer
             _existingConfig = false;
             //download data for this dataviz if necessary
             if (!_storeData[datavizId]) {
@@ -535,6 +576,18 @@ wizard = (function () {
 
     };
 
+    var _onChangeModel = function (modelId) {
+        let model = composer.models()[modelId];
+        _updateIconList(model);
+        _updateStyle(model);
+
+    };
+
+    var _updateStyle = function (model) {
+        $("#wizard-result style").remove();
+        $("#wizard-result").append(model.style);
+    };
+
     var html2json = function (html) {
         //Get the config from html attributes
         var properties = {};
@@ -556,11 +609,25 @@ wizard = (function () {
     };
 
     var _json2html = function (viz) {
-        //TODO save model in viz
         var modelId = viz.model || "b";
         var model = composer.models()[modelId];
         var style = model.style;
+        //TODO Refactore this
         var component = $.parseHTML(model.dataviz_components[viz.type].replace("{{dataviz}}", viz.properties.id))[0];
+        //set icon class from icon attribute for figures components
+        if (viz.properties.icon && viz.type === "figure") {
+            var figure = component.querySelector(".dataviz");
+            //remove existing icon class eg icon-default
+            figure.classList.forEach(className => {
+                if (className.startsWith('icon-')) {
+                    figure.classList.remove(className);
+                }
+            });
+            //add icon class
+            figure.classList.add(viz.properties.icon);
+            figure.classList.add("custom-icon");
+        }
+
         var container = document.createElement("div");
         container.innerHTML = style;
         container.id = "yviz";
@@ -602,9 +669,11 @@ wizard = (function () {
     var _form2json = function () {
         var dataviz = $("#wizard-panel").attr("data-related-id");
         var type = $("#w_dataviz_type").val();
+        var modelId = document.getElementById("selectedModelWizard").value;
         var attributes = [];
         var properties = {
-            "id": dataviz
+            "id": dataviz,
+            "model" : modelId
         };
         $(".dataviz-attributes").each(function (id, attribute) {
             var val = $(attribute).val();
@@ -665,10 +734,11 @@ wizard = (function () {
 
     var _onValidateConfig = function () {
         var viz = _form2json();
-        var model = composer.activeModel() || composer.models().b;
+        var modelId = viz.properties.model;
+        var model = composer.models()[modelId];
         if (viz.type && viz.data && viz.properties) {
             //Get dataviz component herited from template and set attributes with properties object
-            var elem = $.parseHTML(model.dataviz_components[viz.type].replace("{{dataviz}}", viz.id));
+            var elem = $.parseHTML(model.dataviz_components[viz.type].replace("{{dataviz}}", viz.id || viz.properties.id));
             for (const [attribute, value] of Object.entries(viz.properties)) {
                 if (attribute === "id") {
                     $(elem).find(".dataviz").attr("id", value);
@@ -713,7 +783,8 @@ wizard = (function () {
     }
     var _updateColorPicker = function (saved, e) {
         var colorbtn = $("#picker-wrapper .colorbtn").length + 1;
-        var model = composer.activeModel() || composer.models().b;
+        var modelId = document.getElementById("selectedModelWizard").value;
+        var model = composer.models()[modelId];
         if (typeof saved.datasets === "undefined") {
             saved.datasets = _data.dataset.length;
         }
@@ -791,6 +862,8 @@ wizard = (function () {
         rgb2hex: _rgb2hex,
         updateIconList: _updateIconList,
         getSampleData: _getSampleData
+        onChangeModel: _onChangeModel,
+        updateStyle: _updateStyle
     }; // fin return
 
 })();
