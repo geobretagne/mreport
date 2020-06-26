@@ -787,7 +787,15 @@ admin = (function () {
             url: [report.getAppConfiguration().api, "store", datavizId].join("/"),
             data: JSON.stringify({ "viz": viz}),
             success: function (response) {
-                if (response.response === "success") {
+                if (response.response === "success" && response.data.viz) {
+                    console.log(response.data.viz);
+                    //Append local stored viz
+                    admin.getDataviz(datavizId).viz = response.data.viz;
+                    //Refresh dataviz in dataviz-modal-form
+                    if (document.getElementById("dataviz-modal-form").classList.contains("show")) {
+                        visualization.value = response.data.viz;
+                        admin.visualizeDataviz();
+                    }
                     Swal.fire({
                         title: 'Sauvegardé',
                         text: "La dataviz \'" + datavizId  + "\' a été sauvegardée comme représentation par défaut.",
