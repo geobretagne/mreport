@@ -6,10 +6,8 @@ wizard = (function () {
     /*
      * Wizard needs data to vizualize dataviz configuration
      * each data sample linked to dataviz is stored for next usage
-     * in _storeData and active dataviz data if is stored in _data
+     * in _storeData
      */
-
-    var _data = {};
 
     var _storeData = {};
 
@@ -54,7 +52,7 @@ wizard = (function () {
 
     /* Method to extract a set of data in relation with dataviz
      * and necessary to configure and visualize a dataviz for a report
-     * Result is stored in _data variable & in _storeData[xxx] to reuse it later
+     * Result is stored in _storeData[xxx] to reuse it later
      */
     var _getSampleData = function (datavizId) {
         // function countUnique is used to test if labels linked to dataviz are unique or not.
@@ -141,9 +139,8 @@ wizard = (function () {
                         }
                     }
 
-                    _data = formatedData;
                     _storeData[datavizId] = formatedData;
-                    _configureWizardOptions();
+                    _configureWizardOptions(datavizId);
 
                 } else {
                     console.log("Erreur : Impossible de récupérer l'échantillon de données : " + data);
@@ -185,8 +182,9 @@ wizard = (function () {
      * Method to configure wizard options with dataviz capabilities
      * Update options in select control #w_dataviz_type"
      */
-    var _configureWizardOptions = function () {
+    var _configureWizardOptions = function (datavizId) {
         // TODO REFACTOR THIS
+        var _data = _storeData[datavizId];
         var dataset_nb = _data.dataset.length;
         var data_nb = _data.rows;
         var data_type = "text";
@@ -259,6 +257,8 @@ wizard = (function () {
      * this method is called by  _onChangeDatavizType linked to w_dataviz_type change event
      */
     _autoConfig = function (dataviz) {
+        var datavizId = _dataviz_infos.dataviz;
+        var _data = _storeData[datavizId]
         let modelId = document.getElementById("selectedModelWizard").value;
         var colors = composer.models()[modelId].parameters.colors || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
         var unit = _dataviz_infos.unit;
@@ -337,6 +337,7 @@ wizard = (function () {
 
         */
         // get all dataviz parameters from dataviz configuration
+        var _data = _storeData[cfg.properties.id];
         $("#w_dataviz_type").val(cfg.type);
         $("#w_label").val(cfg.properties.label);
         var title = $("#w_title");
@@ -415,44 +416,6 @@ wizard = (function () {
         $("#wizard-panel").modal("hide");
     };
 
-    /*
-     * _saveDataviz. This method get dataviz definition in wizard and save it in viz dataiz field
-     *
-     */
-
-    var _saveDataviz = function () {
-        //Get current dataviz id
-        var datavizId = $("#wizard-panel").attr("data-related-id");
-        //get dataviz definition
-        var viz = JSON.stringify(_dataviz_definition);
-        $.ajax({
-            dataType: "json",
-            type: "POST",
-            contentType: 'application/json',
-            url: [report.getAppConfiguration().api, "store", datavizId].join("/"),
-            data: JSON.stringify({
-                "viz": viz
-            }),
-            success: function (response) {
-                if (response.response === "success") {
-                    Swal.fire({
-                        title: 'Sauvegardé',
-                        text: "La dataviz \'" + datavizId + "\' a été sauvegardée comme représentation par défaut.",
-                        icon: 'success',
-                        showCancelButton: false
-                    });
-                } else {
-                    alert("enregistrement échec :" + response.response);
-                }
-            },
-            error: function (a, b, c) {
-                console.log(a, b, c);
-            }
-        });
-
-
-    };
-
     // this method shows fields linked to dataviz type (table, figure, chart...)
     var _showParameters = function (dataviz) {
         $("#dataviz-attributes").show();
@@ -503,6 +466,13 @@ wizard = (function () {
         } else {
             document.getElementById("wizard_add").classList.remove("hidden");
             document.getElementById("selectedModelWizard").disabled = true;
+            //Use activeModel
+            if (composer.activeModel()) {
+                document.getElementById("selectedModelWizard").value = composer.activeModel().id;
+            } else {
+                window.alert("Erreur : Pas de modèle sélectionné !")
+                return;
+            }
         }
         //Get datavizid linked to the wizard modal
         var datavizId = $(e.relatedTarget).attr('data-related-id');
@@ -533,7 +503,9 @@ wizard = (function () {
             } else {
                 document.getElementById("selectedModelWizard").value = "";
             }
-            _data = viz.data[viz.properties.id];
+            if (!_storeData[datavizId]) {
+                _storeData[datavizId] = viz.data[viz.properties.id];
+            }
             _json2form(viz);
             _existingConfig = viz;
         } else if (yetConfigured) {
@@ -546,19 +518,26 @@ wizard = (function () {
             //download data for this dataviz if necessary
             if (!_storeData[datavizId]) {
                 _getSampleData(datavizId);
+                return;
             }
         }
 
         if (_existingConfig) {
 
             //configure wizard options with dataviz capabilities
+<<<<<<< HEAD
             _configureWizardOptions();
 
+=======
+            _configureWizardOptions(datavizId);
+>>>>>>> origin/master
             //Apply config if exists
             _applyDatavizConfig(_existingConfig);
             //Render dataviz in result panel
             setTimeout(_onValidateConfig, 500);
 
+        } else {
+            _configureWizardOptions(datavizId);
         }
 
 
@@ -714,7 +693,7 @@ wizard = (function () {
         });
 
         var fdata = {};
-        fdata[dataviz] = _data;
+        fdata[dataviz] = _storeData[dataviz];
         //Store config dtatviz in json object
         _dataviz_definition = {
             "type": type,
@@ -785,9 +764,9 @@ wizard = (function () {
         var colorbtn = $("#picker-wrapper .colorbtn").length + 1;
         var modelId = document.getElementById("selectedModelWizard").value;
         var model = composer.models()[modelId];
-        if (typeof saved.datasets === "undefined") {
+        /*if (typeof saved.datasets === "undefined") {
             saved.datasets = _data.dataset.length;
-        }
+        }*/
         if (typeof e === "undefined") {
             e = {};
         }
@@ -838,6 +817,9 @@ wizard = (function () {
                 $('#wizard-panel').on('show.bs.modal', _onWizardOpened);
                 $("#w_dataviz_type").change(_onChangeDatavizType);
                 $("#wizard_refresh").click(_onValidateConfig);
+                $("#wizard_default_save").click(function(e) {
+                    admin.saveVisualization( _dataviz_definition );
+                });
                 $("#addColor").on("click", function (e) {
                     _updateColorPicker({}, e)
                 });
@@ -857,7 +839,6 @@ wizard = (function () {
 
         init: _init,
         configureDataviz: _configureDataviz,
-        saveDataviz: _saveDataviz,
         json2html: _json2html,
         rgb2hex: _rgb2hex,
         updateIconList: _updateIconList,

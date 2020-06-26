@@ -771,6 +771,48 @@ admin = (function () {
         }
     };
 
+    /*
+     * _saveDataviz. This method get dataviz definition in wizard and save it in viz dataiz field
+     *
+     */
+
+    var _saveDataviz = function (definition) {
+        var datavizId = definition.properties.id;
+        //get dataviz definition
+        var viz = JSON.stringify(definition);
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json',
+            url: [report.getAppConfiguration().api, "store", datavizId].join("/"),
+            data: JSON.stringify({ "viz": viz}),
+            success: function (response) {
+                if (response.response === "success" && response.data.viz) {
+                    //Append local stored viz
+                    admin.getDataviz(datavizId).viz = response.data.viz;
+                    //Refresh dataviz in dataviz-modal-form
+                    if (document.getElementById("dataviz-modal-form").classList.contains("show")) {
+                        visualization.value = response.data.viz;
+                        admin.visualizeDataviz();
+                    }
+                    Swal.fire({
+                        title: 'Sauvegardé',
+                        text: "La dataviz \'" + datavizId  + "\' a été sauvegardée comme représentation par défaut.",
+                        icon: 'success',
+                        showCancelButton: false
+                    });
+                } else {
+                    alert("enregistrement échec :" + response.response);
+                }
+            },
+            error: function (a, b, c) {
+                console.log(a, b, c);
+            }
+        });
+
+
+    };
+
 
     /*
      * Public
@@ -788,7 +830,8 @@ admin = (function () {
         getDataviz: _getDataviz,
         createReport: _createReport,
         getReportData: _getReportData,
-        visualizeDataviz: _visualizeDataviz
+        visualizeDataviz: _visualizeDataviz,
+        saveVisualization: _saveDataviz
     }; // fin return
 
 })();
