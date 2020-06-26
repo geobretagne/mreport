@@ -501,6 +501,13 @@ wizard = (function () {
         } else {
             document.getElementById("wizard_add").classList.remove("hidden");
             document.getElementById("selectedModelWizard").disabled = true;
+            //Use activeModel
+            if (composer.activeModel()) {
+                document.getElementById("selectedModelWizard").value = composer.activeModel().id;
+            } else {
+                window.alert("Erreur : Pas de modèle sélectionné !")
+                return;
+            }
         }
         //Get datavizid linked to the wizard modal
         var datavizId = $(e.relatedTarget).attr('data-related-id');
