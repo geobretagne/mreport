@@ -416,42 +416,6 @@ wizard = (function () {
         $("#wizard-panel").modal("hide");
     };
 
-    /*
-     * _saveDataviz. This method get dataviz definition in wizard and save it in viz dataiz field
-     *
-     */
-
-    var _saveDataviz = function () {
-        //Get current dataviz id
-        var datavizId = $("#wizard-panel").attr("data-related-id");
-        //get dataviz definition
-        var viz = JSON.stringify(_dataviz_definition);
-        $.ajax({
-            dataType: "json",
-            type: "POST",
-            contentType: 'application/json',
-            url: [report.getAppConfiguration().api, "store", datavizId].join("/"),
-            data: JSON.stringify({ "viz": viz}),
-            success: function (response) {
-                if (response.response === "success") {
-                    Swal.fire({
-                        title: 'Sauvegardé',
-                        text: "La dataviz \'" + datavizId  + "\' a été sauvegardée comme représentation par défaut.",
-                        icon: 'success',
-                        showCancelButton: false
-                    });
-                } else {
-                    alert("enregistrement échec :" + response.response);
-                }
-            },
-            error: function (a, b, c) {
-                console.log(a, b, c);
-            }
-        });
-
-
-    };
-
     // this method shows fields linked to dataviz type (table, figure, chart...)
     var _showParameters = function (dataviz) {
         $("#dataviz-attributes").show();
@@ -840,6 +804,9 @@ wizard = (function () {
                 $('#wizard-panel').on('show.bs.modal', _onWizardOpened);
                 $("#w_dataviz_type").change(_onChangeDatavizType);
                 $("#wizard_refresh").click(_onValidateConfig);
+                $("#wizard_default_save").click(function(e) {
+                    admin.saveVisualization( _dataviz_definition );
+                });
                 $("#addColor").on("click", function (e) {
                     _updateColorPicker({}, e)
                 });
@@ -859,7 +826,6 @@ wizard = (function () {
 
         init: _init,
         configureDataviz: _configureDataviz,
-        saveDataviz: _saveDataviz,
         json2html: _json2html,
         rgb2hex: _rgb2hex,
         updateIconList: _updateIconList,
