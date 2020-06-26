@@ -788,7 +788,6 @@ admin = (function () {
             data: JSON.stringify({ "viz": viz}),
             success: function (response) {
                 if (response.response === "success" && response.data.viz) {
-                    console.log(response.data.viz);
                     //Append local stored viz
                     admin.getDataviz(datavizId).viz = response.data.viz;
                     //Refresh dataviz in dataviz-modal-form
