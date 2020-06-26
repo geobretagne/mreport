@@ -415,7 +415,10 @@ wizard = (function () {
         $("#wizard-code").text("");
         $("#wizard-panel").modal("hide");
     };
+<<<<<<< HEAD
 
+=======
+>>>>>>> dca96db3c500b13d006319d3e62d781113c2de25
     // this method shows fields linked to dataviz type (table, figure, chart...)
     var _showParameters = function (dataviz) {
         $("#dataviz-attributes").show();
@@ -526,11 +529,15 @@ wizard = (function () {
 
             //configure wizard options with dataviz capabilities
 <<<<<<< HEAD
+<<<<<<< HEAD
             _configureWizardOptions();
 
 =======
             _configureWizardOptions(datavizId);
 >>>>>>> origin/master
+=======
+            _configureWizardOptions(datavizId);
+>>>>>>> dca96db3c500b13d006319d3e62d781113c2de25
             //Apply config if exists
             _applyDatavizConfig(_existingConfig);
             //Render dataviz in result panel
