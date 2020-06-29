@@ -189,9 +189,7 @@ class DatavizManagement(Resource):
             if Dataviz.query.get(dataviz_id):
                 return {"response": "dataviz already exists."}, 403
             else:
-                print("Avant "+str(data))
                 data.update({'dataviz':dataviz_id})
-                print("Après "+str(data))
                 try:
                     dvz = Dataviz(**data)
                 except TypeError as err:
@@ -246,7 +244,8 @@ class GetReports(Resource):
         return jsonify(**data)
 
 report_fields = api.model('Report', {
-    'title': fields.String(max_length=250,required=True)
+    'title': fields.String(max_length=250,required=True),
+    'copy': fields.Boolean(False,required=False)
 })
 @report.route('/<report_id>', doc={'description':'Récupération/Création/Modification/Suppression d\'un rapport'})
 @report.doc(params={'report_id': 'identifiant du rapport'})
@@ -271,10 +270,14 @@ class GetReport(Resource):
             data = {"response": "ERROR no data supplied"}
             return data, 405
         else:
-            if Report.query.get(report_id):
+            if Report.query.get(report_id) and not data["copy"]:
                 return {"response": "The report already exists."}, 403
             else:
-                data.update({"report":report_id})
+                if data["copy"] :
+                    q = db.session.query(Report)
+                    report_id+=str(get_count(q))
+                    data.update({"title":data["title"]+" Copie"})
+                data = {'title':data["title"],'report':report_id}
                 try:
                     rep = Report(**data)
                 except TypeError as err:

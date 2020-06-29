@@ -72,7 +72,7 @@ admin = (function () {
                 //get data-id attribute of the clicked element
                 var reportId = $(e.relatedTarget).data('report-id');
                 var titre = $("#report-form .form-group label");
-                titre.html(titre.html()+" <b>"+reportId+"</b>")
+                titre.html(titre.html() + " <b>" + reportId + "</b>")
                 confirmed.attr("data-report-id", reportId)
                 var data = _report_data[reportId];
                 //populate data
@@ -141,28 +141,37 @@ admin = (function () {
         var cards = [];
         var options = ['<option value="" selected disabled>Rapport...</option>'];
         $("#reports .row").remove();
-        Object.entries(_report_data).forEach(function (a) {
-            var id = a[0];
-            var data = a[1];
+        var objArray = [];
+        for (var prop in _report_data) {
+            if (Object.prototype.hasOwnProperty.call(_report_data, prop)) {
+                objArray.push(_report_data[prop]);
+            }
+        }
+        objArray.sort(function (a, b) {
+            return a.title.localeCompare(b.title);
+        });
+        objArray.forEach(function (elem) {
             cards.push(
-                ['<div class="col-md-3 col-sm-12 cards">',
-                    '<div class="card report" data-dataviz-id="' + id + '">',
+                ['<div class="col-md-4 col-sm-12  cards">',
+                    '<div class="card report" data-dataviz-id="' + elem.report + '">',
                     '<div class="card-body">',
-                    '<h5 class="card-title">' + data.title + '</h5>',
-                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + id + '" data-target="#report-modal-form">Sourcer</a>',
-                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + id + '" data-target="#report-modal-form">Supprimer</a>',
-                    '<a href="' + report.getAppConfiguration().location + '/' + id + '" target="_blank" class="card-link">Afficher</a>',
-                    '<a href="#" onclick="composer.compose(\'' + id + '\')" class="card-link">Composer</a>',
+                    '<h5 class="card-title">' + elem.title + '</h5>',
+                    '<a class="btn duplicate"><i class="fa fa-clone" aria-hidden="true"></i></a>',
+                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + elem.report + '" data-target="#report-modal-form">Sourcer</a>',
+                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + elem.report + '" data-target="#report-modal-form">Supprimer</a>',
+                    '<a href="' + report.getAppConfiguration().location + '/' + elem.report + '" target="_blank" class="card-link">Afficher</a>',
+                    '<a href="#" onclick="composer.compose(\'' + elem.report + '\')" class="card-link">Composer</a>',
                     '</div>',
                     '</div>',
                     '</div>'
                 ].join("")
             );
-            options.push('<option value="' + id + '">' + data.title + '</option>');
+            options.push('<option value="' + elem.report + '">' + elem.title + '</option>');
         });
 
         $("#reports").append('<div class="row">' + cards.join("") + '</div>');
         $("#selectedReport, #selectedReportComposer").html(options.join(""));
+        $('.duplicate').on('click', _duplicateReport);
     };
 
     var _showDataviz = function () {
@@ -354,7 +363,7 @@ admin = (function () {
             success: function (data) {
                 if (data.response === "success") {
                     //update local data
-                    console.log(data.report_composition);
+                    console.log(data);
                     _initReports();
 
                 } else {
@@ -401,7 +410,8 @@ admin = (function () {
             contentType: "application/json",
             type: "PUT",
             data: JSON.stringify({
-                "title": report_name
+                "title": report_name,
+                "copy": false
             }),
             url: [report.getAppConfiguration().api, "report", report_id].join("/"),
             success: function (data) {
@@ -785,7 +795,9 @@ admin = (function () {
             type: "POST",
             contentType: 'application/json',
             url: [report.getAppConfiguration().api, "store", datavizId].join("/"),
-            data: JSON.stringify({ "viz": viz}),
+            data: JSON.stringify({
+                "viz": viz
+            }),
             success: function (response) {
                 if (response.response === "success" && response.data.viz) {
                     //Append local stored viz
@@ -797,7 +809,7 @@ admin = (function () {
                     }
                     Swal.fire({
                         title: 'Sauvegardé',
-                        text: "La dataviz \'" + datavizId  + "\' a été sauvegardée comme représentation par défaut.",
+                        text: "La dataviz \'" + datavizId + "\' a été sauvegardée comme représentation par défaut.",
                         icon: 'success',
                         showCancelButton: false
                     });
@@ -812,7 +824,79 @@ admin = (function () {
 
 
     };
+    var _duplicateReport = function (event) {
+        var report_title = event.currentTarget.previousElementSibling.innerHTML;
+        Swal.fire({
+            title: 'Voulez vous copier le rapport \'' + report_title + '\' ?',
+            icon: 'question',
+            showCancelButton: true,
+            cancelButtonText: 'Annuler',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmer'
+        }).then((result) => {
+            if (result.value) {
+                var reportDataset = event.currentTarget.nextElementSibling.dataset;
+                var reportId = reportDataset.reportId;
+                var reportData = _report_data[reportId];
+                var datavizs = [];
+                reportData.dataviz.forEach(function (elem) {
+                    datavizs.push({
+                        "dataviz": elem
+                    });
+                });
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "PUT",
+                    data: JSON.stringify({
+                        "title": report_title,
+                        "copy": true
+                    }),
+                    url: [report.getAppConfiguration().api, "report", reportId].join("/"),
+                    success: function (data) {
+                        if (data.response === "success") {
+                            //add dataviz to report
+                            if (datavizs.length > 0) {
+                                _addDatavizToReport(data.report, datavizs);
+                            } else {
+                                _initReports();
+                            }
+                            Swal.fire({
+                                title: 'Copié',
+                                text: "Le rapport \'" + report_title + "\' a été copié",
+                                icon: 'success',
+                                showCancelButton: false
+                            });
+                        } else {
+                            $('#report-modal-form').modal('hide');
+                            var err = data.error;
+                            Swal.fire(
+                                'Une erreur s\'est produite',
+                                err,
+                                'error'
+                            );
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $('#report-modal-form').modal('hide');
+                        var err = _parseError(xhr.responseText);
+                        Swal.fire(
+                            'Une erreur s\'est produite',
+                            err,
+                            'error'
+                        );
+                    }
+                });
 
+            }
+        })
+
+
+
+
+
+    }
 
     /*
      * Public

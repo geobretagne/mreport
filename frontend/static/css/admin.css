@@ -419,3 +419,22 @@ h5>.badge {
 #yviz .btn {
   margin-top: 10px;
 }
+.duplicate{
+  position: absolute;
+  top:0;
+  right: 0;
+  background-color: white;
+  transition: 0.2s;
+}
+.duplicate i {
+  color: black;
+  transition: 0.2s;
+}
+.duplicate:hover{
+  background-color: mediumseagreen;
+  transition: 0.2s;
+}
+.duplicate:hover i{
+  color: white;
+  transition: 0.2s;
+}

@@ -1,5 +1,5 @@
 from sqlalchemy.exc import NoInspectionAvailable
-from sqlalchemy import inspect
+from sqlalchemy import inspect, func
 import shutil
 ## Use for (select *) from a single table ex : {'datavizs': json.loads(json.dumps([row2dict(r) for r in result]))}
 def row2dict(row,label="null"):
@@ -66,3 +66,7 @@ def updateReportHTML(src, html, css, composer):
         return 'success'
     except IOError as e:
         return "I/O error({0}): {1}".format(e.errno, e.strerror)
+def get_count(q):
+    count_q = q.statement.with_only_columns([func.count()]).order_by(None)
+    count = q.session.execute(count_q).scalar()
+    return count+1
