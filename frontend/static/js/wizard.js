@@ -171,7 +171,7 @@ wizard = (function () {
         _resetTextField(document.getElementById("w_desc"));
 
     };
-    var _resetTextField = function(textField){
+    var _resetTextField = function (textField) {
         var style = textField.style;
         style.color = "rgb(73, 80, 87)";
         style.fontSize = "1em"
@@ -343,20 +343,19 @@ wizard = (function () {
         var title = $("#w_title");
         var description = $("#w_desc");
         if (cfg.properties.title) {
-            let cfgTitle = cfg.properties.title;
+            let cfgTitle = JSON.parse(cfg.properties.title);
             title.val(cfgTitle.text);
             for (var styleproperty in cfgTitle.style) {
                 title.css(styleproperty, cfgTitle.style[styleproperty]);
             }
         }
         if (cfg.properties.description) {
-            let cfgDesc = cfg.properties.description;
+            let cfgDesc = JSON.parse(cfg.properties.description);
             description.val(cfgDesc.text);
             for (var styleproperty in cfgDesc.style) {
                 description.css(styleproperty, cfgDesc.style[styleproperty]);
             }
         }
-
         // Set colors for Piklor lib
         $("#w_colors").val(cfg.properties.colors);
         let basecolors = document.getElementById("w_colors").value.split(',');
@@ -416,7 +415,6 @@ wizard = (function () {
         $("#wizard-code").text("");
         $("#wizard-panel").modal("hide");
     };
-
     // this method shows fields linked to dataviz type (table, figure, chart...)
     var _showParameters = function (dataviz) {
         $("#dataviz-attributes").show();
@@ -457,6 +455,7 @@ wizard = (function () {
      */
 
     var _onWizardOpened = function (e) {
+
         //Detect wich component calls this
         if (e.relatedTarget.dataset.component === "store") {
             //deactivate button save in report
@@ -478,6 +477,7 @@ wizard = (function () {
         var datavizId = $(e.relatedTarget).attr('data-related-id');
         //Get dataviz infos (description , titile, unit, viz...) if exists
         _dataviz_infos = admin.getDataviz(datavizId);
+
         //Set datavizid in the modal
         $(e.currentTarget).attr("data-related-id", datavizId);
         $(e.currentTarget).find(".modal-title").text(datavizId);
@@ -506,7 +506,7 @@ wizard = (function () {
                 _storeData[datavizId] = viz.data[viz.properties.id];
             }
             _json2form(viz);
-            _existingConfig= viz;
+            _existingConfig = viz;
         } else if (yetConfigured) {
             //Occurs when wizard is called from report composer and dataviz is yet configured
             var _code = $($.parseHTML(yetConfigured)).find(".dataviz");
@@ -522,8 +522,10 @@ wizard = (function () {
         }
 
         if (_existingConfig) {
+
             //configure wizard options with dataviz capabilities
             _configureWizardOptions(datavizId);
+
             //Apply config if exists
             _applyDatavizConfig(_existingConfig);
             //Render dataviz in result panel
@@ -649,20 +651,20 @@ wizard = (function () {
         };
         $(".dataviz-attributes").each(function (id, attribute) {
             var val = $(attribute).val();
-            if (attribute.classList.contains("addedText") && val.length >=1) {
+            if (attribute.classList.contains("addedText") && val.length >= 1) {
                 let style = window.getComputedStyle(attribute, null);
                 val = '{\
-                    "text": "'+val+'",\
+                    "text": "' + val + '",\
                     "style": {\
-                        "fontSize": "'+style.getPropertyValue("font-size")+'",\
-                        "color": "'+style.getPropertyValue("color")+'",\
-                        "fontFamily": "'+style.getPropertyValue("font-family").replace(/"/g,"'")+'",\
-                        "fontWeight": "'+style.getPropertyValue("font-weight")+'"\
+                        "fontSize": "' + style.getPropertyValue("font-size") + '",\
+                        "color": "' + style.getPropertyValue("color") + '",\
+                        "fontFamily": "' + style.getPropertyValue("font-family").replace(/"/g, "'") + '",\
+                        "fontWeight": "' + style.getPropertyValue("font-weight") + '"\
                     }\
                 }'
             }
             var prop = $(attribute).attr("data-prop");
-            if (val && val.length >= 1 ) {
+            if (val && val.length >= 1) {
                 attributes.push("data-" + prop + '="' + val + '"');
                 attributes.push({
                     "prop": prop,
@@ -835,6 +837,7 @@ wizard = (function () {
         json2html: _json2html,
         rgb2hex: _rgb2hex,
         updateIconList: _updateIconList,
+        getSampleData: _getSampleData,
         onChangeModel: _onChangeModel,
         updateStyle: _updateStyle
     }; // fin return

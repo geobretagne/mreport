@@ -404,8 +404,9 @@ class GetReportComposition(Resource):
             else:
                 html = data.get('html')
                 css = data.get('css')
+                composer = data.get('composer')
                 if (html):
-                    up = updateReportHTML("/".join([app.config['MREPORT_REPORTS'], report_id, "report"]), html, css)
+                    up = updateReportHTML("/".join([app.config['MREPORT_REPORTS'], report_id, "report"]), html, css, composer)
                     return {"response": up}
                 else:
                     data = {"response": "ERROR bad data supplied"}
