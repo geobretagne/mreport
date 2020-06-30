@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, send_from_directory, abort
+import shutil
 
 mreport = Blueprint('mreport', __name__, template_folder='templates',
                      static_url_path='/static', static_folder='static')

@@ -273,16 +273,21 @@ class GetReport(Resource):
             if Report.query.get(report_id) and not data["copy"]:
                 return {"response": "The report already exists."}, 403
             else:
+                copy = False
                 if data["copy"] :
                     q = db.session.query(Report)
+                    report_id_og = report_id
                     report_id+=str(get_count(q))
                     data.update({"title":data["title"]+" Copie"})
+                    copy=True
                 data = {'title':data["title"],'report':report_id}
                 try:
                     rep = Report(**data)
                 except TypeError as err:
                     return {"response": str(err)}, 400
                 source = "/".join([app.config['MREPORT_REPORTS'], "models", "default"])
+                if copy :
+                    source = "/".join([app.config['MREPORT_REPORTS'], report_id_og])
                 destination = "/".join([app.config['MREPORT_REPORTS'], report_id])
                 fss = createFileSystemStructure(source, destination)
                 if fss == 'success':

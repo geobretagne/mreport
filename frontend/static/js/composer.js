@@ -282,7 +282,7 @@ composer = (function () {
         var reportId = $(this).val();
         //get and show report title
         var title = admin.getReportData(reportId).title;
-        $("#composer-report-title").text(reportId);
+        $("#composer-report-title").text(title);
         //Update dataviz items in menu list
         var lst = [];
         var dataviz_lst = admin.getReportData(reportId).dataviz;
