@@ -682,7 +682,7 @@ wizard = (function () {
         ["columns"].forEach(function (prop) {
             if (properties[prop]) {
                 properties[prop] = properties[prop].split(",").map(function (val) {
-                    return Number(val) - 1;
+                    return Number(val);
                 });
             }
         });
