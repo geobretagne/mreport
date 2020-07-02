@@ -268,7 +268,7 @@ wizard = (function () {
         var nb_datasets = _data.dataset.length;
         var columns = [];
         for (var i = 0; i < nb_datasets; i++) {
-            columns.push(i + 1);
+            columns.push(i);
         }
 
         switch (dataviz) {
@@ -380,6 +380,10 @@ wizard = (function () {
             $("#w_chart_opacity").val(cfg.properties.opacity);
             $("#w_chart_type").val(cfg.properties.type);
         } else if (cfg.type === "table") {
+            //hugly
+            if (cfg.properties.columns[0] === 1) {
+                cfg.properties.columns = value.map(x => x - 1);
+            }
             $("#w_table_column").val(cfg.properties.columns);
             if (cfg.properties.extracolumn) {
                 //show and set extracolumn parameter
@@ -628,8 +632,14 @@ wizard = (function () {
         //Update wizard form with default dataviz values
         $("#w_dataviz_type").val(viz.type);
         for (const [attribute, value] of Object.entries(viz.properties)) {
-            if (attribute !== "id") {
+            if (attribute !== "id" && attribute !== "columns") {
                 $("#w_" + attribute).val(value);
+            } else if (attribute === "columns") {
+                //hugly
+                if (value[0] === 1) {
+                    value = value.map(x => x - 1);
+                }
+                $("#w_table_column").val(value);
             }
         }
     }
