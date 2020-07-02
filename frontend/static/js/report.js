@@ -263,7 +263,7 @@ report = (function () {
             }
             if (item.columns && !Array.isArray(item.columns)) {
                 properties["columns"] = item.columns.split(",").map(function (value) {
-                    return Number(value) - 1;
+                    return Number(value);
                 });
             }
 
