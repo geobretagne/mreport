@@ -578,22 +578,33 @@ report = (function () {
                 "maintainAspectRatio": true,
                 tooltips: {
                     callbacks: {
+                        title: function(tooltipItem, data) {
+                            var title = "";
+                            if(data['datasets'].length>1)
+                                title = data['datasets'][tooltipItem[0].datasetIndex].label
+                            else
+                                title = data['labels'][tooltipItem[0]['index']]
+                            return title;
+                        },
                         label: function(tooltipItem, data) {
-                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
-                            if (label) {
-                                label += ': ';
+                            var value = data['datasets'][tooltipItem.datasetIndex]['data'][tooltipItem['index']];
+                            var total = false;
+                            if(chart.config.type==="pie"){
+                                total = data['datasets'][tooltipItem.datasetIndex]['data'].reduce(function(a,b){
+                                    return (+a)+(+b);
+                                })
                             }
-                            var value = tooltipItem.yLabel;
-                            // test value if is numeric and then format it
                             if (!isNaN(parseInt(value))) {
                                 if (unit === "€") {
-                                    value = (Math.round(tooltipItem.yLabel * 100) / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR',});
-                                } else {
-                                    value = (Math.round(tooltipItem.yLabel * 100) / 100).toLocaleString();
+                                    value = (Math.round(value * 100) / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR',});
+                                }else if(total){
+                                    value = ((value / total)*100).toFixed(2) + " %";
+                                }
+                                else {
+                                    value = (Math.round(value * 100) / 100).toLocaleString();
                                 }
                             }
-                            label += value;
-                            return label;
+                            return value;
                         }
                     }
                 }
