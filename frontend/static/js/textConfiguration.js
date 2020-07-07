@@ -89,8 +89,6 @@ textedit = (function () {
             var newValue = editedStyle[cameled];
             var input =  document.getElementById("w_text_"+cameled);
             // Handle particular cases
-            if(newValue==="normal")
-                newValue="0px";
             if(item==="color")
                 newValue = wizard.rgb2hex(editedStyle[item], _hexDigits);
             if(input.type==="number")
@@ -112,6 +110,8 @@ textedit = (function () {
     }
     var _removeLetters = function(elem){
         elem = elem.replace(/[^\d.,-]/g,'');
+        if(elem.length===0)
+            elem = 0
         return elem;
     }
     var _saveConfig = function () {
@@ -204,7 +204,7 @@ textedit = (function () {
                 // Bind Inputs to update the text when changed
                 var inputToBind = document.getElementsByClassName("textEditToBind");
                 for (let i = 0; i < inputToBind.length; i++) {
-                    inputToBind[i].addEventListener("click", function (event) {
+                    inputToBind[i].addEventListener("change", function (event) {
                         _updateInput(event, this)
                     })
                 }
