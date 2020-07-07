@@ -751,32 +751,26 @@ report = (function () {
         }
     };
     var _configTitleDesc = function (title, description) {
+        var parent = document.getElementById("wizard-result");
         // Add title and description
         if (newtitle = title) {
-            _addTitle(newtitle);
+            _addTitleOrDescription(JSON.parse(newtitle),"title",false,parent);
         }
         if (newdesc = description) {
-            _addDescription(newdesc);
+            _addTitleOrDescription(JSON.parse(newdesc),"summary",true,parent);
         }
     }
-    var _addTitle = function (title) {
-        title = JSON.parse(title);
+    var _addTitleOrDescription = function (element,type,append,parent) {
         var parser = new DOMParser();
-        let textStyle = 'style="font-size:'+title.style.fontSize+';font-weight:'+title.style.fontWeight+';color:'+title.style.color+';font-family:'+title.style.fontFamily+'"';
-        let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text" '+textStyle+'>' + title.text + '</h6></div>';
-        titleDiv = parser.parseFromString(titleDiv, "text/html").getElementsByClassName("report-chart-title")[0];
-        let result = document.getElementById("wizard-result");
-        result.prepend(titleDiv);
-    }
-    var _addDescription = function (description) {
-        description = JSON.parse(description);
-        var parser = new DOMParser();
-        let textStyle = 'style="font-size:'+description.style.fontSize+';font-weight:'+description.style.fontWeight+';color:'+description.style.color+';font-family:'+description.style.fontFamily+'"';
-        let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text" '+textStyle+'>' + description.text + '</p></div>';
-        descDiv = parser.parseFromString(descDiv, "text/html").getElementsByClassName("report-chart-summary")[0];
-        let result = document.getElementById("wizard-result");
-        result.append(descDiv);
-
+        let textStyle = textedit.generateStyle(element);
+        let elementDiv = textedit.textPatterns[type];
+        elementDiv = parser.parseFromString(elementDiv, "text/html").getElementsByClassName("report-chart-"+type)[0];
+        elementDiv.getElementsByClassName("editable-text")[0].style.cssText=textStyle;
+        elementDiv.getElementsByClassName("editable-text")[0].innerText=element.text;
+        if(append)
+            parent.append(elementDiv);
+        else
+            parent.prepend(elementDiv);
     }
     var _createText = function (data, text) {
         var el = _getDomElement("text", text.id);
@@ -1107,7 +1101,8 @@ report = (function () {
         getAppConfiguration: function () {
             return _appConf;
         },
-        init: _init
+        init: _init,
+        addTitleOrDescription:_addTitleOrDescription
     }; // fin return
 
 })();

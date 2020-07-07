@@ -8,6 +8,18 @@ textedit = (function () {
 
     var _hexDigits = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
 
+    var _styleProperties = ["font-size","font-weight","color","font-family"];
+
+    var _textPatterns = {
+        "title":'<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text"></h6></div>',
+        "summary":'<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text"></p></div>'
+    }
+    var _defaultStyleValues = {
+        "color":"rgb(73, 80, 87)",
+        "font-size":"1em",
+        "font-family":'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+        "font-weight":"400"
+    }
     var _configureButtons = function (target = null) {
         if (target === null) {
             target = document;
@@ -104,11 +116,10 @@ textedit = (function () {
         _applyTextStyle(_currentInput,style);
 
         // Set data attribute to restore config
-        _currentInput.dataset.textColor = style.color;
-        _currentInput.dataset.textSize = style.fontSize;
-        _currentInput.dataset.textFont = style.fontFamily;
-        _currentInput.dataset.textWeight = style.fontWeight;
-
+        _styleProperties.forEach(function(item){
+            let prop = _camelize(item);
+            _currentInput.dataset[prop]=style[prop];
+        })
         // Close modal
         $("#textEdit").modal("hide");
 
@@ -137,23 +148,44 @@ textedit = (function () {
         }
     }
     var _getTextStyle = function (elem) {
-        let style = window.getComputedStyle(elem,null);
-        let fontSize = (parseInt(style.getPropertyValue("font-size").substr(0, 2)) / 16) + "em";
+        var style = window.getComputedStyle(elem,null);
+        var fontSize = (parseInt(style.getPropertyValue("font-size").substr(0, 2)) / 16) + "em";
         if(elem.style.fontSize){
             fontSize=elem.style.fontSize;
         }
-        return {
-            "color": style.getPropertyValue("color"),
-            "fontSize": fontSize,
-            "fontFamily": style.getPropertyValue("font-family"),
-            "fontWeight": style.getPropertyValue("font-weight")
+        var baseProperty = {};
+        _styleProperties.forEach(function(item){
+            let property = _camelize(item);
+            baseProperty[property]=style.getPropertyValue(item)
+        })
+        var extraProperty = {
+            "fontSize": fontSize
         }
+        Object.assign(baseProperty,extraProperty)
+        return baseProperty
     }
     var _applyTextStyle = function(elem,style){
-        elem.style.fontSize = style.fontSize;
-        elem.style.color = style.color;
-        elem.style.fontFamily = style.fontFamily;
-        elem.style.fontWeight = style.fontWeight;
+        _styleProperties.forEach(function(item){
+            let property = _camelize(item);
+            elem.style[property] = style[property]
+        })
+        return elem;
+    }
+    var _generateStyle = function(element){
+        var styleText = '';
+        _styleProperties.forEach(function(elem){
+            let propertyValue = "";
+            if(value = element.style[_camelize(elem)])
+                propertyValue = value
+                styleText+=elem+":"+propertyValue+";";
+        })
+        return styleText;
+    }
+    var _camelize = function camelize(str) {
+        return str.replace(/\W+(.)/g, function(match, chr)
+        {
+              return chr.toUpperCase();
+        });
     }
     var _init = function () {
         $.ajax({
@@ -180,8 +212,10 @@ textedit = (function () {
         configureButtons: _configureButtons,
         init: _init,
         getTextStyle:_getTextStyle,
-        applyTextStyle:_applyTextStyle
-
+        applyTextStyle:_applyTextStyle,
+        generateStyle:_generateStyle,
+        textPatterns:_textPatterns,
+        defaultStyleValues:_defaultStyleValues
     }; // fin return
 
 })();

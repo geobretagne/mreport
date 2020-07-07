@@ -477,10 +477,7 @@ composer = (function () {
                 $(tmp_bloc).find(".badge").remove();
                 tmp_bloc.removeClass("list-group-item");
                 let style = textedit.getTextStyle(tmp_bloc[0]);
-                tmp_bloc[0].style.fontSize = style.fontSize;
-                tmp_bloc[0].style.color = style.color;
-                tmp_bloc[0].style.fontFamily = style.fontFamily;
-                tmp_bloc[0].style.fontWeight = style.fontWeight;
+                tmp_bloc[0]=textedit.applyTextStyle(tmp_bloc[0],style);
             } else {
                 // loop on dataviz-container
                 $(tmp_bloc).find(".dataviz-container").each(function (id, container) {
@@ -533,26 +530,16 @@ composer = (function () {
         var dvzHTML = $($.parseHTML(dvz)[0]);
         var parentDiv = document.createElement("DIV");
         parentDiv.classList.add("report-flex-centered");
-        var parser = new DOMParser();
         parentDiv.appendChild(dvzHTML[0]);
-        dvz = parentDiv.outerHTML;
         if (title = dvzHTML.find('.dataviz').data("title")) {
-            let textStyle = 'style="font-size:' + title.style.fontSize + ';font-weight:' + title.style.fontWeight + ';color:' + title.style.color + ';font-family:' + title.style.fontFamily + '"';
-            let titleDiv = '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text" ' + textStyle + '>' + title.text + '</h6></div>';
-            titleDiv = parser.parseFromString(titleDiv, "text/html").getElementsByClassName("report-chart-title")[0];
-            parentDiv.prepend(titleDiv);
-            dvz = parentDiv.outerHTML;
+            report.addTitleOrDescription(title,"title",false,parentDiv);
         }
         if (description = dvzHTML.find('.dataviz').data("description")) {
-            let textStyle = 'style="font-size:' + description.style.fontSize + ';font-weight:' + description.style.fontWeight + ';color:' + description.style.color + ';font-family:' + description.style.fontFamily + '"';
-            let descDiv = '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text" ' + textStyle + '>' + description.text + '</p></div>';
-            descDiv = parser.parseFromString(descDiv, "text/html").getElementsByClassName("report-chart-summary")[0];
-            parentDiv.append(descDiv);
-            dvz = parentDiv.outerHTML;
+            report.addTitleOrDescription(description,"summary",true,parentDiv);
         }
+        dvz = parentDiv.outerHTML;
         return dvz;
     }
-
     /*
      * _compose.  This public method is used to activate composer for a given report
      * eg composer.compose("test");

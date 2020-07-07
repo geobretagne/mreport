@@ -172,11 +172,7 @@ wizard = (function () {
 
     };
     var _resetTextField = function (textField) {
-        var style = textField.style;
-        style.color = "rgb(73, 80, 87)";
-        style.fontSize = "1em"
-        style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"';
-        style.fontWeight = "400"
+        textField = textedit.applyTextStyle(textField,textedit.defaultStyleValues)
     }
     /*
      * Method to configure wizard options with dataviz capabilities
