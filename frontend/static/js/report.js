@@ -580,10 +580,16 @@ report = (function () {
                     callbacks: {
                         title: function(tooltipItem, data) {
                             var title = "";
-                            if(data['datasets'].length>1)
-                                title = data['datasets'][tooltipItem[0].datasetIndex].label
-                            else
+                            if(data['datasets'].length>1){
+                                if(chart.config.type==="horizontalBar"){
+                                    title = tooltipItem[0].yLabel;
+                                }else{
+                                    title = data['datasets'][tooltipItem[0].datasetIndex].label;
+                                }
+                            }
+                            else{
                                 title = data['labels'][tooltipItem[0]['index']]
+                            }
                             return title;
                         },
                         label: function(tooltipItem, data) {
@@ -594,6 +600,7 @@ report = (function () {
                                     return (+a)+(+b);
                                 })
                             }
+                            
                             if (!isNaN(parseInt(value))) {
                                 if (unit === "€") {
                                     value = (Math.round(value * 100) / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR',});
@@ -603,6 +610,9 @@ report = (function () {
                                 else {
                                     value = (Math.round(value * 100) / 100).toLocaleString();
                                 }
+                            }
+                            if(chart.config.type==="horizontalBar"){
+                                value = data.datasets[tooltipItem.datasetIndex].label+ " : " + value;                                
                             }
                             return value;
                         }
