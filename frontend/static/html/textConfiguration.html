@@ -13,35 +13,43 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Police</span>
                     </div>
-                    <select class="custom-select chart form-control" data-prop="type"
-                        id="w_text_font">
-
+                    <select class="custom-select chart form-control textEditToBind" data-type="fontFamily" data-unit="" id="w_text_fontFamily">
                     </select>
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Taille de police</span>
                     </div>
-                    <input type="number" class="figure chart table form-control" min="1" step="0.5"
-                        id="w_text_fontsize">
+                    <input type="number" class="figure chart table form-control textEditToBind" data-type="fontSize" data-unit="em" min="1" step="0.5"
+                        id="w_text_fontSize">
                     <div class="input-group-append">
                         <span class="input-group-text">em</span>
                     </div>
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
+                        <span class="input-group-text">Espacement des lettres</span>
+                    </div>
+                    <input type="number" class="figure chart table form-control textEditToBind" data-type="letterSpacing" data-unit="px" min="0" step="1"
+                        id="w_text_letterSpacing">
+                    <div class="input-group-append">
+                        <span class="input-group-text">px</span>
+                    </div>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
                         <span class="input-group-text">Graisse de police</span>
                     </div>
-                    <input type="number" class="figure chart table form-control" min="0" step="100"
-                        id="w_text_fontweight">
+                    <input type="number" class="figure chart table form-control textEditToBind" data-type="fontWeight" data-unit="" min="0" step="100"
+                        id="w_text_fontWeight">
                 </div>
                 <div class="textcolor-config-wrapper">
                     <div class="input-group input-group-sm mb-3">
                         <div class="input-group-prepend">
                             <button class="textColorEditBtn btn btn-warning notdvz">Couleur de police</button>
                         </div>
-                        <input type="text" data-prop="title_color"
-                            class="figure chart table form-control input" style="width: 50%;" id="w_text_color">
+                        <input type="text" class="figure chart table form-control input" style="width: 50%;"
+                            id="w_text_color">
                         <div class="text-color-picker">
                         </div>
 
@@ -51,8 +59,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Texte</span>
                     </div>
-                    <input type="text" data-prop="title_text"
-                        class="figure chart table form-control input" id="w_text_text">
+                    <input type="text" class="figure chart table form-control input" id="w_text_text">
                 </div>
 
             </div>

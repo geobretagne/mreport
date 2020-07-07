@@ -705,7 +705,6 @@ report = (function () {
                     datasets_index.push(id);
                 });
             }
-            console.log(datasets_index);
             if (table.extracolumn) {
                 columns.push('<th scope="col">' + table.extracolumn + '</th>');
             }

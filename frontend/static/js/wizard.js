@@ -658,15 +658,10 @@ wizard = (function () {
         $(".dataviz-attributes").each(function (id, attribute) {
             var val = $(attribute).val();
             if (attribute.classList.contains("addedText") && val.length >= 1) {
-                let style = window.getComputedStyle(attribute, null);
+                let style = JSON.stringify(textedit.getTextStyle(attribute));
                 val = '{\
                     "text": "' + val + '",\
-                    "style": {\
-                        "fontSize": "' + style.getPropertyValue("font-size") + '",\
-                        "color": "' + style.getPropertyValue("color") + '",\
-                        "fontFamily": "' + style.getPropertyValue("font-family").replace(/"/g, "'") + '",\
-                        "fontWeight": "' + style.getPropertyValue("font-weight") + '"\
-                    }\
+                    "style": '+style+'\
                 }'
             }
             var prop = $(attribute).attr("data-prop");
