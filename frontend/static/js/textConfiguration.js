@@ -61,7 +61,6 @@ textedit = (function () {
             input.appendChild(div.cloneNode(true));
         }
 
-
     }
     var _onTextEditOpened = function (event) {
 
@@ -73,9 +72,6 @@ textedit = (function () {
 
         // Save this input into a global variable reusable later
         _currentInput = editedInput;
-
-        // Get all the data attribute of the button
-        var config = button.dataset;
 
         // Set the text of the modal to be the text of the editedInput
         var modalText = document.getElementById("w_text_text");
@@ -128,11 +124,6 @@ textedit = (function () {
         // Set color to update preview
         _applyTextStyle(_currentInput, style);
 
-        // Set data attribute to restore config
-        _styleProperties.forEach(function (item) {
-            let prop = _camelize(item);
-            _currentInput.dataset[prop] = style[prop];
-        })
         // Close modal
         $("#textEdit").modal("hide");
 
@@ -156,13 +147,13 @@ textedit = (function () {
     }
     var _getTextStyle = function (elem) {
         var style = window.getComputedStyle(elem, null);
-        var fontSize = (parseInt(style.getPropertyValue("font-size").substr(0, 2)) / 16) + "em";
         var baseProperty = {};
         _styleProperties.forEach(function (item) {
             let property = _camelize(item);
             baseProperty[property] = style.getPropertyValue(item)
         })
         // Handle Particular cases
+        var fontSize = (parseInt(style.getPropertyValue("font-size").substr(0, 2)) / 16) + "em";
         var extraProperty = {
             "fontSize": fontSize
         }
