@@ -299,20 +299,22 @@ composer = (function () {
             type: "GET",
             url: ["/mreport", reportId, "report_composer.html"].join("/"),
             success: function (html) {
-                let reportCompo = document.getElementById("report-composition");
-                reportCompo.innerHTML = html;
-                let alldvz = reportCompo.getElementsByClassName("dataviz");
-                for (elem of alldvz) {
-                    wizard.getSampleData(elem.dataset.dataviz);
+                if (html.length > 0) {
+                    let reportCompo = document.getElementById("report-composition");
+                    reportCompo.innerHTML = html;
+                    let alldvz = reportCompo.getElementsByClassName("dataviz");
+                    for (elem of alldvz) {
+                        wizard.getSampleData(elem.dataset.dataviz);
+                    }
+                    _configureNewBlock(reportCompo.querySelectorAll(".row"));
+                    $("#report-composition .structure-bloc").find(".remove").click(function (e) {
+                        $(e.currentTarget).closest(".structure-bloc").find(".dataviz").appendTo("#dataviz-items");
+                        $(e.currentTarget).closest(".structure-bloc").remove();
+                    });
+                    $("#report-composition .structure-element").find(".structureElems").click(function (e) {
+                        e.currentTarget.parentNode.remove();
+                    });
                 }
-                _configureNewBlock(reportCompo.querySelectorAll(".row"));
-                $("#report-composition .structure-bloc").find(".remove").click(function (e) {
-                    $(e.currentTarget).closest(".structure-bloc").find(".dataviz").appendTo("#dataviz-items");
-                    $(e.currentTarget).closest(".structure-bloc").remove();
-                });
-                $("#report-composition .structure-element").find(".structureElems").click(function (e) {
-                    e.currentTarget.parentNode.remove();
-                });
             },
             error: function (error) {
                 console.log(error);
@@ -477,7 +479,7 @@ composer = (function () {
                 $(tmp_bloc).find(".badge").remove();
                 tmp_bloc.removeClass("list-group-item");
                 let style = textedit.getTextStyle(tmp_bloc[0]);
-                tmp_bloc[0]=textedit.applyTextStyle(tmp_bloc[0],style);
+                tmp_bloc[0] = textedit.applyTextStyle(tmp_bloc[0], style);
             } else {
                 // loop on dataviz-container
                 $(tmp_bloc).find(".dataviz-container").each(function (id, container) {
@@ -532,10 +534,10 @@ composer = (function () {
         parentDiv.classList.add("report-flex-centered");
         parentDiv.appendChild(dvzHTML[0]);
         if (title = dvzHTML.find('.dataviz').data("title")) {
-            report.addTitleOrDescription(title,"title",false,parentDiv);
+            report.addTitleOrDescription(title, "title", false, parentDiv);
         }
         if (description = dvzHTML.find('.dataviz').data("description")) {
-            report.addTitleOrDescription(description,"summary",true,parentDiv);
+            report.addTitleOrDescription(description, "summary", true, parentDiv);
         }
         dvz = parentDiv.outerHTML;
         return dvz;

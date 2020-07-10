@@ -126,6 +126,7 @@ h5>.badge {
 
 .card-body {
   padding: 0.6rem;
+  width: 100%;
 }
 
 .cards {
