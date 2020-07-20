@@ -605,7 +605,10 @@ report = (function () {
                                 if (unit === "€") {
                                     value = (Math.round(value * 100) / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR',});
                                 }else if(total){
-                                    value = ((value / total)*100).toFixed(2) + " %";
+                                    value = parseFloat(((value / total)*100).toFixed(1));
+                                    if(Number.isInteger(value))
+                                        value = value.toString().split(".")[0];
+                                    value += " %";
                                 }
                                 else {
                                     value = (Math.round(value * 100) / 100).toLocaleString();
