@@ -16,7 +16,7 @@ textedit = (function () {
     }
     var _defaultStyleValues = {
         "color": "rgb(73, 80, 87)",
-        "font-size": "1em",
+        "font-size": "16px",
         "font-family": '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
         "font-weight": "400",
         "letter-spacing": "0px"
@@ -79,7 +79,7 @@ textedit = (function () {
         
         // Set the editedInput style to the modal fields
         var editedStyle = _getTextStyle(editedInput);
-        
+
         _styleProperties.forEach(function(item){
             var cameled = _camelize(item);
             var newValue = editedStyle[cameled];
@@ -153,9 +153,7 @@ textedit = (function () {
             baseProperty[property] = style.getPropertyValue(item)
         })
         // Handle Particular cases
-        var fontSize = (parseInt(style.getPropertyValue("font-size").substr(0, 2)) / 16) + "em";
         var extraProperty = {
-            "fontSize": fontSize
         }
         Object.assign(baseProperty, extraProperty)
         return baseProperty

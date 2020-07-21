@@ -141,7 +141,3 @@ div[class*='col-'] {
 .report-chart-summary{
     text-align: justify;
 }
-.container-fluid{
-    padding-left: 15vw;
-    padding-right: 15vw;
-}
