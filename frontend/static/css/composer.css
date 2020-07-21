@@ -382,10 +382,13 @@ span.text-edit.badge.badge-warning {
     flex-grow: 1;
 }
 #w_text_text,
-#w_desc,
 #w_title,
 #text-edit-value{
     height: 100% !important;
-    font-size: 1em;
+    font-size: 16px;
+}
+#w_desc{
+    font-size: 16px;
+    min-height: 16px;
 }
 
