@@ -778,7 +778,7 @@ report = (function () {
         let elementDiv = textedit.textPatterns[type];
         elementDiv = parser.parseFromString(elementDiv, "text/html").getElementsByClassName("report-chart-"+type)[0];
         elementDiv.getElementsByClassName("editable-text")[0].style.cssText=textStyle;
-        elementDiv.getElementsByClassName("editable-text")[0].innerText=element.text;
+        elementDiv.getElementsByClassName("editable-text")[0].innerHTML=element.text;
         if(append)
             parent.append(elementDiv);
         else

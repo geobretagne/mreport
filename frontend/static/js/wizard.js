@@ -488,10 +488,10 @@ wizard = (function () {
         //Test if dataviz has a default visualization or is yet configured in active session
         //check if configuration exists for this dataviz with attributes. eg data-colors...
         var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
-
         if (_dataviz_infos && _dataviz_infos.viz && !yetConfigured) {
             //Occurs when wizard is called from store
             var viz = JSON.parse(_dataviz_infos.viz);
+            
             //Enable the model if defined
             let modelId = viz.properties.model || "b";
             let model ="";
@@ -660,7 +660,7 @@ wizard = (function () {
             if (attribute.classList.contains("addedText") && val.length >= 1) {
                 let style = JSON.stringify(textedit.getTextStyle(attribute));
                 val = '{\
-                    "text": "' + val + '",\
+                    "text": "' + val.replace(/\r?\n/g, "\\n") + '",\
                     "style": '+style+'\
                 }'
             }

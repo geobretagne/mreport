@@ -384,6 +384,7 @@ span.text-edit.badge.badge-warning {
 #w_text_text,
 #w_title,
 #text-edit-value{
+    min-height: 31px;
     height: 100% !important;
     font-size: 16px;
 }
