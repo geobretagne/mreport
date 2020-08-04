@@ -772,7 +772,8 @@ wizard = (function () {
             $(".chosecolors").append('<div class="available_colors color-picker' + colorbtn + '"></div>');
             var pk = new Piklor(".color-picker" + colorbtn, model.parameters.colors, {
                 open: ".picker-wrapper .colorbtn" + colorbtn,
-                closeOnBlur: true
+                closeOnBlur: true,
+                manualSelect:true
             })
 
             pk.colorChosen(function (col) {

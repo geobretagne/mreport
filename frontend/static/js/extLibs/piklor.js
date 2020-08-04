@@ -26,6 +26,7 @@
         options = options || {};
         options.open = self.getElm(options.open);
         options.openEvent = options.openEvent || "click";
+        options.manualSelect = options.manualSelect || false;
         options.style = Object(options.style);
         options.style.display = options.style.display || "block";
         options.closeOnBlur = options.closeOnBlur || false;
@@ -36,24 +37,21 @@
         self.colors = colors;
         self.options = options;
         self.render();
-
+        self.manualColorPicker = self.options.manualSelect ? self.elm.querySelector(".manualColorPicking") : false;
         // Handle the open element and event.
         if (options.open) {
             options.open.addEventListener(options.openEvent, function (ev) {
                 // Set tooltip Arrow on color panel opening
                 var pointer = document.getElementsByClassName("tooltip_pointer")[0];
-                self.isOpen ? (self.close(), pointer.style.display = "none") : (self.open(), pointer.style.display = "block");
+                self.isOpen ? (self.close(true), pointer.style.display = "none") : (self.open(), pointer.style.display = "block");
                 var btn = this;
-                if (parseInt(btn.classList[1].split('btn').pop(), 10) <= 8 && ev.target.classList[0]!="textColorEditBtn") {
+                if (parseInt(btn.classList[1].split('btn').pop(), 10) <= 8 && ev.target.classList[0] != "textColorEditBtn") {
                     var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].split('btn').pop())[0];
                     var colorsbounds = rect_colors.getBoundingClientRect();
                     var btnbounds = btn.getBoundingClientRect();
                     pointer.style.top = colorsbounds.top - 10 + "px";
                     pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
-                }
-                else if(ev.target.classList[0]=="textColorEditBtn"){
-                }
-                else{
+                } else if (ev.target.classList[0] == "textColorEditBtn") {} else {
                     pointer.style.display = "none";
                 }
             });
@@ -68,26 +66,31 @@
             self.set(col);
             self.close();
         });
-
+        if (self.manualColorPicker) {
+            // Validate custom color
+            self.manualColorPicker.addEventListener("change", function (ev) {
+                var col = ev.target.value;
+                self.set(col);
+                self.close();
+            })
+        }
         if (options.closeOnBlur) {
             window.addEventListener("click", function (ev) {
                 // check if we didn't click 'open' and 'color pallete' elements
-                if (ev.target != options.open && ev.target != self.elm && self.isOpen) {
+                if (ev.target != options.open && ev.target != self.elm && self.isOpen && ev.target != self.manualColorPicker) {
                     self.close();
                     // Set tooltip Arrow on Blur
                     var pointer = document.getElementsByClassName("tooltip_pointer")[0];
                     var btn = ev.target;
                     if (btn.classList.contains("colorbtn") && parseInt(btn.classList[1].split('btn').pop(), 10) <= 8) {
-                            var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].substr(-1))[0];
-                            var colorsbounds = rect_colors.getBoundingClientRect();
-                            var btnbounds = btn.getBoundingClientRect();
-                            pointer.style.top = colorsbounds.top - 10 + "px";
-                            pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
+                        var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].substr(-1))[0];
+                        var colorsbounds = rect_colors.getBoundingClientRect();
+                        var btnbounds = btn.getBoundingClientRect();
+                        pointer.style.top = colorsbounds.top - 10 + "px";
+                        pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
                     } else {
                         pointer.style.display = "none";
                     }
-
-
                 }
             });
         }
@@ -127,7 +130,9 @@
         self.colors.forEach(function (c) {
             html += self.options.template.replace(/\{color\}/g, c);
         });
-
+        if (this.options.manualSelect) {
+            html += "<input class='manualColorPicking' placeholder='Saisissez une couleur'></input>"
+        }
         self.elm.innerHTML = html;
     };
 
@@ -151,6 +156,10 @@
      * @function
      */
     Piklor.prototype.open = function () {
+        if (this.manualColorPicker) {
+            var _hexDigits = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
+            this.manualColorPicker.value = wizard.rgb2hex(this.options.open.style.backgroundColor, _hexDigits);
+        }
         this.elm.style.display = this.options.style.display;
         this.isOpen = true;
     };
