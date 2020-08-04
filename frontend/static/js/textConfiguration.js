@@ -10,16 +10,30 @@ textedit = (function () {
 
     var _styleProperties = ["font-size", "font-weight", "color", "font-family", "letter-spacing"];
 
+    var _generatedFonts = {
+        "generated": false,
+        "fonts": [
+            '\"04b30\"', 
+            'Arial', 
+            'Roboto', 
+            '\"Times New Roman\"', 
+            'Times', 
+            'Verdana', 
+            '\"Comic Sans MS\"', 
+            '\"Segoe UI\"'
+        ]
+    };
+
     var _textPatterns = {
         "title": '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text"></h6></div>',
         "summary": '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text"></p></div>'
     }
     var _defaultStyleValues = {
         "color": "rgb(73, 80, 87)",
-        "font-size": "16px",
-        "font-family": '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-        "font-weight": "400",
-        "letter-spacing": "0px"
+        "fontSize": "16px",
+        "fontFamily": '\"Segoe UI\"',
+        "fontWeight": "400",
+        "letterSpacing": "0px"
     }
     var _configureButtons = function (target = null) {
         if (target === null) {
@@ -76,19 +90,31 @@ textedit = (function () {
         // Set the text of the modal to be the text of the editedInput
         var modalText = document.getElementById("w_text_text");
         modalText.value = editedInput.value;
-        
+
+        // Set fonts values for the select input
+        if (!_generatedFonts.generated) {
+            _generatedFonts.generated = true;
+            var fontSelect = document.getElementById("w_text_fontFamily");
+            for (font of _generatedFonts.fonts) {
+                let option = document.createElement("option");
+                option.text = font.replace(/\"/g,"");
+                option.value = font;
+                fontSelect.add(option);
+            }
+        }
+
         // Set the editedInput style to the modal fields
         var editedStyle = _getTextStyle(editedInput);
 
-        _styleProperties.forEach(function(item){
+        _styleProperties.forEach(function (item) {
             var cameled = _camelize(item);
             var newValue = editedStyle[cameled];
-            var input =  document.getElementById("w_text_"+cameled);
+            var input = document.getElementById("w_text_" + cameled);
             // Handle particular cases
-            if(item==="color")
+            if (item === "color")
                 newValue = wizard.rgb2hex(editedStyle[item], _hexDigits);
-            if(input.type==="number")
-                newValue=_removeLetters(newValue);
+            if (input.type === "number")
+                newValue = _removeLetters(newValue);
             input.value = newValue;
         })
         // Set the style of the modal text
@@ -104,9 +130,9 @@ textedit = (function () {
             input.value = col;
         });
     }
-    var _removeLetters = function(elem){
-        elem = elem.replace(/[^\d.,-]/g,'');
-        if(elem.length===0)
+    var _removeLetters = function (elem) {
+        elem = elem.replace(/[^\d.,-]/g, '');
+        if (elem.length === 0)
             elem = 0
         return elem;
     }
@@ -135,7 +161,7 @@ textedit = (function () {
     var _updateInput = function (event, elem) {
         var texte = document.getElementById("w_text_text");
         var newValue = event.target.value;
-        newValue+=elem.dataset.unit;
+        newValue += elem.dataset.unit;
         texte.style[elem.dataset.type] = newValue;
     }
     var _clearModal = function () {
@@ -154,6 +180,7 @@ textedit = (function () {
         })
         // Handle Particular cases
         var extraProperty = {
+            "fontFamily":baseProperty.fontFamily==='-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'? _defaultStyleValues.fontFamily : baseProperty["fontFamily"]
         }
         Object.assign(baseProperty, extraProperty)
         return baseProperty

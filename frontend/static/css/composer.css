@@ -267,6 +267,10 @@ span.text-edit.badge.badge-warning {
     margin-left: 10px;
     cursor: pointer;
     font-size: 13px;
+    font-family: "Segoe UI";
+    letter-spacing: 0;
+    text-transform: lowercase;
+
 }
 
 .composition li.dataviz.list-group-item span {
