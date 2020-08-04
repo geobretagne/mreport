@@ -70,8 +70,14 @@
             // Validate custom color
             self.manualColorPicker.addEventListener("change", function (ev) {
                 var col = ev.target.value;
-                self.set(col);
-                self.close();
+                if(/^#([0-9A-F]{3}){1,2}$/i.test(col)){
+                    self.set(col);
+                    self.close();
+                }
+                else{
+                    ev.target.style.border= "1px solid red";
+                }
+                
             })
         }
         if (options.closeOnBlur) {
@@ -144,6 +150,7 @@
      * @function
      */
     Piklor.prototype.close = function () {
+        this.manualColorPicker.style.border = "none";
         this.elm.style.display = "none";
         this.isOpen = false;
     };
