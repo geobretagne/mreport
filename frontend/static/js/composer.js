@@ -262,6 +262,7 @@ composer = (function () {
         $(document).on('keyup', '#bootstrap_columns', _handleStructureBlocs);
         $(document).on('keypress', '#bootstrap_columns', _onlyIntegerInput);
         $('#separation_input').on('change', _changeOrientationInput);
+        $('#dimensions_division').on('change', _changeDivideColumns);
         $(document).on('show.bs.modal', '#divide_form', _displayDivideModal);
         $(document).on('click', '#divide_modal_btn', _saveDivideConfig);
 
@@ -604,7 +605,21 @@ composer = (function () {
 
 
     };
-    var checkHorizontalBootstrap = function (input_value) {
+    var checkHorizontalBootstrap = function (inputs) {
+        var regex = new RegExp(/1[0-1]|[1-9]/);
+        var test = true;
+        var columns_sum = 0;
+        for (input of inputs) {
+            if (!regex.test(input.value.trim()))
+                test = false;
+            columns_sum += Number.parseInt(input.value)
+        }
+        return {
+            "isValid": test && columns_sum == 12,
+            "str_array": inputs
+        };
+    }
+    var checkBootstrapForStructureBlocs = function (input_value) {
         input_value = input_value.trim();
         var regex = new RegExp(/((1[0-2]|[1-9]) ){0,11}(1[0-2]|[1-9])/);
         var str_array = input_value.split(' ');
@@ -618,22 +633,13 @@ composer = (function () {
         };
     }
     var checkVerticalBootstrap = function (input_value) {
-        input_value = input_value.trim();
-        var regex = new RegExp(/((([27]5)|(50)) ){0,3}(([27]5)|(50)|(100))/);
-        var allowedsums = [100, 75, 50, 25];
-        var str_array = input_value.split(' ');
-
-        var columns_sum = str_array.reduce((total, element) => {
-            return parseInt(total) + parseInt(element);
-        });
         return {
-            "isValid": regex.test(input_value) && allowedsums.includes(parseInt(columns_sum)),
-            "str_array": str_array
+            "numberOfSplit": document.getElementById("dimensions_division").value.trim()
         };
     }
     var _handleStructureBlocs = function () {
         var str = $(this).val();
-        var check = checkHorizontalBootstrap(str);
+        var check = checkBootstrapForStructureBlocs(str);
         if (check.isValid) {
             var columns_number = check.str_array.length;
             columns_number = columns_number > 1 ? columns_number + " colonnes" : columns_number + " colonne"
@@ -683,23 +689,72 @@ composer = (function () {
         return true;
     }
     var _changeOrientationInput = function () {
-        var elements = $(this).parent().next().find(".orientation_changed");
+        var dimensionsInputs =  document.getElementById("columns-inputs")
         if ($(this).val() == 0) {
-            elements[0].setAttribute("placeholder", "Ex : 6 6");
-            elements[1].innerHTML = "Le total doit être 12";
+            var row = document.createElement('div');
+            row.classList.add("row");
+            for (let i = 0; i < 2; i++) {
+                let div = document.createElement("div");
+                div.classList.add("col-4", "horizontal-column");
+                let input = document.createElement("input");
+                input.type = "number";
+                input.classList.add("form-control");
+                input.value = 6;
+                div.appendChild(input);
+                row.appendChild(div);
+            }
+            dimensionsInputs.prepend(row);
+            dimensionsInputs.querySelector("small").innerHTML="Le total doit être 12";
+            _resetSelectForDivision(6);
         } else {
-            elements[0].setAttribute("placeholder", "Ex : 25 25 25 25");
-            elements[1].innerHTML = "Le total doit être inferieur ou égal à 100 avec 4 valeurs maximum";
+            var previousModel = dimensionsInputs.querySelector(".row");
+            dimensionsInputs.querySelector("small").innerHTML="Les divisions verticales ont toutes la même  taille";
+            previousModel.parentNode.removeChild(previousModel);
+            var row = document.createElement('div');
+            _resetSelectForDivision(4);
+
+        }
+    }
+    var _resetSelectForDivision = function (number) {
+        var selectDimensions = document.getElementById("dimensions_division");
+        selectDimensions.innerHTML = "";
+        for (let i = 2; i <= number; i++) {
+            let option = document.createElement("option");
+            option.value = i;
+            option.text = i;
+            selectDimensions.add(option);
+        }
+    }
+    var _changeDivideColumns = function (event) {
+        var separation = document.getElementById("separation_input").value;
+        if (separation == 0) {
+            var previousModel = document.getElementById("columns-inputs").querySelector(".row");
+            previousModel.parentNode.removeChild(previousModel)
+            var row = document.createElement('div');
+            row.classList.add("row");
+            for (let i = 0; i < event.target.value; i++) {
+                let div = document.createElement("div");
+                div.classList.add("col-4", "horizontal-column");
+                let input = document.createElement("input");
+                input.type = "text";
+                input.classList.add("form-control");
+                input.value = Math.floor(12 / event.target.value);
+                div.appendChild(input);
+                row.appendChild(div);
+            }
+            document.getElementById("columns-inputs").prepend(row);
+        } else {
+
         }
     }
     var _displayDivideModal = function (evt) {
         _selectedCustomColumn = evt.relatedTarget.parentNode.nextElementSibling;
     }
     var _saveDivideConfig = function () {
-        var columns_value = $("#dimensions_division").val();
         var columns_orientation = $("#separation_input").val().trim();
         if (columns_orientation == 0) {
-            let check = checkHorizontalBootstrap(columns_value);
+            var inputs = document.getElementById("columns-inputs").querySelectorAll("input");
+            let check = checkHorizontalBootstrap(inputs);
             if (check.isValid) {
                 let parent = _selectedCustomColumn.parentNode;
                 parent.classList.remove("dividedcolumn");
@@ -709,9 +764,8 @@ composer = (function () {
                 let saved = false;
                 var structure = "<div class='view'><div class='row '>";
                 check.str_array.forEach(function (column) {
-
                     structure +=
-                        '<div class="col-md-' + column + ' dividedcolumn customBaseColumn">\
+                        '<div class="col-md-' + column.value + ' dividedcolumn customBaseColumn">\
                         <div class="edit_columns">\
                             <span class="badge badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
                                 <i class="fas fa-columns"></i>\
@@ -741,20 +795,19 @@ composer = (function () {
                 $('#divide_form').modal('hide')
             }
         } else {
-            let check = checkVerticalBootstrap(columns_value);
-            if (check.isValid) {
-                let parent = _selectedCustomColumn.parentNode;
-                parent.classList.remove("dividedcolumn");
-                _selectedCustomColumn.previousElementSibling.remove();
-                let savedContent = _selectedCustomColumn.querySelectorAll("li, div.structure-element");
-                _selectedCustomColumn.remove();
-                let saved = false;
-                var structure = "";
-                let height = 100 / check.str_array.length;
-                check.str_array.forEach(function (row) {
-
-                    structure +=
-                        '<div class="lyrow h-' + height + ' verticalDivision">\
+            var numberOfSplit = document.getElementById("dimensions_division").value;
+            let check = checkVerticalBootstrap(numberOfSplit);
+            let parent = _selectedCustomColumn.parentNode;
+            parent.classList.remove("dividedcolumn");
+            _selectedCustomColumn.previousElementSibling.remove();
+            let savedContent = _selectedCustomColumn.querySelectorAll("li, div.structure-element");
+            _selectedCustomColumn.remove();
+            let saved = false;
+            var structure = "";
+            let height = 100 / check.numberOfSplit;
+            for (let i = 0; i < check.numberOfSplit; i++) {
+                structure +=
+                    '<div class="lyrow h-' + height + ' verticalDivision">\
                         <div class="view">\
                         <div class="row ">\
                         <div class="col-md-12 dividedcolumn customBaseColumn">\
@@ -769,38 +822,38 @@ composer = (function () {
                             </div>\
                             <div class="dataviz-container card list-group-item">\
                                 <!--dataviz component is injected here -->';
-                    if (!saved && savedContent !== null) {
-                        saved = true;
-                        savedContent.forEach(function (elem) {
-                            structure += elem.outerHTML;
-                        });
-                    }
-                    structure +=
-                        '</div>\
+                if (!saved && savedContent !== null) {
+                    saved = true;
+                    savedContent.forEach(function (elem) {
+                        structure += elem.outerHTML;
+                    });
+                }
+                structure +=
+                    '</div>\
                         </div>\
                         </div>\
                         </div>\
                     </div>'
-                });
-                parent.innerHTML = structure;
-                _configureNewBlock(parent.querySelectorAll(".row,.test"));
-                $('#divide_form').modal('hide')
-            }
-        }
-
-
+            };
+        parent.innerHTML = structure;
+        _configureNewBlock(parent.querySelectorAll(".row,.test"));
+        $('#divide_form').modal('hide')
 
     }
-    return {
-        initComposer: _initComposer,
-        compose: /* used by admin.js */ _compose,
-        activeModel: /* used by wizard.js */ function () {
-            return _HTMLTemplates[_activeHTMLTemplate];
-        },
-        models: /* used for test pupose */ function () {
-            return _HTMLTemplates;
-        },
-    }; // fin return
+
+
+
+}
+return {
+    initComposer: _initComposer,
+    compose: /* used by admin.js */ _compose,
+    activeModel: /* used by wizard.js */ function () {
+        return _HTMLTemplates[_activeHTMLTemplate];
+    },
+    models: /* used for test pupose */ function () {
+        return _HTMLTemplates;
+    },
+}; // fin return
 
 })();
 

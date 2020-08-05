@@ -189,13 +189,13 @@
                             </div>
                             <div class="col">
                                 <label for="inputYear"><span class="badge badge-dark">millésime</span></label>
-                                <input type="text" class="form-control" name="year" id="inputYear" placeholder="Millésime"
-                                    required="">
+                                <input type="text" class="form-control" name="year" id="inputYear"
+                                    placeholder="Millésime" required="">
                             </div>
                             <div class="col">
                                 <label for="inputSource"><span class="badge badge-dark">Source</span></label>
-                                <input type="text" class="form-control" name="source" id="inputSource" placeholder="Source"
-                                    required="">
+                                <input type="text" class="form-control" name="source" id="inputSource"
+                                    placeholder="Source" required="">
                             </div>
 
                         </div>
@@ -203,23 +203,22 @@
                             <div class="col">
                                 <label for="inputDescription"><span class="badge badge-dark">Description</span></label>
                                 <input type="text" class="form-control" name="description" id="inputDescription"
-                                 placeholder="Description">
+                                    placeholder="Description">
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control hidden" name="viz" id="visualization"
-                                required="">
+                            <input type="text" class="form-control hidden" name="viz" id="visualization" required="">
                         </div>
                         <div class="form-group row">
                             <div class="col">
                                 <label for="inputLevel"><span class="badge badge-dark">Niveau</span></label>
-                                <input type="text" class="form-control" name="level" id="inputLevel" placeholder="Niveau"
-                                    required="">
+                                <input type="text" class="form-control" name="level" id="inputLevel"
+                                    placeholder="Niveau" required="">
                             </div>
                             <div class="col">
                                 <label for="inputType"><span class="badge badge-dark">Type</span></label>
                                 <input type="text" class="form-control" name="type" id="inputType" placeholder="Type"
-                                required="">
+                                    required="">
                             </div>
                             <div class="col">
                                 <label for="inputUnit"><span class="badge badge-dark">Unité</span></label>
@@ -239,7 +238,8 @@
                 </div>
                 <div class="modal-footer">
                     <button id="dataviz_configure" class="btn btn-dark" data-toggle="modal" data-target="#wizard-panel"
-                        data-component="store" data-related-id=""><i class="fas fa-cog"></i> Configurer la dataviz</button>
+                        data-component="store" data-related-id=""><i class="fas fa-cog"></i> Configurer la
+                        dataviz</button>
                     <button id="dataviz_confirmed" type="button" class="btn btn-primary">Enregistrer</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 </div>
@@ -374,11 +374,27 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for="dimensions_division">Dimensions</label>
-                                <input type="text" class="form-control orientation_changed" id="dimensions_division" placeholder="Ex : 6 6">
-                                <small id="dimensions_help" class="form-text text-muted orientation_changed">Le total doit être 12</small>
+                            <label for="dimensions_division">Dimensions</label>
+                            <select type="text" class="form-control orientation_changed" id="dimensions_division">
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </div>
+                        <div class="form-group no-margin" id="columns-inputs">
+                            <div class="row">
+                                <div class="col-4 horizontal-column">
+                                    <input type="text" class="form-control" value="6">
+                                </div>
+                                <div class="col-4 horizontal-column">
+                                    <input type="text" class="form-control" value="6">
+                                </div>
+                                
                             </div>
+                            <small id="dimensions_help" class="form-text text-muted orientation_changed">Le total
+                                doit être 12</small>
                         </div>
                     </form>
                 </div>

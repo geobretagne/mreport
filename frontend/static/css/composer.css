@@ -413,3 +413,12 @@ span.text-edit.badge.badge-warning {
     display: flex;
     align-items: center;
 }
+#divide_form .form-group,
+#divide_form small{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+#divide_form .no-margin{
+    margin-left: 0;
+    margin-right: 0;
+}
