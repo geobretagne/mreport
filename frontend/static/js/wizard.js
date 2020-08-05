@@ -773,7 +773,8 @@ wizard = (function () {
             var pk = new Piklor(".color-picker" + colorbtn, model.parameters.colors, {
                 open: ".picker-wrapper .colorbtn" + colorbtn,
                 closeOnBlur: true,
-                manualSelect:true
+                manualSelect:true,
+                pointer:true
             })
 
             pk.colorChosen(function (col) {

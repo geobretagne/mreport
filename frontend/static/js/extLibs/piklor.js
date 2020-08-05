@@ -30,6 +30,7 @@
         options.style = Object(options.style);
         options.style.display = options.style.display || "block";
         options.closeOnBlur = options.closeOnBlur || false;
+        options.pointer = options.pointer || false;
         options.template = options.template || "<div data-col=\"{color}\" style=\"background-color: {color}\"></div>";
         self.elm = self.getElm(sel);
         self.cbs = [];
@@ -41,19 +42,24 @@
         // Handle the open element and event.
         if (options.open) {
             options.open.addEventListener(options.openEvent, function (ev) {
-                // Set tooltip Arrow on color panel opening
-                var pointer = document.getElementsByClassName("tooltip_pointer")[0];
-                self.isOpen ? (self.close(true), pointer.style.display = "none") : (self.open(), pointer.style.display = "block");
-                var btn = this;
-                if (parseInt(btn.classList[1].split('btn').pop(), 10) <= 8 && ev.target.classList[0] != "textColorEditBtn") {
-                    var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].split('btn').pop())[0];
-                    var colorsbounds = rect_colors.getBoundingClientRect();
-                    var btnbounds = btn.getBoundingClientRect();
-                    pointer.style.top = colorsbounds.top - 10 + "px";
-                    pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
-                } else if (ev.target.classList[0] == "textColorEditBtn") {} else {
-                    pointer.style.display = "none";
+                if (options.pointer) {
+                    // Set tooltip Arrow on color panel opening
+                    var pointer = document.getElementsByClassName("tooltip_pointer")[0];
+                    self.isOpen ? (self.close(), pointer.style.display = "none") : (self.open(), pointer.style.display = "block");
+                    var btn = this;
+                    if (parseInt(btn.classList[1].split('btn').pop(), 10) <= 8 && ev.target.classList[0] != "textColorEditBtn") {
+                        var rect_colors = document.getElementsByClassName("color-picker" + btn.classList[1].split('btn').pop())[0];
+                        var colorsbounds = rect_colors.getBoundingClientRect();
+                        var btnbounds = btn.getBoundingClientRect();
+                        pointer.style.top = colorsbounds.top - 10 + "px";
+                        pointer.style.left = btnbounds.left + ((btnbounds.right - btnbounds.left) / 2) + "px";
+                    } else if (ev.target.classList[0] == "textColorEditBtn") {} else {
+                        pointer.style.display = "none";
+                    }
+                }else{
+                    self.isOpen ? self.close() : self.open();
                 }
+
             });
         }
 
@@ -70,14 +76,13 @@
             // Validate custom color
             self.manualColorPicker.addEventListener("change", function (ev) {
                 var col = ev.target.value;
-                if(/^#([0-9A-F]{3}){1,2}$/i.test(col)){
+                if (/^#([0-9A-F]{3}){1,2}$/i.test(col)) {
                     self.set(col);
                     self.close();
+                } else {
+                    ev.target.style.border = "1px solid red";
                 }
-                else{
-                    ev.target.style.border= "1px solid red";
-                }
-                
+
             })
         }
         if (options.closeOnBlur) {
@@ -150,7 +155,9 @@
      * @function
      */
     Piklor.prototype.close = function () {
-        this.manualColorPicker.style.border = "none";
+        if (this.manualColorPicker) {
+            this.manualColorPicker.style.border = "none";
+        }
         this.elm.style.display = "none";
         this.isOpen = false;
     };
