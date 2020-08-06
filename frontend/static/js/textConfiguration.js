@@ -20,7 +20,8 @@ textedit = (function () {
             'Times', 
             'Verdana', 
             '\"Comic Sans MS\"', 
-            '\"Segoe UI\"'
+            '\"Segoe UI\"',
+            '\"Trebuchet MS\"'
         ]
     };
 
@@ -31,7 +32,7 @@ textedit = (function () {
     var _defaultStyleValues = {
         "color": "rgb(73, 80, 87)",
         "fontSize": "16px",
-        "fontFamily": '\"Segoe UI\"',
+        "fontFamily": '\"Trebuchet MS\"',
         "fontWeight": "400",
         "letterSpacing": "0px"
     }
