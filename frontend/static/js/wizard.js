@@ -542,8 +542,9 @@ wizard = (function () {
         //update icon store in wizard modal
         $("#w_icon option").remove();
         var icon_options = [];
-        var icons = model.style.match(/icon-\w+/g);
+        var icons = model.style.match(/\.icon-\w+/g);
         icons.forEach(function (i) {
+            i = i.replace(/\./,"");
             icon_options.push('<option value="' + i + '">' + i + '</option>');
         });
         $("#w_icon").append(icon_options.join(""));
