@@ -8,7 +8,7 @@ textedit = (function () {
 
     var _hexDigits = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
 
-    var _styleProperties = ["font-size", "font-weight", "color", "font-family", "letter-spacing"];
+    var _styleProperties = ["font-size", "font-weight", "color", "font-family", "letter-spacing", "text-transform"];
 
     var _generatedFonts = {
         "generated": false,
@@ -34,7 +34,8 @@ textedit = (function () {
         "fontSize": "12px",
         "fontFamily": '\"Trebuchet MS\"',
         "fontWeight": "400",
-        "letterSpacing": "0px"
+        "letterSpacing": "0px",
+        "text-transform":"none"
     }
     var _configureButtons = function (target = null) {
         if (target === null) {
