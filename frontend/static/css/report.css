@@ -141,3 +141,7 @@ div[class*='col-'] {
 .report-chart-summary{
     text-align: justify;
 }
+iframe img{
+    height: 100%;
+    width: 100%;
+}

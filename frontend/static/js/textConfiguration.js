@@ -31,7 +31,7 @@ textedit = (function () {
     }
     var _defaultStyleValues = {
         "color": "rgb(73, 80, 87)",
-        "fontSize": "16px",
+        "fontSize": "12px",
         "fontFamily": '\"Trebuchet MS\"',
         "fontWeight": "400",
         "letterSpacing": "0px"
