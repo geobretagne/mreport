@@ -64,18 +64,7 @@ composer = (function () {
     var _extraElementTemplate = [
         [
             '<div class="structure-element list-group-item titleBloc" draggable="false" style="">',
-            '<p class="editable-text">Title</p>',
-            '<span class="remove badge badge-danger structureElems">',
-            '<i class="fas fa-times"></i> remove',
-            '</span>',
-            '<span class="drag badge badge-default">',
-            '<i class="fas fa-arrows-alt"></i> drag',
-            '</span>',
-            '</div>'
-        ].join(""),
-        [
-            '<div class="structure-element list-group-item descriptionBloc" draggable="false" style="">',
-            '<p class="editable-text">Description</p>',
+            '<p class="editable-text">Texte</p>',
             '<span class="remove badge badge-danger structureElems">',
             '<i class="fas fa-times"></i> remove',
             '</span>',
@@ -84,7 +73,6 @@ composer = (function () {
             '</span>',
             '</div>'
         ].join("")
-
     ];
 
 
