@@ -925,3 +925,4 @@ $(document).ready(function () {
     admin.initReports();
     admin.initMenu();
 });
+

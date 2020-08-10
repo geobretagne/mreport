@@ -82,9 +82,9 @@ composer = (function () {
      */
 
     var _datavizTemplate = [
-        '<li data-dataviz="{{dvz}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item">',
+        '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item">',
         '<div class="tool">',
-        '<button class="btn btn-default" data-toggle="modal" data-component="report" data-related-id="{{dvz}}" data-target="#wizard-panel">',
+        '<button class="btn btn-default" data-toggle="modal" data-component="report" data-related-id="{{id}}" data-target="#wizard-panel">',
         '<i class="fas fa-cog"></i>',
         '</button>',
         '</div>',
@@ -278,9 +278,12 @@ composer = (function () {
         dataviz_lst.forEach(function (dvz) {
             if (dvz != null)
                 var dvztpl = _datavizTemplate.join("");
-            dvztpl = dvztpl.replace(/{{dvz}}/g, dvz);
+            dvztpl = dvztpl.replace(/{{dvz}}/g, dvz.title);
+            dvztpl = dvztpl.replace(/{{id}}/g, dvz.id);
             dvztpl = dvztpl.replace(/{{reportId}}/g, reportId);
             lst.push(dvztpl);
+            
+            
         });
         $("#dataviz-items .dataviz.list-group-item").remove();
         $("#dataviz-items").append(lst.join(""));

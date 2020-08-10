@@ -231,15 +231,16 @@ class DatavizManagement(Resource):
 @report.route('/', doc={'description': 'Récupération des rapports avec leurs dataviz associées'})
 class GetReports(Resource):
     def get(self):
-        result = db.session.query(Report,Report_composition.dataviz).outerjoin(Report_composition,Report.report == Report_composition.report).all()
+        result = db.session.query(Report,Report_composition.dataviz,Dataviz.title.label("datavizTitle")).outerjoin(Report_composition,Report.report == Report_composition.report).join(Dataviz,Dataviz.dataviz == Report_composition.dataviz ).all()
         '''
-                db.session.query(Report,Report_composition.dataviz)
+                db.session.query(Report,Report_composition.dataviz,Dataviz.title.label("datavizTitle"))
                 .outerjoin(Report_composition,Report.report == Report_composition.report)
+                .join(Dataviz,Dataviz.dataviz == Report_composition.dataviz )
                 .all()
         '''
         data = dict_builder(result)
         res = defaultdict(list)
-        for values in data: res[values['report'],values['title']].append(values['dataviz'])
+        for values in data: res[values['report'],values['title']].append({"id":values['dataviz'],"title":values['datavizTitle']})
         data = {'response':'success','reports': [{'report':report[0],'title':report[1], 'dataviz':dataviz} for report,dataviz in res.items()]}
         return jsonify(**data)
 
