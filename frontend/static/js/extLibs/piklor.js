@@ -27,6 +27,7 @@
         options.open = self.getElm(options.open);
         options.openEvent = options.openEvent || "click";
         options.manualSelect = options.manualSelect || false;
+        options.removeColor = options.removeColor || false;
         options.style = Object(options.style);
         options.style.display = options.style.display || "block";
         options.closeOnBlur = options.closeOnBlur || false;
@@ -39,6 +40,7 @@
         self.options = options;
         self.render();
         self.manualColorPicker = self.options.manualSelect ? self.elm.querySelector(".manualColorPicking") : false;
+        self.deleteColorBtn = self.options.removeColor ? self.elm.querySelector(".delete-color") : false;
         // Handle the open element and event.
         if (options.open) {
             options.open.addEventListener(options.openEvent, function (ev) {
@@ -83,6 +85,14 @@
                     ev.target.style.border = "1px solid red";
                 }
 
+            })
+        }
+        if(self.deleteColorBtn){
+            // Delete selected Color
+            self.deleteColorBtn.addEventListener("click", function () {
+                self.elm.parentNode.removeChild(self.elm);
+                self.options.open.parentNode.removeChild(self.options.open);
+                wizard.onRemoveColor();
             })
         }
         if (options.closeOnBlur) {
@@ -141,9 +151,14 @@
         self.colors.forEach(function (c) {
             html += self.options.template.replace(/\{color\}/g, c);
         });
+        var temp = "";
         if (this.options.manualSelect) {
-            html += "<input class='manualColorPicking' placeholder='Saisissez une couleur'></input>"
+            temp += "<div class='col-6 px-2 my-2 optional-parameter'><input class='manualColorPicking' placeholder='Saisissez une couleur'></input></div>";
         }
+        if(this.options.removeColor){
+            temp+='<div class="col-6 px-2 my-2 optional-parameter"><button type="button" class="btn btn-danger delete-color">Delete Color</button></div>';
+        }
+        html+='<div class="optional-piklor-parameters row">'+temp+'</div>';
         self.elm.innerHTML = html;
     };
 

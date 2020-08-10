@@ -50,6 +50,8 @@ wizard = (function () {
 
     var _existingConfig = false;
 
+    var _colorbtnId = 0;
+
     /* Method to extract a set of data in relation with dataviz
      * and necessary to configure and visualize a dataviz for a report
      * Result is stored in _storeData[xxx] to reuse it later
@@ -172,7 +174,7 @@ wizard = (function () {
 
     };
     var _resetTextField = function (textField) {
-        textField = textedit.applyTextStyle(textField,textedit.defaultStyleValues)
+        textField = textedit.applyTextStyle(textField, textedit.defaultStyleValues)
     }
     /*
      * Method to configure wizard options with dataviz capabilities
@@ -491,10 +493,10 @@ wizard = (function () {
         if (_dataviz_infos && _dataviz_infos.viz && !yetConfigured) {
             //Occurs when wizard is called from store
             var viz = JSON.parse(_dataviz_infos.viz);
-            
+
             //Enable the model if defined
             let modelId = viz.properties.model || "b";
-            let model ="";
+            let model = "";
             if (modelId) {
                 document.getElementById("selectedModelWizard").value = modelId;
                 model = composer.models()[modelId];
@@ -544,7 +546,7 @@ wizard = (function () {
         var icon_options = [];
         var icons = model.style.match(/\.icon-\w+/g);
         icons.forEach(function (i) {
-            i = i.replace(/\./,"");
+            i = i.replace(/\./, "");
             icon_options.push('<option value="' + i + '">' + i + '</option>');
         });
         $("#w_icon").append(icon_options.join(""));
@@ -654,7 +656,7 @@ wizard = (function () {
         var attributes = [];
         var properties = {
             "id": dataviz,
-            "model" : modelId
+            "model": modelId
         };
         $(".dataviz-attributes").each(function (id, attribute) {
             var val = $(attribute).val();
@@ -662,7 +664,7 @@ wizard = (function () {
                 let style = JSON.stringify(textedit.getTextStyle(attribute));
                 val = '{\
                     "text": "' + val.replace(/\r?\n/g, "\\n") + '",\
-                    "style": '+style+'\
+                    "style": ' + style + '\
                 }'
             }
             var prop = $(attribute).attr("data-prop");
@@ -758,7 +760,7 @@ wizard = (function () {
         return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
     }
     var _updateColorPicker = function (saved, e) {
-        var colorbtn = $("#picker-wrapper .colorbtn").length + 1;
+        var colorbtn = _colorbtnId += 1;
         var modelId = document.getElementById("selectedModelWizard").value;
         var model = composer.models()[modelId];
         /*if (typeof saved.datasets === "undefined") {
@@ -774,8 +776,9 @@ wizard = (function () {
             var pk = new Piklor(".color-picker" + colorbtn, model.parameters.colors, {
                 open: ".picker-wrapper .colorbtn" + colorbtn,
                 closeOnBlur: true,
-                manualSelect:true,
-                pointer:true
+                manualSelect: true,
+                pointer: true,
+                removeColor: true
             })
 
             pk.colorChosen(function (col) {
@@ -791,20 +794,21 @@ wizard = (function () {
                     }
                 });
                 hidden_input.value = hidden_input.value.slice(0, -1);
-
-                //Delete color TODO
-                // if(col=="#FFF"){
-                // $(".colorbtn"+colorbtn+", .color-picker"+colorbtn).each(function(index,elem){
-                //     elem.remove();
-                // })
-                // }
-
-
             });
         }
 
     };
-
+    var _onRemoveColor = function () {
+        var hidden_input = document.getElementById("w_colors");
+        hidden_input.value = "";
+        var hexDigits = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
+        $(".colorbtn").each(function (index, elem) {
+            if (elem.style.backgroundColor != "") {
+                hidden_input.value += _rgb2hex(elem.style.backgroundColor, hexDigits) + ",";
+            }
+        });
+        hidden_input.value = hidden_input.value.slice(0, -1);
+    }
     var _init = function () {
         //load wizard html dynamicly and append it admin.html
         $.ajax({
@@ -816,8 +820,8 @@ wizard = (function () {
                 $('#wizard-panel').on('show.bs.modal', _onWizardOpened);
                 $("#w_dataviz_type").change(_onChangeDatavizType);
                 $("#wizard_refresh").click(_onValidateConfig);
-                $("#wizard_default_save").click(function(e) {
-                    admin.saveVisualization( _dataviz_definition );
+                $("#wizard_default_save").click(function (e) {
+                    admin.saveVisualization(_dataviz_definition);
                 });
                 $("#addColor").on("click", function (e) {
                     _updateColorPicker({}, e)
@@ -843,7 +847,8 @@ wizard = (function () {
         updateIconList: _updateIconList,
         getSampleData: _getSampleData,
         onChangeModel: _onChangeModel,
-        updateStyle: _updateStyle
+        updateStyle: _updateStyle,
+        onRemoveColor:_onRemoveColor
     }; // fin return
 
 })();

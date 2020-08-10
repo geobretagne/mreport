@@ -360,10 +360,10 @@ h5>.badge {
   background-color: #FFF;
   border: solid 1px grey;
 }
-.available_colors div{
+.available_colors div:not(.optional-piklor-parameters):not(.optional-parameter){
   border: solid 1px grey;
 }
-.available_colors div:hover,
+.available_colors div:not(.optional-piklor-parameters):not(.optional-parameter):hover,
 .colorbtn:hover,
 #addColor:hover{
   cursor: pointer;
@@ -375,7 +375,7 @@ h5>.badge {
   margin-left: 5px;
   transition: 0.2s;
 }
-.available_colors div,
+.available_colors div:not(.optional-piklor-parameters):not(.optional-parameter),
 .colorbtn {
   width: 25px;
   display: inline-block;
