@@ -16,23 +16,13 @@ button.report-share {
 }
 
 button.report-share.btn.btn-outline-info {
-    top: 8%;
+    top: 0;
     position: absolute;
     float: right;
-    left: 10%;
+    left: 0;
+    margin: 5px;
     z-index: 1000;
 }
-
-.report-chart:hover button.report-share,
-.report-text:hover button.report-share,
-.report-map:hover button.report-share,
-.report-image:hover button.report-share,
-.report-group:hover button.report-share,
-.report-figure:hover button.report-share,
-.report-table:hover button.report-share {
-    display: block;
-}
-
 div#preloader {
     position: fixed;
     left: 0;
@@ -141,4 +131,7 @@ div[class*='col-'] {
 }
 .report-chart-summary{
     text-align: justify;
+}
+.dataviz-container:hover .report-share{
+    display: block;
 }
