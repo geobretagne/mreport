@@ -135,3 +135,6 @@ div[class*='col-'] {
 .dataviz-container:hover .report-share{
     display: block;
 }
+.no-data{
+    text-align: center;
+}

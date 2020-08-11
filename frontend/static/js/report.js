@@ -50,7 +50,7 @@ report = (function () {
     };
 
     var _deleteElement = function (id) {
-        $("#" + id).remove();
+        document.getElementById(id).parentNode.parentNode.innerHTML="<h4 class='no-data'>Absence de donnée pour cette Dataviz</h4>"
     };
 
     var _handleVizError = function (el, id, data) {
@@ -498,6 +498,7 @@ report = (function () {
                 dataType: "json",
                 url: url,
                 success: function (data) {
+                    
                     var links = [];
                     data.items.forEach(function (a) {
                         var _url = [APIRequest.base_url, APIRequest.report, a.dataid].join("/");
