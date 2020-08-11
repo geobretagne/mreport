@@ -253,6 +253,7 @@ composer = (function () {
         $('#dimensions_division').on('change', _changeDivideColumns);
         $(document).on('show.bs.modal', '#divide_form', _displayDivideModal);
         $(document).on('click', '#divide_modal_btn', _saveDivideConfig);
+        $(document).on('click', 'span.delete_column', _deleteDvzFromComposer);
 
 
 
@@ -272,21 +273,6 @@ composer = (function () {
         //get and show report title
         var title = admin.getReportData(reportId).title;
         $("#composer-report-title").text(title);
-        //Update dataviz items in menu list
-        var lst = [];
-        var dataviz_lst = admin.getReportData(reportId).dataviz;
-        dataviz_lst.forEach(function (dvz) {
-            if (dvz != null)
-                var dvztpl = _datavizTemplate.join("");
-            dvztpl = dvztpl.replace(/{{dvz}}/g, dvz.title);
-            dvztpl = dvztpl.replace(/{{id}}/g, dvz.id);
-            dvztpl = dvztpl.replace(/{{reportId}}/g, reportId);
-            lst.push(dvztpl);
-            
-            
-        });
-        $("#dataviz-items .dataviz.list-group-item").remove();
-        $("#dataviz-items").append(lst.join(""));
         $.ajax({
             type: "GET",
             url: ["/mreport", reportId, "report_composer.html"].join("/"),
@@ -308,10 +294,32 @@ composer = (function () {
                     });
                 }
             },
+            complete: function () {
+                //Update dataviz items in menu list
+                var lst = [];
+                var dataviz_lst = admin.getReportData(reportId).dataviz;
+                dataviz_lst.forEach(function (dvz) {
+                    var dvzList = [...document.getElementById("report-composition").querySelectorAll(".dataviz-container .dataviz")];
+                    var isAbsent = dvzList.every(function (oldDvz) {
+                        return oldDvz.dataset.dataviz !== dvz.id;
+                    })
+                    if (isAbsent) {
+                        if (dvz != null)
+                            var dvztpl = _datavizTemplate.join("");
+                        dvztpl = dvztpl.replace(/{{dvz}}/g, dvz.title);
+                        dvztpl = dvztpl.replace(/{{id}}/g, dvz.id);
+                        dvztpl = dvztpl.replace(/{{reportId}}/g, reportId);
+                        lst.push(dvztpl);
+                    }
+                });
+                $("#dataviz-items .dataviz.list-group-item").remove();
+                $("#dataviz-items").append(lst.join(""));
+            },
             error: function (error) {
                 console.log(error);
             }
         });
+
     };
 
     /*
@@ -521,7 +529,7 @@ composer = (function () {
      * _addTitleDescription. Add to dataviz title and description if specified in the wizard
      */
     var _addTitleDescription = function (dvz) {
-        var dvzHTML = $($.parseHTML(dvz)[0]);
+        var dvzHTML = $($.parseHTML(dvz));
         var parentDiv = document.createElement("DIV");
         parentDiv.classList.add("report-flex-centered");
         parentDiv.appendChild(dvzHTML[0]);
@@ -680,7 +688,7 @@ composer = (function () {
         return true;
     }
     var _changeOrientationInput = function () {
-        var dimensionsInputs =  document.getElementById("columns-inputs")
+        var dimensionsInputs = document.getElementById("columns-inputs")
         if ($(this).val() == 0) {
             var row = document.createElement('div');
             row.classList.add("row");
@@ -695,11 +703,11 @@ composer = (function () {
                 row.appendChild(div);
             }
             dimensionsInputs.prepend(row);
-            dimensionsInputs.querySelector("small").innerHTML="Le total doit être 12";
+            dimensionsInputs.querySelector("small").innerHTML = "Le total doit être 12";
             _resetSelectForDivision(6);
         } else {
             var previousModel = dimensionsInputs.querySelector(".row");
-            dimensionsInputs.querySelector("small").innerHTML="Les divisions verticales ont toutes la même  taille";
+            dimensionsInputs.querySelector("small").innerHTML = "Les divisions verticales ont toutes la même  taille";
             previousModel.parentNode.removeChild(previousModel);
             var row = document.createElement('div');
             _resetSelectForDivision(4);
@@ -826,25 +834,44 @@ composer = (function () {
                         </div>\
                     </div>'
             };
-        parent.innerHTML = structure;
-        _configureNewBlock(parent.querySelectorAll(".row,.test"));
-        $('#divide_form').modal('hide')
+            parent.innerHTML = structure;
+            _configureNewBlock(parent.querySelectorAll(".row,.test"));
+            $('#divide_form').modal('hide')
+
+        }
+
+
 
     }
+    var _deleteDvzFromComposer = function (e) {
+        var deleteBtn = e.currentTarget;
+        var linkedDvz = deleteBtn.parentNode.nextElementSibling.querySelectorAll(".dataviz");
+        for (dvz of linkedDvz) {
+            var dvzList = [...document.getElementById("dataviz-items").getElementsByClassName("dataviz")];
+            var isAbsent = dvzList.every(function (oldDvz) {
+                return oldDvz.dataset.dataviz !== dvz.dataset.dataviz;
+            })
+            if (isAbsent) {
+                var dvztpl = _datavizTemplate.join("");
+                dvztpl = dvztpl.replace(/{{dvz}}/g, dvz.title);
+                dvztpl = dvztpl.replace(/{{id}}/g, dvz.dataset.dataviz);
+                dvztpl = dvztpl.replace(/{{reportId}}/g, dvz.reportId);
+                document.getElementById("dataviz-items").innerHTML += dvztpl;
+            }
+            dvz.parentNode.removeChild(dvz);
+        }
 
-
-
-}
-return {
-    initComposer: _initComposer,
-    compose: /* used by admin.js */ _compose,
-    activeModel: /* used by wizard.js */ function () {
-        return _HTMLTemplates[_activeHTMLTemplate];
-    },
-    models: /* used for test pupose */ function () {
-        return _HTMLTemplates;
-    },
-}; // fin return
+    }
+    return {
+        initComposer: _initComposer,
+        compose: /* used by admin.js */ _compose,
+        activeModel: /* used by wizard.js */ function () {
+            return _HTMLTemplates[_activeHTMLTemplate];
+        },
+        models: /* used for test pupose */ function () {
+            return _HTMLTemplates;
+        },
+    }; // fin return
 
 })();
 
