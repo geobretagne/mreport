@@ -81,7 +81,7 @@ admin = (function () {
                 //data.dataviz = ['epci_title', 'epci_pop'];
                 data.dataviz.forEach(function (dvz) {
                     if (dvz != null)
-                        lst.push('<li data-dataviz="' + dvz + '" data-report="' + reportId + '" class="list-group-item item2keep"><span>' + dvz + '</span><button type="button" class="btn btn-delete btn-danger">Delete</button></li>');
+                        lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item item2keep"><span>' + dvz.id + '</span><button type="button" class="btn btn-delete btn-danger">Delete</button></li>');
                 });
                 confirmed.attr("onclick", "admin.updateReport();");
                 confirmed.html("Enregistrer");
