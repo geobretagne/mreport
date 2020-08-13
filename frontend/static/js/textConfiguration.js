@@ -26,7 +26,7 @@ textedit = (function () {
     };
 
     var _textPatterns = {
-        "title": '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><h6 class="editable-text"></h6></div>',
+        "title": '<div class="report-chart-title" data-model-icon="fas fa-text-width" data-model-title="Titre"><p class="editable-text"></p></div>',
         "summary": '<div class="report-chart-summary mt-auto" data-model-icon="fas fa-align-justify" data-model-title="Description"><p class="editable-text"></p></div>'
     }
     var _defaultStyleValues = {

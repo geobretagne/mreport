@@ -532,13 +532,14 @@ composer = (function () {
         var dvzHTML = $($.parseHTML(dvz));
         var parentDiv = document.createElement("DIV");
         parentDiv.classList.add("report-flex-centered");
-        parentDiv.appendChild(dvzHTML[0]);
+        parentDiv.style.minHeight="155px";
         if (title = dvzHTML.find('.dataviz').data("title")) {
-            report.addTitleOrDescription(title, "title", false, parentDiv);
+            report.addTitleOrDescription(title, "title", false, dvzHTML[0]);
         }
         if (description = dvzHTML.find('.dataviz').data("description")) {
-            report.addTitleOrDescription(description, "summary", true, parentDiv);
+            report.addTitleOrDescription(description, "summary", true, dvzHTML[0]);
         }
+        parentDiv.appendChild(dvzHTML[0]);
         dvz = parentDiv.outerHTML;
         return dvz;
     }

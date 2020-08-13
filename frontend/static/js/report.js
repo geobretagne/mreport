@@ -764,7 +764,7 @@ report = (function () {
         }
     };
     var _configTitleDesc = function (title, description) {
-        var parent = document.getElementById("wizard-result");
+        var parent = document.querySelector("#wizard-result div[class^='report-component']");
         // Add title and description
         if (newtitle = title) {
             _addTitleOrDescription(JSON.parse(newtitle),"title",false,parent);

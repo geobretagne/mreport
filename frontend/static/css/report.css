@@ -97,6 +97,7 @@ div#preloader {
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    min-height: 155px;
 }
 .full-width{
     width: 100%;
@@ -121,20 +122,26 @@ div[class*='col-'] {
 .view .row .col-md-12{
     height: 100%;
 }
+.dataviz-container:hover .report-share{
+    display: block;
+}
+.no-data{
+    text-align: center;
+}
 .report-chart-title,
 .report-chart-summary{
     margin-right: 15px;
     margin-left: 15px;
 }
 .report-chart-title{
-   text-align: center;
+    margin-top: 15px;
+    text-align: center;
 }
 .report-chart-summary{
+    margin-bottom: 5px;
     text-align: justify;
 }
-.dataviz-container:hover .report-share{
-    display: block;
-}
-.no-data{
-    text-align: center;
+.report-figure-chiffre {
+    padding-top: 30px;
+   
 }
