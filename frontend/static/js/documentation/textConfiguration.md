@@ -1,6 +1,6 @@
 # Documentation du module textConfiguration.js
 
-## Ajouter/Supprimmer/Modifier une des propriétés css a utliser dans le module
+## Ajouter/Supprimmer/Modifier une des propriétés css a utiliser dans le module
 
 ### Première étape
 
@@ -8,7 +8,7 @@
 // Ligne 11 dans textConfiguration.js
 var _styleProperties = ["font-size", "font-weight", "color", "font-family", "letter-spacing", "text-transform"];
 ```
-Il faut modifier ce tableau pour ajouter ou supprimer les propriétés css a utiliser
+Il faut modifier ce tableau pour ajouter ou supprimer les propriétés css à utiliser
 
 ### Deuxième étape
 
@@ -23,7 +23,7 @@ Il faut modifier ce tableau pour ajouter ou supprimer les propriétés css a uti
         "textTransform":"none"
     }
 ```
-Il faut ensuite définir la valeur par defaut des toutes les propriétés specifiées plus tôt
+Il faut ensuite définir la valeur par défaut de toutes les propriétés spécifiées plus tôt
 
 ### Troisième étape
 
@@ -45,9 +45,9 @@ Il faut ajouter dans le fichier html de la modal un input avec les éléments su
 | ------------- |:-------------:|
 | input-group-prepend    | Titre du champ |
 | input      | Le champ lui même      |
-| input-group-append | unité du champ ex:px     |
+| input-group-append | unité du champ ex : px     |
 
-Les classes de tous ces éléments sont toujours les même il ne faut pas les modifier.
+Les classes de tous ces éléments sont toujours les même, il ne faut pas les modifier.
 
 #### Atributs de l'input
 
@@ -57,7 +57,7 @@ Les classes de tous ces éléments sont toujours les même il ne faut pas les mo
 | data-unit     | unité de la propriété css ex : px      |
 | id | ex : w_text_ + nom de la propriété en camelCase     |
 
-### Cas Particulier
+### Cas Particuliers
 ```javascript
 // Ligne 115 textConfigration.js
 // Handle particular cases
@@ -67,7 +67,7 @@ if (input.type === "number")
     newValue = _removeLetters(newValue);
 input.value = newValue;
 ```
-Dans ce bout de code on rempli les champs avec la valeur configurer or si le champ est de type `number` on ne peut pas le remplir avec `"25 px"` c'est donc pour traiter ce problème.
+Ce bout de code remplit les champs avec la valeur configurer, or si le champ est de type `number` on ne peut pas le remplir avec `"25 px"` c'est donc pour traiter ce problème.
 
 ```javascript
 // Ligne 183 textConfiguration.js
@@ -76,7 +76,7 @@ Dans ce bout de code on rempli les champs avec la valeur configurer or si le cha
             "fontFamily":baseProperty.fontFamily==='-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'? _defaultStyleValues.fontFamily : baseProperty["fontFamily"]
         }
 ```
-Cette fois ci il faut modifier la variable extraProperty pour s'assurer que le style récuperer est bien le bon, ici la police ne voulant pas se mettre a jour j'ai été obligé de modifier cela.
+Cette fois-ci il faut modifier la variable extraProperty pour s'assurer que le style récupérer est bien le bon, ici la police ne voulant pas se mettre à jour j'ai été obligé de modifier cela.
 
 ### Modifier les polices
 ```javascript
@@ -96,13 +96,13 @@ var _generatedFonts = {
     ]
 };
 ```
-Pour ajouter des donts a utliser il faut les spécifiées dans cette liste. `Note`  : il faut faire attention certaine police on besoin d'être entourer par des `"` il faut donc echapper ce caractère
+Pour ajouter des fonts a utliser il faut les spécifier dans cette liste. `Note`  : il faut faire attention certaines polices on besoin d'être entourées par des `"` il faut donc echapper ce caractère
 
 #### Ajouter une police externe
 
 Aller dans `static/fonts`
 
-Ajouter le dossier contenant la police avec le fichier css specifiant le `font-face`de la police puis ajouter le `font-family` contenu dans ce font-face dans la liste vu précedemment et pout fnit il faut ajouter
+Ajouter le dossier contenant la police avec le fichier css spécifiant le `font-face`de la police puis ajouter le `font-family` contenu dans ce font-face dans la liste vue précédemment et pour finir il faut ajouter
 un lien vers la police dans `static/templates/admin.html`
 
 ```html 
