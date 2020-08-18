@@ -66,6 +66,7 @@ report = (function () {
     }
 
     var _getCss = function () {
+        $('head').prepend('<link rel="stylesheet" href="' + _getReportRessource("custom.css") + '" type="text/css" />');
         $('head').prepend('<link rel="stylesheet" href="' + _getReportRessource("report.css") + '" type="text/css" />');
     };
 

@@ -34,6 +34,11 @@ def send_html(report, dataid=None):
 def send_css(report, dataid=None):
     return send_from_directory('../backend/reports/%s' % report, 'report.css')
 
+@mreport.route('/<report>/custom.css')
+@mreport.route('/<report>/<dataid>/custom.css')
+def send_css2(report, dataid=None):
+    return send_from_directory('../backend/reports/%s' % report, 'custom.css')
+
 @mreport.route('/<report>/data.csv')
 @mreport.route('/<report>/<dataid>/data.csv')
 def send_data(report, dataid=None):
