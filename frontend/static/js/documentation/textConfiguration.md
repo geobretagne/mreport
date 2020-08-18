@@ -72,9 +72,9 @@ Ce bout de code remplit les champs avec la valeur configurer, or si le champ est
 ```javascript
 // Ligne 183 textConfiguration.js
 // Handle Particular cases
-        var extraProperty = {
-            "fontFamily":baseProperty.fontFamily==='-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'? _defaultStyleValues.fontFamily : baseProperty["fontFamily"]
-        }
+var extraProperty = {
+    "fontFamily":baseProperty.fontFamily==='-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'?           _defaultStyleValues.fontFamily : baseProperty["fontFamily"]
+}
 ```
 Cette fois-ci il faut modifier la variable extraProperty pour s'assurer que le style récupérer est bien le bon, ici la police ne voulant pas se mettre à jour j'ai été obligé de modifier cela.
 
