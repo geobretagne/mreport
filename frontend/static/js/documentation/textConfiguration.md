@@ -20,7 +20,7 @@ Il faut modifier ce tableau pour ajouter ou supprimer les propriétés css a uti
         "fontFamily": '\"Trebuchet MS\"',
         "fontWeight": "400",
         "letterSpacing": "0px",
-        "text-transform":"none"
+        "textTransform":"none"
     }
 ```
 Il faut ensuite définir la valeur par defaut des toutes les propriétés specifiées plus tôt
@@ -79,4 +79,32 @@ Dans ce bout de code on rempli les champs avec la valeur configurer or si le cha
 Cette fois ci il faut modifier la variable extraProperty pour s'assurer que le style récuperer est bien le bon, ici la police ne voulant pas se mettre a jour j'ai été obligé de modifier cela.
 
 ### Modifier les polices
+```javascript
+// Ligne 13 textConfiguration.js
+var _generatedFonts = {
+    "generated": false,
+    "fonts": [
+        '\"04b30\"', 
+        'Arial', 
+        'Roboto', 
+        '\"Times New Roman\"', 
+        'Times', 
+        'Verdana', 
+        '\"Comic Sans MS\"', 
+        '\"Segoe UI\"',
+        '\"Trebuchet MS\"'
+    ]
+};
+```
+Pour ajouter des donts a utliser il faut les spécifiées dans cette liste. `Note`  : il faut faire attention certaine police on besoin d'être entourer par des `"` il faut donc echapper ce caractère
 
+#### Ajouter une police externe
+
+Aller dans `static/fonts`
+
+Ajouter le dossier contenant la police avec le fichier css specifiant le `font-face`de la police puis ajouter le `font-family` contenu dans ce font-face dans la liste vu précedemment et pout fnit il faut ajouter
+un lien vers la police dans `static/templates/admin.html`
+
+```html 
+<link rel="stylesheet" href="/static/fonts/nomDeLaPolice/stylesheet.css">
+```  
