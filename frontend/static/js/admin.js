@@ -101,7 +101,7 @@ admin = (function () {
                 title.prop("disabled", true);
                 data.dataviz.forEach(function (dvz) {
                     if (dvz != null)
-                        lst.push('<li data-dataviz="' + dvz + '" data-report="' + reportId + '" class="list-group-item">' + dvz);
+                        lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item">' + dvz.title+ '</li>');
                 });
                 confirmed.attr("onclick", "admin.deleteReport();");
                 confirmed.attr("data-report-id", reportId)

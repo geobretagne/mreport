@@ -1,6 +1,6 @@
 # Documentation du module textConfiguration.js
 
-## Ajouter/Supprimmer/Modifier une des propriétés css a utiliser dans le module
+## Ajouter/Supprimer/Modifier une des propriétés css a utiliser dans le module
 
 ### Première étape
 
