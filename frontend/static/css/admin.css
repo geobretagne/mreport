@@ -73,7 +73,6 @@ h5>.badge {
 .modal[data-report-state="new"] .badge-danger {
   display: none;
 }
-
 .modal[data-report-state="delete"] .badge-danger {
   display: inline-block;
 }
@@ -118,7 +117,9 @@ h5>.badge {
 .modal[data-dataviz-state="edit"] .badge-danger {
   display: none;
 }
-
+.modal[data-report-state="add"] .badge-success{
+  display: inline-block;
+}
 .container-fluid {
   padding: 15px;
   padding-right: 0;

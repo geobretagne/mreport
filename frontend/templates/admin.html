@@ -12,11 +12,11 @@
     <script src="/static/js/extLibs/Chart.min.js"></script>
     <link href="/static/js/extLibs/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/js/extLibs/leaflet.css"/>
+    <link rel="stylesheet" href="/static/js/extLibs/leaflet.css" />
     <script src="/static/js/extLibs/leaflet.js"></script>
     <link href="/static/css/admin.css" rel="stylesheet">
     <link href="/static/css/composer.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/fonts/04b_30/stylesheet.css">    
+    <link rel="stylesheet" href="/static/fonts/04b_30/stylesheet.css">
     <script src="/static/js/extLibs/fuse.min.js"></script>
     <script src="/static/js/extLibs/Sortable.js"></script>
     <script src="/static/js/extLibs/sweetalert2@9.js"></script>
@@ -72,7 +72,7 @@
                             data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
                     </div>
                     <div class="col-md-3 col-12">
-                        <button type="button" class="btn btn-success" data-toggle="modal"
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-report-state="add"
                             data-target="#report-modal-form2">Ajouter la sélection à un rapport existant</button>
                     </div>
                     <div class="col-md-2 col-12">
@@ -277,7 +277,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="report2ModalLabel">Rapport</h5>
+                    <h5 class="modal-title" id="report2ModalLabel">Rapport
+                        <span class="badge badge-success">Add</span>
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -382,7 +384,7 @@
                                 <div class="col-4 horizontal-column">
                                     <input type="text" class="form-control" value="6">
                                 </div>
-                                
+
                             </div>
                             <small id="dimensions_help" class="form-text text-muted orientation_changed">Le total
                                 doit être 12</small>

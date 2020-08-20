@@ -69,27 +69,29 @@ admin = (function () {
             titre.find("b").remove();
 
             if (newReport === "edit") {
-                //get data-id attribute of the clicked element
+                // get data-id attribute of the clicked element
                 var reportId = $(e.relatedTarget).data('report-id');
                 var titre = $("#report-form .form-group label");
                 titre.html(titre.html() + " <b>" + reportId + "</b>")
                 confirmed.attr("data-report-id", reportId)
                 var data = _report_data[reportId];
-                //populate data
+                // populate data
                 title.val(data.title);
                 title.prop("disabled", false);
-                //data.dataviz = ['epci_title', 'epci_pop'];
+                // data.dataviz = ['epci_title', 'epci_pop'];
                 data.dataviz.forEach(function (dvz) {
                     if (dvz != null)
-                        lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item item2keep"><span>' + dvz.id + '</span><button type="button" class="btn btn-delete btn-danger">Delete</button></li>');
+                        lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item item2keep"><span>' + dvz.title + '</span><button type="button" class="btn btn-delete btn-danger">Delete</button></li>');
                 });
                 confirmed.attr("onclick", "admin.updateReport();");
                 confirmed.html("Enregistrer");
             } else if (newReport === "new") {
                 title.prop("disabled", false);
                 $("input.dataviz-selection:checked").each(function (id, dvz) {
-                    var id = $(dvz).closest(".card.dataviz").attr("data-dataviz-id");
-                    lst.push('<li data-dataviz="' + id + '" class="list-group-item">' + id + '</li>');
+                    var card = $(dvz).closest(".card.dataviz");
+                    var id  = card.attr("data-dataviz-id");
+                    var title = card.find(".card-title").text();
+                    lst.push('<li data-dataviz="' + id + '" class="list-group-item">' + title + '</li>');
                 });
                 confirmed.attr("onclick", "admin.addReport();");
                 confirmed.attr("data-report-id", reportId)
@@ -126,11 +128,15 @@ admin = (function () {
             });
         });
         $('#report-modal-form2').on('show.bs.modal', function (e) {
+            var newReport = $(e.relatedTarget).attr('data-report-state');
+            e.currentTarget.dataset.reportState = newReport;
             $(".reports-dataviz-exist .list-group-item").remove();
             var lst = []
             $("input.dataviz-selection:checked").each(function (id, dvz) {
-                var id = $(dvz).closest(".card.dataviz").attr("data-dataviz-id");
-                lst.push('<li data-dataviz="' + id + '" class="list-group-item">' + id + '</li>');
+                var card = $(dvz).closest(".card.dataviz");
+                var id  = card.attr("data-dataviz-id");
+                var title = card.find(".card-title").text();
+                lst.push('<li data-dataviz="' + id + '" class="list-group-item">' + title + '</li>');
             });
             $(".reports-dataviz-exist").append(lst.join(""));
         });
