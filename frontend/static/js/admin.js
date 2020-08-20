@@ -241,9 +241,6 @@ admin = (function () {
             $(formId + ' .form-control[name="' + key + '"]').val(value);
         }
     };
-    var _filterSearchBar = function (result, divs) {
-
-    };
     var _initCatalog = function () {
         $.ajax({
             dataType: "json",
@@ -254,10 +251,8 @@ admin = (function () {
                     _showDataviz();
                     var options = {
                         tokenize: false,
-                        threshold: 0.2,
-                        location: 0,
+                        threshold: 0.1,
                         distance: 500,
-                        maxPatternLength: 70,
                         minMatchCharLength: 2,
                         keys: [
                             "title",
