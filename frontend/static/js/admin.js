@@ -509,12 +509,7 @@ admin = (function () {
 
     }
     _deleteDatavizFromReport = function (dataviz2delete, report_id, report_name) {
-        var resultArray = [];
-        dataviz2delete.each(function () {
-            resultArray.push({
-                "dataviz": $(this).text()
-            });
-        });
+        var resultArray = dataviz2delete;
         $.ajax({
             dataType: "json",
             contentType: "application/json",
@@ -555,8 +550,13 @@ admin = (function () {
     _updateReport = function () {
         var report_name = $("#reportInputTitre").val();
         var report_id = $("#report_confirmed").attr("data-report-id");
-        var dataviz2delete = $(".reports-dataviz li:not(.item2keep) span");
-
+        var dataviz2delete = $(".reports-dataviz li:not(.item2keep)");
+        var resultArray = [];
+        dataviz2delete.each(function () {
+            resultArray.push({
+                "dataviz": $(this).data("dataviz")
+            });
+        });
         $.ajax({
             dataType: "json",
             contentType: "application/json",
@@ -569,7 +569,7 @@ admin = (function () {
                 if (data.response === "success") {
                     //update local data
                     if (dataviz2delete.length > 0) {
-                        _deleteDatavizFromReport(dataviz2delete, report_id, report_name);
+                        _deleteDatavizFromReport(resultArray, report_id, report_name);
                     } else {
                         $('#report-modal-form').modal('hide');
                         Swal.fire(
