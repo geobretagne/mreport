@@ -843,7 +843,7 @@ admin = (function () {
                 var datavizs = [];
                 reportData.dataviz.forEach(function (elem) {
                     datavizs.push({
-                        "dataviz": elem
+                        "dataviz": elem.id
                     });
                 });
                 $.ajax({
