@@ -171,6 +171,8 @@ wizard = (function () {
         })
         _resetTextField(document.getElementById("w_title"));
         _resetTextField(document.getElementById("w_desc"));
+        _resetTextField(document.getElementById("w_style_cc"));
+        _resetTextField(document.getElementById("w_style_caption"));
 
     };
     var _resetTextField = function (textField) {
@@ -260,6 +262,13 @@ wizard = (function () {
         let modelId = document.getElementById("selectedModelWizard").value;
         var colors = composer.models()[modelId].parameters.colors || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
         var unit = _dataviz_infos.unit;
+        if(dataviz==="figure"){
+            var figureCaption = _data.label; 
+            var chiffreClef  = _data.data+unit;
+            document.getElementById("w_style_cc").value=chiffreClef;
+            document.getElementById("w_style_caption").value=figureCaption;
+        }
+        
         $("#w_unit").val(unit);
         //significative label if is true, allow chart and extra column in table
         var significative_label = _data.significative_label;
@@ -340,6 +349,20 @@ wizard = (function () {
         $("#w_label").val(cfg.properties.label);
         var title = $("#w_title");
         var description = $("#w_desc");
+        if(scc = JSON.parse(cfg.properties.style_cc).style){
+            var cc = document.getElementById("w_style_cc");
+            cc.value = _data.data+cfg.properties.unit;
+            for (var styleproperty in scc) {
+                cc.style[styleproperty]=scc[styleproperty];
+            }
+        }
+        if(sc = JSON.parse(cfg.properties.style_caption).style){
+            var caption = document.getElementById("w_style_caption");
+            caption.value = _data.label;
+            for (var styleproperty in sc) {
+                caption.style[styleproperty]=sc[styleproperty];
+            }
+        }
         if (cfg.properties.title) {
             let cfgTitle = JSON.parse(cfg.properties.title);
             title.val(cfgTitle.text);
@@ -662,12 +685,16 @@ wizard = (function () {
             var val = $(attribute).val();
             if (attribute.classList.contains("addedText") && val.length >= 1) {
                 let style = JSON.stringify(textedit.getTextStyle(attribute));
-                val = '{\
-                    "text": "' + val.replace(/\r?\n/g, "\\n") + '",\
-                    "style": ' + style + '\
-                }'
+                val = '{'+
+                    '"text": "' + val.replace(/\r?\n/g, "\\n") + '",'+
+                    '"style": ' + style +
+                '}'
             }
             var prop = $(attribute).attr("data-prop");
+            if(prop==="style_caption" || prop==="style_cc"){
+                let style = JSON.stringify(textedit.getTextStyle(attribute));
+                val = '{"style":'+style+'}'
+            }
             if (val && val.length >= 1) {
                 attributes.push("data-" + prop + '="' + val + '"');
                 attributes.push({
@@ -682,7 +709,7 @@ wizard = (function () {
                 properties[prop] = properties[prop].split(",");
             }
         });
-
+        
         ["columns"].forEach(function (prop) {
             if (properties[prop]) {
                 properties[prop] = properties[prop].split(",").map(function (val) {

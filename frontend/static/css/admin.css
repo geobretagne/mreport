@@ -448,3 +448,6 @@ h5>.badge {
   display: inline-block;
   width: 20%;
 }
+#wizard-panel input:disabled{
+  background-color: unset;
+}

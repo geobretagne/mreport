@@ -50,7 +50,7 @@ report = (function () {
     };
 
     var _deleteElement = function (id) {
-        document.getElementById(id).parentNode.parentNode.innerHTML="<h4 class='no-data'>Absence de donnée pour cette Dataviz</h4>"
+        document.getElementById(id).parentNode.parentNode.innerHTML = "<h4 class='no-data'>Absence de donnée pour cette Dataviz</h4>"
     };
 
     var _handleVizError = function (el, id, data) {
@@ -499,7 +499,7 @@ report = (function () {
                 dataType: "json",
                 url: url,
                 success: function (data) {
-                    
+
                     var links = [];
                     data.items.forEach(function (a) {
                         var _url = [APIRequest.base_url, APIRequest.report, a.dataid].join("/");
@@ -580,44 +580,45 @@ report = (function () {
                 "maintainAspectRatio": true,
                 tooltips: {
                     callbacks: {
-                        title: function(tooltipItem, data) {
+                        title: function (tooltipItem, data) {
                             var title = "";
-                            if(data['datasets'].length>1){
-                                if(chart.config.type==="horizontalBar"){
+                            if (data['datasets'].length > 1) {
+                                if (chart.config.type === "horizontalBar") {
                                     title = tooltipItem[0].yLabel;
-                                }else{
+                                } else {
                                     title = data['datasets'][tooltipItem[0].datasetIndex].label;
                                 }
-                            }
-                            else{
+                            } else {
                                 title = data['labels'][tooltipItem[0]['index']]
                             }
                             return title;
                         },
-                        label: function(tooltipItem, data) {
+                        label: function (tooltipItem, data) {
                             var value = data['datasets'][tooltipItem.datasetIndex]['data'][tooltipItem['index']];
                             var total = false;
-                            if(chart.config.type==="pie"){
-                                total = data['datasets'][tooltipItem.datasetIndex]['data'].reduce(function(a,b){
-                                    return (+a)+(+b);
+                            if (chart.config.type === "pie") {
+                                total = data['datasets'][tooltipItem.datasetIndex]['data'].reduce(function (a, b) {
+                                    return (+a) + (+b);
                                 })
                             }
-                            
+
                             if (!isNaN(parseInt(value))) {
                                 if (unit === "€") {
-                                    value = (Math.round(value * 100) / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR',});
-                                }else if(total){
-                                    value = parseFloat(((value / total)*100).toFixed(1));
-                                    if(Number.isInteger(value))
+                                    value = (Math.round(value * 100) / 100).toLocaleString('fr-FR', {
+                                        style: 'currency',
+                                        currency: 'EUR',
+                                    });
+                                } else if (total) {
+                                    value = parseFloat(((value / total) * 100).toFixed(1));
+                                    if (Number.isInteger(value))
                                         value = value.toString().split(".")[0];
                                     value += " %";
-                                }
-                                else {
+                                } else {
                                     value = (Math.round(value * 100) / 100).toLocaleString();
                                 }
                             }
-                            if(chart.config.type==="horizontalBar"){
-                                value = data.datasets[tooltipItem.datasetIndex].label+ " : " + value;                                
+                            if (chart.config.type === "horizontalBar") {
+                                value = data.datasets[tooltipItem.datasetIndex].label + " : " + value;
                             }
                             return value;
                         }
@@ -692,12 +693,28 @@ report = (function () {
     };
 
     var _createFigure = function (data, chiffrecle) {
+
         var el = _getDomElement("figure card", chiffrecle.id);
         var unit = $(el).attr("data-unit") || "";
         if (el && data[chiffrecle.id]) {
-            el.getElementsByClassName("report-figure-chiffre")[0].textContent = _format(data[chiffrecle.id].data[0]) + unit;
+            var figure_cc = el.getElementsByClassName("report-figure-chiffre")[0];
+            figure_cc.textContent = _format(data[chiffrecle.id].data[0]) + unit;
+            if (style_cc = el.dataset['style_cc']) {
+                var style_cc = JSON.parse(style_cc).style;
+                for (var styleproperty in style_cc) {
+                    figure_cc.style[styleproperty] = style_cc[styleproperty];
+                }
+            }
             if (el.getElementsByClassName("report-figure-caption").length > 0) {
-                el.getElementsByClassName("report-figure-caption")[0].textContent = data[chiffrecle.id].label[0];
+                var figure = el.getElementsByClassName("report-figure-caption")[0];
+                figure.textContent = data[chiffrecle.id].label[0];
+                if (style_caption = el.dataset['style_caption']) {
+                    var style_caption = JSON.parse(style_caption).style;
+                    for (var styleproperty in style_caption) {
+                        figure.style[styleproperty] = style_caption[styleproperty];
+                    }
+                }
+
             }
             // Add Title and Description to the preview
             _configTitleDesc(chiffrecle.title, chiffrecle.description);
@@ -768,20 +785,20 @@ report = (function () {
         var parent = document.querySelector("#wizard-result div[class^='report-component']");
         // Add title and description
         if (newtitle = title) {
-            _addTitleOrDescription(JSON.parse(newtitle),"title",false,parent);
+            _addTitleOrDescription(JSON.parse(newtitle), "title", false, parent);
         }
         if (newdesc = description) {
-            _addTitleOrDescription(JSON.parse(newdesc),"summary",true,parent);
+            _addTitleOrDescription(JSON.parse(newdesc), "summary", true, parent);
         }
     }
-    var _addTitleOrDescription = function (element,type,append,parent) {
+    var _addTitleOrDescription = function (element, type, append, parent) {
         var parser = new DOMParser();
         let textStyle = textedit.generateStyle(element);
         let elementDiv = textedit.textPatterns[type];
-        elementDiv = parser.parseFromString(elementDiv, "text/html").getElementsByClassName("report-chart-"+type)[0];
-        elementDiv.getElementsByClassName("editable-text")[0].style.cssText=textStyle;
-        elementDiv.getElementsByClassName("editable-text")[0].innerHTML=element.text;
-        if(append)
+        elementDiv = parser.parseFromString(elementDiv, "text/html").getElementsByClassName("report-chart-" + type)[0];
+        elementDiv.getElementsByClassName("editable-text")[0].style.cssText = textStyle;
+        elementDiv.getElementsByClassName("editable-text")[0].innerHTML = element.text;
+        if (append)
             parent.append(elementDiv);
         else
             parent.prepend(elementDiv);
@@ -1116,7 +1133,7 @@ report = (function () {
             return _appConf;
         },
         init: _init,
-        addTitleOrDescription:_addTitleOrDescription
+        addTitleOrDescription: _addTitleOrDescription
     }; // fin return
 
 })();

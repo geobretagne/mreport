@@ -145,3 +145,6 @@ div[class*='col-'] {
     padding-top: 30px;
    
 }
+.editable-text{
+    margin-bottom: 0 !important;
+}
