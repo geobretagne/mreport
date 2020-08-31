@@ -440,3 +440,11 @@ h5>.badge {
   color: white;
   transition: 0.2s;
 }
+#report-modal-form li.list-group-item span{
+  display: inline-block;
+  width: 80%;
+}
+#report-modal-form li.list-group-item button{
+  display: inline-block;
+  width: 20%;
+}
