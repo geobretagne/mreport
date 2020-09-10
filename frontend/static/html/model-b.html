@@ -691,5 +691,57 @@
         .icon-evolution2{
             background-image: url(https://kartenn.region-bretagne.fr/ws/transports/icons/evolution_2.svg);
         }
+
+        .printButton{
+            width: 60px;
+            height: 60px;
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            background-color: #eee;
+            color: #555;
+            padding: 10px;
+            border-radius: 35px;
+            box-shadow: 0 0 5px #ccc;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .icon-print:before{
+            margin: 0 auto;
+        }
+
+        .printButton:hover{
+            background-color:#555;
+            color:#eee;
+        }
+
+        @media print {
+          @page {
+            size: A4 portrait;
+            -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+            color-adjust: exact !important;
+
+          }
+          .lyrow {
+              page-break-inside: avoid;
+          }
+          canvas {
+                min-height: 100%;
+                max-width: 100%;
+                max-height: 100%;
+                height: auto!important;
+                width: auto!important;
+            }
+
+            .printButton{
+                display: none !important;
+            }
+
+            .model-b {
+                background-color: #ffffff;
+            }
+
+        }
     </style>
 </div>

@@ -93,11 +93,11 @@ div#preloader {
 }
 
 .report-flex-centered {
-    display: flex;
+    /*display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    min-height: 155px;
+    min-height: 155px;*/
 }
 .full-width{
     width: 100%;
@@ -143,7 +143,7 @@ div[class*='col-'] {
 }
 .report-figure-chiffre {
     padding-top: 30px;
-   
+
 }
 .editable-text{
     margin-bottom: 0 !important;

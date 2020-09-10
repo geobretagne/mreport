@@ -316,6 +316,29 @@ report = (function () {
 
     };
 
+    var _printDate = function () {
+        let a = document.createElement("span");
+        a.textContent = "Document généré le "  + new Date().toLocaleDateString();
+        a.classList.add("print-date");
+        let b = document.getElementsByClassName("container-fluid")[0];
+        b.appendChild(a);
+
+    };
+
+    var _print = function () {
+        let a = document.createElement("a");
+        a.href = "javascript:window.print();";
+        let b = document.createElement("span");
+        b.classList.add("printButton");
+        let c = document.createElement("span");
+        c.classList.add("icon-print");
+        b.appendChild(c);
+        a.appendChild(b);
+        let d = document.getElementsByClassName("container-fluid")[0];
+        d.appendChild(a);
+
+    };
+
 
     var _getDom = function () {
         $.ajax({
@@ -340,6 +363,8 @@ report = (function () {
                 //append _config
                 _merge_config();
                 _getData();
+                _printDate();
+                _print();
             },
             error: function (xhr, status, err) {
                 _alert("Erreur avec le fichier report.html de " + APIRequest.base_url + " " + err, "danger", true);
