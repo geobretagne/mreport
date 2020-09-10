@@ -349,14 +349,16 @@ wizard = (function () {
         $("#w_label").val(cfg.properties.label);
         var title = $("#w_title");
         var description = $("#w_desc");
-        if(scc = JSON.parse(cfg.properties.style_cc).style){
+        if(cfg.properties.style_cc && cfg.properties.style_cc.style){
+            var scc = JSON.parse(cfg.properties.style_cc).style;
             var cc = document.getElementById("w_style_cc");
             cc.value = _data.data+cfg.properties.unit;
             for (var styleproperty in scc) {
                 cc.style[styleproperty]=scc[styleproperty];
             }
         }
-        if(sc = JSON.parse(cfg.properties.style_caption).style){
+        if(cfg.properties.style_caption && cfg.properties.style_caption.style){
+            var sc = JSON.parse(cfg.properties.style_caption).style;
             var caption = document.getElementById("w_style_caption");
             caption.value = _data.label;
             for (var styleproperty in sc) {
