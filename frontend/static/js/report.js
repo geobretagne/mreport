@@ -724,21 +724,9 @@ report = (function () {
         if (el && data[chiffrecle.id]) {
             var figure_cc = el.getElementsByClassName("report-figure-chiffre")[0];
             figure_cc.textContent = _format(data[chiffrecle.id].data[0]) + unit;
-            if (style_cc = el.dataset['style_cc']) {
-                var style_cc = JSON.parse(style_cc).style;
-                for (var styleproperty in style_cc) {
-                    figure_cc.style[styleproperty] = style_cc[styleproperty];
-                }
-            }
             if (el.getElementsByClassName("report-figure-caption").length > 0) {
                 var figure = el.getElementsByClassName("report-figure-caption")[0];
                 figure.textContent = data[chiffrecle.id].label[0];
-                if (style_caption = el.dataset['style_caption']) {
-                    var style_caption = JSON.parse(style_caption).style;
-                    for (var styleproperty in style_caption) {
-                        figure.style[styleproperty] = style_caption[styleproperty];
-                    }
-                }
 
             }
             // Add Title and Description to the preview
@@ -810,19 +798,17 @@ report = (function () {
         var parent = document.querySelector("#wizard-result div[class^='report-component']");
         // Add title and description
         if (newtitle = title) {
-            _addTitleOrDescription(JSON.parse(newtitle), "title", false, parent);
+            _addTitleOrDescription(newtitle, "title", false, parent);
         }
         if (newdesc = description) {
-            _addTitleOrDescription(JSON.parse(newdesc), "summary", true, parent);
+            _addTitleOrDescription(newdesc, "summary", true, parent);
         }
     }
-    var _addTitleOrDescription = function (element, type, append, parent) {
+    var _addTitleOrDescription = function (text, type, append, parent) {
         var parser = new DOMParser();
-        let textStyle = textedit.generateStyle(element);
         let elementDiv = textedit.textPatterns[type];
         elementDiv = parser.parseFromString(elementDiv, "text/html").getElementsByClassName("report-chart-" + type)[0];
-        elementDiv.getElementsByClassName("editable-text")[0].style.cssText = textStyle;
-        elementDiv.getElementsByClassName("editable-text")[0].innerHTML = element.text;
+        elementDiv.getElementsByClassName("editable-text")[0].innerHTML = text;
         if (append)
             parent.append(elementDiv);
         else

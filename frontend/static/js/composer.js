@@ -328,11 +328,8 @@ composer = (function () {
      */
 
     var _onTextEdit = function (a) {
-        textedit.configureButtons(a.currentTarget);
         //Get selected text element
         var source = a.relatedTarget.parentNode;
-        var sourceStyle = textedit.getTextStyle(source);
-        textedit.applyTextStyle(a.currentTarget.querySelector("#text-edit-value"), sourceStyle);
         //store old text
         var oldtext = source.firstChild.nodeValue.trim();
         $("#text-edit-value").val(oldtext);
@@ -346,8 +343,6 @@ composer = (function () {
             var type = $('#text-edit input[name=typeedit]:checked').val();
             if (type === "text") {
                 source.firstChild.nodeValue = text.trim();
-                let newStyle = textedit.getTextStyle(a.currentTarget.querySelector("#text-edit-value"));
-                textedit.applyTextStyle(source, newStyle);
             }
             //close modal
             $("#text-edit").modal("hide");
@@ -879,5 +874,5 @@ composer = (function () {
 $(document).ready(function () {
     composer.initComposer();
     wizard.init();
-    textedit.init();
+    //textedit.init();
 });

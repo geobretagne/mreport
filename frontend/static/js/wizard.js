@@ -169,15 +169,8 @@ wizard = (function () {
         $(".colorbtn, .color-picker").each(function (index, elem) {
             elem.remove();
         })
-        _resetTextField(document.getElementById("w_title"));
-        _resetTextField(document.getElementById("w_desc"));
-        _resetTextField(document.getElementById("w_style_cc"));
-        _resetTextField(document.getElementById("w_style_caption"));
 
     };
-    var _resetTextField = function (textField) {
-        textField = textedit.applyTextStyle(textField, textedit.defaultStyleValues)
-    }
     /*
      * Method to configure wizard options with dataviz capabilities
      * Update options in select control #w_dataviz_type"
@@ -263,12 +256,12 @@ wizard = (function () {
         var colors = composer.models()[modelId].parameters.colors || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
         var unit = _dataviz_infos.unit;
         if(dataviz==="figure"){
-            var figureCaption = _data.label; 
+            var figureCaption = _data.label;
             var chiffreClef  = _data.data+unit;
             document.getElementById("w_style_cc").value=chiffreClef;
             document.getElementById("w_style_caption").value=figureCaption;
         }
-        
+
         $("#w_unit").val(unit);
         //significative label if is true, allow chart and extra column in table
         var significative_label = _data.significative_label;
@@ -349,36 +342,6 @@ wizard = (function () {
         $("#w_label").val(cfg.properties.label);
         var title = $("#w_title");
         var description = $("#w_desc");
-        if(cfg.properties.style_cc && cfg.properties.style_cc.style){
-            var scc = JSON.parse(cfg.properties.style_cc).style;
-            var cc = document.getElementById("w_style_cc");
-            cc.value = _data.data+cfg.properties.unit;
-            for (var styleproperty in scc) {
-                cc.style[styleproperty]=scc[styleproperty];
-            }
-        }
-        if(cfg.properties.style_caption && cfg.properties.style_caption.style){
-            var sc = JSON.parse(cfg.properties.style_caption).style;
-            var caption = document.getElementById("w_style_caption");
-            caption.value = _data.label;
-            for (var styleproperty in sc) {
-                caption.style[styleproperty]=sc[styleproperty];
-            }
-        }
-        if (cfg.properties.title) {
-            let cfgTitle = JSON.parse(cfg.properties.title);
-            title.val(cfgTitle.text);
-            for (var styleproperty in cfgTitle.style) {
-                title.css(styleproperty, cfgTitle.style[styleproperty]);
-            }
-        }
-        if (cfg.properties.description) {
-            let cfgDesc = JSON.parse(cfg.properties.description);
-            description.val(cfgDesc.text);
-            for (var styleproperty in cfgDesc.style) {
-                description.css(styleproperty, cfgDesc.style[styleproperty]);
-            }
-        }
         // Set colors for Piklor lib
         $("#w_colors").val(cfg.properties.colors);
         let basecolors = document.getElementById("w_colors").value.split(',');
@@ -395,6 +358,12 @@ wizard = (function () {
         }
         if (cfg.properties.unit) {
             $("#w_unit").val(cfg.properties.unit);
+        }
+        if (cfg.properties.title) {
+            title.val(cfg.properties.title);
+        }
+        if (cfg.properties.description) {
+            description.val(cfg.properties.description);
         }
 
         //show fields linked to dataviz type (table, figure, chart...)
@@ -511,7 +480,7 @@ wizard = (function () {
         //clear wizard form;
         _clean();
         // Add text config buttons
-        textedit.configureButtons(e.currentTarget);
+        //textedit.configureButtons(e.currentTarget);
         //Test if dataviz has a default visualization or is yet configured in active session
         //check if configuration exists for this dataviz with attributes. eg data-colors...
         var yetConfigured = $(e.relatedTarget).closest(".dataviz").find("code.dataviz-definition").text() || false;
@@ -685,18 +654,7 @@ wizard = (function () {
         };
         $(".dataviz-attributes").each(function (id, attribute) {
             var val = $(attribute).val();
-            if (attribute.classList.contains("addedText") && val.length >= 1) {
-                let style = JSON.stringify(textedit.getTextStyle(attribute));
-                val = '{'+
-                    '"text": "' + val.replace(/\r?\n/g, "\\n") + '",'+
-                    '"style": ' + style +
-                '}'
-            }
             var prop = $(attribute).attr("data-prop");
-            if(prop==="style_caption" || prop==="style_cc"){
-                let style = JSON.stringify(textedit.getTextStyle(attribute));
-                val = '{"style":'+style+'}'
-            }
             if (val && val.length >= 1) {
                 attributes.push("data-" + prop + '="' + val + '"');
                 attributes.push({
@@ -711,7 +669,7 @@ wizard = (function () {
                 properties[prop] = properties[prop].split(",");
             }
         });
-        
+
         ["columns"].forEach(function (prop) {
             if (properties[prop]) {
                 properties[prop] = properties[prop].split(",").map(function (val) {
