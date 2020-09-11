@@ -253,11 +253,15 @@ span.structure-description {
     display: none;
 }
 
-.composition .dataviz-container {
+.composition .report-bloc .dataviz-container {
     border: #007bff;
     border-style: ridge;
     min-height: 200px;
     width: 100%;
+}
+
+.composition .report-bloc-title  .dataviz-container {
+    height: 100px
 }
 .composition .bloc-content>.dataviz-container {
     min-height: 150px;
@@ -346,7 +350,7 @@ span.text-edit.badge.badge-warning {
     padding: 0;
 }
 .dividedcolumn:hover .divide_column,
-.dividedcolumn:hover .delete_column{    
+.dividedcolumn:hover .delete_column{
     filter: alpha(opacity=100);
     opacity: 1;
     transition: 0.2s;
@@ -431,5 +435,5 @@ span.text-edit.badge.badge-warning {
 }
 .report-figure-chiffre {
     padding-top: 40px !important;
-    
+
 }
