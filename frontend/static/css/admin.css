@@ -1,5 +1,13 @@
-﻿body {
+﻿html {
+  height: 100%;
+}
+body {
   padding: 0 !important;
+  height: 100%;
+}
+
+#composer, .builder.edit, .main, .composition, #report-composition {
+  height: 100%;
 }
 
 .card {

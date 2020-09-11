@@ -30,132 +30,128 @@
 </head>
 
 <body>
+    <!-- Navigation start -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">MREPORT - beta1</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div>
-        <!-- Navigation start -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">MREPORT - beta1</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" data-page="catalog">
+                    <a class="nav-link">Catalogue</a>
+                </li>
+                <li class="nav-item" data-page="reports">
+                    <a class="nav-link">Rapports</a>
+                </li>
+                <li class="nav-item" data-page="composer">
+                    <a id="btn-composer" class="nav-link">Composeur</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <!-- Navigation end -->
+
+    <!-- Catalog start -->
+    <div class="container-fluid page active" id="catalog">
+        <h1>Jeux de données</h1>
+        <div id="filterbutton" class="row sticky-sm">
+            <button class="btn d-md-none col-12" data-toggle="collapse" data-target="#stickycollapse">
+                Outils<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
             </button>
+        </div>
+        <div id="stickycollapse" class="collapse d-md-block sticky">
+            <div id="sticky" class="row">
+                <div class="col-md-3 col-12">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new"
+                        data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
+                </div>
+                <div class="col-md-3 col-12">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-report-state="add"
+                        data-target="#report-modal-form2">Ajouter la sélection à un rapport existant</button>
+                </div>
+                <div class="col-md-2 col-12">
+                    <input id="searchbar" class="form-control" placeholder="Filtrer le catalogue" maxlength="32">
+                </div>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active" data-page="catalog">
-                        <a class="nav-link">Catalogue</a>
-                    </li>
-                    <li class="nav-item" data-page="reports">
-                        <a class="nav-link">Rapports</a>
-                    </li>
-                    <li class="nav-item" data-page="composer">
-                        <a id="btn-composer" class="nav-link">Composeur</a>
-                    </li>
-                </ul>
-
-            </div>
-        </nav>
-        <!-- Navigation end -->
-
-        <!-- Catalog start -->
-        <div class="container-fluid page active" id="catalog">
-            <h1>Jeux de données</h1>
-            <div id="filterbutton" class="row sticky-sm">
-                <button class="btn d-md-none col-12" data-toggle="collapse" data-target="#stickycollapse">
-                    Outils<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                </button>
-            </div>
-            <div id="stickycollapse" class="collapse d-md-block sticky">
-                <div id="sticky" class="row">
-                    <div class="col-md-3 col-12">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new"
-                            data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
+                <div class="col-md-2 col-12">
+                    <div class="custom-control custom-checkbox pt-2">
+                        <input type="checkbox" id="checkAll" class="custom-control-input" name="checkAll">
+                        <label class="custom-control-label" for="checkAll">Tout sélectionner</label>
                     </div>
-                    <div class="col-md-3 col-12">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-report-state="add"
-                            data-target="#report-modal-form2">Ajouter la sélection à un rapport existant</button>
-                    </div>
-                    <div class="col-md-2 col-12">
-                        <input id="searchbar" class="form-control" placeholder="Filtrer le catalogue" maxlength="32">
-                    </div>
-
-                    <div class="col-md-2 col-12">
-                        <div class="custom-control custom-checkbox pt-2">
-                            <input type="checkbox" id="checkAll" class="custom-control-input" name="checkAll">
-                            <label class="custom-control-label" for="checkAll">Tout sélectionner</label>
-                        </div>
-                    </div>
-                    <div class="col-md-1 col-12">
-                        <a class="green"><i class="fas fa-shopping-bag"></i> <span class="number">0</span></a>
-                    </div>
-                    <div class="col-md-1 col-12">
-                        <button id="resetfilters" type="button" class="btn btn-primary">Reset</button>
-                    </div>
+                </div>
+                <div class="col-md-1 col-12">
+                    <a class="green"><i class="fas fa-shopping-bag"></i> <span class="number">0</span></a>
+                </div>
+                <div class="col-md-1 col-12">
+                    <button id="resetfilters" type="button" class="btn btn-primary">Reset</button>
                 </div>
             </div>
         </div>
-        <!-- Catalog start -->
-
-        <!-- Reports start -->
-        <div class="container-fluid page" id="reports">
-            <h1>Rapports</h1>
-        </div>
-        <!-- Reports start -->
-
-        <!-- Composer start -->
-        <div class="container-fluid page" id="composer">
-            <div class="builder edit">
-                <div class="sidenav d-flex flex-column">
-                    <button type="button" id="btn_save_report"
-                        class="btn btn-lg btn-block btn-primary sticky-top">Enregistrer</button>
-                    <form class="form" role="form" autocomplete="off">
-                        <div class="form-group">
-                            <label for="selectedReportComposer">Rapport sélectionné</label>
-                            <select class="form-control" id="selectedReportComposer">
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="selectedModelComposer">Modèle sélectionné</label>
-                            <select class="form-control" id="selectedModelComposer">
-                                <option disabled value selected>Modèle</option>
-                            </select>
-                        </div>
-                    </form>
-                    <div class="rows list-group" id="structure-models">
-                        <h6>Blocs structurants</h6>
-                        <!-- appended by code -->
-                    </div>
-                    <div class="rows list-group" id="element-models">
-                        <h6>Eléments</h6>
-                        <!-- appended by code -->
-                    </div>
-                    <div class="list-group" id="dataviz-items">
-                        <h6>Dataviz disponibles</h6>
-                        <!-- appended by code -->
-                    </div>
-                </div>
-
-                <div class="main">
-                    <h2 id="composer-report-title">
-                        <!-- appended by code -->
-                    </h2>
-
-                    <div class="">
-                        <div class="composition">
-
-                            <div id="report-composition">
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Composer end -->
-
     </div>
+    <!-- Catalog start -->
+
+    <!-- Reports start -->
+    <div class="container-fluid page" id="reports">
+        <h1>Rapports</h1>
+    </div>
+    <!-- Reports start -->
+
+    <!-- Composer start -->
+    <div class="container-fluid page" id="composer">
+        <div class="builder edit">
+            <div class="sidenav d-flex flex-column">
+                <button type="button" id="btn_save_report"
+                    class="btn btn-lg btn-block btn-primary sticky-top">Enregistrer</button>
+                <form class="form" role="form" autocomplete="off">
+                    <div class="form-group">
+                        <label for="selectedReportComposer">Rapport sélectionné</label>
+                        <select class="form-control" id="selectedReportComposer">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectedModelComposer">Modèle sélectionné</label>
+                        <select class="form-control" id="selectedModelComposer">
+                            <option disabled value selected>Modèle</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="rows list-group" id="structure-models">
+                    <h6>Blocs structurants</h6>
+                    <!-- appended by code -->
+                </div>
+                <div class="rows list-group" id="element-models">
+                    <h6>Eléments</h6>
+                    <!-- appended by code -->
+                </div>
+                <div class="list-group" id="dataviz-items">
+                    <h6>Dataviz disponibles</h6>
+                    <!-- appended by code -->
+                </div>
+            </div>
+
+            <div class="main">
+                <h2 id="composer-report-title">
+                    <!-- appended by code -->
+                </h2>
+
+                <div class="composition">
+
+                    <div id="report-composition">
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Composer end -->
+
     <!-- Modal dataviz -->
     <div class="modal fade" id="dataviz-modal-form" data-related-id="" tabindex="-1" role="dialog"
         aria-labelledby="datavizModalLabel" aria-hidden="true">
