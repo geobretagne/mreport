@@ -255,13 +255,6 @@ wizard = (function () {
         let modelId = document.getElementById("selectedModelWizard").value;
         var colors = composer.models()[modelId].parameters.colors || ["#e55039", "#60a3bc", "#78e08f", "#fad390"];
         var unit = _dataviz_infos.unit;
-        if(dataviz==="figure"){
-            var figureCaption = _data.label;
-            var chiffreClef  = _data.data+unit;
-            document.getElementById("w_style_cc").value=chiffreClef;
-            document.getElementById("w_style_caption").value=figureCaption;
-        }
-
         $("#w_unit").val(unit);
         //significative label if is true, allow chart and extra column in table
         var significative_label = _data.significative_label;
