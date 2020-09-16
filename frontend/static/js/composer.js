@@ -557,9 +557,11 @@ composer = (function () {
 
     var _saveReport = function () {
         var _report = $("#selectedReportComposer").val();
-        var newDom = _exportHTML();
+        var html_options = {tabString: '  '};
+        var newDom = indent.html(_exportHTML(), html_options);
         var _css = composer.activeModel().style;
         var composerHTML = document.getElementById("report-composition").innerHTML;
+        composerHTML = indent.html(composerHTML, html_options);
         //get String beetwenn <style>...</style>
         var css = _css.substring(_css.lastIndexOf("<style>") + 7, _css.lastIndexOf("</style")).trim();
         $.ajax({
