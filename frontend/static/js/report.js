@@ -32,10 +32,25 @@ report = (function () {
 
     var _data;
 
+    accounting.settings = {
+        currency: {
+            symbol : "€",   // default currency symbol is '$'
+            format: "%v %s", // controls output: %s = symbol, %v = value/number (can be object: see below)
+            decimal : ",",  // decimal point separator
+            thousand: " ",  // thousands separator
+            precision : 0   // decimal places
+        },
+        number: {
+            precision : 0,  // default precision on numbers is 0
+            thousand: " ",
+            decimal : ","
+        }
+    }
+
 
     var _format = function (value) {
         if (!isNaN(value)) {
-            return parseFloat(value).toLocaleString();
+            return accounting.formatNumber(parseFloat(value));
         } else {
             return value;
         }
@@ -629,17 +644,14 @@ report = (function () {
 
                             if (!isNaN(parseInt(value))) {
                                 if (unit === "€") {
-                                    value = (Math.round(value * 100) / 100).toLocaleString('fr-FR', {
-                                        style: 'currency',
-                                        currency: 'EUR',
-                                    });
+                                    value = accounting.formatMoney(Math.round(value * 100) / 100);
                                 } else if (total) {
                                     value = parseFloat(((value / total) * 100).toFixed(1));
                                     if (Number.isInteger(value))
                                         value = value.toString().split(".")[0];
                                     value += " %";
                                 } else {
-                                    value = (Math.round(value * 100) / 100).toLocaleString();
+                                    value = accounting.formatNumber(Math.round(value * 100) / 100);
                                 }
                             }
                             if (chart.config.type === "horizontalBar") {
