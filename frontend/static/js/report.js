@@ -41,7 +41,7 @@ report = (function () {
             precision : 0   // decimal places
         },
         number: {
-            precision : 0,  // default precision on numbers is 0
+            precision : 2,  // default precision on numbers is 0
             thousand: " ",
             decimal : ","
         }
