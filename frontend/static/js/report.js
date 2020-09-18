@@ -49,9 +49,21 @@ report = (function () {
 
 
     var _format = function (value) {
+        var fvalue;
+        var precision = 0;
+        var dec;
+        //Replace coma separator by point separator
+        value = value.replace(",", ".");
         if (!isNaN(value)) {
-            return accounting.formatNumber(parseFloat(value));
-        } else {
+            dec = value.split(".");
+            if (dec.length > 1) {
+                precision = dec[1].length;
+                fvalue = accounting.formatNumber(parseFloat(value), precision);
+            } else {
+                fvalue = accounting.formatNumber(parseFloat(value), 0);
+            }
+            return  fvalue;
+        }  else {
             return value;
         }
     }
