@@ -457,3 +457,19 @@ span.text-edit.badge.badge-warning {
 .editable-text.titre-4:before {
     content: "IV";
 }
+.editable-text.titre-1 {
+    font-size: 40px;
+    font-weight: 700;
+}
+.editable-text.titre-2 {
+    font-size: 24px;
+    font-weight: 600;
+}
+.editable-text.titre-3 {
+    font-size: 20px;
+    font-weight: 500;
+}
+.editable-text.titre-4 {
+    font-size: 16px;
+    font-weight: 400px;
+}
