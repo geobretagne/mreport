@@ -332,17 +332,44 @@ composer = (function () {
         var source = a.relatedTarget.parentNode;
         //store old text
         var oldtext = source.firstChild.nodeValue.trim();
+
+        var getStyle = function () {
+            let style = "titre-2";
+            source.classList.forEach(function (cls) {
+                if (cls.indexOf("titre-")>=0) {
+                    style = cls;
+                }
+            })
+            return style;
+        }
+
+        //store old style
+        var oldstyle = getStyle();
+
+        var setStyle = function (style) {
+            if (style && style !== oldstyle) {
+                source.classList.remove(oldstyle)
+                source.classList.add(style);
+            }
+
+        }
+
         $("#text-edit-value").val(oldtext);
+        //get style value or Set default style
+        $("#text-edit-level").val(getStyle());
         //Get save button and remove existing handlers
         var btn = $(a.currentTarget).find(".text-save").off("click");
         //Add new handler to save button
         $(btn).click(function (e) {
             //get new text value and store it in composition
             var text = $("#text-edit-value").val();
+            //Get style
+            var newstyle = $("#text-edit-level").val();
             //get type content (text or html)
             var type = $('#text-edit input[name=typeedit]:checked').val();
             if (type === "text") {
                 source.firstChild.nodeValue = text.trim();
+                setStyle(newstyle);
             }
             //close modal
             $("#text-edit").modal("hide");

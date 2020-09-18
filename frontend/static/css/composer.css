@@ -437,3 +437,15 @@ span.text-edit.badge.badge-warning {
     padding-top: 40px !important;
 
 }
+.editable-text.titre-1:before {
+    content: "(1)";
+}
+.editable-text.titre-2:before {
+    content: "(2)";
+}
+.editable-text.titre-3:before {
+    content: "(3)";
+}
+.editable-text.titre-4:before {
+    content: "(4)";
+}
