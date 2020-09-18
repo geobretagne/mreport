@@ -148,3 +148,12 @@ div[class*='col-'] {
 .editable-text{
     margin-bottom: 0 !important;
 }
+
+.model-b div.dataviz-container:empty {
+    height: 100px;
+}
+
+.model-b div.dataviz-container:empty:after {
+    content: "En construction";
+    text-align: center;
+}
