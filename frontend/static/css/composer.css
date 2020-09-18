@@ -437,15 +437,23 @@ span.text-edit.badge.badge-warning {
     padding-top: 40px !important;
 
 }
+.editable-text:before {
+    color: #fff;
+    margin: 10px;
+    background: #000000;
+    text-align: center;
+    padding-right: 10px;
+    padding-left: 10px;
+}
 .editable-text.titre-1:before {
-    content: "(1)";
+    content: "I";
 }
 .editable-text.titre-2:before {
-    content: "(2)";
+    content: "II";
 }
 .editable-text.titre-3:before {
-    content: "(3)";
+    content: "III";
 }
 .editable-text.titre-4:before {
-    content: "(4)";
+    content: "IV";
 }
