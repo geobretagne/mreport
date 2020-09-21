@@ -330,11 +330,22 @@ composer = (function () {
     var _onTextEdit = function (a) {
         //Get selected text element
         var source = a.relatedTarget.parentNode;
+        var oldtext;
+        var oldtype;
         //store old text
-        var oldtext = source.firstChild.nodeValue.trim();
+        //check html content
+        if (source.firstElementChild.nodeName === "DIV") {
+            //HTMLcontent
+            oldtext = source.firstChild.innerHTML;
+            oldtype = "html";
+        } else if (source.firstChild.nodeType === Node.TEXT_NODE){
+            //TEXT CONTENT
+            oldtext = source.firstChild.nodeValue.trim();
+            oldtype = "text";
+        }
 
         var getStyle = function () {
-            let style = "titre-2";
+            let style = "undefined";
             source.classList.forEach(function (cls) {
                 if (cls.indexOf("titre-")>=0) {
                     style = cls;
@@ -347,9 +358,11 @@ composer = (function () {
         var oldstyle = getStyle();
 
         var setStyle = function (style) {
-            if (style && style !== oldstyle) {
-                source.classList.remove(oldstyle)
-                source.classList.add(style);
+            if (style !== oldstyle) {
+                source.classList.remove(oldstyle);
+                if (style && style !== 'undefined') {
+                    source.classList.add(style);
+                }
             }
 
         }
@@ -368,7 +381,25 @@ composer = (function () {
             //get type content (text or html)
             var type = $('#text-edit input[name=typeedit]:checked').val();
             if (type === "text") {
+                //DElete old div node
+                if (oldtype === "html") {
+                    source.querySelector("div").remove();
+                }
                 source.firstChild.nodeValue = text.trim();
+                setStyle(newstyle);
+            } else if (type === "html") {
+                //Check if div exists
+                if (oldtype === "html") {
+                    source.firstChild.innerHTML = text;
+                } else {
+                    //Create div element to store html
+                    let div = document.createElement("div");
+                    div.innerHTML = text;
+                    //delete old texte node
+                    source.firstChild.nodeValue = "";
+                    //Use insert before to keep span child
+                    source.insertBefore(div, source.firstChild);
+                }
                 setStyle(newstyle);
             }
             //close modal
