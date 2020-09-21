@@ -484,3 +484,17 @@ span.text-edit.badge.badge-warning {
 .card.dataviz .card-footer span {
     margin-right: 3px;
 }
+
+span.designed-dataviz {
+    right: 30px;
+    position: absolute;
+    font-family: "Font Awesome 5 Free";
+    font-size: 30px;
+    font-weight: 700;
+    color: grey;
+    margin-top: -10px;
+}
+
+span.designed-dataviz:before {
+    content: "\f568";
+}
