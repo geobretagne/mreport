@@ -821,11 +821,11 @@ report = (function () {
     var _configTitleDesc = function (title, description) {
         var parent = document.querySelector("#wizard-result div[class^='report-component']");
         // Add title and description
-        if (newtitle = title) {
-            _addTitleOrDescription(newtitle, "title", false, parent);
+        if (parent && title) {
+            _addTitleOrDescription(title, "title", false, parent);
         }
-        if (newdesc = description) {
-            _addTitleOrDescription(newdesc, "summary", true, parent);
+        if (parent &&  description) {
+            _addTitleOrDescription(description, "summary", true, parent);
         }
     }
     var _addTitleOrDescription = function (text, type, append, parent) {
