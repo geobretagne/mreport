@@ -31,6 +31,19 @@ admin = (function () {
         });
     };
 
+    var _setDatavizUsed = function (reports) {
+        for (const [key, report] of Object.entries(reports)) {
+            report.dataviz.forEach(function(dataviz) {
+                let element = document.querySelector("#dataviz-cards .dataviz[data-dataviz-id='"+dataviz.id+"']");
+                element.classList.add("used");
+                let span = document.createElement("SPAN");
+                span.className = "badge badge-light";
+                span.textContent = key;
+                element.querySelector(".card-footer").append(span);
+            })
+        }
+    }
+
     var _initReports = function () {
         $.ajax({
             dataType: "json",
@@ -39,6 +52,7 @@ admin = (function () {
                 if (data.response === "success") {
                     _report_data = _arr2dic(data.reports, "report");
                     _appendReports();
+                    _setDatavizUsed(_report_data);
                 } else {
                     var err = data.error || data.response;
                     Swal.fire(
@@ -201,6 +215,7 @@ admin = (function () {
                     '<a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Editer</a>',
                     '<a href="#" data-dataviz-state="delete" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Supprimer</a>',
                     '</div>',
+                    '<div class="card-footer">Usages: </div>',
                     '</div>',
                     '</div>'
                 ].join("")
@@ -926,4 +941,3 @@ $(document).ready(function () {
     admin.initReports();
     admin.initMenu();
 });
-

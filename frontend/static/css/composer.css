@@ -473,3 +473,14 @@ span.text-edit.badge.badge-warning {
     font-size: 16px;
     font-weight: 400px;
 }
+
+.card.dataviz.used {
+    background-color: #f2eef0;
+}
+.card.dataviz:not(.used) .card-footer {
+    display: none;
+}
+
+.card.dataviz .card-footer span {
+    margin-right: 3px;
+}
