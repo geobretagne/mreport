@@ -201,7 +201,11 @@ admin = (function () {
         Object.entries(_dataviz_data).forEach(function (a) {
             var id = a[0];
             var data = a[1];
-            var designedDataviz = (data.viz.length > 0)? '<span class="designed-dataviz"></span>':'';
+            var designedDataviz = (data.viz.length > 0)? '<span title="Designed dataviz" class="designed-dataviz"></span>':'';
+            var certifiedDataviz = '';
+            if (data.description && data.description.includes("[certified]")) {
+                certifiedDataviz = '<span title="Certified dataviz" class="certified-dataviz"></span>';
+            }
             cards.push(
                 ['<div class="col-md-3 col-sm-12 cards">',
                     '<div class="card dataviz" data-dataviz-id="' + id + '">',
@@ -216,6 +220,7 @@ admin = (function () {
                     '<a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Editer</a>',
                     '<a href="#" data-dataviz-state="delete" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Supprimer</a>',
                     designedDataviz,
+                    certifiedDataviz,
                     '</div>',
                     '<div class="card-footer">Usages: </div>',
                     '</div>',

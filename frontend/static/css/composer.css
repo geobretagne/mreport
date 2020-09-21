@@ -498,3 +498,17 @@ span.designed-dataviz {
 span.designed-dataviz:before {
     content: "\f568";
 }
+
+span.certified-dataviz {
+    right: 70px;
+    position: absolute;
+    font-family: "Font Awesome 5 Free";
+    font-size: 30px;
+    font-weight: 700;
+    color:#8cb871;
+    margin-top: -10px;
+}
+
+span.certified-dataviz:before {
+    content: "\f559";
+}
