@@ -345,7 +345,7 @@ report = (function () {
 
     var _printDate = function () {
         let a = document.createElement("span");
-        a.textContent = "Document généré le "  + new Date().toLocaleDateString();
+        a.textContent = "Région Bretagne - document généré le "  + new Date().toLocaleDateString();
         a.classList.add("print-date");
         let b = document.getElementsByClassName("container-fluid")[0];
         b.appendChild(a);
