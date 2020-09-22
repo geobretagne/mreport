@@ -195,40 +195,35 @@ admin = (function () {
     };
 
     var _showDataviz = function () {
-
-        var cards = [];
-        $("#catalog .row:nth-of-type(2)").remove();
+        document.querySelectorAll("#dataviz-cards .cards").forEach(e => e.parentNode.removeChild(e));
+        let container = document.getElementById("dataviz-cards");
+        let template = container.querySelector("template").innerHTML;
+        // remove extra {% flask escapment %}
+        template = template.trim().replace(/{%[^()]*%}/g, '');
+        var cards = { cards: [] };
         Object.entries(_dataviz_data).forEach(function (a) {
             var id = a[0];
             var data = a[1];
-            var designedDataviz = (data.viz.length > 0)? '<span title="Designed dataviz" class="designed-dataviz"></span>':'';
-            var certifiedDataviz = '';
+            var designedDataviz = (data.viz.length > 0)? 'enabled':'disabled';
+            var certifiedDataviz = 'disabled';
             if (data.description && data.description.includes("[certified]")) {
-                certifiedDataviz = '<span title="Certified dataviz" class="certified-dataviz"></span>';
+                certifiedDataviz = 'enabled';
             }
-            cards.push(
-                ['<div class="col-md-3 col-sm-12 cards">',
-                    '<div class="card dataviz" data-dataviz-id="' + id + '">',
-                    '<div class="card-body">',
-                    '<h5 class="card-title">' + data.title + '</h5>',
-                    '<h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">' + data.level + '</span><span class="badge badge-warning">' + data.job + '</span></h6>',
-                    '<p class="card-text">' + data.description + '</p>',
-                    '<div class="custom-control custom-checkbox mb-3">',
-                    '<input type="checkbox" id="' + id + '-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">',
-                    '<label class="custom-control-label" for="' + id + '-selection">Sélectionner</label>',
-                    '</div>',
-                    '<a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Editer</a>',
-                    '<a href="#" data-dataviz-state="delete" class="card-link" data-toggle="modal" data-related-id="' + id + '" data-target="#dataviz-modal-form">Supprimer</a>',
-                    designedDataviz,
-                    certifiedDataviz,
-                    '</div>',
-                    '<div class="card-footer">Usages: </div>',
-                    '</div>',
-                    '</div>'
-                ].join("")
-            );
+
+            let card = {
+                id: id,
+                title: data.title,
+                level: data.level,
+                job: data.job,
+                description: data.description,
+                designed: designedDataviz,
+                certified: certifiedDataviz
+            };
+            cards.cards.push(card);
+
         });
-        $("#catalog").append('<div id="dataviz-cards" class="row">' + cards.join("") + '</div>');
+        let render = Mustache.render(template, cards);
+       $(container).append(render);
         /* Add event to all checkbox to add them into the cart */
         $('input[type="checkbox"]').change(function () {
             var id = $(this).parent().parent().parent().data().datavizId;

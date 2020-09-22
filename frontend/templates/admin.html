@@ -17,6 +17,7 @@
     <link href="/static/css/admin.css" rel="stylesheet">
     <link href="/static/css/composer.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/fonts/04b_30/stylesheet.css">
+    <script src="/static/js/extLibs/mustache.min.js"></script>
     <script src="/static/js/extLibs/fuse.min.js"></script>
     <script src="/static/js/extLibs/Sortable.js"></script>
     <script src="/static/js/extLibs/accounting.min.js"></script>
@@ -92,6 +93,34 @@
                     <button id="resetfilters" type="button" class="btn btn-primary">Reset</button>
                 </div>
             </div>
+        </div>
+        <div id="dataviz-cards" class="row">
+            <template>
+                {% raw %}<!--To disable template escaping with flask-->
+                <!-- Template Mustache-->
+                {{#cards}}
+                <div class="col-md-3 col-sm-12 cards">
+                    <div class="card dataviz" data-dataviz-id="{{id}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{title}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">{{level}}</span><span class="badge badge-warning">{{job}}</span></h6>
+                            <p class="card-text">{{description}}</p>
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" id="{{id}}-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">
+                                <label class="custom-control-label" for="{{id}}-selection">Sélectionner</label>
+                            </div>
+                            <a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form">Editer</a>
+                            <a href="#" data-dataviz-state="delete" class="card-link" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form">Supprimer</a>
+                            <span title="Designed dataviz" class="designed-dataviz {{designed}}"></span>
+                            <span title="Certified dataviz" class="certified-dataviz {{certified}}"></span>
+                        </div>
+                        <div class="card-footer">Usages: </div>
+                    </div>
+                </div>
+                {{/cards}}
+                {% endraw %}
+            </template>
+
         </div>
     </div>
     <!-- Catalog start -->

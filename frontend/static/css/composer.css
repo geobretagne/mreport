@@ -489,7 +489,7 @@ span.designed-dataviz {
     right: 30px;
     position: absolute;
     font-family: "Font Awesome 5 Free";
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 700;
     color: grey;
     margin-top: -10px;
@@ -503,7 +503,7 @@ span.certified-dataviz {
     right: 70px;
     position: absolute;
     font-family: "Font Awesome 5 Free";
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 700;
     color:#8cb871;
     margin-top: -10px;
@@ -511,4 +511,9 @@ span.certified-dataviz {
 
 span.certified-dataviz:before {
     content: "\f559";
+}
+
+span.certified-dataviz.disabled,
+span.designed-dataviz.disabled {
+    display:none;
 }
