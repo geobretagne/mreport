@@ -95,9 +95,8 @@
             </div>
         </div>
         <div id="dataviz-cards" class="row">
+            <!-- Template Mustache {% raw %} -->
             <template>
-                {% raw %}<!--To disable template escaping with flask-->
-                <!-- Template Mustache-->
                 {{#cards}}
                 <div class="col-md-3 col-sm-12 cards">
                     <div class="card dataviz" data-dataviz-id="{{id}}">
@@ -118,8 +117,8 @@
                     </div>
                 </div>
                 {{/cards}}
-                {% endraw %}
             </template>
+            <!-- End template {% endraw %} -->
 
         </div>
     </div>

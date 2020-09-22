@@ -197,9 +197,7 @@ admin = (function () {
     var _showDataviz = function () {
         document.querySelectorAll("#dataviz-cards .cards").forEach(e => e.parentNode.removeChild(e));
         let container = document.getElementById("dataviz-cards");
-        let template = container.querySelector("template").innerHTML;
-        // remove extra {% flask escapment %}
-        template = template.trim().replace(/{%[^()]*%}/g, '');
+        let template = container.querySelector("template").innerHTML.trim();
         var cards = { cards: [] };
         Object.entries(_dataviz_data).forEach(function (a) {
             var id = a[0];
