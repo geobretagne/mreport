@@ -131,8 +131,15 @@ api = Api(app=app, version='0.1', title='MReport Api', description='Test API', v
 
 store = api.namespace('store', description='Store de dataviz')
 report = api.namespace('report', description='Reports')
+picto = api.namespace('picto', description='Pictos')
 report_composition = api.namespace('report_composition', description='Composition des rapports')
 report_html = api.namespace('report_html', description='Structure html des rapports')
+
+@picto.route('/',doc={'description':'Récupération des pictos'})
+class GetPictos(Resource):
+    def get(self):
+        data = getPictos()
+        return jsonify(data)
 
 @store.route('/',doc={'description':'Récupération des dataviz'})
 class GetCatalog(Resource):

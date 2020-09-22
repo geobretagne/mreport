@@ -1,6 +1,6 @@
 from sqlalchemy.exc import NoInspectionAvailable
 from sqlalchemy import inspect, func
-import shutil
+import shutil, glob, json, os
 ## Use for (select *) from a single table ex : {'datavizs': json.loads(json.dumps([row2dict(r) for r in result]))}
 def row2dict(row,label="null"):
     d = {}
@@ -70,3 +70,11 @@ def get_count(q):
     count_q = q.statement.with_only_columns([func.count()]).order_by(None)
     count = q.session.execute(count_q).scalar()
     return count+1
+
+def getPictos():
+    style = []
+    for filepath in glob.iglob('frontend/static/picto/**/*.svg', recursive=True):
+        filename = os.path.basename(filepath)
+        (file, ext) = os.path.splitext(filename)
+        style.append({"id": file, "url": filepath})
+    return style
