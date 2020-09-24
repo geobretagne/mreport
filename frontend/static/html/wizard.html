@@ -108,9 +108,13 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Icone</span>
                                             </div>
-                                            <select class="custom-select figure form-control dataviz-attributes"
+                                            <input class="figure form-control dataviz-attributes"
                                                 data-prop="icon" id="w_icon">
-                                            </select>
+                                            </input>
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-primary" onclick="document.querySelector('.card-container').classList.toggle('backcard');">...</button>
+                                            </div>
+
                                         </div>
                                         <div class="input-group input-group-sm mb-3 text-config">
                                             <div class="input-group-prepend">
@@ -155,13 +159,28 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-8">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="card-title">Affichage</h6>
-                                    <div id="wizard-result">
-                                        <!--dataviz result is injected here -->
+                        <div class="col-lg-8 card-container flip">
+                            <div class="card card-flip">
+                                <div class="front">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Affichage</h6>
+                                        <div id="wizard-result">
+                                            <!--dataviz result is injected here -->
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="back">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Icônes
+                                            <button type="button" class="close" onclick="document.querySelector('.card-container').classList.toggle('backcard');" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                              </button>
+                                        </h6>
+                                        <div id="wizard-icons">
+                                            <!--icons are injected here -->
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

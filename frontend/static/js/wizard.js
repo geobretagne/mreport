@@ -529,14 +529,79 @@ wizard = (function () {
 
     var _updateIconList = function (model) {
         //update icon store in wizard modal
-        $("#w_icon option").remove();
-        var icon_options = [];
-        var icons = model.style.match(/\.icon-\w+/g);
-        icons.forEach(function (i) {
-            i = i.replace(/\./, "");
-            icon_options.push('<option value="' + i + '">' + i + '</option>');
+        var style = "";
+        folders = {};
+        var tabs = ['<nav><div class="nav nav-tabs" id="icon-nav-tab" role="tablist">'];
+        var tabs_content = ['<div class="tab-content" id="icon-nav-tabContent">'];
+        $.ajax({
+            dataType: "json",
+            type: "GET",
+            url: [report.getAppConfiguration().api, "picto"].join("/"),
+            success: function (icons) {
+                var style = "";
+                // group icons by folder
+                icons.forEach(function(icon) {
+                    if (folders[icon.folder]) {
+                        folders[icon.folder].push(icon);
+                    } else {
+                        folders[icon.folder] = [icon];
+                    }
+                });
+                var first = true;
+                var tab_class_base = 'nav-item nav-link';
+                var tab_class = '';
+                var content_class_base = 'tab-pane fade';
+                var content_class ='';
+                for (const [folder, icons] of Object.entries(folders)) {
+                    var icon_list = ['<ul class="icon-picker-list">'];
+                    icons.forEach(function(icon) {
+                        style += '\n.'+icon.id+' { background-image: url('+icon.url+');}';
+                        icon_list.push('<li data-class="'+icon.id+'" class="custom-icon ' + icon.id + '"></li>');
+                    });
+                    //close icon-picker-list
+                    icon_list.push('</ul>');
+                    var items = icon_list.join("");
+                    tab_class = tab_class_base;
+                    content_class = content_class_base;
+                    if (first) {
+                        tab_class += ' active';
+                        content_class += ' show active';
+                        first = false;
+                    }
+                    tabs.push(`<a class="${tab_class}" id="icon-${folder}-tab"
+                        data-toggle="tab" href="#icon-${folder}-content"
+                        role="tab" aria-controls="icon-${folder}-content"
+                        aria-selected="true">${folder}</a>`);
+                    tabs_content.push(`<div class="${content_class}" id="icon-${folder}-content"
+                        role="tabpanel" aria-labelledby="icon-${folder}-tab">${items}</div>`);
+                }
+
+                //close tabs elements
+                tabs_content.push('</div>');
+                tabs.push('</div></nav>');
+                var html = tabs.join(" ") + "\n" + tabs_content.join(" ");
+
+                $("#wizard-icons").append(html);
+                $(".icon-picker-list li.custom-icon").click(function (e) {
+                    var icon = e.currentTarget.dataset.class;
+                    $("#w_icon").val(icon);
+                    document.querySelector(".card-container").classList.toggle('backcard');
+                })
+                model.iconstyle = style;
+                //Update style in wizard modal
+                var _css = ['<style>',
+                //get current/default style
+                    model.style.match(/(?<=\<style\>)(.|\n)*?(?=\<\/style\>)/g)[0].trim(),
+                    //add icon style
+                    style,
+                    '</style>']. join(" ");
+                document.getElementById("wizard-result").querySelector("STYLE").firstChild.nodeValue = _css;
+
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
         });
-        $("#w_icon").append(icon_options.join(""));
 
     };
 

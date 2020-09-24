@@ -459,3 +459,78 @@ h5>.badge {
 #wizard-panel input:disabled{
   background-color: unset;
 }
+
+#modal-icon-picker {
+  z-index: 10000;
+}
+
+/* flip the wizard result card / icon selector when back class */
+.card-container.backcard.flip .card{
+	-webkit-transform: rotateY( 180deg );
+-moz-transform: rotateY( 180deg );
+ -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
+/* flip speed goes here */
+.card.card-flip {
+	 -webkit-transition: -webkit-transform .5s;
+   -moz-transition: -moz-transform .5s;
+     -o-transition: -o-transform .5s;
+        transition: transform .5s;
+-webkit-transform-style: preserve-3d;
+   -moz-transform-style: preserve-3d;
+     -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	-webkit-backface-visibility: hidden;
+   -moz-backface-visibility: hidden;
+     -o-backface-visibility: hidden;
+        backface-visibility: hidden;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+}
+
+/* back, initially hidden pane */
+.back {
+	-webkit-transform: rotateY( 180deg );
+  -moz-transform: rotateY( 180deg );
+  -o-transform: rotateY( 180deg );
+  transform: rotateY( 180deg );
+  z-index: 3;
+  position: absolute;
+  width: 100%;
+}
+
+#wizard-icons li .custom-icon {
+  height: 50px;
+  width: 15px;
+}
+
+.icon-picker-list {
+  display: flex;
+  flex-flow: row wrap;
+  list-style: none;
+  padding-left: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.icon-picker-list li {
+  display: flex;
+  flex: 0 0 10%;
+  float: left;
+  width: 20%;
+  height: 50px;
+}
+
+.icon-picker-list li.custom-icon:hover {
+  background-color: #dee2e6;
+  cursor: pointer;
+}

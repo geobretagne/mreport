@@ -75,6 +75,7 @@ def getPictos():
     style = []
     for filepath in glob.iglob('frontend/static/picto/**/*.svg', recursive=True):
         filename = os.path.basename(filepath)
+        folder =  os.path.basename(os.path.dirname(filepath))
         (file, ext) = os.path.splitext(filename)
-        style.append({"id": file, "url": filepath})
+        style.append({"id": "icon-" + folder + "-" + file, "folder": folder, "url": filepath.replace("frontend","")})
     return style

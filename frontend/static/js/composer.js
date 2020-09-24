@@ -617,7 +617,10 @@ composer = (function () {
         var _report = $("#selectedReportComposer").val();
         var html_options = {tabString: '  '};
         var newDom = indent.html(_exportHTML(), html_options);
-        var _css = composer.activeModel().style;
+        var _css = ['<style>',
+            composer.activeModel().style.match(/(?<=\<style\>)(.|\n)*?(?=\<\/style\>)/g)[0].trim(),
+            composer.activeModel().iconstyle,
+            '</style>']. join(" ");
         var composerHTML = document.getElementById("report-composition").innerHTML;
         composerHTML = indent.html(composerHTML, html_options);
         //get String beetwenn <style>...</style>
