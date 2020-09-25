@@ -349,6 +349,9 @@ wizard = (function () {
         if (cfg.properties.icon) {
             $("#w_icon").val(cfg.properties.icon);
         }
+        if (cfg.properties.iconposition) {
+            $("#w_icon_position").val(cfg.properties.iconposition);
+        }
         if (cfg.properties.unit) {
             $("#w_unit").val(cfg.properties.unit);
         }
@@ -416,6 +419,9 @@ wizard = (function () {
         }
         if (!$("#w_icon").val()) {
             $("#w_icon").val("icon-default");
+        }
+        if (!$("#w_icon_position").val()) {
+            $("#w_icon_position").val("custom-icon");
         }
 
     };
@@ -654,7 +660,19 @@ wizard = (function () {
             });
             //add icon class
             figure.classList.add(viz.properties.icon);
-            figure.classList.add("custom-icon");
+            if (viz.properties.iconposition) {
+                var pos = viz.properties.iconposition;
+                if (pos === "custom-icon-left") {
+                    figure.classList.add("custom-icon-left");
+                } else if (pos === "custom-icon-right") {
+                    figure.classList.add("custom-icon-right");
+                }
+                figure.classList.add("custom-icon");
+
+            } else {
+                figure.classList.add("custom-icon");
+            }
+
         }
 
         var container = document.createElement("div");
@@ -773,6 +791,7 @@ wizard = (function () {
 
             //set icon class from icon attribute for figures components
             var icon = $(elem).find(".dataviz").attr("data-icon");
+            var iconposition = $(elem).find(".dataviz").attr("data-iconposition") || false;
             if (icon && viz.type === "figure") {
                 var figure = $(elem).find(".dataviz")[0];
                 //remove existing icon class eg icon-default
@@ -784,6 +803,9 @@ wizard = (function () {
                 //add icon class
                 figure.classList.add(icon);
                 figure.classList.add("custom-icon");
+                if (iconposition) {
+                    figure.classList.add(iconposition);
+                }
             }
             //Render result in wizard modal
             $("#wizard-result div").remove();
