@@ -150,7 +150,7 @@ div[class*='col-'] {
 }
 
 .model-b div.dataviz-container:empty {
-    height: 100px;
+    min-height: 100px;
 }
 
 .model-b div.dataviz-container:empty:after {
