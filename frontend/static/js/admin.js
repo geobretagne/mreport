@@ -32,18 +32,21 @@ admin = (function () {
     };
 
     var _setDatavizUsed = function (reports) {
-        for (const [key, report] of Object.entries(reports)) {
-            if (report && report.dataviz && report.dataviz.length > 0) {
-                report.dataviz.forEach(function(dataviz) {
-                    let element = document.querySelector("#dataviz-cards .dataviz[data-dataviz-id='"+dataviz.id+"']");
-                    if (element && element.classList) {
-                        element.classList.add("used");
-                        let span = document.createElement("SPAN");
-                        span.className = "badge badge-light";
-                        span.textContent = key;
-                        element.querySelector(".card-footer").append(span);
-                    }
-                })
+        if (document.querySelectorAll("#dataviz-cards .dataviz").length > 0 &&
+            document.querySelectorAll("#dataviz-cards .dataviz.used").length === 0) {
+            for (const [key, report] of Object.entries(reports)) {
+                if (report && report.dataviz && report.dataviz.length > 0) {
+                    report.dataviz.forEach(function(dataviz) {
+                        let element = document.querySelector("#dataviz-cards .dataviz[data-dataviz-id='"+dataviz.id+"']");
+                        if (element && element.classList) {
+                            element.classList.add("used");
+                            let span = document.createElement("SPAN");
+                            span.className = "badge badge-light";
+                            span.textContent = key;
+                            element.querySelector(".card-footer").append(span);
+                        }
+                    })
+                }
             }
         }
     }
@@ -226,6 +229,7 @@ admin = (function () {
         });
         let render = Mustache.render(template, cards);
        $(container).append(render);
+       _setDatavizUsed(_report_data);
         /* Add event to all checkbox to add them into the cart */
         $('input[type="checkbox"]').change(function () {
             var id = $(this).parent().parent().parent().data().datavizId;
