@@ -558,7 +558,7 @@ wizard = (function () {
                 var tab_class = '';
                 var content_class_base = 'tab-pane fade';
                 var content_class ='';
-                for (const [folder, icons] of Object.entries(folders)) {
+                for (const [folder, icons] of Object.entries(folders).sort()) {
                     var icon_list = ['<ul class="icon-picker-list">'];
                     icons.forEach(function(icon) {
                         style += '\n.'+icon.id+' { background-image: url('+icon.url+');}';
