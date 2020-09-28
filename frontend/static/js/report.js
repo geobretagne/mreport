@@ -93,8 +93,9 @@ report = (function () {
     }
 
     var _getCss = function () {
-        $('head').prepend('<link rel="stylesheet" href="' + _getReportRessource("custom.css") + '" type="text/css" />');
-        $('head').prepend('<link rel="stylesheet" href="' + _getReportRessource("report.css") + '" type="text/css" />');
+        const dc = Date.parse(new Date());
+        $('head').prepend('<link rel="stylesheet" href="' + _getReportRessource("custom.css?dc=" + dc) + '" type="text/css" />');
+        $('head').prepend('<link rel="stylesheet" href="' + _getReportRessource("report.css?dc=" + dc) + '" type="text/css" />');
     };
 
     var _showAvailableReports = function () {
@@ -121,9 +122,10 @@ report = (function () {
 
         if (!errors) {
             /* get config file*/
+            const dc = Date.parse(new Date());
             $.ajax({
                 dataType: "json",
-                url: _getReportRessource("config.json"),
+                url: _getReportRessource("config.json?dc=" + dc),
                 success: function (conf) {
                     _config = conf;
                     if (!_config.data_url) {
@@ -368,8 +370,9 @@ report = (function () {
 
 
     var _getDom = function () {
+        const dc = Date.parse(new Date());
         $.ajax({
-            url: _getReportRessource("report.html"),
+            url: _getReportRessource("report.html?dc=" + dc),
             dataType: "text",
             success: function (html) {
                 _rawReport = {
