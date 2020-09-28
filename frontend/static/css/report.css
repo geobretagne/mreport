@@ -151,9 +151,14 @@ div[class*='col-'] {
 
 .model-b div.dataviz-container:empty {
     min-height: 100px;
+    background-image: url(/static/picto/rb/travaux.svg);
+    background-repeat: no-repeat;
+    background-size: 75px;
+    background-position-x: center;
 }
 
 .model-b div.dataviz-container:empty:after {
     content: "En construction";
     text-align: center;
+    padding-left: 180px;
 }
