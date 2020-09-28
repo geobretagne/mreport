@@ -33,14 +33,16 @@ admin = (function () {
 
     var _setDatavizUsed = function (reports) {
         for (const [key, report] of Object.entries(reports)) {
-            report.dataviz.forEach(function(dataviz) {
-                let element = document.querySelector("#dataviz-cards .dataviz[data-dataviz-id='"+dataviz.id+"']");
-                element.classList.add("used");
-                let span = document.createElement("SPAN");
-                span.className = "badge badge-light";
-                span.textContent = key;
-                element.querySelector(".card-footer").append(span);
-            })
+            if (report && report.dataviz && report.dataviz.length > 0) {
+                report.dataviz.forEach(function(dataviz) {
+                    let element = document.querySelector("#dataviz-cards .dataviz[data-dataviz-id='"+dataviz.id+"']");
+                    element.classList.add("used");
+                    let span = document.createElement("SPAN");
+                    span.className = "badge badge-light";
+                    span.textContent = key;
+                    element.querySelector(".card-footer").append(span);
+                })
+            }
         }
     }
 
