@@ -273,9 +273,10 @@ composer = (function () {
         //get and show report title
         var title = admin.getReportData(reportId).title;
         $("#composer-report-title").text(title);
+        const dc = Date.parse(new Date());
         $.ajax({
             type: "GET",
-            url: ["/mreport", reportId, "report_composer.html"].join("/"),
+            url: ["/mreport", reportId, "report_composer.html?dc=" + dc].join("/"),
             success: function (html) {
                 if (html.length > 0) {
                     let reportCompo = document.getElementById("report-composition");
