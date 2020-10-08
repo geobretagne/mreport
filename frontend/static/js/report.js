@@ -721,7 +721,7 @@ report = (function () {
 
             $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
             // Add Title and Description to the preview
-            _configTitleDesc(chart.title, chart.description);
+            //_configTitleDesc(chart.title, chart.description);
             var options = $.extend(commonOptions, chart.options);
             var plugins = [];
             if (chart.plugins && chart.plugins[0] === "ChartDataLabels") {
@@ -757,7 +757,7 @@ report = (function () {
 
             }
             // Add Title and Description to the preview
-            _configTitleDesc(chiffrecle.title, chiffrecle.description);
+            //_configTitleDesc(chiffrecle.title, chiffrecle.description);
         } else {
             _handleVizError(el, chiffrecle.id, data);
         }
@@ -814,14 +814,14 @@ report = (function () {
                 '<tbody>' + rows.join("") + '</tbody></table>'
             ].join("");
             // Add Title and Description to the preview
-            _configTitleDesc(table.title, table.description);
+            //_configTitleDesc(table.title, table.description);
             $(el).append(html);
 
         } else {
             _handleVizError(el, table.id, data);
         }
     };
-    var _configTitleDesc = function (title, description) {
+    /*var _configTitleDesc = function (title, description) {
         var parent = document.querySelector("#wizard-result div[class^='report-component']");
         // Add title and description
         if (parent && title) {
@@ -840,7 +840,7 @@ report = (function () {
             parent.append(elementDiv);
         else
             parent.prepend(elementDiv);
-    }
+    }*/
     var _createText = function (data, text) {
         var el = _getDomElement("text", text.id);
         if (el && data[text.id]) {
@@ -1170,8 +1170,8 @@ report = (function () {
         getAppConfiguration: function () {
             return _appConf;
         },
-        init: _init,
-        addTitleOrDescription: _addTitleOrDescription
+        init: _init
+        /*,addTitleOrDescription: _addTitleOrDescription*/
     }; // fin return
 
 })();
