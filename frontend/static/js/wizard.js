@@ -791,14 +791,14 @@ wizard = (function () {
 
             //set optional title and description
             if (viz.properties.title) {
-                $(elem).find(".report-chart-title").text(viz.properties.title);
+                $(elem).find(".report-dataviz-title").text(viz.properties.title);
             } else {
-                $(elem).find(".report-chart-title").text("");
+                $(elem).find(".report-dataviz-title").text("");
             }
             if (viz.properties.description) {
-                $(elem).find(".report-chart-summary").html(viz.properties.description);
+                $(elem).find(".report-dataviz-description").html(viz.properties.description);
             } else {
-                $(elem).find(".report-chart-summary").html("");
+                $(elem).find(".report-dataviz-description").html("");
             }
 
 

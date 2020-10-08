@@ -1,126 +1,84 @@
-<div id="model-a" data-colors="">
+<div id="model-a" data-colors="#00525f,#006878,#0094ab,#00d6f8,#681215,#781000,#a91d22,#dd363c,#474747,#666666,#858585,#a3a3a3">
+    <!-- REQUERY template report is the main report div -->
     <template class="report">
         <div class="container-fluid model-a">
             <div class="container report">
-                <h1>Rapport Title</h1>
-                <!-- blocs are injected here -->
+                <!-- title and blocs are injected here -->
             </div>
         </div>
     </template>
-
-    <template class="report-bloc" id="b4-4-4">
-        <div class="lyrow report-bloc b4-4-4" data-model-title="3 colonnes" data-model-description="33%/33%/33%">
-            <h4 class="bloc-title editable-text">Titre du bloc
-                <!-- this text is editable in composer --><span data-toggle="modal" data-target="#text-edit"
-                    class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i>edit</span></h4>
+    <template class="report-bloc-title" id="btitle">
+        <div class="report-bloc-title" data-model-title="Titre" data-model-description="Titre">
+            <div class="dataviz-container"><!--dataviz component is injected here --></div>
+        </div>
+    </template>
+    <!-- REQUERY (n) template report-bloc is a report bloc -->
+    <template class="report-bloc" id="b4-4-4_2">
+        <div class="lyrow report-bloc b4-4-4_2" data-model-title="3 colonnes(4)" data-model-description="33%/33%/33%">
+            <!-- REQUERY bloc-title, editable-text means that is editable in composer -->
+            <h4 class="bloc-title editable-text titre-1 ">Titre du bloc
+                <!-- this text is editable in composer -->
+            </h4>
+            <!-- REQUERY bloc-content -->
             <div class="view bloc-content">
                 <div class="row">
                     <div class="col-md-4 dividedcolumn customBaseColumn">
-                        <div class="edit_columns">
-                            <span class="badge badge badge-success divide_column" data-toggle="modal"
-                                data-target="#divide_form">
-                                <i class="fas fa-columns"></i>
-                                Diviser
-                            </span>
-                            <span class="badge badge badge-danger delete_column">
-                                <i class="far fa-trash-alt"></i>
-                            </span>
-                        </div>
-                        <div class="dataviz-container card list-group-item">
-                            <!--dataviz component is injected here -->
-                        </div>
+                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
                     </div>
                     <div class="col-md-4 dividedcolumn customBaseColumn">
-                        <div class="edit_columns">
-                            <span class="badge badge badge-success divide_column" data-toggle="modal"
-                                data-target="#divide_form">
-                                <i class="fas fa-columns"></i>
-                                Diviser
-                            </span>
-                            <span class="badge badge badge-danger delete_column">
-                                <i class="far fa-trash-alt"></i>
-                            </span>
-                        </div>
-                        <div class="dataviz-container card list-group-item">
-                            <!--dataviz component is injected here -->
-                        </div>
+                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
                     </div>
-                    <div class="col-md-4 dividedcolumn customBaseColumn">
-                        <div class="edit_columns">
-                            <span class="badge badge badge-success divide_column" data-toggle="modal"
-                                data-target="#divide_form">
-                                <i class="fas fa-columns"></i>
-                                Diviser
-                            </span>
-                            <span class="badge badge badge-danger delete_column">
-                                <i class="far fa-trash-alt"></i>
-                            </span>
+                    <div class="col-md-4 customBaseColumn">
+                        <div class="lyrow verticalDivision h-50">
+                            <div class="view">
+                                <div class="row">
+                                    <div class="col-md-12 dividedcolumn customBaseColumn">
+                                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="dataviz-container card list-group-item">
-                            <!--dataviz component is injected here -->
+                        <div class="lyrow verticalDivision h-50">
+                            <div class="view">
+                                <div class="row">
+                                    <div class="col-md-12 dividedcolumn customBaseColumn">
+                                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- REQUERY bloc-sources -->
             <div class="bloc-sources">
                 <div class="col">
-                    <p>
-                        <i class="editable-text">
-                            SOURCE: xxx
+                    <p><i class="editable-text">SOURCE: xxx
                             <!-- this text is editable in composer -->
-                            <span data-toggle="modal" data-target="#text-edit"
-                                class="to-remove text-edit badge badge-warning">
-                                <i class="fas fa-edit"></i>
-                                edit
-                            </span>
                         </i>
                     </p>
                 </div>
             </div>
-        </div>
+        </div><!-- fin du bloc -->
     </template>
 
-    <template class="report-bloc" id="b8-4">
-        <div class="lyrow report-bloc b8-4" data-model-title="2 colonnes" data-model-description="66%/33%">
-            <h4 class="bloc-title editable-text">
-                Titre du bloc
+
+    <!-- REQUERY (n) template report-bloc is a report bloc -->
+    <template class="report-bloc" id="b4-4-4">
+        <div class="lyrow report-bloc b4-4-4" data-model-title="3 colonnes" data-model-description="33%/33%/33%">
+            <h4 class="bloc-title editable-text titre-1 ">Titre du bloc
                 <!-- this text is editable in composer -->
-                <span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning">
-                    <i class="fas fa-edit"></i>
-                    edit
-                </span>
             </h4>
             <div class="view bloc-content">
                 <div class="row">
-                    <div class="col-md-8 dividedcolumn customBaseColumn">
-                        <div class="edit_columns">
-                            <span class="badge badge badge-success divide_column" data-toggle="modal"
-                                data-target="#divide_form">
-                                <i class="fas fa-columns"></i>
-                                Diviser
-                            </span>
-                            <span class="badge badge badge-danger delete_column">
-                                <i class="far fa-trash-alt"></i>
-                            </span>
-                        </div>
-                        <div class="dataviz-container card list-group-item">
-                            <!--dataviz component is injected here -->
-                        </div>
+                    <div class="col-md-4 dividedcolumn customBaseColumn">
+                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
                     </div>
                     <div class="col-md-4 dividedcolumn customBaseColumn">
-                        <div class="edit_columns">
-                            <span class="badge badge badge-success divide_column" data-toggle="modal"
-                                data-target="#divide_form">
-                                <i class="fas fa-columns"></i>
-                                Diviser
-                            </span>
-                            <span class="badge badge badge-danger delete_column">
-                                <i class="far fa-trash-alt"></i>
-                            </span>
-                        </div>
-                        <div class="dataviz-container card list-group-item">
-                            <!--dataviz component is injected here -->
-                        </div>
+                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
+                    </div>
+                    <div class="col-md-4 dividedcolumn customBaseColumn">
+                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
                     </div>
                 </div>
             </div>
@@ -130,11 +88,6 @@
                         <i class="editable-text">
                             SOURCE: xxx
                             <!-- this text is editable in composer -->
-                            <span data-toggle="modal" data-target="#text-edit"
-                                class="to-remove text-edit badge badge-warning">
-                                <i class="fas fa-edit"></i>
-                                edit
-                            </span>
                         </i>
                     </p>
                 </div>
@@ -142,31 +95,17 @@
         </div>
     </template>
 
+    <!-- REQUERY (n) template report-bloc is a report bloc -->
     <template class="report-bloc" id="b12">
         <div class="lyrow report-bloc b12" data-model-title="1 colonne" data-model-description="100%">
-            <h4 class="bloc-title editable-text">
+            <h4 class="bloc-title editable-text titre-1 ">
                 Titre du bloc
                 <!-- this text is editable in composer -->
-                <span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning">
-                    <i class="fas fa-edit"></i>
-                    edit</span>
             </h4>
             <div class="view bloc-content">
                 <div class="row">
                     <div class="col-md-12 dividedcolumn customBaseColumn">
-                        <div class="edit_columns">
-                            <span class="badge badge badge-success divide_column" data-toggle="modal"
-                                data-target="#divide_form">
-                                <i class="fas fa-columns"></i>
-                                Diviser
-                            </span>
-                            <span class="badge badge badge-danger delete_column">
-                                <i class="far fa-trash-alt"></i>
-                            </span>
-                        </div>
-                        <div class="dataviz-container card list-group-item">
-                            <!--dataviz component is injected here -->
-                        </div>
+                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
                     </div>
                 </div>
             </div>
@@ -176,11 +115,6 @@
                         <i class="editable-text">
                             SOURCE: xxx
                             <!-- this text is editable in composer -->
-                            <span data-toggle="modal" data-target="#text-edit"
-                                class="to-remove text-edit badge badge-warning">
-                                <i class="fas fa-edit"></i>
-                                edit
-                            </span>
                         </i>
                     </p>
                 </div>
@@ -188,17 +122,48 @@
         </div>
     </template>
 
+    <!-- REQUERY (n) template report-bloc is a report bloc -->
+    <template class="report-bloc" id="b6-6">
+        <div class="lyrow report-bloc b6-6" data-model-title="2 colonnes" data-model-description="50%/50%">
+            <h4 class="bloc-title editable-text titre-1 ">
+                Titre du bloc
+                <!-- this text is editable in composer -->
+            </h4>
+            <div class="view bloc-content">
+                <div class="row">
+                    <div class="col-md-6 dividedcolumn customBaseColumn">
+                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
+                    </div>
+                    <div class="col-md-6 dividedcolumn customBaseColumn">
+                        <div class="dataviz-container card list-group-item"><!--dataviz component is injected here --></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bloc-sources">
+                <div class="col">
+                    <p>
+                        <i class="editable-text">
+                            SOURCE: xxx
+                            <!-- this text is editable in composer -->
+                        </i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
     <!-- REQUERY title component -->
     <template class="report-component report-title">
-        <div class="report-component.title dataviz-container" data-model-title="Titre"
-            data-model-description="Titre principal">
+        <div class="report-component.title">
             <h1 id="{{dataviz}}" class="dataviz report-title"></h1>
         </div>
     </template>
 
+    <!-- REQUERY figure component -->
     <template class="report-component report-figure">
-        <div class="report-component.figure card">
-            <div id="{{dataviz}}" class="dataviz report-figure custom-icon icon-default card-body">
+        <div class="report-component.figure card-body">
+            <div id="{{dataviz}}" class="dataviz report-figure custom-icon icon-default">
                 <figure>
                     <h1 class="report-figure-chiffre"></h1>
                     <figcaption class="report-figure-caption"></figcaption>
@@ -207,21 +172,26 @@
         </div>
     </template>
 
+    <!-- REQUERY chart component -->
     <template class="report-component report-chart">
-        <div class="report-component.chart">
+        <div class="report-component.chart full-width">
+            <div class="report-dataviz-title" >Titre</div>
             <div id="{{dataviz}}" class="dataviz report-chart"></div>
+            <div class="report-dataviz-description mt-auto">Description</div>
         </div>
     </template>
 
+    <!-- REQUERY table component -->
     <template class="report-component report-table">
-        <div class="report-component.chart">
+        <div class="report-component.table card-body">
+            <div class="report-dataviz-title" >Titre</div>
             <div id="{{dataviz}}" class="dataviz report-table"></div>
+            <div class="report-dataviz-description mt-auto">Description</div>
         </div>
     </template>
-
     <!-- REQUERY text component -->
     <template class="report-component report-text">
-        <div class="report-component.text">
+        <div class="report-component.text card-body">
             <div id="{{dataviz}}" class="dataviz report-text">
                 <h3 class="report-text-title"></h3>
                 <p class="report-text-text"></p>
@@ -230,7 +200,7 @@
     </template>
     <!-- REQUERY image component -->
     <template class="report-component report-image">
-        <div class="report-component.image">
+        <div class="report-component.image card-body">
             <div id="{{dataviz}}" class="dataviz report-image">
                 <img src="" class="img-fluid" alt="" />
             </div>
@@ -238,16 +208,324 @@
     </template>
     <!-- REQUERY map component -->
     <template class="report-component report-map">
-        <div class="report-component.map">
+        <div class="report-component.map card-body">
             <div id="{{dataviz}}" class="dataviz report-map"></div>
         </div>
     </template>
     <!-- REQUERY iframe component -->
     <template class="report-component report-iframe">
-        <div class="report-component.iframe">
+        <div class="report-component.iframe card-body">
             <div id="{{dataviz}}" class="dataviz report-iframe .hidden-md-down embed-responsive embed-responsive-16by9">
             </div>
         </div>
-    </template>
+    </template>    
+    <!-- STYLE USED BY this TEMPLATE -->
+    <style>
+/* Couleur de fond de la page*/
+.model-a {
+    background-color: #f5f5f5;
+    padding:15px;
+}
+/* Font */
+.report {
+    font-family: 'Open Sans', sans-serif;
+}
+/* Eléments structurants */
+/* titre du rapport */
+.report-bloc-title{
+  padding:30px 0;
+}
+.report-title {
+    font-size: 30px;
+    text-align:center;
+}
+/* titre des blocs */
+.bloc-title {
+    font-weight: 700;
+    padding-top: 15px;
+    text-transform: capitalize;
+    letter-spacing: 0.2px;
+    color: #213042;
+}
+/* sources des blocs */
+.bloc-sources {
+    font-size: 12px;
+    margin-top:30px;
+}
 
+.bloc-sources .col{
+    padding:0;
+}
+
+.bloc-sources p{
+    color:#0094ab;
+    font-size:12px;
+}
+
+/* Texte libre */
+.free-text,
+.titleBloc {
+    font-size: 12px;
+}
+/* titre-n can be used with .bloc-title, .bloc-sources, .free-text */
+#titre-0{
+  font-size: 30px;
+  font-weight: 700;
+  color:#0094ab;
+}
+.titre-1 {
+    font-size: 20px;
+    font-weight: 800;
+}
+.titre-2 {
+    font-size: 20px;
+    font-weight: 700;
+    font-style:italic;
+}
+.titre-3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+.titre-4 {
+    font-size: 14px;
+    font-weight: 500;
+}
+/* DATAVIZ CONTAINERS*/
+.customBaseColumn {
+    padding: 0;
+}
+.verticalDivision .row {
+    margin: 0;
+}
+.report-bloc .dataviz-container {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    margin:15px;
+    border-radius:0;
+    border:none;
+    box-shadow:0 0 5px #ddd;
+}
+.dataviz-container .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    min-height:100px;
+}
+.card-body .report-figure{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+/* FROM MREPORT.CSS */
+.editable-text {
+    margin-bottom: 0 !important;
+}
+.report-chart,
+.report-figure {
+    padding-top: 20px;
+}
+.report-chart {
+    width: 100%;
+}
+.full-width{
+    width: 100%;
+}
+div[class*="list-group-item"]{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+div[class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
+.view,
+.lyrow{
+    height: 100%;
+}
+.row{
+    margin-left: 0;
+    margin-right: 0;
+    height: 100%;
+}
+.view .row .col-md-12{
+    height: 100%;
+}
+.dataviz-container:hover .report-share{
+    display: block;
+}
+.no-data{
+    text-align: center;
+}
+.report-dataviz-title,
+.report-dataviz-description{
+    margin-right: 15px;
+    margin-left: 15px;
+}
+.report-dataviz-title{
+    margin-top: 15px;
+    text-align: center;
+    color: #0094ab;
+    font-weight: 600;
+}
+.report-dataviz-description{
+    margin-bottom: 5px;
+    text-align: justify;
+    font-size: smaller;
+}
+.report-figure-chiffre {
+    padding-top: 30px;
+
+}
+/* DATAVIZ MAP */
+.report-map {
+    width: 100%;
+}
+.map-marker-circle-1 {
+    background-color: #E91E63;
+    border-radius: 18px;
+    border: 4px solid #eaebf0;
+    opacity: 0.50;
+}
+/* DATAVIZ FIGURE */
+.report-figure-chiffre {
+    color:#ab1700;
+    font-size: 40px;
+    font-weight: 900;
+    text-align: left;
+}
+.report-figure-caption {
+    color:#000000;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: left;
+}
+.custom-icon {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-y: top;
+}
+.custom-icon-left {
+    left:0;
+}
+
+.custom-icon-left .report-figure-chiffre{
+    margin-left: 50px;
+}
+
+.custom-icon-right .report-figure-chiffre{
+    margin-right: 50px;
+}
+
+/* used to test custom-icon in model-checker" */
+
+.icon-default::before {
+    content: " ";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    z-index: -1;
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-image: url(globe-people.svg);
+    left: 50%;
+    top: -40px;
+    transform: translateX(-50%);
+}
+
+.icon-default.custom-icon-right::before{
+    left: unset;
+    right: 0px;
+    top: 0;
+    transform: none;
+}
+
+.icon-default.custom-icon-left::before{
+  left:0px;
+  top:0;
+  transform: none;
+}
+
+/*Margin around blocs*/
+.verticalDivision .dataviz-container{
+  margin: 0 10px;
+}
+
+.verticalDivision:first-child{
+  margin-top:15px
+}
+
+.verticalDivision:last-child{
+  margin-top:15px;
+}
+/* Icon & text used with empty dataviz */
+.model-a div.dataviz-container:empty {
+    min-height: 100px;
+    background-image: url(/static/picto/black/travaux.svg);
+    background-repeat: no-repeat;
+    background-size: 75px;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.model-a div.dataviz-container:empty:after {
+    content: "En construction";
+    text-align: center;
+    padding-left: 180px;
+}
+
+/* IMPRESSION */
+.printButton{
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    background-color: #eee;
+    color: #555;
+    padding: 10px;
+    border-radius: 35px;
+    box-shadow: 0 0 5px #ccc;
+    font-size: 24px;
+    text-align: center;
+}
+
+.icon-print:before{
+    margin: 0 auto;
+}
+
+.printButton:hover{
+    background-color:#555;
+    color:#eee;
+}
+@media print {
+    @page {
+    size: A4 portrait;
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+    color-adjust: exact !important;
+
+  }
+  canvas {
+        min-height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        height: auto!important;
+        width: auto!important;
+    }
+
+    .printButton{
+        display: none !important;
+    }
+    .lyrow {
+        page-break-inside: avoid;
+    }
+    .model-a {
+        background-color: #ffffff;
+    }
+}
+    </style>
 </div>

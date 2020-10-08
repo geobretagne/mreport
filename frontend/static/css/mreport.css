@@ -6,11 +6,6 @@
     display: none;
 }
 
-.report-chart,
-.report-figure {
-    padding-top: 20px;
-}
-
 button.report-share {
     display: none;
 }
@@ -71,95 +66,4 @@ div#preloader {
     border-radius: 18px;
     border: 4px solid #E91E63;
     opacity: 0.50;
-}
-
-.dataviz-container {
-    display: flex;
-    height: 100%;
-    justify-content: center;
-}
-
-.card-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-}
-
-.report-chart {
-    width: 100%;
-    height: 100%;
-}
-
-.report-flex-centered {
-    /*display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 155px;*/
-}
-.full-width{
-    width: 100%;
-}
-div[class*="list-group-item"]{
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-}
-div[class*='col-'] {
-    padding-right:0;
-    padding-left:0;
-}
-.view,
-.lyrow{
-    height: 100%;
-}
-.row{
-    margin-left: 0;
-    margin-right: 0;
-    height: 100%;
-}
-.view .row .col-md-12{
-    height: 100%;
-}
-.dataviz-container:hover .report-share{
-    display: block;
-}
-.no-data{
-    text-align: center;
-}
-.report-chart-title,
-.report-chart-summary{
-    margin-right: 15px;
-    margin-left: 15px;
-}
-.report-chart-title{
-    margin-top: 15px;
-    text-align: center;
-}
-.report-chart-summary{
-    margin-bottom: 5px;
-    text-align: justify;
-}
-.report-figure-chiffre {
-    padding-top: 30px;
-
-}
-.editable-text{
-    margin-bottom: 0 !important;
-}
-
-.model-b div.dataviz-container:empty {
-    min-height: 100px;
-    background-image: url(/static/picto/black/travaux.svg);
-    background-repeat: no-repeat;
-    background-size: 75px;
-    background-position-x: center;
-    background-position-y: center;
-}
-
-.model-b div.dataviz-container:empty:after {
-    content: "En construction";
-    text-align: center;
-    padding-left: 180px;
 }
