@@ -789,6 +789,20 @@ wizard = (function () {
 
             }
 
+            //set optional title and description
+            if (viz.properties.title) {
+                $(elem).find(".report-chart-title").text(viz.properties.title);
+            } else {
+                $(elem).find(".report-chart-title").text("");
+            }
+            if (viz.properties.description) {
+                $(elem).find(".report-chart-summary").html(viz.properties.description);
+            } else {
+                $(elem).find(".report-chart-summary").html("");
+            }
+
+
+
             //set icon class from icon attribute for figures components
             var icon = $(elem).find(".dataviz").attr("data-icon");
             var iconposition = $(elem).find(".dataviz").attr("data-iconposition") || false;
