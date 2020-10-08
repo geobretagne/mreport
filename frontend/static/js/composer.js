@@ -120,6 +120,25 @@ composer = (function () {
      */
 
     var _parseTemplate = function (templateid, html) {
+        //Extra html elements needed to edit report (editable text, divide blocs...)
+        var divide_element = [
+            '<div class="edit_columns">',
+                '<span class="badge badge badge-success divide_column" data-toggle="modal"',
+                    'data-target="#divide_form">',
+                    '<i class="fas fa-columns"></i> Diviser',
+                '</span>',
+                '<span class="badge badge badge-danger delete_column">',
+                    '<i class="far fa-trash-alt"></i>',
+                '</span>',
+            '</div>'
+        ].join("");
+
+        var editable_element = [
+            '<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning">',
+                '<i class="fas fa-edit"></i>edit',
+            '</span>'
+        ].join("");
+
         // get data- linked to the template
         var parameters = $(html).data(); /* eg data-colors... */
         if (parameters.colors) {
@@ -136,6 +155,14 @@ composer = (function () {
         //get all report-bloc and report-bloc-title
         $(html).find("template.report-bloc, template.report-bloc-title").each(function (id, template) {
             var elem = $(template).prop('content').firstElementChild;
+            //add button to editable-text
+            elem.querySelectorAll(".editable-text").forEach(function (t) {
+                $(t).append(editable_element);
+            })
+            //add button to divide columns
+            elem.querySelectorAll(".dividedcolumn.customBaseColumn").forEach(function (c) {
+                $(c).prepend(divide_element);
+            })
             var description = elem.getAttribute("data-model-title");
             blocs.push({
                 "html": elem.outerHTML,
@@ -545,7 +572,6 @@ composer = (function () {
                         var main_position = 0;
                         if ($(item).hasClass("dataviz")) {
                             var dvz = $(item).find("code.dataviz-definition").text();
-                            dvz = _addTitleDescription(dvz);
                             main_content.push(dvz);
                             main_position = idx;
                         } else if ($(item).hasClass("structure-element")) {
@@ -577,26 +603,6 @@ composer = (function () {
 
         return _export;
     };
-
-    /**
-     *
-     * _addTitleDescription. Add to dataviz title and description if specified in the wizard
-     */
-    var _addTitleDescription = function (dvz) {
-        var dvzHTML = $($.parseHTML(dvz));
-        var parentDiv = document.createElement("DIV");
-        parentDiv.classList.add("report-flex-centered");
-        parentDiv.style.minHeight="155px";
-        if (title = dvzHTML.find('.dataviz').data("title")) {
-            report.addTitleOrDescription(title, "title", false, dvzHTML[0]);
-        }
-        if (description = dvzHTML.find('.dataviz').data("description")) {
-            report.addTitleOrDescription(description, "summary", true, dvzHTML[0]);
-        }
-        parentDiv.appendChild(dvzHTML[0]);
-        dvz = parentDiv.outerHTML;
-        return dvz;
-    }
     /*
      * _compose.  This public method is used to activate composer for a given report
      * eg composer.compose("test");
