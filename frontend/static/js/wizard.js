@@ -383,7 +383,7 @@ wizard = (function () {
             }
 
         } else if (cfg.type === "map") {
-            $("#w_zoom").val(cfg.properties.zoom);
+            $("#w_zoom").val(cfg.properties.zoom || 12);
         }
     }
 
