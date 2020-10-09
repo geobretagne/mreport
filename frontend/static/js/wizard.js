@@ -794,11 +794,13 @@ wizard = (function () {
                 $(elem).find(".report-dataviz-title").text(viz.properties.title);
             } else {
                 $(elem).find(".report-dataviz-title").text("");
+                $(elem).find(".dataviz").attr("data-title", "");
             }
             if (viz.properties.description) {
                 $(elem).find(".report-dataviz-description").html(viz.properties.description);
             } else {
                 $(elem).find(".report-dataviz-description").html("");
+                $(elem).find(".dataviz").attr("data-description", "");
             }
 
 
