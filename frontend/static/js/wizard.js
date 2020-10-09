@@ -382,6 +382,8 @@ wizard = (function () {
                 _enableExtraColumnParameter(false);
             }
 
+        } else if (cfg.type === "map") {
+            $("#w_zoom").val(cfg.properties.zoom);
         }
     }
 
