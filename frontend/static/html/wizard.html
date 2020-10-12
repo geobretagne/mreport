@@ -41,9 +41,9 @@
                                             <select class="custom-select chart form-control dataviz-attributes"
                                                 data-prop="type" id="w_chart_type">
                                                 <option selected value="bar">bar</option>
-                                                <option selected value="line">line</option>
-                                                <option selected value="radar">radar</option>
-                                                <option selected value="doughnut">doughnut</option>
+                                                <option value="line">line</option>
+                                                <option value="radar">radar</option>
+                                                <option value="doughnut">doughnut</option>
                                                 <option value="pie">pie</option>
                                                 <option value="polarArea">polarArea</option>
                                                 <option value="bubble">bubble</option>
@@ -73,6 +73,29 @@
                                             </div>
                                             <input type="text" data-prop="opacity"
                                                 class="chart form-control dataviz-attributes" id="w_chart_opacity">
+                                        </div>
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ratio</span>
+                                            </div>
+                                            <select class="custom-select chart form-control dataviz-attributes"
+                                                data-prop="ratio" id="w_chart_ratio">
+                                                <option selected value="2:1">2:1</option>
+                                                <option selected value="3:2">3:2</option>
+                                                <option value="1:1">1:1</option>
+                                            </select>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" data-prop="stacked" class="custom-control-input chart form-control dataviz-attributes"id="w_chart_stacked">
+                                            <label class="custom-control-label" for="w_chart_stacked">Diag. empilé</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" data-prop="begin0" class="custom-control-input chart form-control dataviz-attributes"id="w_chart_begin0">
+                                            <label class="custom-control-label" for="w_chart_begin0">Démarre à 0</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" data-prop="hidelegend" class="custom-control-input chart form-control dataviz-attributes"id="w_chart_hidelegend">
+                                            <label class="custom-control-label" for="w_chart_hidelegend">Masquer la légende</label>
                                         </div>
 
                                         <div class="input-group input-group-sm mb-3">

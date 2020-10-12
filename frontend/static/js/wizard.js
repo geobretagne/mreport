@@ -367,6 +367,17 @@ wizard = (function () {
         if (cfg.type === "chart") {
             $("#w_chart_opacity").val(cfg.properties.opacity);
             $("#w_chart_type").val(cfg.properties.type);
+            $("#w_chart_ratio").val(cfg.properties.ratio || "2:1");
+            if (cfg.properties.stacked) {
+                $("#w_chart_stacked").prop("checked", cfg.properties.stacked === "true");
+            }
+            if (cfg.properties.begin0) {
+                $("#w_chart_begin0").prop("checked", cfg.properties.begin0 === "true");
+            }
+            if (cfg.properties.hidelegend) {
+                $("#w_chart_hidelegend").prop("checked", cfg.properties.hidelegend === "true");
+            }
+
         } else if (cfg.type === "table") {
             //hugly
             if (cfg.properties.columns[0] === 1) {
@@ -740,6 +751,15 @@ wizard = (function () {
                     "value": val
                 });
                 properties[prop] = val;
+            } else {
+                if (attribute.nodeName === "INPUT" && attribute.type === "checkbox") {
+                    attributes.push({
+                        "prop": prop,
+                        "value": attribute.checked
+                    });
+                    properties[prop] = attribute.checked;
+                }
+
             }
         });
         ["colors", "label"].forEach(function (prop) {

@@ -629,6 +629,7 @@ report = (function () {
     var _createChart = function (data, chart) {
         var el = _getDomElement("chart", chart.id);
         var unit = el.dataset.unit || false;
+        var ratio = (el.dataset.ratio || "2:1").split(":").map(Number);
         if (el && data[chart.id]) {
             var commonOptions = {
                 "responsive": true,
@@ -677,6 +678,35 @@ report = (function () {
                     }
                 }
             };
+            if (el.dataset.hidelegend && el.dataset.hidelegend === "true") {
+                commonOptions.legend = {
+                    "display": false
+                };
+            }
+            if (el.dataset.stacked && el.dataset.stacked === "true") {
+                commonOptions.scales = {
+                    "xAxes": [{ "stacked": true }],
+                    "yAxes": [{ "stacked": true }]
+                };
+            }
+            if (el.dataset.begin0 && el.dataset.begin0 === "true") {
+                var opt = {
+                    "yAxes": [{
+                        "ticks": {
+                            "beginAtZero": true
+                        }
+                    }]
+                };
+                if (commonOptions.scales && commonOptions.scales.yAxes) {
+                    commonOptions.scales.yAxes.push(opt.yAxes[0]);
+
+                } else {
+                    commonOptions.scales = opt;
+                }
+            }
+
+            console.log(commonOptions);
+
             var colors = ["#36A2EB"];
             var backgroundColors = []
             var borderColors = [];
@@ -718,8 +748,10 @@ report = (function () {
                     borderColor: borderColors
                 });
             }
-
-            $(el).prepend('<canvas id="' + chart.id + '-canvas" width="400" height="200"></canvas>');
+            var base = 200;
+            var w = base * ratio[0];
+            var h = base * ratio[1];
+            $(el).prepend('<canvas id="' + chart.id + '-canvas" width="' + w + '" height="' + h +'"></canvas>');
             // Add Title and Description to the preview
             //_configTitleDesc(chart.title, chart.description);
             var options = $.extend(commonOptions, chart.options);
