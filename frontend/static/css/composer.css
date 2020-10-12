@@ -346,8 +346,9 @@ span.text-edit.badge.badge-warning {
     opacity: 0.2;
     transition: 0.2s;
 }
-.customBaseColumn{
-    padding: 0;
+#report-composition .dataviz-container{
+    padding-left : 20px;
+    padding-right : 20px;
 }
 .dividedcolumn:hover .divide_column,
 .dividedcolumn:hover .delete_column{
