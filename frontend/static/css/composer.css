@@ -350,6 +350,9 @@ span.text-edit.badge.badge-warning {
     padding-left : 20px;
     padding-right : 20px;
 }
+#report-composition .customBaseColumn {
+    padding: 0;
+}
 .dividedcolumn:hover .divide_column,
 .dividedcolumn:hover .delete_column{
     filter: alpha(opacity=100);
