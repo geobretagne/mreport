@@ -231,7 +231,7 @@ admin = (function () {
        $(container).append(render);
        _setDatavizUsed(_report_data);
         /* Add event to all checkbox to add them into the cart */
-        $('input[type="checkbox"]').change(function () {
+        $('#dataviz-cards input[type="checkbox"]').change(function () {
             var id = $(this).parent().parent().parent().data().datavizId;
             if ($(this).is(":checked")) {
                 $("#cd-cart .cd-cart-items").append(
