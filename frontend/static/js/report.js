@@ -289,7 +289,7 @@ report = (function () {
                 properties["label"] = item.label.split(",");
             }
             if (item.extracolumn) {
-                properties["extracolumn"] = item.label;
+                properties["extracolumn"] = item.extracolumn;
             }
             if (item.columns && !Array.isArray(item.columns)) {
                 properties["columns"] = item.columns.split(",").map(function (value) {
@@ -703,6 +703,20 @@ report = (function () {
                 } else {
                     commonOptions.scales = opt;
                 }
+            }
+
+            if (el.dataset.showlabels && el.dataset.showlabels === "true") {
+                chart.plugins = ["ChartDataLabels"];
+                commonOptions.plugins = {
+                    "datalabels": {
+                      "color": "white",
+                      //"backgroundColor": "#005a66",
+                      "font": {
+                        "weight": "bold"
+                      }
+                    }
+                  };
+
             }
 
             console.log(commonOptions);

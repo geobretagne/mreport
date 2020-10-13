@@ -282,8 +282,10 @@ wizard = (function () {
                 // set chart label(s)
                 if (nb_datasets === 1) {
                     $("#w_label").val("Légende");
+                    $("#w_chart_stacked").prop( "disabled", true );
                 } else {
                     $("#w_label").val(_data.dataset.join(","));
+                    $("#w_chart_stacked").prop( "disabled", false );
                 }
                 break;
             case "table":
@@ -297,7 +299,7 @@ wizard = (function () {
                     _enableExtraColumnParameter(true);
                 } else {
                     //hide extra columns parameters
-                    $("#w_table_extracolumn").closest(".input-group").hide();
+                    $("#w_table_extracolumn").closest(".attribute").hide();
                 }
                 break;
 
@@ -307,9 +309,9 @@ wizard = (function () {
     //show or hide  extra columns parameters
     _enableExtraColumnParameter = function (enable) {
         if (enable) {
-            $("#w_table_extracolumn").closest(".input-group").show();
+            $("#w_table_extracolumn").closest(".attribute").show();
         } else {
-            $("#w_table_extracolumn").closest(".input-group").hide();
+            $("#w_table_extracolumn").closest(".attribute").hide();
         }
     }
 
@@ -373,9 +375,23 @@ wizard = (function () {
             }
             if (cfg.properties.begin0) {
                 $("#w_chart_begin0").prop("checked", cfg.properties.begin0 === "true");
+            } else {
+                $("#w_chart_begin0").prop("checked", false);
             }
             if (cfg.properties.hidelegend) {
                 $("#w_chart_hidelegend").prop("checked", cfg.properties.hidelegend === "true");
+            } else {
+                $("#w_chart_hidelegend").prop("checked", false);
+            }
+            if (cfg.properties.showlabels) {
+                $("#w_chart_showlabels").prop("checked", cfg.properties.showlabels === "true");
+            } else {
+                $("#w_chart_showlabels").prop("checked", false);
+            }
+            if ( _data.dataset.length > 1 ) {
+                $("#w_chart_stacked").prop( "disabled", false );
+            } else {
+                $("#w_chart_stacked").prop( "disabled", true );
             }
 
         } else if (cfg.type === "table") {
@@ -423,12 +439,12 @@ wizard = (function () {
     // this method shows fields linked to dataviz type (table, figure, chart...)
     var _showParameters = function (dataviz) {
         $("#dataviz-attributes").show();
-        $(".dataviz-attributes").closest(".input-group").hide();
-        $("." + dataviz + ".dataviz-attributes").closest(".input-group").show();
+        $(".dataviz-attributes").closest(".attribute").hide();
+        $("." + dataviz + ".dataviz-attributes").closest(".attribute").show();
         if (dataviz === "chart") {
-            $("#w_label").closest(".input-group").find(".input-group-text").text("séries");
+            $("#w_label").closest(".attribute").find(".input-group-text").text("séries");
         } else if (dataviz === "table") {
-            $("#w_label").closest(".input-group").find(".input-group-text").text("labels");
+            $("#w_label").closest(".attribute").find(".input-group-text").text("labels");
         }
         if (!$("#w_icon").val()) {
             $("#w_icon").val("icon-default");
@@ -491,6 +507,7 @@ wizard = (function () {
         $(e.currentTarget).find(".modal-title").text(datavizId);
         //clear wizard form;
         _clean();
+        $("#wizard-parameters .nav-tabs>.nav-item").first().tab('show');
         // Add text config buttons
         //textedit.configureButtons(e.currentTarget);
         //Test if dataviz has a default visualization or is yet configured in active session
@@ -741,7 +758,7 @@ wizard = (function () {
             "id": dataviz,
             "model": modelId
         };
-        $(".dataviz-attributes").each(function (id, attribute) {
+        $(".dataviz-attributes." + type).each(function (id, attribute) {
             var val = $(attribute).val();
             var prop = $(attribute).attr("data-prop");
             if (val && val.length >= 1) {
@@ -915,6 +932,7 @@ wizard = (function () {
         hidden_input.value = hidden_input.value.slice(0, -1);
     }
     var _init = function () {
+        Chart.plugins.unregister(ChartDataLabels);
         //load wizard html dynamicly and append it admin.html
         $.ajax({
             url: "/static/html/wizard.html",
