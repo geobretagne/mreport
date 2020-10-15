@@ -536,3 +536,9 @@ span.certified-dataviz.disabled,
 span.designed-dataviz.disabled {
     display:none;
 }
+
+#dataviz-attributes.tab-content {
+    border: solid;
+    border-color: #fff #dee2e6 #dee2e6 #dee2e6;
+    border-width: thin;
+}
