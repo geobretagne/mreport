@@ -253,6 +253,21 @@ span.structure-description {
     display: none;
 }
 
+#report-composition {
+    outline: dashed;
+    outline-color: grey;
+}
+
+#report-composition:empty:after {
+    content: "Déposer ici des blocs structurants après avoir sélectionné un rapport et un modèle";
+    text-align: center;
+    top: 30%;
+    position: absolute;
+    padding-left: 20px;
+    padding-right: 20px;
+    color:grey;
+}
+
 .composition .report-bloc .dataviz-container {
     border: #007bff;
     border-style: ridge;
