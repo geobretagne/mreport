@@ -534,3 +534,7 @@ h5>.badge {
   background-color: #dee2e6;
   cursor: pointer;
 }
+
+.page>h1 {
+  padding-top: 40px;
+}
