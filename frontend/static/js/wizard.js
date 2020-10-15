@@ -40,21 +40,40 @@ wizard = (function () {
 
     var _dataviz_infos = {};
 
+    /*
+     * _dataviz_definition
+     *
+     * store the last return by _form2json then used by admin.saveVisualization()
+     * to store dataviz definition in dataviz table
+     *{
+        "type": type,
+        "data": fdata,
+        "properties": properties
+      }
+     *
+     */
+
     var _dataviz_definition = {};
 
     /*
      * ExistingConfig is a dataviz
-     * conf herited of composition report
+     * dataviz conf herited from composition report or dataviz table via _dataviz_infos
      * this var is used by wizard to initiate itself with existing conf
      */
 
     var _existingConfig = false;
 
+    /*
+     *
+     * _colorbtnId - Number used by _updateColorPicker to generate color buttons
+     */
+
     var _colorbtnId = 0;
 
-    /* Method to extract a set of data in relation with dataviz
+    /** Method to extract a set of data in relation with dataviz
      * and necessary to configure and visualize a dataviz for a report
      * Result is stored in _storeData[xxx] to reuse it later
+     * @param  {string} datavizId
      */
     var _getSampleData = function (datavizId) {
         // function countUnique is used to test if labels linked to dataviz are unique or not.
@@ -154,10 +173,9 @@ wizard = (function () {
         });
     };
 
-    /*
+    /**
      * _clean Method to clear wizard form
      */
-
     var _clean = function () {
         $("#dataviz-attributes").hide();
         //remove existing result
@@ -171,9 +189,11 @@ wizard = (function () {
         })
 
     };
-    /*
+
+    /**
      * Method to configure wizard options with dataviz capabilities
-     * Update options in select control #w_dataviz_type"
+     * Update options in select control #w_dataviz_type
+     * @param  {string} datavizId
      */
     var _configureWizardOptions = function (datavizId) {
         // TODO REFACTOR THIS
@@ -245,11 +265,12 @@ wizard = (function () {
 
     };
 
-    /*
+    /**
      * Method to automaticaly set dataviz parameters in #wizard-parameters form
      * this method is called by  _onChangeDatavizType linked to w_dataviz_type change event
+     * @param  {string} datavizType
      */
-    _autoConfig = function (dataviz) {
+    _autoConfig = function (datavizType) {
         var datavizId = _dataviz_infos.dataviz;
         var _data = _storeData[datavizId]
         let modelId = document.getElementById("selectedModelWizard").value;
@@ -264,7 +285,7 @@ wizard = (function () {
             columns.push(i);
         }
 
-        switch (dataviz) {
+        switch (datavizType) {
             case "chart":
                 // chart parameters
                 $("#w_chart_opacity").val("0.75");
@@ -306,7 +327,10 @@ wizard = (function () {
         }
     };
 
-    //show or hide  extra columns parameters
+    /**
+     * show or hide  extra columns parameters
+     * @param  {boolean} enable
+     */
     _enableExtraColumnParameter = function (enable) {
         if (enable) {
             $("#w_table_extracolumn").closest(".attribute").show();
@@ -315,11 +339,12 @@ wizard = (function () {
         }
     }
 
-    /*
-    * Apply dataviz conf from composition report.
-    . By this way on open wizard, dataviz is directly rendered
+    /**
+    * Apply dataviz conf from composition report or stored dataviz conf.
+    * Set attributes form and render it in result panel
+    * By this way on open wizard, dataviz is directly rendered
+    * @param  {object} cfg
     */
-
     _applyDatavizConfig = function (cfg) {
         /*
         {
@@ -414,18 +439,15 @@ wizard = (function () {
         }
     }
 
-    /*
-     * _configureDataviz. This method get dataviz definition in wizard and put it in dataviz-definition
-     * in the report composition
+    /**
+     * _configureDataviz. This method copy paste dataviz html code between  wizard result and composition
+     * @param  {string} datavizId
      */
-
     var _configureDataviz = function (datavizId) {
         //Get current dataviz id
         var datavizId = $("#wizard-panel").attr("data-related-id");
         //copy paste generated code in <code> element
         $('[data-dataviz="' + datavizId + '"] code.dataviz-definition').text($("#wizard-code").text());
-        //get dataviz type
-        var datavizType = $("#w_dataviz_type").val();
         var ico = $("#w_dataviz_type option:selected").attr("data-icon");
         //update dataviz element icon (chart for chart, table for table...)
         $('[data-dataviz="' + datavizId + '"] button i').get(0).className = ico;
@@ -436,14 +458,18 @@ wizard = (function () {
         $("#wizard-code").text("");
         $("#wizard-panel").modal("hide");
     };
-    // this method shows fields linked to dataviz type (table, figure, chart...)
-    var _showParameters = function (dataviz) {
+
+    /**
+     * this method shows fields linked to dataviz type (table, figure, chart...)
+     * @param  {string} datavizType
+     */
+    var _showParameters = function (datavizType) {
         $("#dataviz-attributes").show();
         $(".dataviz-attributes").closest(".attribute").hide();
-        $("." + dataviz + ".dataviz-attributes").closest(".attribute").show();
-        if (dataviz === "chart") {
+        $("." + datavizType + ".dataviz-attributes").closest(".attribute").show();
+        if (datavizType === "chart") {
             $("#w_label").closest(".attribute").find(".input-group-text").text("séries");
-        } else if (dataviz === "table") {
+        } else if (datavizType === "table") {
             $("#w_label").closest(".attribute").find(".input-group-text").text("labels");
         }
         if (!$("#w_icon").val()) {
@@ -455,29 +481,28 @@ wizard = (function () {
 
     };
 
-    /*
+    /**
      * _onChangeDatavizType. This method is linked to #w_dataviz_type select control event change
      *
      */
     var _onChangeDatavizType = function () {
         // get dataviz representation type
-        var dataviz = $("#w_dataviz_type").val();
+        var datavizType = $("#w_dataviz_type").val();
         //Reset dataviz parameters form
         $(".dataviz-attributes").val("");
         //Show fields linked to dataviz type
-        _showParameters(dataviz);
+        _showParameters(datavizType);
         // automaticaly set dataviz parameters in #wizard-parameters form
-        _autoConfig(dataviz);
+        _autoConfig(datavizType);
         _existingConfig = false;
         //Refresh dataviz renderer
         $("#wizard_refresh").click();
     };
 
-    /*
+    /**
      * _onWizardOpened. This method is linked to open wizard modal event.
-     *
+     * @param  {event} e
      */
-
     var _onWizardOpened = function (e) {
 
         //Detect wich component calls this
@@ -563,7 +588,13 @@ wizard = (function () {
 
     };
 
+    /**
+     * this method get icons list from api and show them in wizard
+     * and update css model with all icons
+     * @param  {object} model
+     */
     var _updateIconList = function (model) {
+        if (model.iconstyle) { return; }
         //update icon store in wizard modal
         var style = "";
         folders = {};
@@ -641,6 +672,9 @@ wizard = (function () {
 
     };
 
+    /**
+     * @param  {string} modelId
+     */
     var _onChangeModel = function (modelId) {
         let model = composer.models()[modelId];
         _updateIconList(model);
@@ -648,11 +682,18 @@ wizard = (function () {
 
     };
 
+    /**
+     * @param  {object} model
+     */
     var _updateStyle = function (model) {
         $("#wizard-result style").remove();
         $("#wizard-result").append(model.style);
     };
 
+    /**
+     * convert data attributes of html element to a Dataviz object
+     * @param  {element} html
+     */
     var html2json = function (html) {
         //Get the config from html attributes
         var properties = {};
@@ -673,6 +714,11 @@ wizard = (function () {
         return cfg;
     };
 
+    /**
+     * convert Dataviz object to html representation  this method is called by admin.js
+     * to render dataviz in dataviz form
+     * @param  {object} viz
+     */
     var _json2html = function (viz) {
         var modelId = viz.model || "b";
         var model = composer.models()[modelId];
@@ -721,14 +767,14 @@ wizard = (function () {
 
     }
 
-    /*
-     * _json2form. This methodset values from config
+    /**
+     * _json2form. This method set values from dataviz config
      * and populate wizard form.
+     * @param  {object} viz
      *
      */
-
     var _json2form = function (viz) {
-        //Update wizard form with default dataviz values
+        //Update wizard form with dataviz values
         $("#w_dataviz_type").val(viz.type);
         for (const [attribute, value] of Object.entries(viz.properties)) {
             if (attribute !== "id" && attribute !== "columns") {
@@ -743,12 +789,11 @@ wizard = (function () {
         }
     }
 
-    /*
+    /**
      * _form2json. This method is get values from wizard parameters
      * and populate a json config object
      *
      */
-
     var _form2json = function () {
         var dataviz = $("#wizard-panel").attr("data-related-id");
         var type = $("#w_dataviz_type").val();
@@ -806,12 +851,11 @@ wizard = (function () {
 
     };
 
-    /*
+    /**
      * _onValidateConfig. This method pass a config object to the report.testViz method.
      * Used by #wizard_refresh button and the auto render method in _onWizardOpened
      *
      */
-
     var _onValidateConfig = function () {
         var viz = _form2json();
         var modelId = viz.properties.model;
@@ -931,6 +975,10 @@ wizard = (function () {
         });
         hidden_input.value = hidden_input.value.slice(0, -1);
     }
+
+    /**
+     * this method initializes wizard
+     */
     var _init = function () {
         Chart.plugins.unregister(ChartDataLabels);
         //load wizard html dynamicly and append it admin.html
