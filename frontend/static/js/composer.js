@@ -43,7 +43,7 @@ composer = (function () {
         '<i class="fas fa-times"></i> remove',
         '</span>',
         '<span class="structure-description">',
-        '<input id="bootstrap_columns" type="text" class="form-control" placeholder="Ex : 6 6">',
+         '<input id="bootstrap_columns" type="text" class="form-control col-8" placeholder="Ex : 6 6">',
         '<p id="nb_columns" class="d-none"></p>',
         '</span>',
         '<span class="drag badge badge-default">',
