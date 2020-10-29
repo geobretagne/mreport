@@ -182,8 +182,8 @@ admin = (function () {
                 ['<div class="col-md-4 col-sm-12  cards">',
                     '<div class="card report" data-dataviz-id="' + elem.report + '">',
                     '<div class="card-body">',
-                    '<h5 class="card-title">' + elem.title + '</h5>',
-                    '<a class="btn duplicate"><i class="fa fa-clone" aria-hidden="true"></i></a>',
+                    '<h6 class="card-title col-9">' + elem.title + '</h6>',
+                    '<a class="btn duplicate col-3"><i class="fa fa-clone" aria-hidden="true"></i>copier</a>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + elem.report + '" data-target="#report-modal-form">Sourcer</a>',
                     '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + elem.report + '" data-target="#report-modal-form">Supprimer</a>',
                     '<a href="' + report.getAppConfiguration().location + '/' + elem.report + '" target="_blank" class="card-link">Afficher</a>',
@@ -236,8 +236,8 @@ admin = (function () {
             if ($(this).is(":checked")) {
                 $("#cd-cart .cd-cart-items").append(
                     "<li data-dataviz-id=" + id + ">\
-                        " + $(this).parent().parent().find("h5")[0].outerHTML + "\
                         " + $(this).parent().parent().find("h6")[0].outerHTML + "\
+                        " + $(this).parent().parent().find("h7")[0].outerHTML + "\
                         <a href='#0' class='cd-item-remove cd-img-replace'>Remove</a>\
                     </li>"
                 );

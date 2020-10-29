@@ -5,7 +5,7 @@
     z-index: 1;
     top: 55px;
     left: 0;
-    background-color: #111;
+    background-color: #455461;
     overflow-x: hidden;
     overflow-y: auto;
     padding-bottom: 60px;
@@ -51,6 +51,11 @@
 .builder .structure-bloc {
     position: relative;
 }
+
+.sidenav .list-group .list-group-item{
+  padding: 0.5rem;
+}
+
 
 .builder.edit .composition {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -169,11 +174,16 @@
     background: #3095b4;
     color: white;
     position: absolute;
-    right: 0;
+    right: 5px;
     cursor: pointer;
     padding: 6px;
     font-size: 14px;
 }
+
+.builder.edit .list-group .structure-bloc:last-child .drag{
+  top:13px;
+}
+
 .structure-element .drag{
     top: 5px;
     right: 5px !important;
@@ -256,6 +266,7 @@ span.structure-description {
 #report-composition {
     outline: dashed;
     outline-color: grey;
+    min-height:200px;
 }
 
 #report-composition:empty:after {
@@ -329,7 +340,7 @@ span.text-edit.badge.badge-warning {
 }
 
 #bootstrap_columns{
-    width: 75%;
+    /*width: 75%;*/
     display: inline-block;
 }
 .sortable-chosen span input{
@@ -393,6 +404,12 @@ span.text-edit.badge.badge-warning {
 
 #element-models{
     margin: 10px;
+}
+#element-models .titleBloc {
+  line-height:1.5rem;
+}
+#element-models .structure-element .editable-text{
+  margin:0;
 }
 .full-width{
     width: 100%;
@@ -494,7 +511,7 @@ span.text-edit.badge.badge-warning {
 }
 
 .card.dataviz.used {
-    background-color: #f2eef0;
+    background-color: #dae0e5;
 }
 .card.dataviz:not(.used) .card-footer {
     display: none;
