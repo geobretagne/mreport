@@ -46,7 +46,7 @@ db = SQLAlchemy(app)
 class Dataviz(db.Model):
     dataviz = db.Column(db.String(50),primary_key=True)
     title = db.Column(db.String(200),nullable=False)
-    description = db.Column(db.String(250))
+    description = db.Column(db.String(500))
     source = db.Column(db.String(200),nullable=False)
     year = db.Column(db.String(4))
     unit = db.Column(db.String(50))
@@ -72,12 +72,12 @@ class Dataid(db.Model):
         return '<Dataid {}>'.format(self.dataid)
 
 class Rawdata(db.Model):
-    dataviz = db.Column(db.String(50),db.ForeignKey(schema+'dataviz.dataviz'),index=True,nullable=False)
+    dataviz = db.Column(db.String(100),db.ForeignKey(schema+'dataviz.dataviz'),index=True,nullable=False)
     dataid = db.Column(db.String(50),db.ForeignKey(schema+'dataid.dataid'),index=True,nullable=False)
-    dataset = db.Column(db.String(50),nullable=False)
+    dataset = db.Column(db.String(100),nullable=False)
     order = db.Column(db.Integer,nullable=False)
     label = db.Column(db.String(250))
-    data = db.Column(db.String(250))
+    data = db.Column(db.String(1000))
     __table_args__ = (
         db.PrimaryKeyConstraint('dataviz', 'dataid', 'dataset', 'order'),
         tableschema
