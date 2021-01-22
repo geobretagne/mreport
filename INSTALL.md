@@ -8,10 +8,10 @@ Prerequis
 
 Clone repository
 ----------------
-  Create mreport system user
+Create mreport system user
   ``sudo adduser mreport``
 
-  Clone the repository
+Clone the repository
 
   ``cd /home/mreport``
   
@@ -21,29 +21,29 @@ Clone repository
   
   ``exit``
   
- Configure database with 5 variables
- -----------------------------------
+Configure database with 5 variables
+-----------------------------------
  
- For example:
+For example:
  
- ```
- DATABASE_HOST=localhost
- DATABASE_PORT=5432
- DATABASE_NAME=dataviz
- DATABASE_USER=mreport_user
- DATABASE_PASSWORD=changeit
- ```
+  ```
+  DATABASE_HOST=localhost
+  DATABASE_PORT=5432
+  DATABASE_NAME=dataviz
+  DATABASE_USER=mreport_user
+  DATABASE_PASSWORD=changeit
+  ```
  
- In the next section, you have to replace DATABASE_VARS by your values
+In the next section, you have to replace DATABASE_VARS by your values
  
- On mreport server, edit /home/mreport/mreport.config.py and set SQLALCHEMY_DATABASE_URI variable
+On mreport server, edit /home/mreport/mreport.config.py and set SQLALCHEMY_DATABASE_URI variable
  
- ``SQLALCHEMY_DATABASE_URI = 'postgresql://DATABASE_USER:DATABASE_PASSWORD@DATABASE_HOST:DATABASE_PORT/DATABASE_NAME'``
+  ``SQLALCHEMY_DATABASE_URI = 'postgresql://DATABASE_USER:DATABASE_PASSWORD@DATABASE_HOST:DATABASE_PORT/DATABASE_NAME'``
  
   
- On database server (localhost or remote host)
+On database server (localhost or remote host)
  
- Set shell variables
+Set shell variables
  
  ``sudo su postgres``
  
@@ -55,35 +55,32 @@ Clone repository
  
  ``DATABASE_USER=mreport_user``
  
- Create database user
+Create database user
  
  ``createuser -p $DATABASE_PORT -P -S -D -R -e $DATABASE_USER``
  
- Create database
+Create database
  
  ``createdb -O $DATABASE_USER $DATABASE_NAME``
  
- Install mreport application
- ---------------------------
+Install mreport application
+---------------------------
 
 ``sudo su mreport``
 
 `` cd /home/mreport/mreport``  
 
-  Create a virtualenv and activate it
+Create a virtualenv and activate it
 
   ``python3 -m venv venv``
 
   ``. venv/bin/activate``
 
-  Install Flask and dependencies
+Install Flask and dependencies
 
   ``pip install -r requirements.txt``
 
-  *To install requirements, you need to be disconnected from any proxy*
-
-
-
+*To install requirements, you need to be disconnected from any proxy*
 
 
 Configure
@@ -99,24 +96,15 @@ Configure
 
   * API_LOCATION = '/api'
   * APP_SCHEME = 'http'
-  * SCHEMA = "data" 
+  * SCHEMA = "data" *if you rename the SCHEMA, you must also change it in createdb.py*
   * MREPORT_REPORTS = "backend/reports"
   * MREPORT_LOCATION = "/mreport"
   * ADMIN_LOCATION = "/admin"
 
-Create database schema and tables
+Create database schema and tables and add demo data to database
 ------------------------------------
 
   ``python createdb.py``
-
-Add demo data to database
--------------------------
-
-  
-  ``psql -p 5432 -d dataviz --set "schema=data" -f backend/datainit/alimentation.sql``
-
- 
-  *schema must = the same as SCHEMA in config.py*
 
   *To drop the test data from the database use this command*
 
