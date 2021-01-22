@@ -1,67 +1,95 @@
 Prerequis
 ----------
 
-  $ sudo apt-get install python3-venv
-
   *You need to have a running instance of postgre installed*
-
-  $ apt install postgresql postgresql-client
-
-  $ su postgresql
-
-  $ service postgresql start
-
-  $ adduser mreport
-
-  $ psql -p 5432 -c "CREATE DATABASE dataviz OWNER mreport;"
+  
+  $ sudo apt-get install python3-venv git  
  
 
-Install
----------
+Clone repository
+----------------
+  Create mreport system user
+  ``sudo adduser mreport``
 
   Clone the repository
 
-  $ cd /home/mreport
+  ``cd /home/mreport``
+  
+  ``sudo su mreport``
 
-  $ git clone https://github.com/geobretagne/mreport.git
+  ``git clone https://github.com/geobretagne/mreport.git``
+  
+  ``exit``
+  
+ Configure database with 5 variables
+ -----------------------------------
+ 
+ For example:
+ 
+ ```
+ DATABASE_HOST=localhost
+ DATABASE_PORT=5432
+ DATABASE_NAME=dataviz
+ DATABASE_USER=mreport_user
+ DATABASE_PASSWORD=changeit
+ ```
+ 
+ In the next section, you have to replace DATABASE_VARS by your values
+ 
+ On mreport server, edit /home/mreport/mreport.config.py and set SQLALCHEMY_DATABASE_URI variable
+ 
+ ``SQLALCHEMY_DATABASE_URI = 'postgresql://DATABASE_USER:DATABASE_PASSWORD@DATABASE_HOST:DATABASE_PORT/DATABASE_NAME'``
+ 
+  
+ On database server (localhost or remote host)
+ 
+ Set shell variables
+ 
+ ``sudo su postgres``
+ 
+ ``DATABASE_HOST=localhost``
+ 
+ ``DATABASE_PORT=5432``
+ 
+ ``DATABASE_NAME=dataviz``
+ 
+ ``DATABASE_USER=mreport_user``
+ 
+ Create database user
+ 
+ ``createuser -p $DATABASE_PORT -P -S -D -R -e $DATABASE_USER``
+ 
+ Create database
+ 
+ ``createdb -O $DATABASE_USER $DATABASE_NAME``
+ 
+ Install mreport application
+ ---------------------------
 
-  $ cd mreport
+``sudo su mreport``
+
+`` cd /home/mreport/mreport``  
 
   Create a virtualenv and activate it
 
-  $ python3 -m venv venv
+  ``python3 -m venv venv``
 
-  $ . venv/bin/activate
+  ``. venv/bin/activate``
 
   Install Flask and dependencies
 
-  $ pip install -r requirements.txt
+  ``pip install -r requirements.txt``
 
   *To install requirements, you need to be disconnected from any proxy*
 
 
-Configure database
----------
 
-$ DATABASE_NAME=dataviz
-
-$ DATABASE_USER=mreport
-
-$ DATABASE_PORT=5432
-
-$ su postgres
-
-$ createuser -p $DATABASE_PORT -P -S -D -R -e $DATABASE_USER
-
-$ createdb -O $DATABASE_USER DATABASE_NAME
-
-$ exit
 
 
 Configure
 ---------
 
-  Edit config.py and set and replace DATABASE_VARIABLES by correct values
+  Edit config.py and set and be sure that DATABASE_VARIABLES are correctly set in the next variable
 
   * SQLALCHEMY_DATABASE_URI = 'postgresql://DATABASE_USER:DATABASE_PASSWORD@DATABASE_HOST:DATABASE_PORT/DATABASE_NAME'
 
@@ -77,32 +105,30 @@ Configure
   * ADMIN_LOCATION = "/admin"
 
 Create database schema and tables
---------------
+------------------------------------
 
-  $ python createdb.py
+  ``python createdb.py``
 
-Add test data to database
---------------
+Add demo data to database
+-------------------------
 
-  $ su postgres
+  
+  ``psql -p 5432 -d dataviz --set "schema=data" -f backend/datainit/alimentation.sql``
 
-  $ psql -p 5432 -d dataviz --set "schema=data" -f backend/datainit/alimentation.sql
-
-  $ exit
-
+ 
   *schema must = the same as SCHEMA in config.py*
 
   *To drop the test data from the database use this command*
 
-  $ python emptydb.py
+  ``python emptydb.py``
 
 
 Test frontend
 --------------
 
-  $ export FLASK_APP=frontend
+  ``export FLASK_APP=frontend``
 
-  $ flask run
+  ``flask run``
 
   test http://localhost:5000/mreport/sample/ECLUSE_1
 
@@ -112,9 +138,9 @@ Test frontend
 Test backend
 --------------
 
-  $ export FLASK_APP=backend
+  ``export FLASK_APP=backend``
 
-  $ flask run
+  ``flask run``
 
   test http://localhost:5000/api
 
@@ -122,7 +148,7 @@ Test backend
 Tester frontend & backend
 --------------------------
 
-  $ python3 dispatcher.py
+  ``python3 dispatcher.py``
 
   test http://localhost:5000/api
 
