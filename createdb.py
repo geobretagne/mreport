@@ -3,8 +3,11 @@ from backend import db
 from sqlalchemy.sql import text
 
 db.create_all()
-db.engine.execute(" SET @schema='data'")
-db.engine.execute(text(open("backend/datainit/alimentation.sql").read())) 
+
+with open('backend/datainit/demo.sql') as f:
+  #sql = f.read().replace(':schema', app.config['SCHEMA'])
+  sql = f.read()
+  db.engine.execute(text(sql))
 
 
-print("Tables created and test data added")
+print("Tables created in database")
