@@ -126,6 +126,12 @@ On database server (localhost or remote host). If remote host copy /home/mreport
 Test frontend
 --------------
 
+ ``cd /home/mreport/mreport``
+ 
+ ``sudo su mreport``
+ 
+ ``. venv/bin/activate`` 
+
   ``export FLASK_APP=frontend``
 
   ``flask run``
