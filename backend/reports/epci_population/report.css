@@ -1,0 +1,525 @@
+/* Couleur de fond de la page*/
+.model-b {
+    background-color: #f5f5f5;
+}
+/* Font */
+.report {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+/* Eléments structurants */
+/* titre du rapport */
+.report-title {
+    font-size: 2em;
+}
+/* titre des blocs */
+.bloc-title {
+    font-weight: 700;
+    padding-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+    color: #213042;
+}
+/* sources des blocs */
+.bloc-sources {
+    font-size: 12px;
+}
+.bloc-sources p {
+    padding-left: 20px;
+}
+/* Texte libre */
+.free-text,
+.titleBloc {
+    font-size: 12px;
+}
+/* titre-n can be used with .bloc-title, .bloc-sources, .free-text */
+.titre-1 {
+    font-size: 2em;
+    font-weight: 700;
+}
+.titre-2 {
+    font-size: 24px;
+    font-weight: 700;
+
+}
+.titre-3 {
+    font-size: 20px;
+    font-weight: 500;
+}
+.titre-4 {
+    font-size: 16px;
+    font-weight: 400;
+}
+/* DATAVIZ CONTAINERS*/
+.model-b .customBaseColumn {
+    padding: 0;
+}
+.verticalDivision .row {
+    margin: 0;
+}
+.report-bloc .dataviz-container {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}
+.dataviz-container .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+/* FROM MREPORT.CSS */
+.editable-text {
+    margin-bottom: 0 !important;
+}
+.report-chart,
+.report-figure {
+    padding-top: 20px;
+}
+.report-chart {
+    width: 100%;
+}
+.full-width{
+    width: 100%;
+}
+.dataviz-container {
+    padding-right: 0;
+    padding-left: 0;
+}
+.view,
+.lyrow{
+    height: 100%;
+}
+.bloc-content .row {
+    margin-left: 0;
+    margin-right: 0;
+    height: 100%;
+}
+.view .row .col-md-12{
+    height: 100%;
+}
+.dataviz-container:hover .report-share{
+    display: block;
+}
+.no-data{
+    text-align: center;
+}
+.report-dataviz-title,
+.report-dataviz-description{
+    margin-right: 15px;
+    margin-left: 15px;
+}
+.report-dataviz-title{
+    margin-top: 15px;
+    text-align: center;
+    color: #0094ab;
+    font-weight: 600;
+}
+.report-dataviz-description{
+    margin-bottom: 5px;
+    text-align: justify;
+    font-size: smaller;
+}
+.report-figure-chiffre {
+    padding-top: 30px;
+
+}
+/* DATAVIZ FIGURE */
+.report-figure-chiffre {
+    padding-top: 30px;
+    color:#0094ab;
+    font-size: 40px;
+    font-weight: 900;
+    text-align: center;
+}
+.report-figure-caption {
+    color:#0094ab;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+}
+.custom-icon {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-y: top;
+    background-size: 75px 45px;
+}
+.custom-icon-left {
+    width: 100%;
+    background-position:left;
+    background-size: 100px 75px;
+    background-position-x: 2em;
+}
+.custom-icon-right {
+    width: 100%;
+    background-position:right;
+    background-size: 100px 75px;
+}
+/* used to test custom-icon in model-checker" */
+.icon-default {
+    background-image: url(lycee.svg);
+}
+/* Icon & text used with empty dataviz */
+.model-b div.dataviz-container:empty {
+    min-height: 100px;
+    background-image: url(/static/picto/black/travaux.svg);
+    background-repeat: no-repeat;
+    background-size: 75px;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.model-b div.dataviz-container:empty:after {
+    content: "En construction";
+    text-align: center;
+    padding-left: 180px;
+}
+
+/* IMPRESSION */
+.printButton{
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    background-color: #eee;
+    color: #555;
+    padding: 10px;
+    border-radius: 35px;
+    box-shadow: 0 0 5px #ccc;
+    font-size: 24px;
+    text-align: center;
+}
+
+.icon-print:before{
+    margin: 0 auto;
+}
+
+.printButton:hover{
+    background-color:#555;
+    color:#eee;
+}
+@media print {
+    @page {
+    size: A4 portrait;
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+    color-adjust: exact !important;
+
+  }
+  canvas {
+        min-height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        height: auto!important;
+        width: auto!important;
+    }
+
+    .printButton{
+        display: none !important;
+    }
+    .lyrow {
+        page-break-inside: avoid;
+    }
+    .model-b {
+        background-color: #ffffff;
+    }
+} 
+.icon-black-covoiturage { background-image: url(/static/picto/black/covoiturage.svg);}
+.icon-black-chauve_souris { background-image: url(/static/picto/black/chauve_souris.svg);}
+.icon-black-eaux_usees { background-image: url(/static/picto/black/eaux_usees.svg);}
+.icon-black-etoile { background-image: url(/static/picto/black/etoile.svg);}
+.icon-black-loupe { background-image: url(/static/picto/black/loupe.svg);}
+.icon-black-international { background-image: url(/static/picto/black/international.svg);}
+.icon-black-identite { background-image: url(/static/picto/black/identite.svg);}
+.icon-black-epicerie { background-image: url(/static/picto/black/epicerie.svg);}
+.icon-black-cargo { background-image: url(/static/picto/black/cargo.svg);}
+.icon-black-voiture { background-image: url(/static/picto/black/voiture.svg);}
+.icon-black-elu { background-image: url(/static/picto/black/elu.svg);}
+.icon-black-annuaire { background-image: url(/static/picto/black/annuaire.svg);}
+.icon-black-eglise { background-image: url(/static/picto/black/eglise.svg);}
+.icon-black-pieton { background-image: url(/static/picto/black/pieton.svg);}
+.icon-black-coche { background-image: url(/static/picto/black/coche.svg);}
+.icon-black-formation_02 { background-image: url(/static/picto/black/formation_02.svg);}
+.icon-black-outil { background-image: url(/static/picto/black/outil.svg);}
+.icon-black-sante { background-image: url(/static/picto/black/sante.svg);}
+.icon-black-RSS { background-image: url(/static/picto/black/RSS.svg);}
+.icon-black-banc { background-image: url(/static/picto/black/banc.svg);}
+.icon-black-fichier { background-image: url(/static/picto/black/fichier.svg);}
+.icon-black-moto { background-image: url(/static/picto/black/moto.svg);}
+.icon-black-tramway { background-image: url(/static/picto/black/tramway.svg);}
+.icon-black-numerique { background-image: url(/static/picto/black/numerique.svg);}
+.icon-black-google { background-image: url(/static/picto/black/google.svg);}
+.icon-black-logo_RB_gallo { background-image: url(/static/picto/black/logo_RB_gallo.svg);}
+.icon-black-jeu { background-image: url(/static/picto/black/jeu.svg);}
+.icon-black-fleche_haut { background-image: url(/static/picto/black/fleche_haut.svg);}
+.icon-black-parking_velo { background-image: url(/static/picto/black/parking_velo.svg);}
+.icon-black-chantier_naval { background-image: url(/static/picto/black/chantier_naval.svg);}
+.icon-black-formation_01 { background-image: url(/static/picto/black/formation_01.svg);}
+.icon-black-auto_electrique { background-image: url(/static/picto/black/auto_electrique.svg);}
+.icon-black-deviation { background-image: url(/static/picto/black/deviation.svg);}
+.icon-black-escalier { background-image: url(/static/picto/black/escalier.svg);}
+.icon-black-demi_tour { background-image: url(/static/picto/black/demi_tour.svg);}
+.icon-black-fleche_double { background-image: url(/static/picto/black/fleche_double.svg);}
+.icon-black-train_TGV { background-image: url(/static/picto/black/train_TGV.svg);}
+.icon-black-commentaire { background-image: url(/static/picto/black/commentaire.svg);}
+.icon-black-justice { background-image: url(/static/picto/black/justice.svg);}
+.icon-black-canoe { background-image: url(/static/picto/black/canoe.svg);}
+.icon-black-arret_transport { background-image: url(/static/picto/black/arret_transport.svg);}
+.icon-black-titre_transport { background-image: url(/static/picto/black/titre_transport.svg);}
+.icon-black-industrie { background-image: url(/static/picto/black/industrie.svg);}
+.icon-black-plus { background-image: url(/static/picto/black/plus.svg);}
+.icon-black-pinterest { background-image: url(/static/picto/black/pinterest.svg);}
+.icon-black-frigidaire { background-image: url(/static/picto/black/frigidaire.svg);}
+.icon-black-panier { background-image: url(/static/picto/black/panier.svg);}
+.icon-black-poisson { background-image: url(/static/picto/black/poisson.svg);}
+.icon-black-corbeille { background-image: url(/static/picto/black/corbeille.svg);}
+.icon-black-lieu_culte { background-image: url(/static/picto/black/lieu_culte.svg);}
+.icon-black-information { background-image: url(/static/picto/black/information.svg);}
+.icon-black-tracteur { background-image: url(/static/picto/black/tracteur.svg);}
+.icon-black-vaporisateur { background-image: url(/static/picto/black/vaporisateur.svg);}
+.icon-black-abeille { background-image: url(/static/picto/black/abeille.svg);}
+.icon-black-chariot_entretien { background-image: url(/static/picto/black/chariot_entretien.svg);}
+.icon-black-musique { background-image: url(/static/picto/black/musique.svg);}
+.icon-black-perceuse { background-image: url(/static/picto/black/perceuse.svg);}
+.icon-black-nageur { background-image: url(/static/picto/black/nageur.svg);}
+.icon-black-fichier_presentation { background-image: url(/static/picto/black/fichier_presentation.svg);}
+.icon-black-site_remarquable { background-image: url(/static/picto/black/site_remarquable.svg);}
+.icon-black-breton { background-image: url(/static/picto/black/breton.svg);}
+.icon-black-marqueur { background-image: url(/static/picto/black/marqueur.svg);}
+.icon-black-cadenas { background-image: url(/static/picto/black/cadenas.svg);}
+.icon-black-aire_covoiturage { background-image: url(/static/picto/black/aire_covoiturage.svg);}
+.icon-black-camion { background-image: url(/static/picto/black/camion.svg);}
+.icon-black-documentation { background-image: url(/static/picto/black/documentation.svg);}
+.icon-black-tablette { background-image: url(/static/picto/black/tablette.svg);}
+.icon-black-enveloppe { background-image: url(/static/picto/black/enveloppe.svg);}
+.icon-black-fichier_texte { background-image: url(/static/picto/black/fichier_texte.svg);}
+.icon-black-photo { background-image: url(/static/picto/black/photo.svg);}
+.icon-black-cafe { background-image: url(/static/picto/black/cafe.svg);}
+.icon-black-facebook { background-image: url(/static/picto/black/facebook.svg);}
+.icon-black-euro { background-image: url(/static/picto/black/euro.svg);}
+.icon-black-ecluse { background-image: url(/static/picto/black/ecluse.svg);}
+.icon-black-sport { background-image: url(/static/picto/black/sport.svg);}
+.icon-black-attente { background-image: url(/static/picto/black/attente.svg);}
+.icon-black-douche { background-image: url(/static/picto/black/douche.svg);}
+.icon-black-reseau { background-image: url(/static/picto/black/reseau.svg);}
+.icon-black-europe { background-image: url(/static/picto/black/europe.svg);}
+.icon-black-velo { background-image: url(/static/picto/black/velo.svg);}
+.icon-black-auto_partage { background-image: url(/static/picto/black/auto_partage.svg);}
+.icon-black-telepherique { background-image: url(/static/picto/black/telepherique.svg);}
+.icon-black-metro { background-image: url(/static/picto/black/metro.svg);}
+.icon-black-alimentation { background-image: url(/static/picto/black/alimentation.svg);}
+.icon-black-vestiaire_h { background-image: url(/static/picto/black/vestiaire_h.svg);}
+.icon-black-flore { background-image: url(/static/picto/black/flore.svg);}
+.icon-black-deficience_visuelle { background-image: url(/static/picto/black/deficience_visuelle.svg);}
+.icon-black-liste { background-image: url(/static/picto/black/liste.svg);}
+.icon-black-calendrier { background-image: url(/static/picto/black/calendrier.svg);}
+.icon-black-economie { background-image: url(/static/picto/black/economie.svg);}
+.icon-black-cycliste { background-image: url(/static/picto/black/cycliste.svg);}
+.icon-black-crayon { background-image: url(/static/picto/black/crayon.svg);}
+.icon-black-table_banc { background-image: url(/static/picto/black/table_banc.svg);}
+.icon-black-son { background-image: url(/static/picto/black/son.svg);}
+.icon-black-zoom_plus { background-image: url(/static/picto/black/zoom_plus.svg);}
+.icon-black-hebergement { background-image: url(/static/picto/black/hebergement.svg);}
+.icon-black-dossier { background-image: url(/static/picto/black/dossier.svg);}
+.icon-black-menhir { background-image: url(/static/picto/black/menhir.svg);}
+.icon-black-telephone_02 { background-image: url(/static/picto/black/telephone_02.svg);}
+.icon-black-formation_sanitaire { background-image: url(/static/picto/black/formation_sanitaire.svg);}
+.icon-black-tournevis { background-image: url(/static/picto/black/tournevis.svg);}
+.icon-black-etiquettes { background-image: url(/static/picto/black/etiquettes.svg);}
+.icon-black-calculatrice { background-image: url(/static/picto/black/calculatrice.svg);}
+.icon-black-fichier_image { background-image: url(/static/picto/black/fichier_image.svg);}
+.icon-black-linkedin { background-image: url(/static/picto/black/linkedin.svg);}
+.icon-black-transport_scolaire { background-image: url(/static/picto/black/transport_scolaire.svg);}
+.icon-black-carte { background-image: url(/static/picto/black/carte.svg);}
+.icon-black-ponton { background-image: url(/static/picto/black/ponton.svg);}
+.icon-black-agenda { background-image: url(/static/picto/black/agenda.svg);}
+.icon-black-borne_kilometrique { background-image: url(/static/picto/black/borne_kilometrique.svg);}
+.icon-black-rail { background-image: url(/static/picto/black/rail.svg);}
+.icon-black-groupe { background-image: url(/static/picto/black/groupe.svg);}
+.icon-black-malentendant { background-image: url(/static/picto/black/malentendant.svg);}
+.icon-black-conserve { background-image: url(/static/picto/black/conserve.svg);}
+.icon-black-cale_eau { background-image: url(/static/picto/black/cale_eau.svg);}
+.icon-black-fouet_cuisine { background-image: url(/static/picto/black/fouet_cuisine.svg);}
+.icon-black-energie_01 { background-image: url(/static/picto/black/energie_01.svg);}
+.icon-black-commerce { background-image: url(/static/picto/black/commerce.svg);}
+.icon-black-bateau { background-image: url(/static/picto/black/bateau.svg);}
+.icon-black-plage { background-image: url(/static/picto/black/plage.svg);}
+.icon-black-bus { background-image: url(/static/picto/black/bus.svg);}
+.icon-black-organigramme { background-image: url(/static/picto/black/organigramme.svg);}
+.icon-black-algue { background-image: url(/static/picto/black/algue.svg);}
+.icon-black-port { background-image: url(/static/picto/black/port.svg);}
+.icon-black-fichier_tableur { background-image: url(/static/picto/black/fichier_tableur.svg);}
+.icon-black-train_TER { background-image: url(/static/picto/black/train_TER.svg);}
+.icon-black-assemblee { background-image: url(/static/picto/black/assemblee.svg);}
+.icon-black-fleche_bas { background-image: url(/static/picto/black/fleche_bas.svg);}
+.icon-black-chateau { background-image: url(/static/picto/black/chateau.svg);}
+.icon-black-formulaire { background-image: url(/static/picto/black/formulaire.svg);}
+.icon-black-institution { background-image: url(/static/picto/black/institution.svg);}
+.icon-black-youtube { background-image: url(/static/picto/black/youtube.svg);}
+.icon-black-eau { background-image: url(/static/picto/black/eau.svg);}
+.icon-black-femme_homme { background-image: url(/static/picto/black/femme_homme.svg);}
+.icon-black-calvaire { background-image: url(/static/picto/black/calvaire.svg);}
+.icon-black-car { background-image: url(/static/picto/black/car.svg);}
+.icon-black-village { background-image: url(/static/picto/black/village.svg);}
+.icon-black-manager { background-image: url(/static/picto/black/manager.svg);}
+.icon-black-camping { background-image: url(/static/picto/black/camping.svg);}
+.icon-black-parking { background-image: url(/static/picto/black/parking.svg);}
+.icon-black-maison { background-image: url(/static/picto/black/maison.svg);}
+.icon-black-fichier_pdf { background-image: url(/static/picto/black/fichier_pdf.svg);}
+.icon-black-imprimante { background-image: url(/static/picto/black/imprimante.svg);}
+.icon-black-journal { background-image: url(/static/picto/black/journal.svg);}
+.icon-black-horloge { background-image: url(/static/picto/black/horloge.svg);}
+.icon-black-telephone_01 { background-image: url(/static/picto/black/telephone_01.svg);}
+.icon-black-cavalier { background-image: url(/static/picto/black/cavalier.svg);}
+.icon-black-ordinateur_bureau { background-image: url(/static/picto/black/ordinateur_bureau.svg);}
+.icon-black-telephone_interdit { background-image: url(/static/picto/black/telephone_interdit.svg);}
+.icon-black-fichier_texte_02 { background-image: url(/static/picto/black/fichier_texte_02.svg);}
+.icon-black-plein_ecran { background-image: url(/static/picto/black/plein_ecran.svg);}
+.icon-black-administration { background-image: url(/static/picto/black/administration.svg);}
+.icon-black-citoyen { background-image: url(/static/picto/black/citoyen.svg);}
+.icon-black-malvoyant { background-image: url(/static/picto/black/malvoyant.svg);}
+.icon-black-ordinateur_portable { background-image: url(/static/picto/black/ordinateur_portable.svg);}
+.icon-black-archives { background-image: url(/static/picto/black/archives.svg);}
+.icon-black-lycee { background-image: url(/static/picto/black/lycee.svg);}
+.icon-black-espace_remarquable { background-image: url(/static/picto/black/espace_remarquable.svg);}
+.icon-black-feuille { background-image: url(/static/picto/black/feuille.svg);}
+.icon-black-etiquette { background-image: url(/static/picto/black/etiquette.svg);}
+.icon-black-pecheur { background-image: url(/static/picto/black/pecheur.svg);}
+.icon-black-usine { background-image: url(/static/picto/black/usine.svg);}
+.icon-black-moins { background-image: url(/static/picto/black/moins.svg);}
+.icon-black-aeroport { background-image: url(/static/picto/black/aeroport.svg);}
+.icon-black-zoom_moins { background-image: url(/static/picto/black/zoom_moins.svg);}
+.icon-black-gare { background-image: url(/static/picto/black/gare.svg);}
+.icon-black-randonneur { background-image: url(/static/picto/black/randonneur.svg);}
+.icon-black-vestiaire { background-image: url(/static/picto/black/vestiaire.svg);}
+.icon-black-fleche_droit { background-image: url(/static/picto/black/fleche_droit.svg);}
+.icon-black-commentaires { background-image: url(/static/picto/black/commentaires.svg);}
+.icon-black-mobile { background-image: url(/static/picto/black/mobile.svg);}
+.icon-black-eolienne { background-image: url(/static/picto/black/eolienne.svg);}
+.icon-black-travaux { background-image: url(/static/picto/black/travaux.svg);}
+.icon-black-energie_02 { background-image: url(/static/picto/black/energie_02.svg);}
+.icon-black-route { background-image: url(/static/picto/black/route.svg);}
+.icon-black-alerte { background-image: url(/static/picto/black/alerte.svg);}
+.icon-black-electricite { background-image: url(/static/picto/black/electricite.svg);}
+.icon-black-dolmen { background-image: url(/static/picto/black/dolmen.svg);}
+.icon-black-hopital { background-image: url(/static/picto/black/hopital.svg);}
+.icon-black-issue_secours { background-image: url(/static/picto/black/issue_secours.svg);}
+.icon-black-mobilite_reduite { background-image: url(/static/picto/black/mobilite_reduite.svg);}
+.icon-black-education { background-image: url(/static/picto/black/education.svg);}
+.icon-black-vestiaire_f { background-image: url(/static/picto/black/vestiaire_f.svg);}
+.icon-black-logo_RB { background-image: url(/static/picto/black/logo_RB.svg);}
+.icon-black-ascenseur { background-image: url(/static/picto/black/ascenseur.svg);}
+.icon-black-toque { background-image: url(/static/picto/black/toque.svg);}
+.icon-black-acceuil { background-image: url(/static/picto/black/acceuil.svg);}
+.icon-black-twitter { background-image: url(/static/picto/black/twitter.svg);}
+.icon-black-lecture { background-image: url(/static/picto/black/lecture.svg);}
+.icon-black-culture { background-image: url(/static/picto/black/culture.svg);}
+.icon-black-service { background-image: url(/static/picto/black/service.svg);}
+.icon-black-poule { background-image: url(/static/picto/black/poule.svg);}
+.icon-black-juridique { background-image: url(/static/picto/black/juridique.svg);}
+.icon-black-station_autopartage { background-image: url(/static/picto/black/station_autopartage.svg);}
+.icon-black-fleche_gauche { background-image: url(/static/picto/black/fleche_gauche.svg);}
+.icon-black-securite { background-image: url(/static/picto/black/securite.svg);}
+.icon-black-famille { background-image: url(/static/picto/black/famille.svg);}
+.icon-black-gallo { background-image: url(/static/picto/black/gallo.svg);}
+.icon-black-recherche { background-image: url(/static/picto/black/recherche.svg);}
+.icon-black-observatoire { background-image: url(/static/picto/black/observatoire.svg);}
+.icon-black-chariot { background-image: url(/static/picto/black/chariot.svg);}
+.icon-black-scanner { background-image: url(/static/picto/black/scanner.svg);}
+.icon-black-musee { background-image: url(/static/picto/black/musee.svg);}
+.icon-black-vimeo { background-image: url(/static/picto/black/vimeo.svg);}
+.icon-black-laverie { background-image: url(/static/picto/black/laverie.svg);}
+.icon-black-carburant { background-image: url(/static/picto/black/carburant.svg);}
+.icon-black-tondeuse { background-image: url(/static/picto/black/tondeuse.svg);}
+.icon-black-logo_RB_bzh { background-image: url(/static/picto/black/logo_RB_bzh.svg);}
+.icon-black-mer { background-image: url(/static/picto/black/mer.svg);}
+.icon-black-fontaire_eau { background-image: url(/static/picto/black/fontaire_eau.svg);}
+.icon-black-pain { background-image: url(/static/picto/black/pain.svg);}
+.icon-blue-young_man { background-image: url(/static/picto/blue/young_man.svg);}
+.icon-blue-etoile { background-image: url(/static/picto/blue/etoile.svg);}
+.icon-blue-habitants { background-image: url(/static/picto/blue/habitants.svg);}
+.icon-blue-evolution { background-image: url(/static/picto/blue/evolution.svg);}
+.icon-blue-social_jeune_ssempl { background-image: url(/static/picto/blue/social_jeune_ssempl.svg);}
+.icon-blue-norovirus { background-image: url(/static/picto/blue/norovirus.svg);}
+.icon-blue-numerique { background-image: url(/static/picto/blue/numerique.svg);}
+.icon-blue-definition { background-image: url(/static/picto/blue/definition.svg);}
+.icon-blue-homme_femme { background-image: url(/static/picto/blue/homme_femme.svg);}
+.icon-blue-montee { background-image: url(/static/picto/blue/montee.svg);}
+.icon-blue-icon-eco8 { background-image: url(/static/picto/blue/icon-eco8.svg);}
+.icon-blue-man { background-image: url(/static/picto/blue/man.svg);}
+.icon-blue-homme { background-image: url(/static/picto/blue/homme.svg);}
+.icon-blue-menage { background-image: url(/static/picto/blue/menage.svg);}
+.icon-blue-eau_usage { background-image: url(/static/picto/blue/eau_usage.svg);}
+.icon-blue-diplome { background-image: url(/static/picto/blue/diplome.svg);}
+.icon-blue-social_apprentissage { background-image: url(/static/picto/blue/social_apprentissage.svg);}
+.icon-blue-europe { background-image: url(/static/picto/blue/europe.svg);}
+.icon-blue-old_man { background-image: url(/static/picto/blue/old_man.svg);}
+.icon-blue-icon-soc13 { background-image: url(/static/picto/blue/icon-soc13.svg);}
+.icon-blue-social_tx_pauvrete { background-image: url(/static/picto/blue/social_tx_pauvrete.svg);}
+.icon-blue-groupe { background-image: url(/static/picto/blue/groupe.svg);}
+.icon-blue-evolution_pop { background-image: url(/static/picto/blue/evolution_pop.svg);}
+.icon-blue-revenu { background-image: url(/static/picto/blue/revenu.svg);}
+.icon-blue-pin { background-image: url(/static/picto/blue/pin.svg);}
+.icon-blue-part { background-image: url(/static/picto/blue/part.svg);}
+.icon-blue-social_education { background-image: url(/static/picto/blue/social_education.svg);}
+.icon-blue-menage_mono { background-image: url(/static/picto/blue/menage_mono.svg);}
+.icon-blue-social_diplome { background-image: url(/static/picto/blue/social_diplome.svg);}
+.icon-blue-eau { background-image: url(/static/picto/blue/eau.svg);}
+.icon-blue-maison { background-image: url(/static/picto/blue/maison.svg);}
+.icon-blue-setting_a { background-image: url(/static/picto/blue/setting_a.svg);}
+.icon-blue-social_fammone { background-image: url(/static/picto/blue/social_fammone.svg);}
+.icon-blue-icon-soc9 { background-image: url(/static/picto/blue/icon-soc9.svg);}
+.icon-blue-lycee { background-image: url(/static/picto/blue/lycee.svg);}
+.icon-blue-densite { background-image: url(/static/picto/blue/densite.svg);}
+.icon-blue-pop_suppl { background-image: url(/static/picto/blue/pop_suppl.svg);}
+.icon-blue-femme { background-image: url(/static/picto/blue/femme.svg);}
+.icon-blue-appartement { background-image: url(/static/picto/blue/appartement.svg);}
+.icon-blue-usine { background-image: url(/static/picto/blue/usine.svg);}
+.icon-blue-icon-soc14 { background-image: url(/static/picto/blue/icon-soc14.svg);}
+.icon-blue-icon-soc10 { background-image: url(/static/picto/blue/icon-soc10.svg);}
+.icon-blue-icon-soc7 { background-image: url(/static/picto/blue/icon-soc7.svg);}
+.icon-blue-social_revenu_uc { background-image: url(/static/picto/blue/social_revenu_uc.svg);}
+.icon-blue-icon-soc12b { background-image: url(/static/picto/blue/icon-soc12b.svg);}
+.icon-blue-densite2 { background-image: url(/static/picto/blue/densite2.svg);}
+.icon-blue-aristote { background-image: url(/static/picto/blue/aristote.svg);}
+.icon-blue-icon-soc8 { background-image: url(/static/picto/blue/icon-soc8.svg);}
+.icon-gray-icon-eco7b { background-image: url(/static/picto/gray/icon-eco7b.svg);}
+.icon-mixed-encours_envir { background-image: url(/static/picto/mixed/encours_envir.svg);}
+.icon-mixed-dashboard { background-image: url(/static/picto/mixed/dashboard.svg);}
+.icon-mixed-eye { background-image: url(/static/picto/mixed/eye.svg);}
+.icon-pink-young_man { background-image: url(/static/picto/pink/young_man.svg);}
+.icon-pink-habitants { background-image: url(/static/picto/pink/habitants.svg);}
+.icon-pink-homme { background-image: url(/static/picto/pink/homme.svg);}
+.icon-pink-menage { background-image: url(/static/picto/pink/menage.svg);}
+.icon-pink-social_apprentissage { background-image: url(/static/picto/pink/social_apprentissage.svg);}
+.icon-pink-social_tx_pauvrete { background-image: url(/static/picto/pink/social_tx_pauvrete.svg);}
+.icon-pink-revenu { background-image: url(/static/picto/pink/revenu.svg);}
+.icon-pink-menage_mono { background-image: url(/static/picto/pink/menage_mono.svg);}
+.icon-pink-social_diplome { background-image: url(/static/picto/pink/social_diplome.svg);}
+.icon-pink-maison { background-image: url(/static/picto/pink/maison.svg);}
+.icon-pink-femme { background-image: url(/static/picto/pink/femme.svg);}
+.icon-pink-appartement { background-image: url(/static/picto/pink/appartement.svg);}
+.icon-pink-demande_emploi_ev { background-image: url(/static/picto/pink/demande_emploi_ev.svg);}
+.icon-red-evolution_emploi { background-image: url(/static/picto/red/evolution_emploi.svg);}
+.icon-red-emploi_suppl { background-image: url(/static/picto/red/emploi_suppl.svg);}
+.icon-red-emploi { background-image: url(/static/picto/red/emploi.svg);}
+.icon-red-etablissement { background-image: url(/static/picto/red/etablissement.svg);}
+.icon-red-part_cat_abc { background-image: url(/static/picto/red/part_cat_abc.svg);}
+.icon-red-demande_emploi_ev { background-image: url(/static/picto/red/demande_emploi_ev.svg);}
+.icon-red-demande_emploi { background-image: url(/static/picto/red/demande_emploi.svg);}
+.icon-yellow-icon-eco6a { background-image: url(/static/picto/yellow/icon-eco6a.svg);}
+.icon-yellow-eco_evo_nbremploi { background-image: url(/static/picto/yellow/eco_evo_nbremploi.svg);}
+.icon-yellow-icon-eco8 { background-image: url(/static/picto/yellow/icon-eco8.svg);}
+.icon-yellow-hlm_tx { background-image: url(/static/picto/yellow/hlm_tx.svg);}
+.icon-yellow-house { background-image: url(/static/picto/yellow/house.svg);}
+.icon-yellow-eco_herfin_secteur { background-image: url(/static/picto/yellow/eco_herfin_secteur.svg);}
+.icon-yellow-eco_herfin_taille { background-image: url(/static/picto/yellow/eco_herfin_taille.svg);}
+.icon-yellow-house_person { background-image: url(/static/picto/yellow/house_person.svg);}
+.icon-yellow-hlm { background-image: url(/static/picto/yellow/hlm.svg);}
+.icon-yellow-icon-eco7a { background-image: url(/static/picto/yellow/icon-eco7a.svg);}
+.icon-yellow-eco_evo_emploi { background-image: url(/static/picto/yellow/eco_evo_emploi.svg);}
+.icon-yellow-eco_txemploi { background-image: url(/static/picto/yellow/eco_txemploi.svg);}
+.icon-yellow-eco_defm { background-image: url(/static/picto/yellow/eco_defm.svg);}
+.icon-yellow-icon-eco5 { background-image: url(/static/picto/yellow/icon-eco5.svg);}
+.icon-yellow-icon-eco9 { background-image: url(/static/picto/yellow/icon-eco9.svg);}
