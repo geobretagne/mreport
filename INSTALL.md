@@ -6,42 +6,16 @@ Prerequis
   $ sudo apt-get install python3-venv git
 
 
-Clone repository
-----------------
-Create mreport system user
-  ``sudo adduser mreport``
-
-Clone the repository
-
-  ``cd /home/mreport``
-
-  ``sudo su mreport``
-
-  ``git clone https://github.com/geobretagne/mreport.git``
-
-  ``exit``
-
 Configure database with 5 variables
 -----------------------------------
 
-For example:
-
-  ```
-  DATABASE_HOST=localhost
-  DATABASE_PORT=5432
-  DATABASE_NAME=dataviz
-  DATABASE_USER=mreport_user
-  DATABASE_PASSWORD=changeit
-  ```
-
 In the next section, you have to replace DATABASE_VARS by your values
 
-On mreport server, edit /home/mreport/mreport.config.py and set SQLALCHEMY_DATABASE_URI variable
-
-  ``SQLALCHEMY_DATABASE_URI = 'postgresql://DATABASE_USER:DATABASE_PASSWORD@DATABASE_HOST:DATABASE_PORT/DATABASE_NAME'``
-
-
 On database server (localhost or remote host)
+
+``cd /tmp``
+
+``wget https://raw.githubusercontent.com/geobretagne/mreport/install/backend/datainit/demo.sql``
 
 Set shell variables
 
@@ -55,6 +29,8 @@ Set shell variables
 
  ``DATABASE_USER=mreport_user``
 
+ ``DATABASE_SCHEMA=data``
+
 Create database user
 
  ``createuser -p $DATABASE_PORT -P -S -D -R -e $DATABASE_USER``
@@ -63,11 +39,27 @@ Create database
 
  ``createdb -O $DATABASE_USER $DATABASE_NAME``
 
+ ``psql -p 5432 -d $DATABASE_NAME -f /tmp/demo.sql --set "user=$DATABASE_USER" --set "schema=$DATABASE_SCHEMA"``
+
+
+Clone repository
+----------------
+
+Create mreport system user
+
+  ``sudo adduser mreport``
+
+Clone the repository
+
+  ``cd /home/mreport``
+
+  ``sudo su mreport``
+
+  ``git clone https://github.com/geobretagne/mreport.git``
+
 
 Install mreport application
 ---------------------------
-
-``sudo su mreport``
 
 `` cd /home/mreport/mreport``
 
@@ -87,13 +79,27 @@ Install Flask and dependencies
 Configure
 ---------
 
-  Edit config.py and set and be sure that DATABASE_VARIABLES are correctly set in the next variable
+Edit config.py and set and be sure that DATABASE_VARIABLES are correctly set in the next variable
 
   * SQLALCHEMY_DATABASE_URI = 'postgresql://DATABASE_USER:DATABASE_PASSWORD@DATABASE_HOST:DATABASE_PORT/DATABASE_NAME'
 
+Use the same parameters as used in the database section
+
+For example you used:
+
+ ``DATABASE_HOST=localhost``
+
+ ``DATABASE_PORT=5432``
+
+ ``DATABASE_NAME=dataviz``
+
+ ``DATABASE_USER=mreport_user``
+
+ ``DATABASE_SCHEMA=data``
+
   *Replace the respective elements with the information of your database*
 
-  The other default configuration parameters are :
+  The other default configuration parameters in config.py are :
 
   * API_LOCATION = '/api'
   * APP_SCHEME = 'http'
@@ -102,28 +108,20 @@ Configure
   * MREPORT_LOCATION = "/mreport"
   * ADMIN_LOCATION = "/admin"
 
-Create database schema and tables and add demo data to database
-------------------------------------
 
-  ``python createdb.py``
+Tester frontend & backend
+--------------------------
 
-  *To drop the test data from the database use this command*
+  ``python3 dispatcher.py``
 
-  ``python emptydb.py``
+  test http://localhost:5000/api
 
+  test http://localhost:5000/admin/
 
-import demo data
------------------
-
-On database server (localhost or remote host). If remote host copy /home/mreport/mreport/backend/datainit/demo.sql on remote.
+  test http://localhost:5000/mreport/epci_population/243500139
 
 
- ``sudo su postgres``
-
- ``psql -p 5432 -d dataviz -f /home/mreport/mreport/backend/datainit/demo.sql``
-
-
-Test frontend
+Or to independently test the frontend
 --------------
 
  ``cd /home/mreport/mreport``
@@ -141,7 +139,7 @@ Test frontend
   test http://localhost:5000/admin/
 
 
-Test backend
+Or to independently test the backend
 --------------
 
   ``export FLASK_APP=backend``
@@ -150,17 +148,6 @@ Test backend
 
   test http://localhost:5000/api
 
-
-Tester frontend & backend
---------------------------
-
-  ``python3 dispatcher.py``
-
-  test http://localhost:5000/api
-
-  test http://localhost:5000/admin/
-
-  test http://localhost:5000/mreport/epci_population/243500139
 
 
 Gunicorn
