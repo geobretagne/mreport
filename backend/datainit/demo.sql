@@ -343,7 +343,7 @@ ECL_NB230	Treziguidy
 ECL_IR14	Dialay
 242900074	Communauté de communes du Pays d'Iroise
 ECL_NB141	Kerlouët
-200067221	Centre Morbihan Communauté 
+200067221	Centre Morbihan Communauté
 ECL_NB092	Kerponer
 ECL_NB234	Toul Ar Rodo
 ECL_NB085	Lann Vras
@@ -485,38 +485,38 @@ ECL_NB101	Kerveno
 --
 
 COPY :schema.dataviz (dataviz, title, description, source, year, unit, type, level, job, viz) FROM stdin;
-epci_pop_menage_famillemono_en_cours	Part des familles monoparentales (dernier millesime)		INSEE	2017	%	figure	epci	epci_struct_menage	"{""type"":""figure"",""data"":{""epci_pop_menage_famillemono_en_cours"":{""dataset"":[""epci_pop_menage_famillemono""],""data"":[""7.4""],""label"":[""Part de familles monoparentales en 2017""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""epci_pop_menage_famillemono_en_cours"",""model"":""b"",""unit"":"" %"",""icon"":""icon-menage_mono""}}"
-epci_pop_logement_nb_personne_en_cours	Nombre de personnes par logement dans l'EPCI (dernier millesime)		INSEE	2017	personnes	figure	epci	epci_struct_logement	"{""type"":""figure"",""data"":{""epci_pop_logement_nb_personne_en_cours"":{""dataset"":[""menage_nb_personne""],""data"":[""1.4""],""label"":[""Nombre moyen de personnes par logement en 2017 (moyenne Bretagne 1.7)""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""epci_pop_logement_nb_personne_en_cours"",""model"":""b"",""icon"":""icon-territoire-house_person"",""iconposition"":""custom-icon""}}"
-epci_pop_logement_statut_en_cours	Répartition des logements selon le statut d'ocupation dans l'EPCI (dernier millesime) 		INSEE	2017	%	chart	epci	epci_struct_logement	"{""type"":""chart"",""data"":{""epci_pop_logement_statut_en_cours"":{""dataset"":[""EPCI"",""Région""],""data"":[[""83.7"",""6"",""10.3""],[""79.2"",""13.2"",""7.7""]],""label"":[[""Rés. principale"",""Rés. secondaire"",""Log. vacants""],[""Rés. principale"",""Rés. secondaire"",""Log. vacants""]],""rows"":3,""significative_label"":true}},""properties"":{""id"":""epci_pop_logement_statut_en_cours"",""model"":""b"",""type"":""bar"",""opacity"":""1"",""label"":[""EPCI"",""Région""],""colors"":[""#0094ab"",""#005a66""],""unit"":""%"",""icon"":""icon-default"",""iconposition"":""custom-icon"",""title"":""Répartition des logements selon le statut en 2017""}}"
-epci_pop_densite_en_cours	Densité de population de l'EPCI (dernier millesime) 		INSEE	2017	hab/km²	figure	epci	epci_struct_pop	"{""type"":""figure"",""data"":{""epci_pop_densite_en_cours"":{""dataset"":[""densite_epci""],""data"":[""64""],""label"":[""Densité de population 2017 (moyenne Bretagne 122 hab./km²)""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""epci_pop_densite_en_cours"",""model"":""b"",""unit"":"" hab./km²"",""icon"":""icon-blue-densite"",""iconposition"":""custom-icon""}}"
-epci_pop_logement_type_en_cours	Répartition des logements selon le type dans l'EPCI (dernier millesime) 		INSEE	2017	logements	chart	epci	epci_struct_logement	"{""type"":""chart"",""data"":{""epci_pop_logement_type_en_cours"":{""dataset"":[""epci_pop_logement_type""],""data"":[""4327"",""20181""],""label"":[""Appartement"",""Maison""],""rows"":2,""significative_label"":true}},""properties"":{""id"":""epci_pop_logement_type_en_cours"",""model"":""b"",""type"":""pie"",""opacity"":""1"",""label"":[""Légende""],""colors"":[""#0094ab"",""#005a66""],""unit"":""logements"",""icon"":""icon-default"",""title"":""{                    ""text"": ""Répartition des logements selon le type en 2017"",                    ""style"": {""fontSize"":""18px"",""fontWeight"":""700"",""color"":""rgb(0, 90, 102)"",""fontFamily"":""\\""Trebuchet MS\\"""",""letterSpacing"":""normal"",""textTransform"":""none""}                }""}}"
-epci_pop_logement_hlm_taux_en_cours	Taux de logements HLM dans l'EPCI (dernier millesime) 		INSEE	2017	%	figure	epci	epci_struct_logement	"{""type"":""figure"",""data"":{""epci_pop_logement_hlm_taux_en_cours"":{""dataset"":[""epci_pop_logement_hlm_taux""],""data"":[""6.8""],""label"":[""Part des logements HLM dans le parc de résidence principale en 2017""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""epci_pop_logement_hlm_taux_en_cours"",""model"":""b"",""unit"":"" %"",""icon"":""icon-hlm_tx""}}"
-epci_revenu_median	Revenu médian par EPCI	Revenu médian par EPCI	INSEE	2017	€	figure	epci	epci_revenus	"{""type"":""figure"",""data"":{""epci_revenu_median"":{""dataset"":[""epci_revenu_median""],""data"":[""20240""],""label"":[""Revenu médian 2017 (moyenne Bretagne 21060 €)""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""epci_revenu_median"",""model"":""b"",""unit"":"" €"",""icon"":""icon-blue-revenu"",""iconposition"":""custom-icon""}}"
-epci_revenu_taux_pauvrete	Taux de pavreté par EPCI	Taux de pavreté par EPCI	INSEE	2017	%	figure	epci	epci_revenus	"{""type"":""figure"",""data"":{""epci_revenu_taux_pauvrete"":{""dataset"":[""epci_revenu_taux_pauvrete""],""data"":[""11.9""],""label"":[""Taux de pauvreté 2017 (moyenne Bretagne 10,9 %)""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""epci_revenu_taux_pauvrete"",""model"":""b"",""unit"":"" %"",""icon"":""icon-blue-social_tx_pauvrete"",""iconposition"":""custom-icon""}}"
-epci_pop_repartition_h_en_cours	Part de la population masculine de l'EPCI (dernier millesime) 		INSEE	2017	%	figure	epci	epci_struct_pop	
-epci_pop_repartition_f_en_cours	Part de la population feminime de l'EPCI (dernier millesime) 		INSEE	2017	%	figure	epci	epci_struct_pop	
-epci_title	Nom de l'EPCI		COG INSEE	2020		title	epci	epci_lycee	
-epci_pop_comparaison_pays_region	Evolution population EPCI - pays - région		INSEE	2017	%	figure	epci	epci_struct_pop	"{""type"":""chart"",""data"":{""epci_pop_comparaison_pays_region"":{""dataset"":[""pop_comparaison""],""data"":[""2.0"",""1.9"",""2.5""],""label"":[""EPCI"",""Pays"",""Région""],""rows"":3,""significative_label"":true}},""properties"":{""id"":""epci_pop_comparaison_pays_region"",""model"":""b"",""type"":""bar"",""opacity"":""1"",""label"":[""Légende""],""colors"":[""#0094ab"",""#005a66"",""#005a66""],""unit"":""%"",""icon"":""icon-default"",""title"":""{                    ""text"": ""Taux d'évolution de la population municipale comparée de 2012 à 2017"",                    ""style"": {""fontSize"":""1.1875em"",""fontWeight"":""600"",""color"":""rgb(0, 90, 102)"",""fontFamily"":""undefined"",""letterSpacing"":""normal""}                }""}}"
-epci_pop_evolution	Evolution population de l'EPCI		INSEE	2017	hab.	chart	epci	epci_struct_pop	"{""type"":""chart"",""data"":{""epci_pop_evolution"":{""dataset"":[""pop_evolution""],""data"":[""42608"",""44331"",""45187"",""46087""],""label"":[""1999"",""2007"",""2012"",""2017""],""rows"":4,""significative_label"":true}},""properties"":{""id"":""epci_pop_evolution"",""model"":""b"",""type"":""line"",""opacity"":""0.2"",""label"":[""Légende""],""colors"":[""#005a66""],""unit"":""hab."",""icon"":""icon-default"",""title"":""{                    ""text"": ""Evolution nombre d'habitant·e·s dans l'EPCI"",                    ""style"": {""fontSize"":""18px"",""fontWeight"":""700"",""color"":""rgb(0, 90, 102)"",""fontFamily"":""\\""Trebuchet MS\\"""",""letterSpacing"":""normal"",""textTransform"":""none""}                }""}}"
-epci_pop_en_cours	Population de l'EPCI (dernier millesime)		INSEE	2017	hab.	figure	epci	epci_struct_pop	"{""type"":""figure"",""data"":{""epci_pop_en_cours"":{""dataset"":[""epci_pop""],""data"":[""46087""],""label"":[""Population municipale 2017""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""epci_pop_en_cours"",""model"":""b"",""unit"":"" hab."",""icon"":""icon-blue-habitants"",""iconposition"":""custom-icon""}}"
-epci_pop_categorie_age_en_cours	Part de la population par catégorie d'age (dernier millesime)	Comparaison de la part au niveau du pays et de l'EPCI 	INSEE	2017	%	chart	epci	epci_struct_pop	"{""type"":""chart"",""data"":{""epci_pop_categorie_age_en_cours"":{""dataset"":[""EPCI"",""Pays""],""data"":[[""17.5"",""15.6"",""16.6"",""21.4"",""17.8"",""11.2""],[""18.4"",""14.8"",""17.8"",""21.1"",""17.1"",""10.8""]],""label"":[[""0-14 ans"",""15-29 ans"",""30-44 ans"",""45-59 ans"",""60-74 ans"",""75 ans et plus""],[""0-14 ans"",""15-29 ans"",""30-44 ans"",""45-59 ans"",""60-74 ans"",""75 ans et plus""]],""rows"":6,""significative_label"":true}},""properties"":{""id"":""epci_pop_categorie_age_en_cours"",""model"":""b"",""opacity"":""1"",""label"":[""EPCI"",""Pays""],""colors"":[""#0094ab"",""#005a66""],""unit"":""%"",""icon"":""icon-default"",""title"":""{                    ""text"": ""Répartition de la population selon la catégorie d'âge en 2017"",                    ""style"": {""fontSize"":""1.1875em"",""fontWeight"":""600"",""color"":""rgb(73, 80, 87)"",""fontFamily"":""undefined"",""letterSpacing"":""normal""}                }""}}"
-epci_pop_categorie_csp_en_cours	Part de la population par catégorie socio-professionnelle (dernier millesime)	Comparaison EPCI et pays	INSEE	2017	%	chart	epci	epci_struct_pop	"{""type"":""chart"",""data"":{""epci_pop_categorie_csp_en_cours"":{""dataset"":[""EPCI"",""Région""],""data"":[[""1.9"",""2.6"",""3.3"",""9.7"",""12.4"",""14.6"",""26.6"",""11.3""],[""1.1"",""2.9"",""6.1"",""11.2"",""12.6"",""10.8"",""25.6"",""12.1""]],""label"":[[""CS1"",""CS2"",""CS3"",""CS4"",""CS5"",""CS6"",""CS7"",""CS8""],[""CS1"",""CS2"",""CS3"",""CS4"",""CS5"",""CS6"",""CS7"",""CS8""]],""rows"":8,""significative_label"":true}},""properties"":{""id"":""epci_pop_categorie_csp_en_cours"",""model"":""b"",""opacity"":""1"",""label"":[""EPCI"",""Région""],""colors"":[""#0094ab"",""#005a66""],""unit"":""%"",""icon"":""icon-default"",""title"":""Répartition de la population selon les catégories socio-professionnelles (CSP) en 2017"",""description"":""<ul>Les catégories socio-professionnelles<li>CS1: Agriculteur·rice·s exploitants </li><li>CS2: Artisan·e·s, Commerçant·e·s, Chef·fe·s d'entreprise</li><li>CS3: Cadres, Professions intellectuelles supérieures </li><li>CS4: Professions intermédiaires</li><li>CS5: Employé·e·s </li><li>CS6: Ouvrier·ère·s </li><li>CS7: Retraité·e·s </li><li>CS8: Autres, Sans activité professionnelle</li></ul>""}}"
-epci_pop_repartition_sexuee_en_cours	Répartition de la population par sexe par EPCI (dernier millesime) 		INSEE	2017	%	chart	epci	epci_struct_pop	"{""type"":""chart"",""data"":{""epci_pop_repartition_sexuee_en_cours"":{""dataset"":[""repartition_sexuee""],""data"":[""51.0"",""49.0""],""label"":[""Femme"",""Homme""],""rows"":2,""significative_label"":true}},""properties"":{""id"":""epci_pop_repartition_sexuee_en_cours"",""model"":""b"",""type"":""pie"",""opacity"":""1"",""label"":[""Légende""],""colors"":[""#0094ab"",""#005a66""],""unit"":""%"",""icon"":""icon-default"",""title"":""{                    ""text"": ""Répartition de la population selon le sexe en 2017 (en %)"",                    ""style"": {""fontSize"":""1.1875em"",""fontWeight"":""600"",""color"":""rgb(0, 90, 102)"",""fontFamily"":""undefined"",""letterSpacing"":""normal""}                }""}}"
-epci_pop_formation_sans_diplome_en_cours	Part de la population non scolarisée sans diplôme ou au plus un brevet des collèges (dernier millesime)		INSEE	2017	%	figure	epci	epci_struct_formation	"{""type"":""figure"",""data"":{""epci_pop_formation_sans_diplome_en_cours"":{""dataset"":[""epci_pop_formation_sans_diplome""],""data"":[""23""],""label"":[""Part de la population non scolarisée sans diplôme ou au plus un brevet des collèges en 2017""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""epci_pop_formation_sans_diplome_en_cours"",""model"":""b"",""unit"":"" %"",""icon"":""icon-default""}}"
-ecluse_graphe_trafic_journalier	Trafic journalier pour l'année 2018	Trafic journalier pour l'année 2018	région Bretagne	2018	bâteaux	chart	ecluse	ecluse	
-ecluse_trafic_agent	Agent·e en charge de l'éclusage en % pour l'année 2018	Répartition entre agent titulaire et agent saisonnier	région Bretagne	2018	%	chart	ecluse	ecluse	
-ecluse_trafic_type_embarcation	Type d'embarcation en % pour l'année 2018	Type d'embarcation en % pour l'année 2018	région Bretagne	2018	%	chart	ecluse	ecluse	"{""type"":""chart"",""data"":{""ecluse_trafic_type_embarcation"":{""dataset"":[""ecluse_trafic_type_embarcation""],""data"":[""0.7"",""55.6"",""43.4"",""0.3""],""label"":[""Canoë/Kayak"",""Location"",""Particulier"",""Service""],""rows"":4,""significative_label"":true}},""properties"":{""id"":""ecluse_trafic_type_embarcation"",""model"":""b"",""type"":""pie"",""opacity"":""0.75"",""label"":[""Légende""],""colors"":[""#b0252e"",""#cf7a26"",""#005a66"",""#9fb935""],""unit"":""%"",""icon"":""icon-default"",""title"":""{                    ""text"": ""Type d'embarcation en % pour l'année 2018"",                    ""style"": {""fontSize"":""14px"",""fontWeight"":""700"",""color"":""rgb(73, 80, 87)"",""fontFamily"":""\\""Trebuchet MS\\"""",""letterSpacing"":""normal"",""textTransform"":""none""}                }""}}"
-ecluse_trafic_heure	Passage par plage horaire pour l'année 2018	Passage par plage horaire pour l'année 2018	région Bretagne	2018	bâteaux	chart	ecluse	ecluse	"{""type"":""chart"",""data"":{""ecluse_trafic_heure"":{""dataset"":[""ecluse_trafic_heure""],""data"":[""134"",""203"",""193"",""102"",""70"",""162"",""240"",""256"",""252"",""161"",""28""],""label"":[""9h-10h"",""10h-11h"",""11h-12h"",""12h-13h"",""13h-14h"",""14h-15h"",""15h-16h"",""16h-17h"",""17h-18h"",""18h-19h"",""19h-20h""],""rows"":11,""significative_label"":true}},""properties"":{""id"":""ecluse_trafic_heure"",""model"":""b"",""opacity"":""0.75"",""label"":[""Passage par plage horaire pour l'année 2018""],""colors"":[""#005a66""],""unit"":""bâteaux"",""icon"":""icon-default""}}"
-ecluse_carte	Carte de l'écluse	Carte de l'écluse	région Bretagne			map	ecluse	ecluse	"{""type"":""map"",""data"":{""ecluse_carte"":{""dataset"":[""ecluse_carte""],""data"":[""POINT(-2.38168929788757 47.5000248649264)""],""label"":[""Arzal""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""ecluse_carte"",""model"":""b"",""icon"":""icon-default""}}"
-ecluse_trafic_sens_passage	Sens de passage en % pour l'année 2018	Sens de passage en % pour l'année 2018	région Bretagne	2018	%	chart	ecluse	ecluse	"{""type"":""chart"",""data"":{""ecluse_trafic_sens_passage"":{""dataset"":[""ecluse_trafic_sens_passage""],""data"":[""50.8"",""49.2""],""label"":[""Avalant"",""Montant""],""rows"":2,""significative_label"":true}},""properties"":{""id"":""ecluse_trafic_sens_passage"",""model"":""b"",""type"":""pie"",""opacity"":""0.75"",""label"":[""Légende""],""colors"":[""#3db39e"",""#005a66""],""unit"":""%"",""icon"":""icon-default""}}"
-ecluse_photo	Photo de l'écluse	Photo de l'écluse	région Bretagne			image	ecluse	ecluse	"{""type"":""image"",""data"":{""ecluse_photo"":{""dataset"":[""ecluse_photo""],""data"":[""https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_V13.jpg""],""label"":[""Photo de l'écluse""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""ecluse_photo"",""model"":""b"",""icon"":""icon-default""}}"
-ecluse_trafic_jour_semaine	Trafic par jour de la semaine pour l'année 2018	Trafic par jour de la semaine pour l'année 2018	région Bretagne	2018	bâteaux	chart	ecluse	ecluse	"{""type"":""chart"",""data"":{""ecluse_trafic_jour_semaine"":{""dataset"":[""ecluse_trafic_jour_semaine""],""data"":[""310"",""219"",""198"",""227"",""218"",""307"",""330""],""label"":[""Dimanche"",""Lundi"",""Mardi"",""Mercredi"",""Jeudi"",""Vendredi"",""Samedi""],""rows"":7,""significative_label"":true}},""properties"":{""id"":""ecluse_trafic_jour_semaine"",""model"":""b"",""type"":""radar"",""opacity"":""0.75"",""label"":[""Trafic par jour de la semaine pour l'année 2018""],""colors"":[""#005a66""],""unit"":""bâteaux"",""icon"":""icon-default""}}"
-ecluse_graphe_trafic_mensuel	Trafic mensuel pour l'année 2019	Trafic mensuel pour l'année 2019 par écluse	région Bretagne	2019	bâteaux	chart	ecluse	ecluse	"{""type"":""chart"",""data"":{""ecluse_graphe_trafic_mensuel"":{""dataset"":[""ecluse_graphe_trafic_mensuel""],""data"":[""0"",""0"",""0"",""135"",""233"",""304"",""411"",""443"",""342"",""111"",""0"",""0""],""label"":[""Janvier"",""Février"",""Mars"",""Avril"",""Mai"",""Juin"",""Juillet"",""Août"",""Septembre"",""Octobre"",""Novembre"",""Décembre""],""rows"":12,""significative_label"":true}},""properties"":{""id"":""ecluse_graphe_trafic_mensuel"",""model"":""b"",""opacity"":""0.75"",""label"":[""Trafic mensuel pour l'année 2019""],""colors"":[""#005a66""],""unit"":""bâteaux"",""icon"":""icon-default""}}"
-ecluse_graphe_trafic_annuel	Trafic annuel depuis 2002	Trafic annuel depuis 2002 jusqu'en 2019	région Bretagne	2019	bâteaux	chart	ecluse	ecluse	"{""type"":""chart"",""data"":{""ecluse_graphe_trafic_annuel"":{""dataset"":[""ecluse_graphe_trafic_annuel""],""data"":[""1909"",""2185"",""1982"",""1918"",""2011"",""1738"",""1578"",""1893"",""1786"",""1674"",""1792"",""1829"",""1818"",""2004"",""1896"",""1990"",""1955"",""1979""],""label"":[""2002"",""2003"",""2004"",""2005"",""2006"",""2007"",""2008"",""2009"",""2010"",""2011"",""2012"",""2013"",""2014"",""2015"",""2016"",""2017"",""2018"",""2019""],""rows"":18,""significative_label"":true}},""properties"":{""id"":""ecluse_graphe_trafic_annuel"",""model"":""b"",""type"":""line"",""opacity"":""0.2"",""label"":[""Trafic annuel depuis 2002""],""colors"":[""#005a66""],""unit"":""bâteaux"",""icon"":""icon-default""}}"
-ecluse_trafic_jour_moyen	Moyenne journalière de passages de bâteaux pour l'année 2019	Moyenne journalière de passages de bâteaux pour l'année 2019	région Bretagne	2019	bâteaux	figure	ecluse	ecluse	"{""type"":""figure"",""data"":{""ecluse_trafic_jour_moyen"":{""dataset"":[""ecluse_trafic_jour_moyen""],""data"":[""5.4""],""label"":[""Moyenne journalière de passages de bâteaux pour l'année 2019""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""ecluse_trafic_jour_moyen"",""model"":""b"",""icon"":""icon-evolution2""}}"
-ecluse_trafic_annuel	Nombre total de passages de bâteaux pour l'année 2019	Nombre total de passages de bâteaux pour l'année 2019	région Bretagne	2019	bâteaux	figure	ecluse	ecluse	"{""type"":""figure"",""data"":{""ecluse_trafic_annuel"":{""dataset"":[""ecluse_trafic_annuel""],""data"":[""1979""],""label"":[""Nombre total de passages de bâteaux pour l'année 2019""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""ecluse_trafic_annuel"",""model"":""b"",""icon"":""icon-default""}}"
-ecluse_trafic_jour_estival	Moyenne estivale de passages de bâteaux pour l'année 2019	Moyenne estivale de passages de bâteaux pour l'année 2019	région Bretagne	2019	bâteaux	figure	ecluse	ecluse	"{""type"":""figure"",""data"":{""ecluse_trafic_jour_estival"":{""dataset"":[""ecluse_trafic_jour_estival""],""data"":[""13.8""],""label"":[""Moyenne estivale de passages de bâteaux pour l'année 2019""],""rows"":1,""significative_label"":true}},""properties"":{""id"":""ecluse_trafic_jour_estival"",""model"":""b"",""icon"":""icon-evolution2""}}"
-ecluse_title	Nom de l'écluse		région Bretagne			title	ecluse	ecluse	
+epci_pop_menage_famillemono_en_cours	Part des familles monoparentales (dernier millesime)		INSEE	2017	%	figure	epci	epci_struct_menage	"{"type":"figure","data":{"epci_pop_menage_famillemono_en_cours":{"dataset":["epci_pop_menage_famillemono"],"data":["7.4"],"label":["Part de familles monoparentales en 2017"],"rows":1,"significative_label":true}},"properties":{"id":"epci_pop_menage_famillemono_en_cours","model":"b","unit":" %","icon":"icon-menage_mono"}}"
+epci_pop_logement_nb_personne_en_cours	Nombre de personnes par logement dans l'EPCI (dernier millesime)		INSEE	2017	personnes	figure	epci	epci_struct_logement	"{"type":"figure","data":{"epci_pop_logement_nb_personne_en_cours":{"dataset":["menage_nb_personne"],"data":["1.4"],"label":["Nombre moyen de personnes par logement en 2017 (moyenne Bretagne 1.7)"],"rows":1,"significative_label":true}},"properties":{"id":"epci_pop_logement_nb_personne_en_cours","model":"b","icon":"icon-territoire-house_person","iconposition":"custom-icon"}}"
+epci_pop_logement_statut_en_cours	Répartition des logements selon le statut d'ocupation dans l'EPCI (dernier millesime) 		INSEE	2017	%	chart	epci	epci_struct_logement	"{"type":"chart","data":{"epci_pop_logement_statut_en_cours":{"dataset":["EPCI","Région"],"data":[["83.7","6","10.3"],["79.2","13.2","7.7"]],"label":[["Rés. principale","Rés. secondaire","Log. vacants"],["Rés. principale","Rés. secondaire","Log. vacants"]],"rows":3,"significative_label":true}},"properties":{"id":"epci_pop_logement_statut_en_cours","model":"b","type":"bar","opacity":"1","label":["EPCI","Région"],"colors":["#0094ab","#005a66"],"unit":"%","icon":"icon-default","iconposition":"custom-icon","title":"Répartition des logements selon le statut en 2017"}}"
+epci_pop_densite_en_cours	Densité de population de l'EPCI (dernier millesime) 		INSEE	2017	hab/km²	figure	epci	epci_struct_pop	"{"type":"figure","data":{"epci_pop_densite_en_cours":{"dataset":["densite_epci"],"data":["64"],"label":["Densité de population 2017 (moyenne Bretagne 122 hab./km²)"],"rows":1,"significative_label":true}},"properties":{"id":"epci_pop_densite_en_cours","model":"b","unit":" hab./km²","icon":"icon-blue-densite","iconposition":"custom-icon"}}"
+epci_pop_logement_type_en_cours	Répartition des logements selon le type dans l'EPCI (dernier millesime) 		INSEE	2017	logements	chart	epci	epci_struct_logement	"{"type":"chart","data":{"epci_pop_logement_type_en_cours":{"dataset":["epci_pop_logement_type"],"data":["4327","20181"],"label":["Appartement","Maison"],"rows":2,"significative_label":true}},"properties":{"id":"epci_pop_logement_type_en_cours","model":"b","type":"pie","opacity":"1","label":["Légende"],"colors":["#0094ab","#005a66"],"unit":"logements","icon":"icon-default","title":"{                    "text": "Répartition des logements selon le type en 2017",                    "style": {"fontSize":"18px","fontWeight":"700","color":"rgb(0, 90, 102)","fontFamily":"\\"Trebuchet MS\\"","letterSpacing":"normal","textTransform":"none"}                }"}}"
+epci_pop_logement_hlm_taux_en_cours	Taux de logements HLM dans l'EPCI (dernier millesime) 		INSEE	2017	%	figure	epci	epci_struct_logement	"{"type":"figure","data":{"epci_pop_logement_hlm_taux_en_cours":{"dataset":["epci_pop_logement_hlm_taux"],"data":["6.8"],"label":["Part des logements HLM dans le parc de résidence principale en 2017"],"rows":1,"significative_label":true}},"properties":{"id":"epci_pop_logement_hlm_taux_en_cours","model":"b","unit":" %","icon":"icon-hlm_tx"}}"
+epci_revenu_median	Revenu médian par EPCI	Revenu médian par EPCI	INSEE	2017	€	figure	epci	epci_revenus	"{"type":"figure","data":{"epci_revenu_median":{"dataset":["epci_revenu_median"],"data":["20240"],"label":["Revenu médian 2017 (moyenne Bretagne 21060 €)"],"rows":1,"significative_label":true}},"properties":{"id":"epci_revenu_median","model":"b","unit":" €","icon":"icon-blue-revenu","iconposition":"custom-icon"}}"
+epci_revenu_taux_pauvrete	Taux de pavreté par EPCI	Taux de pavreté par EPCI	INSEE	2017	%	figure	epci	epci_revenus	"{"type":"figure","data":{"epci_revenu_taux_pauvrete":{"dataset":["epci_revenu_taux_pauvrete"],"data":["11.9"],"label":["Taux de pauvreté 2017 (moyenne Bretagne 10,9 %)"],"rows":1,"significative_label":true}},"properties":{"id":"epci_revenu_taux_pauvrete","model":"b","unit":" %","icon":"icon-blue-social_tx_pauvrete","iconposition":"custom-icon"}}"
+epci_pop_repartition_h_en_cours	Part de la population masculine de l'EPCI (dernier millesime) 		INSEE	2017	%	figure	epci	epci_struct_pop
+epci_pop_repartition_f_en_cours	Part de la population feminime de l'EPCI (dernier millesime) 		INSEE	2017	%	figure	epci	epci_struct_pop
+epci_title	Nom de l'EPCI		COG INSEE	2020		title	epci	epci_lycee
+epci_pop_comparaison_pays_region	Evolution population EPCI - pays - région		INSEE	2017	%	figure	epci	epci_struct_pop	"{"type":"chart","data":{"epci_pop_comparaison_pays_region":{"dataset":["pop_comparaison"],"data":["2.0","1.9","2.5"],"label":["EPCI","Pays","Région"],"rows":3,"significative_label":true}},"properties":{"id":"epci_pop_comparaison_pays_region","model":"b","type":"bar","opacity":"1","label":["Légende"],"colors":["#0094ab","#005a66","#005a66"],"unit":"%","icon":"icon-default","title":"{                    "text": "Taux d'évolution de la population municipale comparée de 2012 à 2017",                    "style": {"fontSize":"1.1875em","fontWeight":"600","color":"rgb(0, 90, 102)","fontFamily":"undefined","letterSpacing":"normal"}                }"}}"
+epci_pop_evolution	Evolution population de l'EPCI		INSEE	2017	hab.	chart	epci	epci_struct_pop	"{"type":"chart","data":{"epci_pop_evolution":{"dataset":["pop_evolution"],"data":["42608","44331","45187","46087"],"label":["1999","2007","2012","2017"],"rows":4,"significative_label":true}},"properties":{"id":"epci_pop_evolution","model":"b","type":"line","opacity":"0.2","label":["Légende"],"colors":["#005a66"],"unit":"hab.","icon":"icon-default","title":"{                    "text": "Evolution nombre d'habitant·e·s dans l'EPCI",                    "style": {"fontSize":"18px","fontWeight":"700","color":"rgb(0, 90, 102)","fontFamily":"\\"Trebuchet MS\\"","letterSpacing":"normal","textTransform":"none"}                }"}}"
+epci_pop_en_cours	Population de l'EPCI (dernier millesime)		INSEE	2017	hab.	figure	epci	epci_struct_pop	"{"type":"figure","data":{"epci_pop_en_cours":{"dataset":["epci_pop"],"data":["46087"],"label":["Population municipale 2017"],"rows":1,"significative_label":true}},"properties":{"id":"epci_pop_en_cours","model":"b","unit":" hab.","icon":"icon-blue-habitants","iconposition":"custom-icon"}}"
+epci_pop_categorie_age_en_cours	Part de la population par catégorie d'age (dernier millesime)	Comparaison de la part au niveau du pays et de l'EPCI 	INSEE	2017	%	chart	epci	epci_struct_pop	"{"type":"chart","data":{"epci_pop_categorie_age_en_cours":{"dataset":["EPCI","Pays"],"data":[["17.5","15.6","16.6","21.4","17.8","11.2"],["18.4","14.8","17.8","21.1","17.1","10.8"]],"label":[["0-14 ans","15-29 ans","30-44 ans","45-59 ans","60-74 ans","75 ans et plus"],["0-14 ans","15-29 ans","30-44 ans","45-59 ans","60-74 ans","75 ans et plus"]],"rows":6,"significative_label":true}},"properties":{"id":"epci_pop_categorie_age_en_cours","model":"b","opacity":"1","label":["EPCI","Pays"],"colors":["#0094ab","#005a66"],"unit":"%","icon":"icon-default","title":"{                    "text": "Répartition de la population selon la catégorie d'âge en 2017",                    "style": {"fontSize":"1.1875em","fontWeight":"600","color":"rgb(73, 80, 87)","fontFamily":"undefined","letterSpacing":"normal"}                }"}}"
+epci_pop_categorie_csp_en_cours	Part de la population par catégorie socio-professionnelle (dernier millesime)	Comparaison EPCI et pays	INSEE	2017	%	chart	epci	epci_struct_pop	"{"type":"chart","data":{"epci_pop_categorie_csp_en_cours":{"dataset":["EPCI","Région"],"data":[["1.9","2.6","3.3","9.7","12.4","14.6","26.6","11.3"],["1.1","2.9","6.1","11.2","12.6","10.8","25.6","12.1"]],"label":[["CS1","CS2","CS3","CS4","CS5","CS6","CS7","CS8"],["CS1","CS2","CS3","CS4","CS5","CS6","CS7","CS8"]],"rows":8,"significative_label":true}},"properties":{"id":"epci_pop_categorie_csp_en_cours","model":"b","opacity":"1","label":["EPCI","Région"],"colors":["#0094ab","#005a66"],"unit":"%","icon":"icon-default","title":"Répartition de la population selon les catégories socio-professionnelles (CSP) en 2017","description":"<ul>Les catégories socio-professionnelles<li>CS1: Agriculteur·rice·s exploitants </li><li>CS2: Artisan·e·s, Commerçant·e·s, Chef·fe·s d'entreprise</li><li>CS3: Cadres, Professions intellectuelles supérieures </li><li>CS4: Professions intermédiaires</li><li>CS5: Employé·e·s </li><li>CS6: Ouvrier·ère·s </li><li>CS7: Retraité·e·s </li><li>CS8: Autres, Sans activité professionnelle</li></ul>"}}"
+epci_pop_repartition_sexuee_en_cours	Répartition de la population par sexe par EPCI (dernier millesime) 		INSEE	2017	%	chart	epci	epci_struct_pop	"{"type":"chart","data":{"epci_pop_repartition_sexuee_en_cours":{"dataset":["repartition_sexuee"],"data":["51.0","49.0"],"label":["Femme","Homme"],"rows":2,"significative_label":true}},"properties":{"id":"epci_pop_repartition_sexuee_en_cours","model":"b","type":"pie","opacity":"1","label":["Légende"],"colors":["#0094ab","#005a66"],"unit":"%","icon":"icon-default","title":"{                    "text": "Répartition de la population selon le sexe en 2017 (en %)",                    "style": {"fontSize":"1.1875em","fontWeight":"600","color":"rgb(0, 90, 102)","fontFamily":"undefined","letterSpacing":"normal"}                }"}}"
+epci_pop_formation_sans_diplome_en_cours	Part de la population non scolarisée sans diplôme ou au plus un brevet des collèges (dernier millesime)		INSEE	2017	%	figure	epci	epci_struct_formation	"{"type":"figure","data":{"epci_pop_formation_sans_diplome_en_cours":{"dataset":["epci_pop_formation_sans_diplome"],"data":["23"],"label":["Part de la population non scolarisée sans diplôme ou au plus un brevet des collèges en 2017"],"rows":1,"significative_label":true}},"properties":{"id":"epci_pop_formation_sans_diplome_en_cours","model":"b","unit":" %","icon":"icon-default"}}"
+ecluse_graphe_trafic_journalier	Trafic journalier pour l'année 2018	Trafic journalier pour l'année 2018	région Bretagne	2018	bâteaux	chart	ecluse	ecluse
+ecluse_trafic_agent	Agent·e en charge de l'éclusage en % pour l'année 2018	Répartition entre agent titulaire et agent saisonnier	région Bretagne	2018	%	chart	ecluse	ecluse
+ecluse_trafic_type_embarcation	Type d'embarcation en % pour l'année 2018	Type d'embarcation en % pour l'année 2018	région Bretagne	2018	%	chart	ecluse	ecluse	"{"type":"chart","data":{"ecluse_trafic_type_embarcation":{"dataset":["ecluse_trafic_type_embarcation"],"data":["0.7","55.6","43.4","0.3"],"label":["Canoë/Kayak","Location","Particulier","Service"],"rows":4,"significative_label":true}},"properties":{"id":"ecluse_trafic_type_embarcation","model":"b","type":"pie","opacity":"0.75","label":["Légende"],"colors":["#b0252e","#cf7a26","#005a66","#9fb935"],"unit":"%","icon":"icon-default","title":"{                    "text": "Type d'embarcation en % pour l'année 2018",                    "style": {"fontSize":"14px","fontWeight":"700","color":"rgb(73, 80, 87)","fontFamily":"\\"Trebuchet MS\\"","letterSpacing":"normal","textTransform":"none"}                }"}}"
+ecluse_trafic_heure	Passage par plage horaire pour l'année 2018	Passage par plage horaire pour l'année 2018	région Bretagne	2018	bâteaux	chart	ecluse	ecluse	"{"type":"chart","data":{"ecluse_trafic_heure":{"dataset":["ecluse_trafic_heure"],"data":["134","203","193","102","70","162","240","256","252","161","28"],"label":["9h-10h","10h-11h","11h-12h","12h-13h","13h-14h","14h-15h","15h-16h","16h-17h","17h-18h","18h-19h","19h-20h"],"rows":11,"significative_label":true}},"properties":{"id":"ecluse_trafic_heure","model":"b","opacity":"0.75","label":["Passage par plage horaire pour l'année 2018"],"colors":["#005a66"],"unit":"bâteaux","icon":"icon-default"}}"
+ecluse_carte	Carte de l'écluse	Carte de l'écluse	région Bretagne			map	ecluse	ecluse	"{"type":"map","data":{"ecluse_carte":{"dataset":["ecluse_carte"],"data":["POINT(-2.38168929788757 47.5000248649264)"],"label":["Arzal"],"rows":1,"significative_label":true}},"properties":{"id":"ecluse_carte","model":"b","icon":"icon-default"}}"
+ecluse_trafic_sens_passage	Sens de passage en % pour l'année 2018	Sens de passage en % pour l'année 2018	région Bretagne	2018	%	chart	ecluse	ecluse	"{"type":"chart","data":{"ecluse_trafic_sens_passage":{"dataset":["ecluse_trafic_sens_passage"],"data":["50.8","49.2"],"label":["Avalant","Montant"],"rows":2,"significative_label":true}},"properties":{"id":"ecluse_trafic_sens_passage","model":"b","type":"pie","opacity":"0.75","label":["Légende"],"colors":["#3db39e","#005a66"],"unit":"%","icon":"icon-default"}}"
+ecluse_photo	Photo de l'écluse	Photo de l'écluse	région Bretagne			image	ecluse	ecluse	"{"type":"image","data":{"ecluse_photo":{"dataset":["ecluse_photo"],"data":["https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_V13.jpg"],"label":["Photo de l'écluse"],"rows":1,"significative_label":true}},"properties":{"id":"ecluse_photo","model":"b","icon":"icon-default"}}"
+ecluse_trafic_jour_semaine	Trafic par jour de la semaine pour l'année 2018	Trafic par jour de la semaine pour l'année 2018	région Bretagne	2018	bâteaux	chart	ecluse	ecluse	"{"type":"chart","data":{"ecluse_trafic_jour_semaine":{"dataset":["ecluse_trafic_jour_semaine"],"data":["310","219","198","227","218","307","330"],"label":["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"],"rows":7,"significative_label":true}},"properties":{"id":"ecluse_trafic_jour_semaine","model":"b","type":"radar","opacity":"0.75","label":["Trafic par jour de la semaine pour l'année 2018"],"colors":["#005a66"],"unit":"bâteaux","icon":"icon-default"}}"
+ecluse_graphe_trafic_mensuel	Trafic mensuel pour l'année 2019	Trafic mensuel pour l'année 2019 par écluse	région Bretagne	2019	bâteaux	chart	ecluse	ecluse	"{"type":"chart","data":{"ecluse_graphe_trafic_mensuel":{"dataset":["ecluse_graphe_trafic_mensuel"],"data":["0","0","0","135","233","304","411","443","342","111","0","0"],"label":["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],"rows":12,"significative_label":true}},"properties":{"id":"ecluse_graphe_trafic_mensuel","model":"b","opacity":"0.75","label":["Trafic mensuel pour l'année 2019"],"colors":["#005a66"],"unit":"bâteaux","icon":"icon-default"}}"
+ecluse_graphe_trafic_annuel	Trafic annuel depuis 2002	Trafic annuel depuis 2002 jusqu'en 2019	région Bretagne	2019	bâteaux	chart	ecluse	ecluse	"{"type":"chart","data":{"ecluse_graphe_trafic_annuel":{"dataset":["ecluse_graphe_trafic_annuel"],"data":["1909","2185","1982","1918","2011","1738","1578","1893","1786","1674","1792","1829","1818","2004","1896","1990","1955","1979"],"label":["2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019"],"rows":18,"significative_label":true}},"properties":{"id":"ecluse_graphe_trafic_annuel","model":"b","type":"line","opacity":"0.2","label":["Trafic annuel depuis 2002"],"colors":["#005a66"],"unit":"bâteaux","icon":"icon-default"}}"
+ecluse_trafic_jour_moyen	Moyenne journalière de passages de bâteaux pour l'année 2019	Moyenne journalière de passages de bâteaux pour l'année 2019	région Bretagne	2019	bâteaux	figure	ecluse	ecluse	"{"type":"figure","data":{"ecluse_trafic_jour_moyen":{"dataset":["ecluse_trafic_jour_moyen"],"data":["5.4"],"label":["Moyenne journalière de passages de bâteaux pour l'année 2019"],"rows":1,"significative_label":true}},"properties":{"id":"ecluse_trafic_jour_moyen","model":"b","icon":"icon-evolution2"}}"
+ecluse_trafic_annuel	Nombre total de passages de bâteaux pour l'année 2019	Nombre total de passages de bâteaux pour l'année 2019	région Bretagne	2019	bâteaux	figure	ecluse	ecluse	"{"type":"figure","data":{"ecluse_trafic_annuel":{"dataset":["ecluse_trafic_annuel"],"data":["1979"],"label":["Nombre total de passages de bâteaux pour l'année 2019"],"rows":1,"significative_label":true}},"properties":{"id":"ecluse_trafic_annuel","model":"b","icon":"icon-default"}}"
+ecluse_trafic_jour_estival	Moyenne estivale de passages de bâteaux pour l'année 2019	Moyenne estivale de passages de bâteaux pour l'année 2019	région Bretagne	2019	bâteaux	figure	ecluse	ecluse	"{"type":"figure","data":{"ecluse_trafic_jour_estival":{"dataset":["ecluse_trafic_jour_estival"],"data":["13.8"],"label":["Moyenne estivale de passages de bâteaux pour l'année 2019"],"rows":1,"significative_label":true}},"properties":{"id":"ecluse_trafic_jour_estival","model":"b","icon":"icon-evolution2"}}"
+ecluse_title	Nom de l'écluse		région Bretagne			title	ecluse	ecluse
 \.
 
 
@@ -10357,7 +10357,7 @@ ecluse_trafic_jour_estival	ECL_IR45	ecluse_trafic_jour_estival	1	Moyenne estival
 ecluse_trafic_jour_estival	ECL_IR46	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	4.9
 ecluse_trafic_jour_estival	ECL_IR47	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	11.1
 ecluse_trafic_jour_estival	ECL_IR48	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	39.1
-ecluse_trafic_jour_estival	ECL_NB018	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	
+ecluse_trafic_jour_estival	ECL_NB018	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020
 ecluse_trafic_jour_estival	ECL_NB018B	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	22.2
 ecluse_trafic_jour_estival	ECL_NB019	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	21.2
 ecluse_trafic_jour_estival	ECL_NB020	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	20.2
@@ -10454,14 +10454,14 @@ ecluse_trafic_jour_estival	ECL_NB108	ecluse_trafic_jour_estival	1	Moyenne estiva
 ecluse_trafic_jour_estival	ECL_NB109	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	0.1
 ecluse_trafic_jour_estival	ECL_NB110	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	0.1
 ecluse_trafic_jour_estival	ECL_NB111	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	0
-ecluse_trafic_jour_estival	ECL_NB112	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	
-ecluse_trafic_jour_estival	ECL_NB113	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	
-ecluse_trafic_jour_estival	ECL_NB114	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	
-ecluse_trafic_jour_estival	ECL_NB115	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	
-ecluse_trafic_jour_estival	ECL_NB116	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	
-ecluse_trafic_jour_estival	ECL_NB117	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	
-ecluse_trafic_jour_estival	ECL_NB118	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	
-ecluse_trafic_jour_estival	ECL_NB119	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	
+ecluse_trafic_jour_estival	ECL_NB112	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020
+ecluse_trafic_jour_estival	ECL_NB113	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020
+ecluse_trafic_jour_estival	ECL_NB114	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020
+ecluse_trafic_jour_estival	ECL_NB115	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020
+ecluse_trafic_jour_estival	ECL_NB116	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020
+ecluse_trafic_jour_estival	ECL_NB117	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020
+ecluse_trafic_jour_estival	ECL_NB118	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020
+ecluse_trafic_jour_estival	ECL_NB119	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020
 ecluse_trafic_jour_estival	ECL_NB192	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	0.1
 ecluse_trafic_jour_estival	ECL_NB193	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	0.1
 ecluse_trafic_jour_estival	ECL_NB194	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	0.1
@@ -13720,8 +13720,8 @@ epci_pop_logement_statut_en_cours	242900660	Région	2	Rés. secondaire	13.2
 epci_pop_logement_statut_en_cours	242900660	Région	3	Log. vacants	7.7
 epci_pop_logement_statut_en_cours	242900694	Région	1	Rés. principale	79.2
 epci_pop_logement_statut_en_cours	242900694	Région	2	Rés. secondaire	13.2
-epci_title	200039022	epci_title	1	Vitré Communauté	
-epci_title	200042174	epci_title	1	Lorient Agglomération	
+epci_title	200039022	epci_title	1	Vitré Communauté
+epci_title	200042174	epci_title	1	Lorient Agglomération
 epci_pop_menage_famillemono_en_cours	200027027	epci_pop_menage_famillemono	1	Part de familles monoparentales en 2017 (moyenne Bretagne 7,6 %)	5.2
 epci_pop_menage_famillemono_en_cours	200038990	epci_pop_menage_famillemono	1	Part de familles monoparentales en 2017 (moyenne Bretagne 7,6 %)	7
 epci_pop_menage_famillemono_en_cours	200039022	epci_pop_menage_famillemono	1	Part de familles monoparentales en 2017 (moyenne Bretagne 7,6 %)	6.6
@@ -13821,64 +13821,64 @@ epci_pop_logement_statut_en_cours	245614417	Région	3	Log. vacants	7.7
 epci_pop_logement_statut_en_cours	245614433	Région	1	Rés. principale	79.2
 epci_pop_logement_statut_en_cours	245614433	Région	2	Rés. secondaire	13.2
 epci_pop_logement_statut_en_cours	245614433	Région	3	Log. vacants	7.7
-epci_title	200027027	epci_title	1	Communauté de communes Arc Sud Bretagne	
-epci_title	200038990	epci_title	1	Communauté de communes de Saint-Méen Montauban	
-epci_title	200043123	epci_title	1	Auray Quiberon Terre Atlantique	
-epci_title	200043990	epci_title	1	Vallons de Haute-Bretagne Communauté	
-epci_title	200065928	epci_title	1	Lannion Trégor Communauté	
-epci_title	200066777	epci_title	1	Ploërmel Communauté	
-epci_title	200066785	epci_title	1	De l'Oust à Brocéliande Communauté	
-epci_title	200066868	epci_title	1	Communauté de communes Presqu'île de Crozon-Aulne maritime	
-epci_title	200067072	epci_title	1	Haut-Léon Communauté	
-epci_title	200067197	epci_title	1	Monts d'Arrée Communauté	
-epci_title	200067221	epci_title	1	Centre Morbihan Communauté 	
-epci_title	200067247	epci_title	1	Communauté de communes de Pleyben-Châteaulin-Porzay	
-epci_title	200067460	epci_title	1	Loudéac Communauté – Bretagne Centre	
-epci_title	200067932	epci_title	1	Golfe du Morbihan - Vannes agglomération	
-epci_title	200067981	epci_title	1	Guingamp-Paimpol Agglomération	
-epci_title	200068120	epci_title	1	Quimper Bretagne Occidentale	
-epci_title	200068989	epci_title	1	Dinan Agglomération	
-epci_title	200069086	epci_title	1	Leff Armor Communauté	
-epci_title	200069391	epci_title	1	Lamballe Terre et Mer	
-epci_title	200069409	epci_title	1	Saint-Brieuc Armor Agglomération	
-epci_title	200070662	epci_title	1	Bretagne porte de Loire Communauté	
-epci_title	200070670	epci_title	1	Communauté de communes du pays de Dol et de la Baie du Mont St Michel	
-epci_title	200070688	epci_title	1	Couesnon Marches de Bretagne	
-epci_title	200072452	epci_title	1	Fougères Agglomération	
-epci_title	242200715	epci_title	1	Communauté de communes du Kreiz-Breizh	
-epci_title	242900074	epci_title	1	Communauté de communes du Pays d'Iroise	
-epci_title	242900314	epci_title	1	Brest Métropole	
-epci_title	242900553	epci_title	1	Communauté de communes du Pays des Abers	
-epci_title	242900561	epci_title	1	Communauté de communes de Haute Cornouaille	
-epci_title	242900629	epci_title	1	Communauté de communes Cap Sizun - Pointe du Raz	
-epci_title	242900645	epci_title	1	Douarnenez Communauté	
-epci_title	242900660	epci_title	1	Communauté de communes du Pays Fouesnantais	
-epci_title	242900694	epci_title	1	Communauté d'agglomération du Pays de Quimperlé	
-epci_title	242900702	epci_title	1	Communauté de communes du Pays Bigouden Sud	
-epci_title	242900710	epci_title	1	Communauté de communes du Haut Pays Bigouden	
-epci_title	242900744	epci_title	1	Poher Communauté	
-epci_title	242900751	epci_title	1	Communauté de communes du Pays de Landivisiau	
-epci_title	242900769	epci_title	1	Concarneau Cornouaille Agglomération	
-epci_title	242900793	epci_title	1	Communauté de communes du pays de Lesneven et Côte des Légendes	
-epci_title	242900801	epci_title	1	Communauté de communes du Pays de Landerneau-Daoulas	
-epci_title	242900835	epci_title	1	Morlaix Communauté	
-epci_title	243500139	epci_title	1	Rennes Métropole	
-epci_title	243500550	epci_title	1	Montfort Communauté	
-epci_title	243500618	epci_title	1	Communauté de communes de Brocéliande	
-epci_title	243500634	epci_title	1	Roche aux Fées Communauté	
-epci_title	243500659	epci_title	1	Communauté de communes du Pays de Châteaugiron	
-epci_title	243500667	epci_title	1	Communauté de communes Val d'Ille - Aubigné	
-epci_title	243500725	epci_title	1	Communauté de communes de la Côte d'Emeraude	
-epci_title	243500733	epci_title	1	Communauté de communes Bretagne Romantique	
-epci_title	243500741	epci_title	1	Redon Agglomération	
-epci_title	243500774	epci_title	1	Liffré-Cormier Communauté	
-epci_title	243500782	epci_title	1	Saint-Malo Agglomération	
-epci_title	244400610	epci_title	1	CA de la Presqu'île de Guérande Atlantique (Cap Atlantique)	
-epci_title	245600440	epci_title	1	Communauté de communes de Blavet Bellevue Océan	
-epci_title	245600465	epci_title	1	Communauté de communes de Belle Ile en Mer	
-epci_title	245614383	epci_title	1	Questembert Communauté	
-epci_title	245614417	epci_title	1	Roi Morvan Communauté	
-epci_title	245614433	epci_title	1	Pontivy Communauté	
+epci_title	200027027	epci_title	1	Communauté de communes Arc Sud Bretagne
+epci_title	200038990	epci_title	1	Communauté de communes de Saint-Méen Montauban
+epci_title	200043123	epci_title	1	Auray Quiberon Terre Atlantique
+epci_title	200043990	epci_title	1	Vallons de Haute-Bretagne Communauté
+epci_title	200065928	epci_title	1	Lannion Trégor Communauté
+epci_title	200066777	epci_title	1	Ploërmel Communauté
+epci_title	200066785	epci_title	1	De l'Oust à Brocéliande Communauté
+epci_title	200066868	epci_title	1	Communauté de communes Presqu'île de Crozon-Aulne maritime
+epci_title	200067072	epci_title	1	Haut-Léon Communauté
+epci_title	200067197	epci_title	1	Monts d'Arrée Communauté
+epci_title	200067221	epci_title	1	Centre Morbihan Communauté
+epci_title	200067247	epci_title	1	Communauté de communes de Pleyben-Châteaulin-Porzay
+epci_title	200067460	epci_title	1	Loudéac Communauté – Bretagne Centre
+epci_title	200067932	epci_title	1	Golfe du Morbihan - Vannes agglomération
+epci_title	200067981	epci_title	1	Guingamp-Paimpol Agglomération
+epci_title	200068120	epci_title	1	Quimper Bretagne Occidentale
+epci_title	200068989	epci_title	1	Dinan Agglomération
+epci_title	200069086	epci_title	1	Leff Armor Communauté
+epci_title	200069391	epci_title	1	Lamballe Terre et Mer
+epci_title	200069409	epci_title	1	Saint-Brieuc Armor Agglomération
+epci_title	200070662	epci_title	1	Bretagne porte de Loire Communauté
+epci_title	200070670	epci_title	1	Communauté de communes du pays de Dol et de la Baie du Mont St Michel
+epci_title	200070688	epci_title	1	Couesnon Marches de Bretagne
+epci_title	200072452	epci_title	1	Fougères Agglomération
+epci_title	242200715	epci_title	1	Communauté de communes du Kreiz-Breizh
+epci_title	242900074	epci_title	1	Communauté de communes du Pays d'Iroise
+epci_title	242900314	epci_title	1	Brest Métropole
+epci_title	242900553	epci_title	1	Communauté de communes du Pays des Abers
+epci_title	242900561	epci_title	1	Communauté de communes de Haute Cornouaille
+epci_title	242900629	epci_title	1	Communauté de communes Cap Sizun - Pointe du Raz
+epci_title	242900645	epci_title	1	Douarnenez Communauté
+epci_title	242900660	epci_title	1	Communauté de communes du Pays Fouesnantais
+epci_title	242900694	epci_title	1	Communauté d'agglomération du Pays de Quimperlé
+epci_title	242900702	epci_title	1	Communauté de communes du Pays Bigouden Sud
+epci_title	242900710	epci_title	1	Communauté de communes du Haut Pays Bigouden
+epci_title	242900744	epci_title	1	Poher Communauté
+epci_title	242900751	epci_title	1	Communauté de communes du Pays de Landivisiau
+epci_title	242900769	epci_title	1	Concarneau Cornouaille Agglomération
+epci_title	242900793	epci_title	1	Communauté de communes du pays de Lesneven et Côte des Légendes
+epci_title	242900801	epci_title	1	Communauté de communes du Pays de Landerneau-Daoulas
+epci_title	242900835	epci_title	1	Morlaix Communauté
+epci_title	243500139	epci_title	1	Rennes Métropole
+epci_title	243500550	epci_title	1	Montfort Communauté
+epci_title	243500618	epci_title	1	Communauté de communes de Brocéliande
+epci_title	243500634	epci_title	1	Roche aux Fées Communauté
+epci_title	243500659	epci_title	1	Communauté de communes du Pays de Châteaugiron
+epci_title	243500667	epci_title	1	Communauté de communes Val d'Ille - Aubigné
+epci_title	243500725	epci_title	1	Communauté de communes de la Côte d'Emeraude
+epci_title	243500733	epci_title	1	Communauté de communes Bretagne Romantique
+epci_title	243500741	epci_title	1	Redon Agglomération
+epci_title	243500774	epci_title	1	Liffré-Cormier Communauté
+epci_title	243500782	epci_title	1	Saint-Malo Agglomération
+epci_title	244400610	epci_title	1	CA de la Presqu'île de Guérande Atlantique (Cap Atlantique)
+epci_title	245600440	epci_title	1	Communauté de communes de Blavet Bellevue Océan
+epci_title	245600465	epci_title	1	Communauté de communes de Belle Ile en Mer
+epci_title	245614383	epci_title	1	Questembert Communauté
+epci_title	245614417	epci_title	1	Roi Morvan Communauté
+epci_title	245614433	epci_title	1	Pontivy Communauté
 epci_pop_categorie_csp_en_cours	242900769	Région	2	CS2	2.9
 epci_pop_categorie_csp_en_cours	200069409	EPCI	4	CS4	11.8
 epci_pop_categorie_csp_en_cours	242900801	EPCI	2	CS2	2.7
@@ -18607,11 +18607,11 @@ ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2012	2012	0
 ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2013	2013	0
 ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2014	2014	0
 ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2015	2015	0
-ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2016	2016	
-ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2017	2017	
-ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2018	2018	
-ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2019	2019	
-ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2016	2016
+ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2017	2017
+ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2018	2018
+ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2019	2019
+ecluse_graphe_trafic_annuel	ECL_NB018	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_NB018B	ecluse_graphe_trafic_annuel	2002	2002	3507
 ecluse_graphe_trafic_annuel	ECL_NB018B	ecluse_graphe_trafic_annuel	2003	2003	2749
 ecluse_graphe_trafic_annuel	ECL_NB018B	ecluse_graphe_trafic_annuel	2004	2004	3550
@@ -20416,7 +20416,7 @@ ecluse_graphe_trafic_annuel	ECL_NB112	ecluse_graphe_trafic_annuel	2016	2016	0
 ecluse_graphe_trafic_annuel	ECL_NB112	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_NB112	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_NB112	ecluse_graphe_trafic_annuel	2019	2019	0
-ecluse_graphe_trafic_annuel	ECL_NB112	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_NB112	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_NB113	ecluse_graphe_trafic_annuel	2002	2002	0
 ecluse_graphe_trafic_annuel	ECL_NB113	ecluse_graphe_trafic_annuel	2003	2003	0
 ecluse_graphe_trafic_annuel	ECL_NB113	ecluse_graphe_trafic_annuel	2004	2004	0
@@ -20435,7 +20435,7 @@ ecluse_graphe_trafic_annuel	ECL_NB113	ecluse_graphe_trafic_annuel	2016	2016	0
 ecluse_graphe_trafic_annuel	ECL_NB113	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_NB113	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_NB113	ecluse_graphe_trafic_annuel	2019	2019	0
-ecluse_graphe_trafic_annuel	ECL_NB113	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_NB113	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_NB114	ecluse_graphe_trafic_annuel	2002	2002	0
 ecluse_graphe_trafic_annuel	ECL_NB114	ecluse_graphe_trafic_annuel	2003	2003	0
 ecluse_graphe_trafic_annuel	ECL_NB114	ecluse_graphe_trafic_annuel	2004	2004	0
@@ -20454,7 +20454,7 @@ ecluse_graphe_trafic_annuel	ECL_NB114	ecluse_graphe_trafic_annuel	2016	2016	0
 ecluse_graphe_trafic_annuel	ECL_NB114	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_NB114	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_NB114	ecluse_graphe_trafic_annuel	2019	2019	0
-ecluse_graphe_trafic_annuel	ECL_NB114	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_NB114	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_NB115	ecluse_graphe_trafic_annuel	2002	2002	0
 ecluse_graphe_trafic_annuel	ECL_NB115	ecluse_graphe_trafic_annuel	2003	2003	0
 ecluse_graphe_trafic_annuel	ECL_NB115	ecluse_graphe_trafic_annuel	2004	2004	0
@@ -20473,7 +20473,7 @@ ecluse_graphe_trafic_annuel	ECL_NB115	ecluse_graphe_trafic_annuel	2016	2016	0
 ecluse_graphe_trafic_annuel	ECL_NB115	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_NB115	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_NB115	ecluse_graphe_trafic_annuel	2019	2019	0
-ecluse_graphe_trafic_annuel	ECL_NB115	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_NB115	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_NB116	ecluse_graphe_trafic_annuel	2002	2002	0
 ecluse_graphe_trafic_annuel	ECL_NB116	ecluse_graphe_trafic_annuel	2003	2003	0
 ecluse_graphe_trafic_annuel	ECL_NB116	ecluse_graphe_trafic_annuel	2004	2004	0
@@ -20492,7 +20492,7 @@ ecluse_graphe_trafic_annuel	ECL_NB116	ecluse_graphe_trafic_annuel	2016	2016	0
 ecluse_graphe_trafic_annuel	ECL_NB116	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_NB116	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_NB116	ecluse_graphe_trafic_annuel	2019	2019	0
-ecluse_graphe_trafic_annuel	ECL_NB116	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_NB116	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_NB117	ecluse_graphe_trafic_annuel	2002	2002	0
 ecluse_graphe_trafic_annuel	ECL_NB117	ecluse_graphe_trafic_annuel	2003	2003	0
 ecluse_graphe_trafic_annuel	ECL_NB117	ecluse_graphe_trafic_annuel	2004	2004	0
@@ -20511,7 +20511,7 @@ ecluse_graphe_trafic_annuel	ECL_NB117	ecluse_graphe_trafic_annuel	2016	2016	0
 ecluse_graphe_trafic_annuel	ECL_NB117	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_NB117	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_NB117	ecluse_graphe_trafic_annuel	2019	2019	0
-ecluse_graphe_trafic_annuel	ECL_NB117	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_NB117	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_NB118	ecluse_graphe_trafic_annuel	2002	2002	0
 ecluse_graphe_trafic_annuel	ECL_NB118	ecluse_graphe_trafic_annuel	2003	2003	0
 ecluse_graphe_trafic_annuel	ECL_NB118	ecluse_graphe_trafic_annuel	2004	2004	0
@@ -20530,7 +20530,7 @@ ecluse_graphe_trafic_annuel	ECL_NB118	ecluse_graphe_trafic_annuel	2016	2016	0
 ecluse_graphe_trafic_annuel	ECL_NB118	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_NB118	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_NB118	ecluse_graphe_trafic_annuel	2019	2019	0
-ecluse_graphe_trafic_annuel	ECL_NB118	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_NB118	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_NB119	ecluse_graphe_trafic_annuel	2002	2002	0
 ecluse_graphe_trafic_annuel	ECL_NB119	ecluse_graphe_trafic_annuel	2003	2003	0
 ecluse_graphe_trafic_annuel	ECL_NB119	ecluse_graphe_trafic_annuel	2004	2004	0
@@ -20549,7 +20549,7 @@ ecluse_graphe_trafic_annuel	ECL_NB119	ecluse_graphe_trafic_annuel	2016	2016	0
 ecluse_graphe_trafic_annuel	ECL_NB119	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_NB119	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_NB119	ecluse_graphe_trafic_annuel	2019	2019	0
-ecluse_graphe_trafic_annuel	ECL_NB119	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_NB119	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_NB137	ecluse_graphe_trafic_annuel	2009	2009	0
 ecluse_graphe_trafic_annuel	ECL_NB137	ecluse_graphe_trafic_annuel	2010	2010	0
 ecluse_graphe_trafic_annuel	ECL_NB137	ecluse_graphe_trafic_annuel	2011	2011	0
@@ -21725,7 +21725,7 @@ ecluse_graphe_trafic_annuel	ECL_V01	ecluse_graphe_trafic_annuel	2016	2016	0
 ecluse_graphe_trafic_annuel	ECL_V01	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_V01	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_V01	ecluse_graphe_trafic_annuel	2019	2019	26
-ecluse_graphe_trafic_annuel	ECL_V01	ecluse_graphe_trafic_annuel	2020	2020	
+ecluse_graphe_trafic_annuel	ECL_V01	ecluse_graphe_trafic_annuel	2020	2020
 ecluse_graphe_trafic_annuel	ECL_V02	ecluse_graphe_trafic_annuel	2002	2002	802
 ecluse_graphe_trafic_annuel	ECL_V02	ecluse_graphe_trafic_annuel	2003	2003	956
 ecluse_graphe_trafic_annuel	ECL_V02	ecluse_graphe_trafic_annuel	2004	2004	852
@@ -29611,4 +29611,3 @@ ALTER TABLE ONLY :schema.report_composition
 --
 -- PostgreSQL database dump complete
 --
-
