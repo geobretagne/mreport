@@ -92,7 +92,7 @@ Example :
 
 * ```SQLALCHEMY_DATABASE_URI = 'postgresql://mreport_user:abcdef@localhost:5432/dataviz'```
 
-Use the same parameters as used in the database section !
+Use the same parameters as used in the [database section !](#set-database-variables)
 
   The other default configuration parameters in **config.py** are :
   
