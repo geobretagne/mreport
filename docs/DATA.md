@@ -1,3 +1,14 @@
+# Structuration des données.
+
+La base de données de l'application est constituée de 5 tables.
+
+Les 2 tables **dataviz** et **rawdata** contiennent les données et leurs métadonnées servant à réaliser les dataviz
+La table **dataid** liste tous les localisants disponibles (Communes, EPCI, gares)
+Les tables **report** et **report_composition** sont des tables de configuration propres à l'application (Nom des rapports et source des données)
+
+![MCD](img/mcd.png "MCD")
+
+
 **Title sample** dataset & data & order are not used
 
 dataid | dataviz | dataset | order | label | data
