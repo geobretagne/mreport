@@ -85,7 +85,7 @@ Install Flask and dependencies
 
 Edit config.py and set and be sure that DATABASE_VARIABLES are correctly set in the next variable
 
-* SQLALCHEMY_DATABASE_URI = 'postgresql://[DATABASE_USER]:[DATABASE_PASSWORD]@[DATABASE_HOST]:[DATABASE_PORT]/[DATABASE_NAME]'
+* ```SQLALCHEMY_DATABASE_URI = 'postgresql://[DATABASE_USER]:[DATABASE_PASSWORD]@[DATABASE_HOST]:[DATABASE_PORT]/[DATABASE_NAME]'```
   
 Example :
 
@@ -117,4 +117,4 @@ Use the same parameters as used in the database section !
   
 ### Production mode
 
-See [PRODUCTION.md](PRODUCTION.md)
+See [PRODUCTION.md](docs/PRODUCTION.md)
