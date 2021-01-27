@@ -89,7 +89,7 @@ Edit config.py and set and be sure that DATABASE_VARIABLES are correctly set in 
   
 Example :
 
-* SQLALCHEMY_DATABASE_URI = 'postgresql://mreport_user:abcdef@localhost:5432/dataviz'
+* ```SQLALCHEMY_DATABASE_URI = 'postgresql://mreport_user:abcdef@localhost:5432/dataviz'```
 
 Use the same parameters as used in the database section !
 
