@@ -1,11 +1,18 @@
 # Structuration des données.
 
-La base de données de l'application est constituée de 5 tables.
----------------------------------------------------------------
 
-* Les 2 tables **dataviz** et **rawdata** contiennent les données et leurs métadonnées servant à réaliser les dataviz.
-* La table **dataid** liste tous les localisants disponibles (Communes, EPCI, gares).
-* Les tables **report** et **report_composition** sont des tables de configuration propres à l'application (Nom des rapports et source des données).
+## La base de données
+
+
+La base de données de l'application est constituée de 5 tables.
+
+* Les 2 tables **dataviz** et **rawdata** contiennent les données qui servant à réaliser les dataviz utilisé dans la génération de reports.
+* La table **dataid** liste tous les identités disponibles (Communes, EPCI, gares, ...).
+* Les tables **report** et **report_composition** sont des tables de configuration propres à l'application (Qui sont respectivement les noms des rapports et la source des données).
+
+Ci-dessous le MCD de la base de donnée. Les relations '1,1' de rawdata avec dataviz et dataid montre que rawdata a besoin d'utiliser les données des deux autres tables. Il y a un ordre d'alimentation des tables à respecter selon les cardinalités.
+
+L'association '0,n' entre dataviz et report fait la table d'association report_composition. Cela permet de lier un report et un dataviz.
 
 ![MCD](img/mcd.png "MCD")
 
@@ -14,7 +21,8 @@ La base de données de l'application est constituée de 5 tables.
 
 ### Etape 1 : alimenter la table dataid
 
-Cette table est le référentiel des identifiants/localisants. Elle est constituée de 2 champs (dataid et label)
+
+Cette table est le référentiel des identifiants. Elle est constituée de 2 champs (dataid et label).
 
 Exemple:
 
@@ -23,16 +31,32 @@ dataid | label
 35001 | Acigné
 ecl_1 | Ecluse du soleil
 
-Il sera possible via l'API d'afficher le rapport - monrapport - préalablement créé pour ce localisant/identifiant.
-Exemple : ``/mreport/monrapport/35001``
+Il sera possible via l'API d'afficher le rapport (exemple: monrapport ) préalablement créé pour cette identité en utilisant le champ dataid.
+Exemples : 
+``/mreport/monrapport/35001``
+``/mreport/monrapport/ecl_1``
 
 
-### Etape 2 : alimenter conjointement les tables dataviz et rawdata
+*Pour les deux prochaines étapes nous allons les illustrer avec ce cas d'usage : créer un chiffre clé pour le référentiel écluses relatif au passage de bâteaux*
 
-Cas d'usage : créer un chiffre clé pour le référentiel écluses relatif au passage de bâteaux
 
-Table rawdata :
----------------
+### Etape 2 : alimenter la table dataviz
+
+#### Table dataviz :
+
+Cette table recupère les metadonnées lié à la donnée. 
+
+dataviz | title | description | source | year | unit | type | level | job | viz
+--------|-------|-------------|--------|------|------|------|-------|-----|----
+figure_1 | Passages mensuels | - | RB | 2019 | - | figure | ecluse | - | -
+
+
+### Etape 3 : alimenter la table rawdata
+
+#### Table rawdata :
+
+
+Comme précisé dans le MCD la table rawdata nécéssite de reprendre les données de dataid et dataviz.
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
@@ -40,40 +64,29 @@ ecl_1 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 483
 ecl_2 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 218
 
 
-Table dataviz :
----------------
-
-dataviz | title | description | source | year | unit | type | level | job | viz
---------|-------|-------------|--------|------|------|------|-------|-----|----
-figure_1 | Passages mensuels | - | RB | 2019 | - | figure | ecluse | - | -
+### Un exemple de chaque dataviz
 
 
-
-
-
-
-
-
-**Title sample** dataset & data & order are not used
+**Title sample** 
+*dataset*, *data* & *order* ne sont pas utilisés pour ce cas de figure.
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | title | 1 | 1 |ECLUSE N°1 |
 
 
-
-**Text sample** dataset & order are not used
-
+**Text sample**
+*dataset* & *order* ne sont pas utilisés pour ce cas de figure.
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | text_1 | 1 | 1 | Descriptif 1 | Lorem ipsum dolor sit amet. consectetur adipiscing elit. Ut id urna faucibus. blandit tellus a. aliquet massa. Vivamus non mollis arcu. Phasellus nec sem eget massa fa...
 
 
+**Chart sample** 
+Ici on comprends à quoi sert *order*, notamment lorsqu'il y a des notions de temps et ordre à respecter.
 
-
-**Chart sample** one dataset
-
+Exemple de données dans rawdata:
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
@@ -89,12 +102,15 @@ ECLUSE_1 | chart_1 | 1 | 9 | 17h-18h | 45
 ECLUSE_1 | chart_1 | 1 | 10 | 18h-19h | 18
 ECLUSE_1 | chart_1 | 1 | 11 | 19h-20h | 1
 
+Son rendu sour forme de chart:
 
 ![chart_1](img/chart_1.png?raw=true  "chart_1")
 
 
-**Table sample** one dataset is a column content
+**Table sample** 
+*dataset* sert lorsqu'il y a deux données parallèles sur le même *order*
 
+Exemple de données dans rawdata:
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
@@ -105,26 +121,37 @@ ECLUSE_1 | table_1 | 2 | 2 | Passage | 22 |
 ECLUSE_1 | table_1 | 1 | 3 | Mois | Mars |
 ECLUSE_1 | table_1 | 2 | 3 | Passage | 222
 
+Son rendu sous forme de table:
 
 ![table_1](img/table_1.png?raw=true  "table_1")
 
-**Figure sample** - dataset & order are not used
+**Figure sample**
+*dataset* & *order* ne sont pas utilisés pour ce cas de figure.
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 483
 
 
-**Map sample** - One marker type by dataset - Data is WKT POINT.
+**Map sample** 
+Un marquer par type de *dataset*. 
+*data* ici est un WKT POINT
+
+Exemple de données dans rawdata:
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
 ECLUSE_1 | map_1 | point_1 | 1 | ECLUSE N°1a | POINT(-1.5, 48.2)
 ECLUSE_1 | map_1 | point_1 | 2 | ECLUSE N°1b | POINT(-1.55, 48.25)
 
+Son rendu sous forme de carte:
+
 ![map_1](img/map_1.png?raw=true  "map_1")
 
-**Image sample** - dataset & order are not used
+**Image sample** 
+*dataset* & *order* ne sont pas utilisés pour ce cas de figure.
+
+Exemple de données dans rawdata:
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
@@ -132,6 +159,8 @@ ECLUSE_1 | image_1 | 1 | 1 | Image 1 | http://kartenn.region-bretagne.fr/img/vn/
 
 
 **Iframe sample** - dataset & order are not used
+
+Exemple de données dans rawdata:
 
 dataid | dataviz | dataset | order | label | data
 -------|---------|---------|------|--------|-----
