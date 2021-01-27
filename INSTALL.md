@@ -1,13 +1,11 @@
 Prerequis
 ----------
 
-  *You need to have a running instance of postgre installed*
+You need to have a running instance of postgres installed
 
-  $ sudo apt-get install python3-venv git
-
-
-Configure database with 5 variables
------------------------------------
+  
+Create and configure database with 5 variables
+----------------------------------------------
 
 In the next section, you have to replace DATABASE_VARS by your values
 
@@ -42,8 +40,10 @@ Create database
  ``psql -p 5432 -d $DATABASE_NAME -f /tmp/demo.sql --set "user=$DATABASE_USER" --set "schema=$DATABASE_SCHEMA"``
 
 
-Clone repository
-----------------
+Install system packages
+-----------------------
+
+``sudo apt-get install python3-venv git``
 
 Create mreport system user
 
