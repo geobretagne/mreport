@@ -21,19 +21,19 @@ Outre l'aspect reporting, mreport dispose d'une **API** permettant de réutilise
 
 7 types de représentations sont disponibles
 
-[Chiffres clés](img/figure.png)
+![Chiffres clés](img/figure.png "Chiffres clés")
 
-[Graphique](img/chart.png)
+![Graphique](img/chart.png "Graphique")
 
-[Tableau](img/table.png)
+![Tableau](img/table.png "Tableau")
 
-[carte](img/map.png)
+![carte](img/map.png "Carte")
 
-[Texte](img/text.png)
+![Texte](img/text.png "Texte")
 
-[image](img/image.png)
+![image](img/image.png "Image")
 
-[Contenu embarqué (iframe)](img/iframe.png)
+![Contenu embarqué (iframe)](img/iframe.png "Contenu embarqué")
 
 
 
