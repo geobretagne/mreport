@@ -1,4 +1,4 @@
-## mreport
+# mreport
 
 mreport est un outil simple de **reporting web** qui permet de composer des rapports combinant **chiffres-clés**, **graphiques**, **images**, **textes** à partir de jeux de données intégrés dans la base de données de la solution. Un même rapport peut être valable pour un référentiel de localisation (Communes, EPCI,  gares...)
 
@@ -17,7 +17,7 @@ Outre l'aspect reporting, mreport dispose d'une **API** permettant de réutilise
 
 
 
-## 7 TYPES DE REPRESENTATIONS  DISPONIBLES (DATAVIZ)
+## Types de représentations (dataviz) disponibles
 
 
 * ### Chiffres clés :
@@ -43,7 +43,7 @@ Outre l'aspect reporting, mreport dispose d'une **API** permettant de réutilise
 
 
 
-### DATA STRUCTURE
+### Structuration des données
 
 A chaque localisant  (commune , gare...)  - **dataid**- est associé une ou plusieurs représentations - **dataviz** -
 Chaque dataviz  contient une ou plusieurs séries de données - **dataset** - composées elles mêmes d'une ou plusieurs valeurs (**data** + **label**) ordonnées - **order**.
@@ -57,7 +57,7 @@ feature_1 | figure_2 | 1 | 1 | chats | 72
 feature_2 | figure_1 | 1 | 1 | chiens | 28
 feature_2 | figure_2 | 1 | 1 | chats | 72
 
-[exemples](DATA.md)
+[En savoir plus](DATA.md)
 
 
 ### PRINCIPE
