@@ -1,12 +1,57 @@
 # Structuration des données.
 
 La base de données de l'application est constituée de 5 tables.
+---------------------------------------------------------------
 
-Les 2 tables **dataviz** et **rawdata** contiennent les données et leurs métadonnées servant à réaliser les dataviz
-La table **dataid** liste tous les localisants disponibles (Communes, EPCI, gares)
-Les tables **report** et **report_composition** sont des tables de configuration propres à l'application (Nom des rapports et source des données)
+* Les 2 tables **dataviz** et **rawdata** contiennent les données et leurs métadonnées servant à réaliser les dataviz.
+* La table **dataid** liste tous les localisants disponibles (Communes, EPCI, gares).
+* Les tables **report** et **report_composition** sont des tables de configuration propres à l'application (Nom des rapports et source des données).
 
 ![MCD](img/mcd.png "MCD")
+
+
+## Process d'alimentation
+
+### Etape 1 : alimenter la table dataid
+
+Cette table est le référentiel des identifiants/localisants. Elle est constituée de 2 champs (dataid et label)
+
+Exemple:
+
+dataid | label
+-------|------
+35001 | Acigné
+ecl_1 | Ecluse du soleil
+
+Il sera possible via l'API d'afficher le rapport - monrapport - préalablement créé pour ce localisant/identifiant.
+Exemple : ``/mreport/monrapport/35001``
+
+
+### Etape 2 : alimenter conjointement les tables dataviz et rawdata
+
+Cas d'usage : créer un chiffre clé pour le référentiel écluses relatif au passage de bâteaux
+
+Table rawdata :
+---------------
+
+dataid | dataviz | dataset | order | label | data
+-------|---------|---------|------|--------|-----
+ecl_1 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 483
+ecl_2 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 218
+
+
+Table dataviz :
+---------------
+
+dataviz | title | description | source | year | unit | type | level | job | viz
+--------|-------|-------------|--------|------|------|------|-------|-----|----
+figure_1 | Passages mensuels | - | RB | 2019 | - | figure | ecluse | - | -
+
+
+
+
+
+
 
 
 **Title sample** dataset & data & order are not used
