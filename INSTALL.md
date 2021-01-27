@@ -43,7 +43,7 @@ Create database schema and populate it with demo data
 
 ## 2 - Install application
 
-Install system packages
+On mreport server, install system packages
 
 ``sudo apt-get install python3-venv git``
 
