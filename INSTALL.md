@@ -18,6 +18,7 @@ Become postgres user
  ``sudo su postgres``
  
 Set DATABASE VARIABLES
+----------------------
 
  ```
  DATABASE_HOST=localhost 
