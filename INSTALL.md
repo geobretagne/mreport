@@ -15,7 +15,7 @@ On database server (localhost or remote host)
 
 ``cd /tmp``
 
-``wget https://raw.githubusercontent.com/geobretagne/mreport/install/backend/datainit/demo.sql``
+``wget https://raw.githubusercontent.com/geobretagne/mreport/master/backend/datainit/demo.sql``
 
 Set shell variables
 
