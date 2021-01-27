@@ -1,0 +1,70 @@
+/****Couleur du texte et font par défaut ****/
+.report {
+    font-family: "Segoe ui";
+    color: #213042;
+}
+
+/*** TITRE DU RAPPORT ***/
+.report-title {
+    font-size: 2em;
+}
+
+/*** SOUS-TITRE / TITRE LIBRE ***/
+.titre-1 {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.titre-2 {
+    font-size: 24px;
+    font-weight: 700;
+    
+}
+
+.titre-3 {
+    font-size: 20px;
+    font-weight: 500;    
+}
+
+.titre-4 {
+    font-size: 16px;
+    font-weight: 400;
+    
+}
+
+/*** SOURCES ***/
+.bloc-sources p {
+    color: #000;
+}
+
+
+/*** TITRES ET DESCRIPTIONS DES DATAVIZ ***/
+
+/* Titre Dataviz */
+.report-dataviz-title {
+    color: #0094ab;
+    font-weight: 600;
+}
+/* Description */
+.report-dataviz-description {
+    font-size: smaller;
+}
+
+/*** DATAVIZ ***/
+
+/** FIGURES **/
+
+/* CHIFFRE */
+.dataviz .report-figure-chiffre {
+    color: #0094ab;
+}
+
+/* LEGENDE */
+.dataviz .report-figure-caption {
+    color: #0094ab;
+}
+
+/* report.css */
+.dataviz.report-map {
+    width: 100%;
+} 

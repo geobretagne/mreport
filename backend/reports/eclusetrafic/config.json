@@ -1,0 +1,23 @@
+{
+  "debug": true,
+  "share": false,
+  "charts": [    
+	{
+      "id": "ecluse_trafic_jour_semaine",
+      "plugins": [
+        "ChartDataLabels"
+      ],
+      "options": {
+        "plugins": {
+          "datalabels": {
+            "color": "white",
+			"backgroundColor": "#005a66",
+            "font": {
+              "weight": "bold"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
