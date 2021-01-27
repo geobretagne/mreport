@@ -1,7 +1,7 @@
 # Structuration des données.
 
 
-## La base de données
+## 1 - La base de données
 
 
 La base de données de l'application est constituée de 5 tables.
@@ -17,7 +17,7 @@ L'association '0,n' entre dataviz et report fait la table d'association report_c
 ![MCD](img/mcd.png "MCD")
 
 
-## Process d'alimentation
+## 2 - Process d'alimentation
 
 ### Etape 1 : alimenter la table dataid
 
@@ -64,10 +64,11 @@ ecl_1 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 483
 ecl_2 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 218
 
 
-### Un exemple de chaque dataviz
+## 3 - Exemples
 
 
-**Title sample** 
+**Exemple de titre** 
+
 *dataset*, *data* & *order* ne sont pas utilisés pour ce cas de figure.
 
 dataid | dataviz | dataset | order | label | data
@@ -75,7 +76,8 @@ dataid | dataviz | dataset | order | label | data
 ECLUSE_1 | title | 1 | 1 |ECLUSE N°1 |
 
 
-**Text sample**
+**Exemple de texte**
+
 *dataset* & *order* ne sont pas utilisés pour ce cas de figure.
 
 dataid | dataviz | dataset | order | label | data
@@ -83,7 +85,8 @@ dataid | dataviz | dataset | order | label | data
 ECLUSE_1 | text_1 | 1 | 1 | Descriptif 1 | Lorem ipsum dolor sit amet. consectetur adipiscing elit. Ut id urna faucibus. blandit tellus a. aliquet massa. Vivamus non mollis arcu. Phasellus nec sem eget massa fa...
 
 
-**Chart sample** 
+**Exemple de graphique** 
+
 Ici on comprends à quoi sert *order*, notamment lorsqu'il y a des notions de temps et ordre à respecter.
 
 Exemple de données dans rawdata:
@@ -107,7 +110,8 @@ Son rendu sour forme de chart:
 ![chart_1](img/chart_1.png?raw=true  "chart_1")
 
 
-**Table sample** 
+**Exemple de tableau** 
+
 *dataset* sert lorsqu'il y a deux données parallèles sur le même *order*
 
 Exemple de données dans rawdata:
@@ -125,7 +129,8 @@ Son rendu sous forme de table:
 
 ![table_1](img/table_1.png?raw=true  "table_1")
 
-**Figure sample**
+**Exemple de chiffre clé**
+
 *dataset* & *order* ne sont pas utilisés pour ce cas de figure.
 
 dataid | dataviz | dataset | order | label | data
@@ -133,8 +138,10 @@ dataid | dataviz | dataset | order | label | data
 ECLUSE_1 | figure_1 | 1 | 1 | Nombre total de passage de bâteaux | 483
 
 
-**Map sample** 
+**Exemple de carte** 
+
 Un marquer par type de *dataset*. 
+
 *data* ici est un WKT POINT
 
 Exemple de données dans rawdata:
@@ -148,7 +155,8 @@ Son rendu sous forme de carte:
 
 ![map_1](img/map_1.png?raw=true  "map_1")
 
-**Image sample** 
+**Exemple d'image** 
+
 *dataset* & *order* ne sont pas utilisés pour ce cas de figure.
 
 Exemple de données dans rawdata:
@@ -158,7 +166,9 @@ dataid | dataviz | dataset | order | label | data
 ECLUSE_1 | image_1 | 1 | 1 | Image 1 | http://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_IR33.jpg
 
 
-**Iframe sample** - dataset & order are not used
+**Exemple d'iframe** 
+
+*dataset* & *order* ne sont pas utilisés pour ce cas de figure.
 
 Exemple de données dans rawdata:
 
