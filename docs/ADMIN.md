@@ -32,13 +32,13 @@ Il y a la possibilité de chercher un jeux de données ou de réintisaliser la s
 
 ## Rapports
 
-![Rapports](img/rapports.png "Rapports")
+![Rapports](img/rapport.png "Rapports")
 
 Sur la page rapport nous pouvons voir les rapports qui se trouvent dans la table rawdata. 
 
 Pour un rapport c'est possible de modifier les jeux de données qui le composent
 
-![Sourcer apport](img/sourcer_rapports.png "Sourcer les données")
+![Sourcer apport](img/sourcer_rapport.png "Sourcer les données")
 
 A cette même endroit il ly a les options de supprimer, afficher ou composer le rapport ainsi que le copier.
 
@@ -71,7 +71,8 @@ Une fois le jeux de données en place il est alors possible de configurer leur a
 
 Dans la fenêtre qui s'affiche plusieurs options de configuration sont présent. 
 
-![configuration dataviz](img/configuration_dataviz.png "Ajout des données à la structure")
+![configuration dataviz](img/config_dataviz.png "Ajout des données à la structure")
 
 Le type défini dans dataviz pour cette exemple est figure, il y a donc des paramètres prédéfinis pour ce type.
 
+Une fois votre rapport structuré avec les données et les dataviz, vous pouvez l'enregistrer et afficher votre rapport ou continuer de le modifier.
