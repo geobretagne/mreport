@@ -43,23 +43,15 @@ Outre l'aspect reporting, mreport dispose d'une **API** permettant de réutilise
 
 
 
-### Structuration des données
+## Données
 
-A chaque localisant  (commune , gare...)  - **dataid**- est associé une ou plusieurs représentations - **dataviz** -
-Chaque dataviz  contient une ou plusieurs séries de données - **dataset** - composées elles mêmes d'une ou plusieurs valeurs (**data** + **label**) ordonnées - **order**.
+Pour pouvoir créer un représentation des données sous la forme de dataviz, les données doivent être intégrées dans la base de l'application avec le formalisme propre à **mreport**
 
-  Exemple
-
-dataid | dataviz | dataset | order | label | data
--------|---------|---------|------|--------|-----
-feature_1 | figure_1 | 1 | 1 | chiens | 28
-feature_1 | figure_2 | 1 | 1 | chats | 72
-feature_2 | figure_1 | 1 | 1 | chiens | 28
-feature_2 | figure_2 | 1 | 1 | chats | 72
+Actuellement les données sont à intégrer avec un ETL. Une évolution en cours de développement permettra prochainement d'intégrer les données depuis l'interface d'administation.
 
 [En savoir plus](DATA.md)
 
 
-### PRINCIPE
+## Principes de fonctionnement
 
 [Principes](PRINCIPES.md)
