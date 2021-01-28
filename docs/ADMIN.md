@@ -1,6 +1,6 @@
 # Interface admin
 
-*Pour montrer au mieux les pages de l'admin nous utilisons les données demo qui sont présent demo.sql*
+*Pour expliquer au mieux les différentes pages de l'admin nous utilisons les données demo qui sont présent demo.sql*
 
 L'interface admin se décompose en 3 pages:
 
@@ -13,9 +13,9 @@ L'interface admin se décompose en 3 pages:
 
 ![Catalogue](img/catalogue.png "Catalogue")
 
-Dans le catalogue s'affiche chaque jeux de donnée qui se trouve dans rawdata.
+Le catalogue affiche chaque jeux de donnée qui se trouve dans tabel rawdata de la base de données.
 
-Dans le catalogue vous pouvez sélectionner les jeux de données à utiliser dans un rapport
+Ici vous pouvez sélectionner les jeux de données à utiliser dans un rapport
 
 ![Selection](img/selection.png "Séléction")
 
@@ -27,27 +27,27 @@ ou
 
 ![Ajouter à un rapport](img/creation_rapport.png "Ajouter à un rapport")
 
-Il y a la possibilité de chercher un jeux de données ou de réintisaliser la séléction.
+Comme autre fonctionnalité ici vous pouvez chercher un jeux de données ou de réintisaliser la séléction.
 
 
 ## Rapports
 
 ![Rapports](img/rapport.png "Rapports")
 
-Sur la page rapport nous pouvons voir les rapports qui se trouvent dans la table rawdata. 
+Sur la page rapport nous pouvons voir les rapports qui se trouvent dans la table report de la base de données. 
 
 Pour un rapport c'est possible de modifier les jeux de données qui le composent
 
 ![Sourcer apport](img/sourcer_rapport.png "Sourcer les données")
 
-A cette même endroit il ly a les options de supprimer, afficher ou composer le rapport ainsi que le copier.
+A cette même endroit il y a les options de supprimer, afficher ou composer le rapport ainsi que le copier.
 
 
 ## Composeur
 
 ![Composeur](img/composeur.png "Composeur")
 
-Dans le composeur il y a deux blocs, la options a gauche et la structuration du rapport sur le reste de la page. 
+Dans le composeur il y a deux blocs, les options à gauche et la structuration du rapport sur le reste de la page. 
 
 En ce qui concernce les options il faut dans un premier temps choisir quel rapport utiliser:
 
@@ -63,7 +63,7 @@ Avec un glisser déposer des élements à gauche, il faut ajouter les blocs qui 
 
 ![Structure du rapport page](img/structure2_rapport.png "Structure du rapport page")
 
-Une fois la structure ajouté, avec la même action du glisser déposer, ajouter les jeux de données au structure 
+Une fois la structure ajouté, avec la même action du glisser déposer, ajouter les jeux de données au structure.
 
 ![Ajout données structure](img/donnees_rapport.png "Ajout des données à la structure")
 
