@@ -109,9 +109,23 @@ Use the same parameters as used in the [database section !](#set-database-variab
 ```
 
 
-### Test frontend & backend
+### Launch application in dev or test mode
 
   ``python3 dispatcher.py``
+  
+  or
+  
+  ``sudo su mreport``
+  
+  ``cd ~/mreport``
+  
+  ``. /venv/bin/activate``
+  
+  ``python3 dispatcher.py``
+  
+  
+  
+### Test application in your web browser
 
   test http://localhost:5000/api
 
@@ -119,6 +133,6 @@ Use the same parameters as used in the [database section !](#set-database-variab
 
   test http://localhost:5000/mreport/epci_population/243500139
   
-### Production mode
+### Launch application in production mode
 
 See [PRODUCTION.md](docs/PRODUCTION.md)
