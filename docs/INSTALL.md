@@ -111,17 +111,15 @@ Use the same parameters as used in the [database section !](#set-database-variab
 
 ### Launch application in dev or test mode
 
+with **mreport** user in ~/mreport folder with **venv** activated
+
   ``python3 dispatcher.py``
   
   or
   
   ``sudo su mreport``
   
-  ``cd ~/mreport``
-  
-  ``. /venv/bin/activate``
-  
-  ``python3 dispatcher.py``
+  ``cd ~/mreport && . /venv/bin/activate && python3 dispatcher.py``
   
   
   
