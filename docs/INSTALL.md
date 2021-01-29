@@ -29,11 +29,11 @@ Become postgres user
 
 Create database user with password (Enter it to times at prompt).
 
- ``createuser -p $DATABASE_PORT -P -S -D -R -e $DATABASE_USER -T template0 -E 'UTF8'``
+ ``createuser -p $DATABASE_PORT -P -S -D -R -e $DATABASE_USER``
 
 Create database
 
- ``createdb -O $DATABASE_USER $DATABASE_NAME``
+ ``createdb -O $DATABASE_USER $DATABASE_NAME -T template0 -E 'UTF8'``
  
 Create database schema and populate it with demo data
 
