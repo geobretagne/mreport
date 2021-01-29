@@ -27,7 +27,7 @@ Become postgres user
  DATABASE_SCHEMA=data
  ```
 
-Create database user
+Create database user with password (Enter it to times at prompt).
 
  ``createuser -p $DATABASE_PORT -P -S -D -R -e $DATABASE_USER``
 
