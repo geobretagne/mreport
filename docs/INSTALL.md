@@ -85,7 +85,7 @@ Install Flask and dependencies
 *To install requirements, you need to be disconnected from any proxy*
 
 
-### Configure
+### Configure application
 
 Edit config.py and set and be sure that DATABASE_VARIABLES are correctly set in the next variable
 
