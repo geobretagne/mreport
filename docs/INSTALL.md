@@ -125,6 +125,8 @@ with **mreport** user in ~/mreport folder with **venv** activated
   
 ### Test application in your web browser
 
+Replace localhost by your hostname is instaaltion is not on your localhost
+
   test http://localhost:5000/api
 
   test http://localhost:5000/admin/
