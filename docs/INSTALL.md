@@ -37,7 +37,7 @@ Create database
  
 Create database schema and populate it with demo data
 
- ``psql -p 5432 -d $DATABASE_NAME -f /tmp/demo.sql --set "user=$DATABASE_USER" --set "schema=$DATABASE_SCHEMA"``
+ ``psql -p $DATABASE_PORT -d $DATABASE_NAME -f /tmp/demo.sql --set "user=$DATABASE_USER" --set "schema=$DATABASE_SCHEMA"``
  
  Logout postgres user
  
