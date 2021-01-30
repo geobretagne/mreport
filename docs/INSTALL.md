@@ -119,7 +119,7 @@ with **mreport** user in ~/mreport folder with **venv** activated
   
   ``sudo su mreport``
   
-  ``cd ~/mreport && . /venv/bin/activate && python3 dispatcher.py``
+  ``cd ~/mreport && . venv/bin/activate && python3 dispatcher.py``
   
   
   
