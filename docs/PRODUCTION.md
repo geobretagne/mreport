@@ -85,28 +85,27 @@ The next apache configuration will :
 Create this content in your apache installation and enable it
 
 ```
-Define MREPORT_LOCATION /home/mreport/mreport
+Define MREPORT_LOCATION /home/{{ mreport_sys_usr.name }}/mreport
 Include ${MREPORT_LOCATION}/server_configurations/apache2/mreport_conf2.conf
 
 <Location "/api">
-	ProxyPreserveHost On
-	ProxyPass "http://localhost:5000/api/"
-  ProxyPassReverse "http://localhost:5000/api/"
-  AuthType Basic
-  AuthName "Restricted Content"
-  AuthUserFile /etc/apache2/.mreport
-  <Limit POST PUT DELETE>
-    <RequireAll>
-        Require valid-user
-    </RequireAll>
-  </Limit>
+    AuthType Basic
+    AuthName "Restricted Content"
+    AuthUserFile /etc/apache2/.mreport
+    <Limit POST PUT DELETE>
+      <RequireAll>          
+          Require valid-user
+      </RequireAll>
+    </Limit>
+</Location>
+<Location ~ "^/api($|/$)">
+    Require all denied
 </Location>
 
 <Location ~ "/admin/">
     AuthType Basic
     AuthName "Restricted Content"
     AuthUserFile /etc/apache2/.mreport
-    Require valid-user
-
+    Require valid-user 
 </Location>
 ```
