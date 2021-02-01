@@ -4,7 +4,7 @@
 
 You need to have a running instance of postgres installed
 
-  
+
 ## 1 - Create and configure database
 
 Download sql dump on database server (localhost or remote host)
@@ -16,14 +16,14 @@ Download sql dump on database server (localhost or remote host)
 Become postgres user
 
  ``sudo su postgres``
- 
+
 ##### Set DATABASE VARIABLES
 
  ```
- DATABASE_HOST=localhost 
- DATABASE_PORT=5432 
- DATABASE_NAME=dataviz 
- DATABASE_USER=mreport_user 
+ DATABASE_HOST=localhost
+ DATABASE_PORT=5432
+ DATABASE_NAME=dataviz
+ DATABASE_USER=mreport_user
  DATABASE_SCHEMA=data
  ```
 
@@ -34,13 +34,13 @@ Create database user with password (Enter it to times at prompt).
 Create database
 
  ``createdb -O $DATABASE_USER $DATABASE_NAME -T template0 -E 'UTF8'``
- 
+
 Create database schema and populate it with demo data
 
  ``psql -p $DATABASE_PORT -d $DATABASE_NAME -f /tmp/demo.sql --set "user=$DATABASE_USER" --set "schema=$DATABASE_SCHEMA"``
- 
+
  Logout postgres user
- 
+
  ``exit``
 
 
@@ -90,7 +90,7 @@ Install Flask and dependencies
 Edit config.py and set and be sure that DATABASE_VARIABLES are correctly set in the next variable
 
 * ```SQLALCHEMY_DATABASE_URI = 'postgresql://[DATABASE_USER]:[DATABASE_PASSWORD]@[DATABASE_HOST]:[DATABASE_PORT]/[DATABASE_NAME]'```
-  
+
 Example :
 
 * ```SQLALCHEMY_DATABASE_URI = 'postgresql://mreport_user:abcdef@localhost:5432/dataviz'```
@@ -98,7 +98,7 @@ Example :
 Use the same parameters as used in the [database section !](#set-database-variables)
 
   The other default configuration parameters in **config.py** are :
-  
+
 ```
   * API_LOCATION = '/api'
   * APP_SCHEME = 'http'
@@ -111,28 +111,30 @@ Use the same parameters as used in the [database section !](#set-database-variab
 
 ### Launch application in dev or test mode
 
+mreport backend and frontend can be served by flask at same time with tje following command
+
 with **mreport** user in ~/mreport folder with **venv** activated
 
   ``python3 dispatcher.py``
-  
+
   or
-  
+
   ``sudo su mreport``
-  
+
   ``cd ~/mreport && . venv/bin/activate && python3 dispatcher.py``
-  
-  
-  
+
+
+
 ### Test application in your web browser
 
-Replace localhost by your hostname is instaaltion is not on your localhost
+Replace localhost by your hostname if instalation is not on your localhost
 
   test http://localhost:5000/api
 
   test http://localhost:5000/admin/
 
   test http://localhost:5000/mreport/epci_population/243500139
-  
+
 ### Launch application in production mode
 
 See [PRODUCTION.md](docs/PRODUCTION.md)
