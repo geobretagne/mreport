@@ -86,7 +86,7 @@ The next apache configuration will :
 Create this content in your apache installation and enable it
 
 ```
-Define MREPORT_LOCATION /home/{{ mreport_sys_usr.name }}/mreport
+Define MREPORT_LOCATION /home/mreport/mreport
 Include ${MREPORT_LOCATION}/server_configurations/apache2/mreport_conf2.conf
 
 <Location "/api">
