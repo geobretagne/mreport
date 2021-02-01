@@ -77,10 +77,11 @@ You will be asked to supply and confirm a password for the admin user.
 
 The next apache configuration will :
 
- * serve mreport api at /api
- * serve mreport frontend with apache including dedicated configuration (mreport_conf2.conf)
- * restrict /api access in PUT DELETE POST Method to authenticated admin user
- * restrict /admin access to authenticated admin user
+ * Serve mreport api at /api
+ * Serve mreport frontend with apache including dedicated configuration (mreport_conf2.conf)
+ * Restrict /api access in PUT DELETE POST Method to authenticated admin user
+ * Disable /api root access
+ * Restrict /admin access to authenticated admin user
 
 Create this content in your apache installation and enable it
 
