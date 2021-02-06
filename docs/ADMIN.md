@@ -13,7 +13,7 @@ L'interface admin se décompose en 3 pages:
 
 ![Catalogue](img/catalogue.png "Catalogue")
 
-Le catalogue affiche chaque jeux de donnée qui se trouve dans tabel rawdata de la base de données.
+Le catalogue affiche chaque jeux de donnée qui se trouve dans la table rawdata de la base de données.
 
 Ici vous pouvez sélectionner les jeux de données à utiliser dans un rapport
 
