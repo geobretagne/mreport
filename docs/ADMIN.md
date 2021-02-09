@@ -13,19 +13,19 @@ L'interface admin se décompose en 3 pages:
 
 ![Catalogue](img/catalogue.png "Catalogue")
 
-Le catalogue affiche chaque jeux de donnée qui se trouve dans la table rawdata de la base de données.
+Le catalogue affiche chaque jeux de donnée qui se trouve dans la table dataviz de la base de données.
 
-Ici vous pouvez sélectionner les jeux de données à utiliser dans un rapport
+Ici vous pouvez sélectionner les jeux de données à utiliser dans un rapport.
 
 ![Selection](img/selection.png "Séléction")
 
 A partir de cette séléction il a possible de créer un nouveau rapport ou d'ajouter ces données à un rapport existant.
 
-![Creation rapport](img/ajouter_rapport.png "Création d'un rapport")
+![Creation rapport](img/ajouter_rapport.png =100x "Création d'un rapport")
 
 ou
 
-![Ajouter à un rapport](img/creation_rapport.png "Ajouter à un rapport")
+![Ajouter à un rapport](img/creation_rapport.png =1"Ajouter à un rapport")
 
 Comme autre fonctionnalité ici vous pouvez chercher un jeux de données ou de réintisaliser la séléction.
 
@@ -40,7 +40,7 @@ Pour un rapport c'est possible de modifier les jeux de données qui le composent
 
 ![Sourcer apport](img/sourcer_rapport.png "Sourcer les données")
 
-A cette même endroit il y a les options de supprimer, afficher ou composer le rapport ainsi que le copier.
+A ce même endroit il y a les options de supprimer, afficher ou composer le rapport ainsi que le copier.
 
 
 ## Composeur
@@ -75,4 +75,4 @@ Dans la fenêtre qui s'affiche plusieurs options de configuration sont présent.
 
 Le type défini dans dataviz pour cette exemple est figure, il y a donc des paramètres prédéfinis pour ce type.
 
-Une fois votre rapport structuré avec les données et les dataviz, vous pouvez l'enregistrer et afficher votre rapport ou continuer de le modifier.
+Une fois votre rapport structuré avec les données et les dataviz, vous pouvez l'enregistrer et l'afficher votre rapport ou continuer de le modifier.

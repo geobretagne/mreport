@@ -11,6 +11,7 @@ Outre l'aspect reporting, mreport dispose d'une **API** permettant de réutilise
 * Présentation [PRESENTATION.md](docs/PRESENTATION.md)
 * Installation [INSTALL.md](docs/INSTALL.md)
 * Guide de démarrage [START.md](docs/QUICKSTART.md)
+* Admin [ADMIN.md](docs/ADMIN.md)
 
 
 ## Capture
