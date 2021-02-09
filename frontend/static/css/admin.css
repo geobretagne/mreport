@@ -193,7 +193,6 @@ h5>.badge {
 */
 #cd-cart.speed-in {
   right: 0;
-  padding-top:55px
 }
 
 #cd-cart {
@@ -218,7 +217,7 @@ h5>.badge {
 
 #cd-cart {
   position: fixed;
-  top: 0;
+  top: 56px;
   height: 100%;
   width: 350px;
   overflow-y: auto;
@@ -317,14 +316,18 @@ h5>.badge {
 */
 #togglePanier {
   position: sticky;
-  background: url(../img/cd-remove-item.svg) no-repeat center center lightskyblue;
+  background: lightskyblue;
   z-index: 5;
   width: 32px;
-  height: 32px;
+  height: 35px;
   width: 100%;
   top: 0;
   right: 0;
   transition: .3s;
+  display: inline-block;
+  overflow: hidden;
+  text-align:center;
+  padding:4px 36px;
 }
 
 #togglePanier:hover {
