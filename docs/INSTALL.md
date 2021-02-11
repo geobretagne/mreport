@@ -137,4 +137,4 @@ Replace localhost by your hostname if instalation is not on your localhost
 
 ### Launch application in production mode
 
-See [PRODUCTION.md](docs/PRODUCTION.md)
+See [PRODUCTION.md](PRODUCTION.md)
