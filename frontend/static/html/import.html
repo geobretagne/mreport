@@ -1,0 +1,199 @@
+<!-- Button injected in admin.html-->
+<template id="import_button" data-target="#sticky">
+    <div class="col-md-2 col-12">
+        <button type="button" class="btn btn-dark" data-toggle="modal"
+            data-target="#import-modal-form">Importer</button>
+    </div>
+</template>
+
+<!-- Modal Data import injected admin.html-->
+<template id="import_modal" data-target="body">
+    <div class="modal fade status-0" id="import-modal-form" data-step="1" tabindex="-1" role="dialog" aria-labelledby="importModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel">Import</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="steps">
+                    <ul class="nav nav-pills" role="tablist">
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link active" data-toggle="pill" id="s1"  data-step="1" href="#step-datasource" role="tab" aria-selected="true" aria-controls="step-datasource">
+                                <div class="title">
+                                    <span class="number">1</span>
+                                    <span>Donnée source</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="presentation" class="nav-item" >
+                            <a class="nav-link" data-toggle="pill" id="s2" data-step="2" href="#step-transformation" role="tab" aria-selected="false" aria-controls="step-transformation">
+                                <div class="title">
+                                    <span class="number">2</span>
+                                    <span>Transformation</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="presentation" class="nav-item last" >
+                            <a class="nav-link" data-toggle="pill" id="s3" data-step = "3" href="#step-details" role="tab" aria-selected="false" aria-controls="step-details">
+                                <div class="title">
+                                    <span class="number">3</span>
+                                    <span>Détails</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="wizard-content">
+                        <div class="tab-pane fade show active" id="step-datasource" role="tabpanel" aria-labelledby="s1">
+
+                            <div class="import-message">
+                                <span class="fas fa-spin fa-cog fa-3x"></span>
+                                <p>Traitement en cours...</p>
+                            </div>
+
+                            <form id="import-file-form" class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="import-file-input" onclick="import_wizard.selectLocalFile();" onchange="import_wizard.importLoadLocalFile();">
+                                    <label class="custom-file-label" for="import-file-input" data-browse="Parcourir">Sélectionner un fichier</label>
+                                </div>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" onclick="import_wizard.clear();">x</button>
+                                </span>
+                            </form>
+
+                            <div id="show_data" class="row">
+                                <h5>Extrait des données</h5>
+                                <div class="col-12">
+                                    <div id="data-result" style="overflow: auto">
+                                        <table class="table table-bordered table-sm">
+                                            <thead></thead>
+                                            <tbody></tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="step-transformation" role="tabpanel" aria-labelledby="s2">
+
+                            <div id="import_params" class="row">
+                                <div class="col-4">
+                                    <h6>Champs disponibles</h6>
+                                    <div id="lst_fields" class="list-group"></div>
+                                </div>
+                                <div class="col-4">
+                                    <h6>Mapping des champs utilisés</h6>
+                                    <div class="list-group">
+                                        <div class="row">
+                                            <div id="lst_fields_datasets" data-parameter="datasets" class="col-12 drag-drop param"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div id="lst_field_label" data-parameter="label" class="col-12 drag-drop param"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div id="lst_field_dataid" data-parameter="dataid" class="col-12 drag-drop param"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div id="test_transformation" class="row">
+                                <div class="col-12">
+                                    <div id="transformation-result">
+                                        <table class="table table-bordered table-sm">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col">dataid</th>
+                                                <th scope="col">dataset</th>
+                                                <th scope="col">order</th>
+                                                <th scope="col">label</th>
+                                                <th scope="col">data</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="step-details" role="tabpanel" aria-labelledby="s3">
+
+                            <form class="form was-validated" id="dataviz-form2" role="form" autocomplete="off">
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="inputTitle"><span class="badge badge-dark">Nom</span></label>
+                                        <input type="text" class="form-control" name="title" id="inputTitle"
+                                            placeholder="Nom de la dataviz" required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+                                    <div class="col">
+                                        <label for="inputSource"><span class="badge badge-dark">Source</span></label>
+                                        <input type="text" class="form-control" name="source" id="inputSource"
+                                            placeholder="Source" required>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="inputDescription"><span class="badge badge-dark">Description</span></label>
+                                        <input type="text" class="form-control" name="description" id="inputDescription"
+                                            placeholder="Description">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label for="inputYear"><span class="badge badge-dark">millésime</span></label>
+                                        <input type="text" class="form-control" name="year" id="inputYear"
+                                            placeholder="Millésime">
+                                    </div>
+                                    <div class="col">
+                                        <label for="inputLevel"><span class="badge badge-dark">Niveau</span></label>
+                                        <input type="text" class="form-control" name="level" id="inputLevel"
+                                            placeholder="Niveau" required>
+                                    </div>
+                                    <div class="col">
+                                        <label for="inputUnit"><span class="badge badge-dark">Unité</span></label>
+                                        <input type="text" class="form-control" name="unit" id="inputUnit" placeholder="Unité">
+                                    </div>
+                                </div>
+
+
+                            </form>
+
+                        </div>
+                      </div>
+                </div>
+
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-prev" class="btn btn-success mr-auto" onclick="import_wizard.previous();">Previous</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" id="btn-next" class="btn btn-success" onclick="import_wizard.next();">Next</button>
+                <button id="import_data-btn" type="submit" disabled class="btn btn-primary"
+                    onclick="import_wizard.importData();">Importer</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</template>
