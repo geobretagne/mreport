@@ -171,6 +171,42 @@ dataviz_post = api.model('Dataviz_post', {
     'viz': fields.String(max_length=2000)
 })
 
+rawdata_put = store.model('Rawdata_put', {
+    'dataviz': fields.String(max_length=200,required=True),
+    'dataid': fields.String(max_length=250,required=True),
+    'dataset': fields.String(max_length=200,required=True),
+    'order': fields.Integer(required=True),
+    'data': fields.String(max_length=250,required=True),
+    'label': fields.String(max_length=200,required=True)
+})
+
+@store.route('/<string:dataviz_id>/data',doc={'Données':'Enregistrer les données associées à une dataviz'})
+class ManageDatavizData(Resource):
+    @store.expect([rawdata_put])
+    def put(self, dataviz_id):
+        data = request.get_json()
+        datas = []
+        if not data:
+            data = {"response": "ERROR no data supplied"}
+            return data, 405
+        else:
+            if Rawdata.query.filter(Rawdata.dataviz == dataviz_id).count() > 0:
+                return {"response": "data for this dataviz already exists."}, 403
+            else:
+                try:
+                    for item in data:
+                        item.update({'dataviz':dataviz_id})
+                        datas.append(Rawdata(**item))
+                except TypeError as err:
+                    return {"response": str(err)}, 400
+                db.session.add_all(datas)
+                db.session.commit()
+                return {"response": "success" , "data": data}
+
+    def delete(self, dataviz_id):
+        db.session.query(Rawdata).filter(Rawdata.dataviz == dataviz_id).delete()
+        db.session.commit()
+
 @store.route('/<string:dataviz_id>/data/sample',doc={'Données':'Données associées à une dataviz'})
 class DatavizData(Resource):
     def get(self, dataviz_id):
