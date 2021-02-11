@@ -17,6 +17,7 @@
     <script src="/static/js/extLibs/leaflet.js"></script>
     <link href="/static/css/admin.css" rel="stylesheet">
     <link href="/static/css/composer.css" rel="stylesheet">
+    <link href="/static/css/import.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/fonts/04b_30/stylesheet.css">
     <script src="/static/js/extLibs/mustache.min.js"></script>
     <script src="/static/js/extLibs/fuse.min.js"></script>
@@ -25,11 +26,14 @@
     <script src="/static/js/extLibs/sweetalert2@9.js"></script>
     <script src="/static/js/extLibs/piklor.js"></script>
     <script src="/static/js/extLibs/indent.min.js"></script>
+    <script src="/static/js/extLibs/bs-custom-file-input.min.js"></script>
+    <script src="/static/js/extLibs/papaparse.min.js"></script>
     <script src="/static/js/textConfiguration.js"></script>
     <script src="/static/js/composer.js"></script>
     <script src="/static/js/wizard.js"></script>
     <script src="/static/js/report.js"></script>
     <script src="/static/js/admin.js"></script>
+    <script src="/static/js/import.js"></script>
 
 </head>
 
@@ -69,11 +73,11 @@
         </div>
         <div id="stickycollapse" class="collapse d-md-block sticky">
             <div id="sticky" class="row">
-                <div class="col-md-3 col-12">
+                <div class="col-md-2 col-12">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new"
                         data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
                 </div>
-                <div class="col-md-3 col-12">
+                <div class="col-md-2 col-12">
                     <button type="button" class="btn btn-success" data-toggle="modal" data-report-state="add"
                         data-target="#report-modal-form2">Ajouter la sélection à un rapport existant</button>
                 </div>
