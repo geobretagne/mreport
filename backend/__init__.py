@@ -315,7 +315,7 @@ class GetReport(Resource):
             return data, 405
         else:
             if Report.query.get(report_id) and not data["copy"]:
-                return {"response": "The report already exists."}, 403
+                return {"response": "Ce rapport existe déjà."}, 403
             else:
                 copy = False
                 if data["copy"] :
@@ -344,7 +344,7 @@ class GetReport(Resource):
     def post(self, report_id):
         data = request.get_json()
         if not data:
-            data = {"response": "ERROR no data supplied"}
+            data = {"response": "ERROR pas de données associés"}
             return data, 405
         else:
             if Report.query.get(report_id):
@@ -369,7 +369,7 @@ class GetReport(Resource):
             else:
                 return {"response": delete_folder}
         else:
-            return {"response": "The report '"+report_id+"' does not exists."}, 404
+            return {"response": "Le rapport '"+report_id+"' n'existe pas."}, 404
 
 @report.route('/<report_id>/<dataid_id>', doc={'description': 'Récupération des données pour rapport ex: test & 200039022'})
 @report.doc(params={'report_id': 'identifiant du rapport', 'dataid_id': 'id géographique'})
@@ -399,15 +399,15 @@ class GetReportComposition(Resource):
             return data, 405
         else:
             if not Report.query.get(report_id):
-                return {"response": "report does not exists."}, 404
+                return {"response": "rapport n'existe pas."}, 404
             else:
                 dtv_list = []
                 for dvz in data :
                     if not Dataviz.query.get(dvz["dataviz"]):
-                        data = {"response": "ERROR dataviz \'"+dvz["dataviz"]+"\' does not exist"}
+                        data = {"response": "ERROR dataviz \'"+dvz["dataviz"]+"\' n'existe pas"}
                         return data, 404
                     if Report_composition.query.filter_by(report=report_id,dataviz=dvz["dataviz"]).first():
-                        data = {"response": "ERROR the report is already associated with \'"+dvz["dataviz"]+"\'"}
+                        data = {"response": "ERROR ce rapport est déjà associé avec \'"+dvz["dataviz"]+"\'"}
                         return data, 406
                     dvz.update({"report":report_id})
                     try:
@@ -423,21 +423,21 @@ class GetReportComposition(Resource):
     def delete(self,report_id):
         data = request.get_json()
         if not data:
-            data = {"response": "ERROR no data supplied"}
+            data = {"response": "ERROR pas de données associés"}
             return data, 405
         else:
             if not Report.query.get(report_id):
-                return {"response": "report does not exists."}, 404
+                return {"response": "rapport n'existe pas."}, 404
             else:
                 dtv_list = []
                 for dvz in data :
 
                     if not Dataviz.query.get(dvz["dataviz"]):
-                        data = {"response": "ERROR dataviz \'"+dvz["dataviz"]+"\' does not exist"}
+                        data = {"response": "ERROR dataviz \'"+dvz["dataviz"]+"\' n'existe pas."}
                         return data, 404
                     rep_comp = Report_composition.query.filter_by(report=report_id,dataviz=dvz["dataviz"]).first()
                     if not rep_comp:
-                        data = {"response": "ERROR the report is not associated with \'"+dvz["dataviz"]+"\'"}
+                        data = {"response": "ERROR le rapport n'est pas associé avec \'"+dvz["dataviz"]+"\'"}
                         return data, 405
                     dtv_list.append(rep_comp)
                 for rep_c in dtv_list :
@@ -451,7 +451,7 @@ class GetReportComposition(Resource):
         def post(self,report_id):
             data = request.get_json()
             if not data:
-                data = {"response": "ERROR no data supplied"}
+                data = {"response": "ERROR Pas de données associé"}
                 return data, 405
             else:
                 html = data.get('html')
@@ -461,7 +461,7 @@ class GetReportComposition(Resource):
                     up = updateReportHTML("/".join([app.config['MREPORT_REPORTS'], report_id, "report"]), html, css, composer)
                     return {"response": up}
                 else:
-                    data = {"response": "ERROR bad data supplied"}
+                    data = {"response": "ERROR mauvais données associés"}
                     return data, 405
 
 #    return app
