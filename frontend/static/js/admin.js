@@ -27,6 +27,10 @@ admin = (function () {
                 $(".container-fluid.page, .nav-item").removeClass("active");
                 $("#" + $(this).attr("data-page")).addClass("active");
                 $(this).addClass("active");
+                if($(this).attr("data-page") == "reports" && $("#cd-cart").hasClass("speed-in") ||
+                   $(this).attr("data-page") =="composer" && $("#cd-cart").hasClass("speed-in")){
+                    $("#cd-cart").toggleClass("speed-in");
+                };
             });
         });
     };
