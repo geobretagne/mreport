@@ -551,14 +551,14 @@ span.designed-dataviz {
     right: 30px;
     position: absolute;
     font-family: "Font Awesome 5 Free";
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 700;
-    color: grey;
+    color: #218838;
     margin-top: -10px;
 }
 
 span.designed-dataviz:before {
-    content: "\f5ae";
+    content: "\f200";
 }
 
 span.certified-dataviz {
