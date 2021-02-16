@@ -952,4 +952,5 @@ $(document).ready(function () {
     admin.initCatalog();
     admin.initReports();
     admin.initMenu();
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 });
