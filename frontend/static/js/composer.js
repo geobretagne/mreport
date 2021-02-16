@@ -48,7 +48,7 @@ composer = (function () {
         '<p id="drag-tag">drag</p>',
         '</span>',
         '<span class="structure-description">',
-        '<input id="bootstrap_columns" type="text" class="form-control col-8" placeholder="Ex : 6 6">',
+         '<input id="bootstrap_columns" type="text" class="form-control col-8" placeholder="Ex : 6 6">',
         '<p id="nb_columns" class="d-none"></p>',
         '</span>',
         '<div class="structure-html">',
@@ -130,12 +130,12 @@ composer = (function () {
         //Extra html elements needed to edit report (editable text, divide blocs...)
         var divide_element = [
             '<div class="edit_columns">',
-                '<span class="badge badge badge-success divide_column" data-toggle="modal"',
+                '<span class="badge badge-success divide_column" data-toggle="modal"',
                     'data-target="#divide_form">',
-                    '<i class="fas fa-columns"></i> Diviser',
+                    '<i class="fas fa-columns"></i> <span>Diviser</span>',
                 '</span>',
-                '<span class="badge badge badge-danger delete_column">',
-                    '<i class="far fa-trash-alt"></i>',
+                '<span class="badge badge-danger delete_column">',
+                    '<i class="fas fa-undo"></i><span>reset</span>',
                 '</span>',
             '</div>'
         ].join("");
@@ -725,12 +725,13 @@ composer = (function () {
                 structure +=
                     '<div class="col-md-' + elem + ' dividedcolumn customBaseColumn">\
                     <div class="edit_columns">\
-                        <span class="badge badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
+                        <span class="badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
                             <i class="fas fa-columns"></i>\
                             Diviser\
                         </span>\
-                        <span class="badge badge badge-danger delete_column">\
-                            <i class="far fa-trash-alt"></i>\
+                        <span class="badge badge-danger delete_column">\
+                            <i class="fas fa-undo"></i>\
+                        <span>reset</span>\
                         </span>\
                     </div>\
                     <div class="dataviz-container card list-group-item">\
@@ -839,12 +840,13 @@ composer = (function () {
                     structure +=
                         '<div class="col-md-' + column.value + ' dividedcolumn customBaseColumn">\
                         <div class="edit_columns">\
-                            <span class="badge badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
+                            <span class="badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
                                 <i class="fas fa-columns"></i>\
                                 Diviser\
                             </span>\
-                            <span class="badge badge badge-danger delete_column">\
-                                <i class="far fa-trash-alt"></i>\
+                            <span class="badge badge-danger delete_column">\
+                                <i class="fas fa-undo"></i>\
+                                <span>reset</span>\
                             </span>\
                         </div>\
                         <div class="dataviz-container card list-group-item">\
@@ -884,12 +886,13 @@ composer = (function () {
                         <div class="row ">\
                         <div class="col-md-12 dividedcolumn customBaseColumn">\
                             <div class="edit_columns">\
-                                <span class="badge badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
+                                <span class="badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
                                     <i class="fas fa-columns"></i>\
                                     Diviser\
                                 </span>\
-                                <span class="badge badge badge-danger delete_column">\
-                                    <i class="far fa-trash-alt"></i>\
+                                <span class="badge  badge-danger delete_column">\
+                                    <i class="fas fa-undo"></i>\
+                                    <span>reset</span>\
                                 </span>\
                             </div>\
                             <div class="dataviz-container card list-group-item">\
