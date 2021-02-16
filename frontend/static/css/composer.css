@@ -400,6 +400,7 @@ span.text-edit.badge.badge-warning {
 #report-composition .dataviz-container{
     padding-left : 20px;
     padding-right : 20px;
+    padding-top:45px;
 }
 #report-composition .customBaseColumn {
     padding: 0;
