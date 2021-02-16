@@ -368,8 +368,9 @@ h5>.badge {
   font-size: 12px;
   font-family: inherit;
   color: #FFF;
-  top: -10px;
-  right: -13px;
+  top: -20px;
+  right: -20px;
+  margin:0;
   border: 2px solid #FFF;
 }
 
