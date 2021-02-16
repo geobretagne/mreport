@@ -152,7 +152,8 @@
     transition: all 500ms ease;
 }
 
-.builder.edit .composition .structure-bloc .drag {
+.builder.edit .composition .structure-bloc .drag,
+.builder.edit .composition .structure-element .drag {
     font-size: 13px;
     top: 5px;
     right: 90px;
@@ -171,13 +172,33 @@
 }
 
 .builder.edit .drag {
+    /*background: #3095b4;
+    color: white;
+    position: absolute;
+    right: 5px;*/
+    cursor: grab;
+    padding: 6px;
+    font-size: 14px;
+}
+
+.sidenav #drag-tag{
+  display:none;
+}
+
+#report-composition .drag{
     background: #3095b4;
     color: white;
     position: absolute;
-    right: 5px;
-    cursor: pointer;
-    padding: 6px;
-    font-size: 14px;
+}
+
+#report-composition .drag #drag-tag{
+  display:inline-block;
+  margin-left:5px;
+  margin-bottom:0;
+}
+
+#report-composition .dataviz-container .dataviz .drag{
+  right:5px;
 }
 
 .builder.edit .list-group .structure-bloc:last-child .drag{
@@ -186,7 +207,7 @@
 
 .structure-element .drag{
     top: 5px;
-    right: 5px !important;
+    right: 5px ;
     transition: 0.2s;
 }
 .structure-element .drag:hover{
@@ -194,7 +215,7 @@
     opacity: 1;
 }
 .structure-element .remove{
-    right: 80px !important;
+    right: 80px ;
     transition: 0.2s;
 }
 .structure-element .remove:hover{
@@ -291,6 +312,10 @@ span.structure-description {
 }
 .composition .bloc-content>.dataviz-container {
     min-height: 150px;
+}
+
+.bloc-content{
+  margin:15px;
 }
 
 span.text-edit.badge.badge-warning {

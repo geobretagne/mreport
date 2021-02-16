@@ -23,31 +23,33 @@ composer = (function () {
      */
 
     var _blockTemplate = [
-        '<div class="structure-bloc list-group-item">',
+        '<div class=" structure-bloc list-group-item">',
+        '<span class="drag badge badge-default">',
+        '<i class="fas fa-arrows-alt"></i>',
+        '<p id="drag-tag">drag</p>',
+        '</span>',
         '<span class="remove badge badge-danger">',
         '<i class="fas fa-times"></i> remove',
         '</span>',
         '<span class="structure-description">',
         '{{{DESCRIPTION}}}',
         '</span>',
-        '<span class="drag badge badge-default">',
-        '<i class="fas fa-arrows-alt"></i> drag',
-        '</span>',
         '<div class="structure-html">{{{HTML}}}</div>',
         '</div>'
     ].join("");
 
     var _dynamicBootstrapBloc = [
-        '<div class="structure-bloc list-group-item disable_dynamic">',
+        '<div class=" structure-bloc list-group-item disable_dynamic">',
         '<span class="remove badge badge-danger">',
         '<i class="fas fa-times"></i> remove',
         '</span>',
-        '<span class="structure-description">',
-         '<input id="bootstrap_columns" type="text" class="form-control col-8" placeholder="Ex : 6 6">',
-        '<p id="nb_columns" class="d-none"></p>',
-        '</span>',
         '<span class="drag badge badge-default">',
-        '<i class="fas fa-arrows-alt"></i> drag',
+        '<i class="fas fa-arrows-alt"></i>',
+        '<p id="drag-tag">drag</p>',
+        '</span>',
+        '<span class="structure-description">',
+        '<input id="bootstrap_columns" type="text" class="form-control col-8" placeholder="Ex : 6 6">',
+        '<p id="nb_columns" class="d-none"></p>',
         '</span>',
         '<div class="structure-html">',
         '<div class="row  bloc-content">',
@@ -64,12 +66,13 @@ composer = (function () {
     var _extraElementTemplate = [
         [
             '<div class="structure-element list-group-item titleBloc" draggable="false" style="">',
-            '<p class="editable-text">Texte</p>',
+            '<span class="drag badge badge-default">',
+            '<i class="fas fa-arrows-alt"></i>',
+            '<p id="drag-tag"> drag</p>',
+            '</span>',
+            '<span class="editable-text">Texte</span>',
             '<span class="remove badge badge-danger structureElems">',
             '<i class="fas fa-times"></i> remove',
-            '</span>',
-            '<span class="drag badge badge-default">',
-            '<i class="fas fa-arrows-alt"></i> drag',
             '</span>',
             '</div>'
         ].join("")
@@ -82,13 +85,17 @@ composer = (function () {
      */
 
     var _datavizTemplate = [
-        '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item">',
+        '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item handle">',
+        '<span class="drag badge badge-default">',
+        '<i class="fas fa-arrows-alt"></i>',
+        '<p id="drag-tag"> drag</p>',
+        '</span>',
+        '<span>{{dvz}}</span>',
         '<div class="tool">',
         '<button class="btn btn-default" data-toggle="modal" data-component="report" data-related-id="{{id}}" data-target="#wizard-panel">',
         '<i class="fas fa-cog"></i>',
         '</button>',
         '</div>',
-        '<span>{{dvz}}</span>',
         '<code class="dataviz-definition"></code>',
         '</li>'
     ];
