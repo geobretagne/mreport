@@ -27,6 +27,10 @@ admin = (function () {
                 $(".container-fluid.page, .nav-item").removeClass("active");
                 $("#" + $(this).attr("data-page")).addClass("active");
                 $(this).addClass("active");
+                if($(this).attr("data-page") == "reports" && $("#cd-cart").hasClass("speed-in") ||
+                   $(this).attr("data-page") =="composer" && $("#cd-cart").hasClass("speed-in")){
+                    $("#cd-cart").toggleClass("speed-in");
+                };
             });
         });
     };
@@ -184,10 +188,10 @@ admin = (function () {
                     '<div class="card-body">',
                     '<h6 class="card-title col-9">' + elem.title + '</h6>',
                     '<a class="btn duplicate col-3"><i class="fa fa-clone" aria-hidden="true"></i>copier</a>',
-                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + elem.report + '" data-target="#report-modal-form">Sourcer</a>',
-                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + elem.report + '" data-target="#report-modal-form">Supprimer</a>',
-                    '<a href="' + report.getAppConfiguration().location + '/' + elem.report + '" target="_blank" class="card-link">Afficher</a>',
-                    '<a href="#" onclick="composer.compose(\'' + elem.report + '\')" class="card-link">Composer</a>',
+                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-info"></i> Sourcer</a>',
+                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-trash"></i> Supprimer</a>',
+                    '<a href="' + report.getAppConfiguration().location + '/' + elem.report + '" target="_blank" class="card-link"><i class="fas fa-eye"></i> Afficher</a>',
+                    '<a href="#" onclick="composer.compose(\'' + elem.report + '\')" class="card-link"><i class="fas fa-edit"></i> Composer</a>',
                     '</div>',
                     '</div>',
                     '</div>'
@@ -948,4 +952,5 @@ $(document).ready(function () {
     admin.initCatalog();
     admin.initReports();
     admin.initMenu();
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 });

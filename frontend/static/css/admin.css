@@ -4,10 +4,15 @@
 body {
   padding: 0 !important;
   height: 100%;
+  background-color:#e9ecef;
 }
 
 #composer, .builder.edit, .main, .composition, #report-composition {
   min-height: 100%;
+}
+
+#composer-report-title{
+  margin:0;
 }
 
 .card {
@@ -22,7 +27,7 @@ body {
   border: none;
   border-radius: 2px;
   line-height: 36px;
-  padding: 0 16px;
+  padding: 3px;
 }
 .btn:not(.notdvz){
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
@@ -141,6 +146,11 @@ h5>.badge {
   padding: 1rem;
   width: 100%;
 }
+
+.card-link{
+  font-size:0.85rem;
+}
+
 
 .cards {
   padding-left: 5px;
@@ -458,6 +468,11 @@ h5>.badge {
   color: white;
   transition: 0.2s;
 }
+#report-modal-form .modal-body #report-form,
+#report-modal-form2 .modal-body #report-form2{
+  max-height:300px;
+  overflow:auto;
+}
 #report-modal-form li.list-group-item span{
   display: inline-block;
   width: 80%;
@@ -548,7 +563,6 @@ h5>.badge {
 
 .page{
   padding-top:65px;
-  background-color:#e9ecef;
 }
 
 #catalog .badge,
@@ -604,4 +618,10 @@ h5>.badge {
 
 .custom-checkbox .custom-control-label::before{
   margin-top:-0.06rem!important;
+}
+
+#btn_save_report{
+    position: fixed;
+    z-index: 99;
+    right: 10px;
 }

@@ -23,31 +23,33 @@ composer = (function () {
      */
 
     var _blockTemplate = [
-        '<div class="structure-bloc list-group-item">',
+        '<div class=" structure-bloc list-group-item">',
+        '<span class="drag badge badge-default">',
+        '<i class="fas fa-arrows-alt"></i>',
+        '<p id="drag-tag">drag</p>',
+        '</span>',
         '<span class="remove badge badge-danger">',
         '<i class="fas fa-times"></i> remove',
         '</span>',
         '<span class="structure-description">',
         '{{{DESCRIPTION}}}',
         '</span>',
-        '<span class="drag badge badge-default">',
-        '<i class="fas fa-arrows-alt"></i> drag',
-        '</span>',
         '<div class="structure-html">{{{HTML}}}</div>',
         '</div>'
     ].join("");
 
     var _dynamicBootstrapBloc = [
-        '<div class="structure-bloc list-group-item disable_dynamic">',
+        '<div class=" structure-bloc list-group-item disable_dynamic">',
         '<span class="remove badge badge-danger">',
         '<i class="fas fa-times"></i> remove',
+        '</span>',
+        '<span class="drag badge badge-default">',
+        '<i class="fas fa-arrows-alt"></i>',
+        '<p id="drag-tag">drag</p>',
         '</span>',
         '<span class="structure-description">',
          '<input id="bootstrap_columns" type="text" class="form-control col-8" placeholder="Ex : 6 6">',
         '<p id="nb_columns" class="d-none"></p>',
-        '</span>',
-        '<span class="drag badge badge-default">',
-        '<i class="fas fa-arrows-alt"></i> drag',
         '</span>',
         '<div class="structure-html">',
         '<div class="row  bloc-content">',
@@ -64,12 +66,13 @@ composer = (function () {
     var _extraElementTemplate = [
         [
             '<div class="structure-element list-group-item titleBloc" draggable="false" style="">',
-            '<p class="editable-text">Texte</p>',
+            '<span class="drag badge badge-default">',
+            '<i class="fas fa-arrows-alt"></i>',
+            '<p id="drag-tag"> drag</p>',
+            '</span>',
+            '<span class="editable-text">Texte</span>',
             '<span class="remove badge badge-danger structureElems">',
             '<i class="fas fa-times"></i> remove',
-            '</span>',
-            '<span class="drag badge badge-default">',
-            '<i class="fas fa-arrows-alt"></i> drag',
             '</span>',
             '</div>'
         ].join("")
@@ -82,13 +85,17 @@ composer = (function () {
      */
 
     var _datavizTemplate = [
-        '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item">',
+        '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item handle">',
+        '<span class="drag badge badge-default">',
+        '<i class="fas fa-arrows-alt"></i>',
+        '<p id="drag-tag"> drag</p>',
+        '</span>',
+        '<span>{{dvz}}</span>',
         '<div class="tool">',
         '<button class="btn btn-default" data-toggle="modal" data-component="report" data-related-id="{{id}}" data-target="#wizard-panel">',
         '<i class="fas fa-cog"></i>',
         '</button>',
         '</div>',
-        '<span>{{dvz}}</span>',
         '<code class="dataviz-definition"></code>',
         '</li>'
     ];
@@ -123,12 +130,12 @@ composer = (function () {
         //Extra html elements needed to edit report (editable text, divide blocs...)
         var divide_element = [
             '<div class="edit_columns">',
-                '<span class="badge badge badge-success divide_column" data-toggle="modal"',
+                '<span class="badge badge-success divide_column" data-toggle="modal"',
                     'data-target="#divide_form">',
-                    '<i class="fas fa-columns"></i> Diviser',
+                    '<i class="fas fa-columns"></i> <span>Diviser</span>',
                 '</span>',
-                '<span class="badge badge badge-danger delete_column">',
-                    '<i class="far fa-trash-alt"></i>',
+                '<span class="badge badge-danger delete_column">',
+                    '<i class="fas fa-undo"></i><span>reset</span>',
                 '</span>',
             '</div>'
         ].join("");
@@ -718,12 +725,13 @@ composer = (function () {
                 structure +=
                     '<div class="col-md-' + elem + ' dividedcolumn customBaseColumn">\
                     <div class="edit_columns">\
-                        <span class="badge badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
+                        <span class="badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
                             <i class="fas fa-columns"></i>\
                             Diviser\
                         </span>\
-                        <span class="badge badge badge-danger delete_column">\
-                            <i class="far fa-trash-alt"></i>\
+                        <span class="badge badge-danger delete_column">\
+                            <i class="fas fa-undo"></i>\
+                        <span>reset</span>\
                         </span>\
                     </div>\
                     <div class="dataviz-container card list-group-item">\
@@ -832,12 +840,13 @@ composer = (function () {
                     structure +=
                         '<div class="col-md-' + column.value + ' dividedcolumn customBaseColumn">\
                         <div class="edit_columns">\
-                            <span class="badge badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
+                            <span class="badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
                                 <i class="fas fa-columns"></i>\
                                 Diviser\
                             </span>\
-                            <span class="badge badge badge-danger delete_column">\
-                                <i class="far fa-trash-alt"></i>\
+                            <span class="badge badge-danger delete_column">\
+                                <i class="fas fa-undo"></i>\
+                                <span>reset</span>\
                             </span>\
                         </div>\
                         <div class="dataviz-container card list-group-item">\
@@ -877,12 +886,13 @@ composer = (function () {
                         <div class="row ">\
                         <div class="col-md-12 dividedcolumn customBaseColumn">\
                             <div class="edit_columns">\
-                                <span class="badge badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
+                                <span class="badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
                                     <i class="fas fa-columns"></i>\
                                     Diviser\
                                 </span>\
-                                <span class="badge badge badge-danger delete_column">\
-                                    <i class="far fa-trash-alt"></i>\
+                                <span class="badge  badge-danger delete_column">\
+                                    <i class="fas fa-undo"></i>\
+                                    <span>reset</span>\
                                 </span>\
                             </div>\
                             <div class="dataviz-container card list-group-item">\

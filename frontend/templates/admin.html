@@ -75,17 +75,17 @@
             <div id="sticky" class="row">
                 <div class="col-md-2 col-12">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new"
-                        data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
+                        data-target="#report-modal-form">Créer un rapport avec la sélection</button>
                 </div>
                 <div class="col-md-2 col-12">
                     <button type="button" class="btn btn-success" data-toggle="modal" data-report-state="add"
-                        data-target="#report-modal-form2">Ajouter la sélection à un rapport existant</button>
+                        data-target="#report-modal-form2">Ajouter à un rapport existant</button>
                 </div>
                 <div class="col-md-2 col-12">
                     <input id="searchbar" class="form-control" placeholder="Filtrer le catalogue" maxlength="32">
                 </div>
 
-                <div class="col-md-2 col-12">
+                <div class="col-md-1 col-12">
                     <div class="custom-control custom-checkbox pt-2">
                         <input type="checkbox" id="checkAll" class="custom-control-input" name="checkAll">
                         <label class="custom-control-label" for="checkAll">Tout sélectionner</label>
@@ -94,8 +94,8 @@
                 <div class="col-md-1 col-12">
                     <a class="green"><i class="fas fa-shopping-bag"></i> <span class="number">0</span></a>
                 </div>
-                <div class="col-md-1 col-12">
-                    <button id="resetfilters" type="button" class="btn btn-primary">Reset</button>
+                <div class="col-md-2 col-12">
+                     <button id="resetfilters" type="button" class="btn btn-primary"><i class="fas fa-undo"></i> Reset</button>
                 </div>
             </div>
         </div>
@@ -113,10 +113,10 @@
                                 <input type="checkbox" id="{{id}}-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">
                                 <label class="custom-control-label" for="{{id}}-selection">Sélectionner</label>
                             </div>
-                            <a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form">Editer</a>
-                            <a href="#" data-dataviz-state="delete" class="card-link" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form">Supprimer</a>
-                            <span title="Designed dataviz" class="designed-dataviz {{designed}}"></span>
-                            <span title="Certified dataviz" class="certified-dataviz {{certified}}"></span>
+                            <a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-pencil-alt"></i> Editer</a>
+                            <a href="#" data-dataviz-state="delete" class="card-link " data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-trash"></i> Supprimer</a>
+                            <span class="designed-dataviz {{designed}}"  data-toggle="tooltip" data-html="true" title="Ces données ont une dataviz par défaut de configuré"></span>
+                            <span class="certified-dataviz {{certified}}"   data-toggle="tooltip" data-html="true" title="cartified data"></span>
                         </div>
                         <div class="card-footer">Usages: </div>
                     </div>
@@ -137,10 +137,9 @@
 
     <!-- Composer start -->
     <div class="container-fluid page" id="composer">
+        <button type="button" id="btn_save_report" class="col-3 btn btn-block btn-primary">Enregistrer</button>
         <div class="builder edit">
             <div class="sidenav d-flex flex-column">
-                <button type="button" id="btn_save_report"
-                    class="btn btn-lg btn-block btn-primary sticky-top">Enregistrer</button>
                 <form class="form" role="form" autocomplete="off">
                     <div class="form-group">
                         <label for="selectedReportComposer">Rapport sélectionné</label>
@@ -154,25 +153,32 @@
                         </select>
                     </div>
                 </form>
-                <div class="rows list-group" id="structure-models">
-                    <h6>Blocs structurants</h6>
-                    <!-- appended by code -->
+                <div>
+                  <h6>Blocs structurants</h6>
+                  <div class="rows list-group" id="structure-models">
+                      <!-- appended by code -->
+                  </div>
                 </div>
-                <div class="rows list-group" id="element-models">
-                    <h6>Eléments</h6>
-                    <!-- appended by code -->
+                <div>
+                  <h6>Eléments</h6>
+                  <div class="rows list-group" id="element-models">
+                       <!-- appended by code -->
+                  </div>
                 </div>
-                <div class="list-group" id="dataviz-items">
-                    <h6>Dataviz disponibles</h6>
-                    <!-- appended by code -->
+                <div>
+                  <h6>Dataviz disponibles</h6>
+                  <div class="list-group" id="dataviz-items">
+                      <!-- appended by code -->
+                  </div>
                 </div>
             </div>
 
             <div class="main">
-                <h2 id="composer-report-title">
+                <div class="row">
+                <h2 class="col-9" id="composer-report-title">
                     <!-- appended by code -->
                 </h2>
-
+                </div>
                 <div class="composition">
 
                     <div id="report-composition"></div>
@@ -272,20 +278,23 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModalLabel">Rapport<span
+                    <div class="row col-12">
+                      <h5 class="modal-title" id="reportModalLabel">Rapport<span
                             class="badge badge-success">New</span><span class="badge badge-warning">Edition</span><span
                             class="badge badge-danger">Supression</span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                    </div>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group ">
+                        <label for="reportInputTitre">Titre du rapport</label>
+                        <input type="text" class="form-control" name="title" id="reportInputTitre"
+                              placeholder="Titre" required="true">
+                    </div>
                     <form class="form" id="report-form" role="form" autocomplete="off">
-                        <div class="form-group">
-                            <label for="reportInputTitre">Titre du rapport</label>
-                            <input type="text" class="form-control" name="title" id="reportInputTitre"
-                                placeholder="Titre" required="true">
-                        </div>
+                        
                         <h5>Sources de données associées</h5>
                         <ul class="reports-dataviz list-group">
                         </ul>
@@ -320,9 +329,11 @@
                             <select class="form-control" id="selectedReport">
                             </select>
                         </div>
-                        <h5>Sources de données associées</h5>
-                        <ul class="reports-dataviz-exist list-group">
-                        </ul>
+                        <div id="report-form2">
+                          <h5>Sources de données associées</h5>
+                          <ul class="reports-dataviz-exist list-group">
+                          </ul>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

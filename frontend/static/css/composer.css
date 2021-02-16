@@ -21,6 +21,7 @@
 
 .sidenav h6 {
     color: #fff;
+    padding:0 10px;
 }
 
 .sidenav a:hover {
@@ -60,8 +61,8 @@
 .builder.edit .composition {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin-left: 0px;
-    margin-top: 10px;
-    padding: 30px 15px 15px;
+    margin-top: 50px;
+    padding: 20px;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     position: relative;
@@ -143,8 +144,8 @@
 }
 
 .builder .composition .drag, .builder .composition .remove {
-    filter: alpha(opacity=20);
-    opacity: 0.2;
+    filter: alpha(opacity=40);
+    opacity: 0.4;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -ms-transition: all 500ms ease;
@@ -152,17 +153,18 @@
     transition: all 500ms ease;
 }
 
-.builder.edit .composition .structure-bloc .drag {
+.builder.edit .composition .structure-bloc .drag,
+.builder.edit .composition .structure-element .drag {
     font-size: 13px;
     top: 5px;
-    right: 90px;
+    right: 80px;
     z-index: 10;
 }
 
 
 .builder .composition .drag, .builder .composition .remove {
-    filter: alpha(opacity=20);
-    opacity: 0.2;
+    filter: alpha(opacity=40);
+    opacity: 0.4;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -ms-transition: all 500ms ease;
@@ -171,13 +173,33 @@
 }
 
 .builder.edit .drag {
+    /*background: #3095b4;
+    color: white;
+    position: absolute;
+    right: 5px;*/
+    cursor: grab;
+    padding: 6px;
+    font-size: 14px;
+}
+
+.sidenav #drag-tag{
+  display:none;
+}
+
+#report-composition .drag{
     background: #3095b4;
     color: white;
     position: absolute;
-    right: 5px;
-    cursor: pointer;
-    padding: 6px;
-    font-size: 14px;
+}
+
+#report-composition .drag #drag-tag{
+  display:inline-block;
+  margin-left:5px;
+  margin-bottom:0;
+}
+
+#report-composition .dataviz-container .dataviz .drag{
+  right:5px;
 }
 
 .builder.edit .list-group .structure-bloc:last-child .drag{
@@ -186,7 +208,7 @@
 
 .structure-element .drag{
     top: 5px;
-    right: 5px !important;
+    right: 5px ;
     transition: 0.2s;
 }
 .structure-element .drag:hover{
@@ -194,7 +216,7 @@
     opacity: 1;
 }
 .structure-element .remove{
-    right: 80px !important;
+    right: 80px ;
     transition: 0.2s;
 }
 .structure-element .remove:hover{
@@ -233,6 +255,7 @@
 
 #structure-models, #dataviz-items {
     padding: 10px;
+  margin-bottom:1rem;
 }
 
 .composition {
@@ -291,6 +314,10 @@ span.structure-description {
 }
 .composition .bloc-content>.dataviz-container {
     min-height: 150px;
+}
+
+.bloc-content{
+  margin:15px;
 }
 
 span.text-edit.badge.badge-warning {
@@ -364,17 +391,21 @@ span.text-edit.badge.badge-warning {
     right: 10px;
     z-index: 5;
 }
+.divide_column{
+  margin-right:5px;
+}
 .divide_column,
 .delete_column{
     cursor: pointer;
     font-size: 15px;
-    filter: alpha(opacity=20);
-    opacity: 0.2;
+    filter: alpha(opacity=40);
+    opacity: 0.4;
     transition: 0.2s;
 }
 #report-composition .dataviz-container{
     padding-left : 20px;
     padding-right : 20px;
+    padding-top:45px;
 }
 #report-composition .customBaseColumn {
     padding: 0;
@@ -527,19 +558,19 @@ span.designed-dataviz {
     font-family: "Font Awesome 5 Free";
     font-size: 25px;
     font-weight: 700;
-    color: grey;
+    color: #218838;
     margin-top: -10px;
 }
 
 span.designed-dataviz:before {
-    content: "\f568";
+    content: "\f200";
 }
 
 span.certified-dataviz {
     right: 70px;
     position: absolute;
     font-family: "Font Awesome 5 Free";
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 700;
     color:#8cb871;
     margin-top: -10px;
