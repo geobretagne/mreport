@@ -139,8 +139,6 @@
     <div class="container-fluid page" id="composer">
         <div class="builder edit">
             <div class="sidenav d-flex flex-column">
-                <button type="button" id="btn_save_report"
-                    class="btn btn-lg btn-block btn-primary sticky-top">Enregistrer</button>
                 <form class="form" role="form" autocomplete="off">
                     <div class="form-group">
                         <label for="selectedReportComposer">Rapport sélectionné</label>
@@ -175,10 +173,13 @@
             </div>
 
             <div class="main">
-                <h2 id="composer-report-title">
+                <div class="row">
+                <h2 class="col-9" id="composer-report-title">
                     <!-- appended by code -->
                 </h2>
-
+                <button type="button" id="btn_save_report"
+                    class="col-3 btn btn-block btn-primary">Enregistrer</button>
+                </div>
                 <div class="composition">
 
                     <div id="report-composition"></div>
