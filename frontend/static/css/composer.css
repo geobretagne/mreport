@@ -143,8 +143,8 @@
 }
 
 .builder .composition .drag, .builder .composition .remove {
-    filter: alpha(opacity=20);
-    opacity: 0.2;
+    filter: alpha(opacity=40);
+    opacity: 0.4;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -ms-transition: all 500ms ease;
@@ -161,8 +161,8 @@
 
 
 .builder .composition .drag, .builder .composition .remove {
-    filter: alpha(opacity=20);
-    opacity: 0.2;
+    filter: alpha(opacity=40);
+    opacity: 0.4;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -ms-transition: all 500ms ease;
@@ -368,8 +368,8 @@ span.text-edit.badge.badge-warning {
 .delete_column{
     cursor: pointer;
     font-size: 15px;
-    filter: alpha(opacity=20);
-    opacity: 0.2;
+    filter: alpha(opacity=40);
+    opacity: 0.4;
     transition: 0.2s;
 }
 #report-composition .dataviz-container{
