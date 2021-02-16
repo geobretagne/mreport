@@ -73,11 +73,11 @@
         </div>
         <div id="stickycollapse" class="collapse d-md-block sticky">
             <div id="sticky" class="row">
-                <div class="col-md-2 col-12">
+                <div class="col-md-3 col-12">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-report-state="new"
                         data-target="#report-modal-form">Créer un rapport à partir de la sélection</button>
                 </div>
-                <div class="col-md-2 col-12">
+                <div class="col-md-3 col-12">
                     <button type="button" class="btn btn-success" data-toggle="modal" data-report-state="add"
                         data-target="#report-modal-form2">Ajouter la sélection à un rapport existant</button>
                 </div>
@@ -272,20 +272,23 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModalLabel">Rapport<span
+                    <div class="row col-12">
+                      <h5 class="modal-title" id="reportModalLabel">Rapport<span
                             class="badge badge-success">New</span><span class="badge badge-warning">Edition</span><span
                             class="badge badge-danger">Supression</span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                    </div>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group ">
+                        <label for="reportInputTitre">Titre du rapport</label>
+                        <input type="text" class="form-control" name="title" id="reportInputTitre"
+                              placeholder="Titre" required="true">
+                    </div>
                     <form class="form" id="report-form" role="form" autocomplete="off">
-                        <div class="form-group">
-                            <label for="reportInputTitre">Titre du rapport</label>
-                            <input type="text" class="form-control" name="title" id="reportInputTitre"
-                                placeholder="Titre" required="true">
-                        </div>
+                        
                         <h5>Sources de données associées</h5>
                         <ul class="reports-dataviz list-group">
                         </ul>
@@ -320,9 +323,11 @@
                             <select class="form-control" id="selectedReport">
                             </select>
                         </div>
-                        <h5>Sources de données associées</h5>
-                        <ul class="reports-dataviz-exist list-group">
-                        </ul>
+                        <div id="report-form2">
+                          <h5>Sources de données associées</h5>
+                          <ul class="reports-dataviz-exist list-group">
+                          </ul>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

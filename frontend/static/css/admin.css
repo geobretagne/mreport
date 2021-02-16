@@ -464,6 +464,11 @@ h5>.badge {
   color: white;
   transition: 0.2s;
 }
+#report-modal-form .modal-body #report-form,
+#report-modal-form2 .modal-body #report-form2{
+  max-height:300px;
+  overflow:auto;
+}
 #report-modal-form li.list-group-item span{
   display: inline-block;
   width: 80%;
