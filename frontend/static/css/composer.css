@@ -21,6 +21,7 @@
 
 .sidenav h6 {
     color: #fff;
+    padding:0 10px;
 }
 
 .sidenav a:hover {
@@ -60,8 +61,8 @@
 .builder.edit .composition {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin-left: 0px;
-    margin-top: 10px;
-    padding: 30px 15px 15px;
+    margin-top: 50px;
+    padding: 20px;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     position: relative;
@@ -156,7 +157,7 @@
 .builder.edit .composition .structure-element .drag {
     font-size: 13px;
     top: 5px;
-    right: 90px;
+    right: 80px;
     z-index: 10;
 }
 
@@ -254,6 +255,7 @@
 
 #structure-models, #dataviz-items {
     padding: 10px;
+  margin-bottom:1rem;
 }
 
 .composition {
@@ -388,6 +390,9 @@ span.text-edit.badge.badge-warning {
     font-size: 15px;
     right: 10px;
     z-index: 5;
+}
+.divide_column{
+  margin-right:5px;
 }
 .divide_column,
 .delete_column{
