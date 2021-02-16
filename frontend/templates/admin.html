@@ -48,8 +48,11 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active" data-page="catalog">
-                    <a class="nav-link">Catalogue</a>
+                <li class="nav-item active" data-page="home">
+                    <a class="nav-link">Accueil</a>
+                </li>
+                <li class="nav-item" data-page="catalog">
+                    <a class="nav-link">Données</a>
                 </li>
                 <li class="nav-item" data-page="reports">
                     <a class="nav-link">Rapports</a>
@@ -63,9 +66,21 @@
     </nav>
     <!-- Navigation end -->
 
+    <div class="container-fluid page active" id="home">
+        <h1>Accueil</h1>
+        <p>
+<h4>mreport</h4> est un outil simple de <b>reporting web</b> qui permet de composer des rapports combinant <b>chiffres-clés, graphiques, images, textes</b> à partir de
+ jeux de données intégrés dans la base de données de la solution. Un même rapport peut être valable pour un <b>référentiel d'identités</b> (Communes, EPCI,  gares...)
+Les rapports générés restent "connectés"   aux données sources et sont affichables sur mobile, ordinateur et imprimables au format A4 pour un export pdf par exemple.
+Outre l'aspect reporting, mreport dispose d'une <b>API</b> permettant de réutiliser les dataviz disponibles dans un rapport et de les intégrer dans un autre outil web ou un CMS ou mviewer.
+
+<h5><a href="https://github.com/geobretagne/mreport/blob/master/docs/PRESENTATION.md" target="_blank">Documentation</a></h5>
+        </p>
+    </div>
+
     <!-- Catalog start -->
-    <div class="container-fluid page active" id="catalog">
-        <h1>Jeux de données</h1>
+    <div class="container-fluid page" id="catalog">
+        <h1>Données</h1>
         <div id="filterbutton" class="row sticky-sm">
             <button class="btn d-md-none col-12" data-toggle="collapse" data-target="#stickycollapse">
                 Outils<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
@@ -82,7 +97,7 @@
                         data-target="#report-modal-form2">Ajouter à un rapport existant</button>
                 </div>
                 <div class="col-md-2 col-12">
-                    <input id="searchbar" class="form-control" placeholder="Filtrer le catalogue" maxlength="32">
+                    <input id="searchbar" class="form-control" placeholder="Filtrer les données" maxlength="32">
                 </div>
 
                 <div class="col-md-1 col-12">

@@ -590,3 +590,13 @@ span.designed-dataviz.disabled {
     border-color: #fff #dee2e6 #dee2e6 #dee2e6;
     border-width: thin;
 }
+
+#report-composition .dataviz-container:empty:after {
+    content: "Glisser-déposer une donnée ici";
+    color: #818181;
+}
+
+#report-composition .report-bloc-title .dataviz-container {
+    border: #007bff;
+    border-style: ridge;
+}
