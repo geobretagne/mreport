@@ -647,7 +647,7 @@ wizard = (function () {
                 tabs_content.push('</div>');
                 tabs.push('</div></nav>');
                 var html = tabs.join(" ") + "\n" + tabs_content.join(" ");
-
+                $("#wizard-icons").html("");
                 $("#wizard-icons").append(html);
                 $(".icon-picker-list li.custom-icon").click(function (e) {
                     var icon = e.currentTarget.dataset.class;
@@ -655,15 +655,7 @@ wizard = (function () {
                     document.querySelector(".card-container").classList.toggle('backcard');
                 })
                 model.iconstyle = style;
-                //Update style in wizard modal
-                var _css = ['<style>',
-                //get current/default style
-                    model.style.match(/(?<=\<style\>)(.|\n)*?(?=\<\/style\>)/g)[0].trim(),
-                    //add icon style
-                    style,
-                    '</style>']. join(" ");
-                document.getElementById("wizard-result").querySelector("STYLE").firstChild.nodeValue = _css;
-
+                _updateStyle(model);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -687,7 +679,14 @@ wizard = (function () {
      */
     var _updateStyle = function (model) {
         $("#wizard-result style").remove();
-        $("#wizard-result").append(model.style);
+        //Update style in wizard modal
+        var _css = ['<style>',
+            //get current/default style
+            model.style.match(/(?<=\<style\>)(.|\n)*?(?=\<\/style\>)/g)[0].trim(),
+            //add icon style
+            model.iconstyle,
+            '</style>']. join(" ");
+        document.getElementById("wizard-view").querySelector("STYLE").innerHTML = _css;
     };
 
     /**
