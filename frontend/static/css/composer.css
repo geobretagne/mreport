@@ -525,21 +525,21 @@ span.designed-dataviz {
     right: 30px;
     position: absolute;
     font-family: "Font Awesome 5 Free";
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 700;
     color: grey;
     margin-top: -10px;
 }
 
 span.designed-dataviz:before {
-    content: "\f568";
+    content: "\f5ae";
 }
 
 span.certified-dataviz {
     right: 70px;
     position: absolute;
     font-family: "Font Awesome 5 Free";
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 700;
     color:#8cb871;
     margin-top: -10px;
