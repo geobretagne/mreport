@@ -626,3 +626,44 @@ h5>.badge {
     z-index: 99;
     right: 10px;
 }
+
+#home h1{
+  text-align:center;
+  color:#0094ab;
+}
+
+#home p{
+  max-width:315px;
+font-size:15px;
+  margin:0 auto;
+  text-align:center;
+  margin-top:30px;
+  margin-bottom:0;
+}
+
+#home .buttons{
+  text-align:center;
+}
+#home .buttons .btn{
+  margin:30px 10px;
+  width:140px;
+  background: linear-gradient(135deg, #00c0de, #006878);
+  -webkit-transition: background-color 2s ease-out;
+  -moz-transition: background-color 2s ease-out;
+  -o-transition: background-color 2s ease-out;
+  transition: background-color 2s ease-out;
+}
+
+#home .buttons .btn:hover{
+  background: linear-gradient(135deg,#00c0de,#0094ab, #00262c);
+  cursor:pointer;
+}
+#home .buttons a,
+#home .buttons a .btn{
+  color:white;
+  text-decoration:none;
+  font-size:12px;
+}
+#home .images img{
+  height:300px;
+}
