@@ -361,6 +361,7 @@ report = (function () {
         b.classList.add("printButton");
         let c = document.createElement("span");
         c.classList.add("fas");
+        c.classList.add("fa-print");
         b.appendChild(c);
         a.appendChild(b);
         let d = document.getElementsByClassName("container-fluid")[0];
