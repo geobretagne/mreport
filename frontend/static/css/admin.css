@@ -647,7 +647,7 @@ font-size:15px;
 #home .buttons .btn{
   margin:30px 10px;
   width:140px;
-  background: linear-gradient(135deg, #00c0de, #006878);
+  background: linear-gradient(135deg, #0094ab, #006878);
   -webkit-transition: background-color 2s ease-out;
   -moz-transition: background-color 2s ease-out;
   -o-transition: background-color 2s ease-out;
@@ -655,7 +655,7 @@ font-size:15px;
 }
 
 #home .buttons .btn:hover{
-  background: linear-gradient(135deg,#00c0de,#0094ab, #00262c);
+  background: linear-gradient(135deg,#0094ab, #006878,#00525f);
   cursor:pointer;
 }
 #home .buttons a,
