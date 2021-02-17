@@ -90,12 +90,12 @@ composer = (function () {
         '<i class="fas fa-arrows-alt"></i>',
         '<p id="drag-tag"> drag</p>',
         '</span>',
-        '<span>{{dvz}}</span>',
         '<div class="tool">',
         '<button class="btn btn-default" data-toggle="modal" data-component="report" data-related-id="{{id}}" data-target="#wizard-panel">',
         '<i class="fas fa-cog"></i>',
         '</button>',
         '</div>',
+        '<span>{{dvz}}</span>',
         '<code class="dataviz-definition"></code>',
         '</li>'
     ];

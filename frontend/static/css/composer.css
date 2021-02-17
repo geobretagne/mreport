@@ -344,7 +344,7 @@ span.text-edit.badge.badge-warning {
     content: "  \0040";
 }
 
-.tool.configured {
+.tool,.tool.configured {
     display: inline;
 }
 
@@ -405,7 +405,8 @@ span.text-edit.badge.badge-warning {
 #report-composition .dataviz-container{
     padding-left : 20px;
     padding-right : 20px;
-    padding-top:45px;
+    padding-top:5px;
+    padding-bottom:5px;
 }
 #report-composition .customBaseColumn {
     padding: 0;
