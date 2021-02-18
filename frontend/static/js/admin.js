@@ -245,11 +245,29 @@ admin = (function () {
                         <a href='#0' class='cd-item-remove cd-img-replace'>Remove</a>\
                     </li>"
                 );
+              /*deactivate button if no selection*/
+              if($("ul.cd-cart-items li").length < 1 ){
+                $('.toggle-deactivate').prop('disabled', true);
+              }else if($("ul.cd-cart-items li").length >= 1 ){
+                $('.toggle-deactivate').prop('disabled', false);
+              }
             } else {
                 $("#cd-cart .cd-cart-items li[data-dataviz-id|=" + id + "]").remove();
+              /*deactivate button if no selection*/
+              if($("ul.cd-cart-items li").length < 1 ){
+                $('.toggle-deactivate').prop('disabled', true);
+              }else if($("ul.cd-cart-items li").length >= 1 ){
+                $('.toggle-deactivate').prop('disabled', false);
+              }
             }
             $(".green .number").html($(".cd-cart-items li").length);
         });
+        /*deactivate button if no selection*/
+        if($("ul.cd-cart-items li").length < 1 ){
+          $('.toggle-deactivate').prop('disabled', true);
+        }else if($("ul.cd-cart-items li").length >= 1 ){
+          $('.toggle-deactivate').prop('disabled', false);
+        }
         /* Remove event from the 'select all' checkbox because we do not want to add it to the cart */
         $("#checkAll").off("change");
         /* Bind event to dynamically generated cart items in order to delete them from the cart and unselect
