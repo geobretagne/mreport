@@ -42,6 +42,14 @@ db = SQLAlchemy(app)
 
 #MODELS
 
+class Level_type(db.Model):
+    level= db.Column(db.String(50),primary_key=True)
+    level_dataid = db.relationship('Dataid', backref="level1", cascade="all, delete-orphan" , lazy='dynamic')
+    level_dataviz = db.relationship('Dataviz', backref="level2", cascade="all, delete-orphan" , lazy='dynamic')
+    __table_args__ = (tableschema)
+    def __repr__(self):
+        return '<level {}>'.format(self.level)
+
 
 class Dataviz(db.Model):
     dataviz = db.Column(db.String(50),primary_key=True)
@@ -51,7 +59,7 @@ class Dataviz(db.Model):
     year = db.Column(db.String(4))
     unit = db.Column(db.String(50))
     type = db.Column(db.String(200),nullable=False)
-    level = db.Column(db.String(50),nullable=False)
+    level = db.Column(db.String(50),db.ForeignKey(schema+'level_type.level'))
     job = db.Column(db.String(50))
     viz = db.Column(db.String(2000))
     report_composition_dvz = db.relationship('Report_composition', backref="report1", cascade="all, delete-orphan" , lazy='dynamic')
@@ -64,6 +72,7 @@ class Dataviz(db.Model):
 class Dataid(db.Model):
     dataid = db.Column(db.String(50),primary_key=True,index=True)
     label = db.Column(db.String(250),nullable=False)
+    level = db.Column(db.String(50),db.ForeignKey(schema+'level_type.level'))
     rawdata_dataid = db.relationship('Rawdata', backref="rawdata2", cascade="all, delete-orphan", lazy='dynamic')
     __table_args__ = (
         tableschema
@@ -134,6 +143,18 @@ report = api.namespace('report', description='Reports')
 picto = api.namespace('picto', description='Pictos')
 report_composition = api.namespace('report_composition', description='Composition des rapports')
 report_html = api.namespace('report_html', description='Structure html des rapports')
+level = api.namespace('level', description='Liste des référentiels')
+
+@level.route('/',doc={'description':'Récupération des réferentiels'})
+class GetLevels(Resource):
+    def get(self):
+        result = db.session.query(Level_type).all()
+        levels = []
+        for r in result: 
+          levels.append(r.level)
+        data = {'response':'success','levels': levels}
+        return jsonify(**data)
+
 
 @picto.route('/',doc={'description':'Récupération des pictos'})
 class GetPictos(Resource):
