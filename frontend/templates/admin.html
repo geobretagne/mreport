@@ -269,9 +269,18 @@
                                     placeholder="Niveau" required="">
                             </div>
                             <div class="col">
-                                <label for="inputType"><span class="badge badge-dark">Type</span></label>
-                                <input type="text" class="form-control" name="type" id="inputType" placeholder="Type"
+                                <label for="inputType"><span class="badge badge-dark">Mode de Réprésentation par défault</span></label>
+                                <select class="form-control" name="type" id="inputType" placeholder="Mode de Réprésentation par défault"
                                     required="">
+                                    <option value="chart">chart</option>
+                                    <option value="figure">figure</option>
+                                    <option value="iframe">iframe</option>
+                                    <option value="image">image</option>
+                                    <option value="map">map</option>
+                                    <option value="table">table</option>
+                                    <option value="text">text</option>
+                                    <option value="titre">titre</option>
+                                </select>
                             </div>
                             <div class="col">
                                 <label for="inputUnit"><span class="badge badge-dark">Unité</span></label>
@@ -321,7 +330,7 @@
                               placeholder="Titre" required="true">
                     </div>
                     <form class="form" id="report-form" role="form" autocomplete="off">
-                        
+
                         <h5>Sources de données associées</h5>
                         <ul class="reports-dataviz list-group">
                         </ul>
