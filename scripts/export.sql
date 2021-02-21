@@ -1,4 +1,4 @@
-CREATE TEMPORARY TABLE bk AS SELECT report from data.report WHERE report IN ('epci_population', 'eclusetrafic');
+CREATE TEMPORARY TABLE bk AS SELECT report from data.report WHERE report IN (:expr);
 
 copy (select report, title from data.report
 	  where report IN (SELECT report from bk))
