@@ -150,7 +150,7 @@ class GetLevels(Resource):
     def get(self):
         result = db.session.query(Level_type).all()
         levels = []
-        for r in result: 
+        for r in result:
           levels.append(r.level)
         data = {'response':'success','levels': levels}
         return jsonify(**data)
@@ -295,7 +295,7 @@ class DatavizManagement(Resource):
 @report.route('/', doc={'description': 'Récupération des rapports avec leurs dataviz associées'})
 class GetReports(Resource):
     def get(self):
-        result = db.session.query(Report,Report_composition.dataviz,Dataviz.title.label("datavizTitle")).outerjoin(Report_composition,Report.report == Report_composition.report).join(Dataviz,Dataviz.dataviz == Report_composition.dataviz ).all()
+        result = db.session.query(Report,Report_composition.dataviz,Dataviz.title.label("datavizTitle"),Dataviz.type.label("datavizType")).outerjoin(Report_composition,Report.report == Report_composition.report).join(Dataviz,Dataviz.dataviz == Report_composition.dataviz ).all()
         '''
                 db.session.query(Report,Report_composition.dataviz,Dataviz.title.label("datavizTitle"))
                 .outerjoin(Report_composition,Report.report == Report_composition.report)
@@ -304,7 +304,7 @@ class GetReports(Resource):
         '''
         data = dict_builder(result)
         res = defaultdict(list)
-        for values in data: res[values['report'],values['title']].append({"id":values['dataviz'],"title":values['datavizTitle']})
+        for values in data: res[values['report'],values['title']].append({"id":values['dataviz'],"title":values['datavizTitle'],"type":values['datavizType']})
         data = {'response':'success','reports': [{'report':report[0],'title':report[1], 'dataviz':dataviz} for report,dataviz in res.items()]}
         return jsonify(**data)
 

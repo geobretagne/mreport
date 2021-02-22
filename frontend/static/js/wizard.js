@@ -231,10 +231,10 @@ wizard = (function () {
                 // 1 dataset une seule ligne => figure, text, iframe, image
                 if (data_type === "text") {
                     options.push(["figure", "fas fa-sort-numeric-down"]);
-                    options.push(["text", "far fa-file-alt"]);
+                    options.push(["text", "fas fa-comment"]);
                 } else if (data_type === "url") {
-                    options.push(["iframe", "far fa-map"]);
-                    options.push(["image", "far fa-image"]);
+                    options.push(["iframe", "fas fa-external-link-alt"]);
+                    options.push(["image", "fas fa-image"]);
                 }
             } else {
                 // 1 dataset plusieurs lignes => table, chart

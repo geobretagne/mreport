@@ -87,7 +87,7 @@ composer = (function () {
     var _datavizTemplate = [
         '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item handle">',
         '<span class="drag badge badge-default">',
-        '<i class="fas fa-arrows-alt"></i>',
+        '<i class="{{icon}}"></i>',
         '<p id="drag-tag"> drag</p>',
         '</span>',
         '<div class="tool">',
@@ -344,6 +344,8 @@ composer = (function () {
                         dvztpl = dvztpl.replace(/{{dvz}}/g, dvz.title);
                         dvztpl = dvztpl.replace(/{{id}}/g, dvz.id);
                         dvztpl = dvztpl.replace(/{{reportId}}/g, reportId);
+                        dvztpl = dvztpl.replace(/{{type}}/g, dvz.type);
+                        dvztpl = dvztpl.replace(/{{icon}}/g, _getDatavizTypeIcon(dvz.type));
                         lst.push(dvztpl);
                     }
                 });
@@ -355,6 +357,37 @@ composer = (function () {
             }
         });
 
+    };
+
+    var _getDatavizTypeIcon  = function (type) {
+        let icon = 'fas fa-arrows-alt';
+        switch (type) {
+            case "chart":
+            icon = "fas fa-chart-bar";
+            break;
+            case "table":
+            icon = "fas fa-table";
+            break;
+            case "figure":
+            icon = "fas fa-sort-numeric-down";
+            break;
+            case "title":
+            icon = "fas fa-heading";
+            break;
+            case "map":
+            icon = "fas fa-map-marker-alt";
+            break;
+            case "image":
+            icon = "fas fa-image";
+            break;
+            case "iframe":
+            icon = "fas fa-external-link-alt";
+            break;
+            case "text":
+            icon = "fas fa-comment";
+            break;
+        }
+        return icon;
     };
 
     /*
@@ -472,7 +505,7 @@ composer = (function () {
                             //Set title icon & deactivate wizard button
                             var btn = $(evt.item).find(".tool button");
                             $(btn).removeAttr("data-target").removeAttr("data-toggle");
-                            $(btn).find("i").get(0).className = "far fa-comment-dots";
+                            $(btn).find("i").get(0).className = "fas fa-heading";
                         } else if ($(evt.item).hasClass("structure-element") && $(evt.item).find(".editable-text:contains(edit)").length == 0) {
                             // add edit button near to editable text elements
                             var btn = $(evt.item).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i>edit</span>').find(".text-edit");
@@ -932,6 +965,7 @@ composer = (function () {
                 dvztpl = dvztpl.replace(/{{dvz}}/g, dvz.title);
                 dvztpl = dvztpl.replace(/{{id}}/g, dvz.dataset.dataviz);
                 dvztpl = dvztpl.replace(/{{reportId}}/g, dvz.reportId);
+                dvztpl = dvztpl.replace(/{{icon}}/g, _getDatavizTypeIcon(dvz.type));
                 document.getElementById("dataviz-items").innerHTML += dvztpl;
             }
             dvz.parentNode.removeChild(dvz);
