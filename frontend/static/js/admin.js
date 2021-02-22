@@ -286,6 +286,42 @@ admin = (function () {
             $(formId + ' .form-control[name="' + key + '"]').val(value);
         }
     };
+
+    var _initLevels = function () {
+         //get levels list
+        $.ajax({
+            dataType: "json",
+            url: [report.getAppConfiguration().api, "level"].join("/"),
+            success: function (data) {
+                if (data.response === "success") {
+                    _levels = data.levels;
+                    let options = [];
+                    data.levels.forEach(function (level) {
+                        options.push(`<option value="${level}">${level}</option>`);
+                    })
+                    $("#dataviz-modal-form #inputLevel,#dataviz-form2 #inputLevel").append(options.join(""));
+
+
+                } else {
+                    var err = data.error || data.response;
+                    Swal.fire(
+                        'Une erreur s\'est produite',
+                        'La liste des référentiels n\'a pas pu être chargée <br> (' + err + ')',
+                        'error'
+                    );
+                }
+            },
+            error: function (xhr, status, error) {
+                var err = _parseError(xhr.responseText);
+                Swal.fire(
+                    'Une erreur s\'est produite',
+                    'L\'API ne réponds pas <br> (' + err + ')',
+                    'error'
+                );
+            }
+        });
+
+    };
     var _initCatalog = function () {
         $.ajax({
             dataType: "json",
@@ -961,7 +997,8 @@ admin = (function () {
         createReport: _createReport,
         getReportData: _getReportData,
         visualizeDataviz: _visualizeDataviz,
-        saveVisualization: _saveDataviz
+        saveVisualization: _saveDataviz,
+        initLevels: _initLevels
     }; // fin return
 
 })();
@@ -970,5 +1007,6 @@ $(document).ready(function () {
     admin.initCatalog();
     admin.initReports();
     admin.initMenu();
+    admin.initLevels();
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 });
