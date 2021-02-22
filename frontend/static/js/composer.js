@@ -135,7 +135,7 @@ composer = (function () {
                     '<i class="fas fa-columns"></i> <span>Diviser</span>',
                 '</span>',
                 '<span class="badge badge-danger delete_column">',
-                    '<i class="fas fa-undo"></i><span>reset</span>',
+                    '<i class="fas fa-undo"></i><span>Vider</span>',
                 '</span>',
             '</div>'
         ].join("");
@@ -764,7 +764,7 @@ composer = (function () {
                         </span>\
                         <span class="badge badge-danger delete_column">\
                             <i class="fas fa-undo"></i>\
-                        <span>reset</span>\
+                        <span>Vider</span>\
                         </span>\
                     </div>\
                     <div class="dataviz-container card list-group-item">\
@@ -879,7 +879,7 @@ composer = (function () {
                             </span>\
                             <span class="badge badge-danger delete_column">\
                                 <i class="fas fa-undo"></i>\
-                                <span>reset</span>\
+                                <span>Vider</span>\
                             </span>\
                         </div>\
                         <div class="dataviz-container card list-group-item">\
@@ -925,7 +925,7 @@ composer = (function () {
                                 </span>\
                                 <span class="badge  badge-danger delete_column">\
                                     <i class="fas fa-undo"></i>\
-                                    <span>reset</span>\
+                                    <span>Vider</span>\
                                 </span>\
                             </div>\
                             <div class="dataviz-container card list-group-item">\
