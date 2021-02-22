@@ -331,7 +331,7 @@ span.text-edit.badge.badge-warning {
 }
 
 .composition li.dataviz.list-group-item span {
-    /*display: none;*/
+    padding-left: 10px;
 }
 
 .structure-element-description {
@@ -346,6 +346,10 @@ span.text-edit.badge.badge-warning {
 
 .tool,.tool.configured {
     display: inline;
+}
+
+.report-bloc-title .tool .btn {
+    cursor: auto;
 }
 
 #dataviz-items code.dataviz-definition {
