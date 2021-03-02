@@ -577,6 +577,7 @@ composer = (function () {
      */
 
     var _exportHTML = function () {
+        saver.saveJsonReport();
         var html = [];
         // Get first title
         $("#report-composition .report-bloc-title").each(function (id, title) {
