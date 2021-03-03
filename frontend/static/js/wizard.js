@@ -183,7 +183,6 @@ wizard = (function () {
         //remove all form values
         $(".dataviz-attributes").val("");
         $("#w_dataviz_type").val("");
-        $("#wizard-code").text("");
         $(".colorbtn, .color-picker").each(function (index, elem) {
             elem.remove();
         })
@@ -446,8 +445,6 @@ wizard = (function () {
     var _configureDataviz = function (datavizId) {
         //Get current dataviz id
         var datavizId = $("#wizard-panel").attr("data-related-id");
-        //copy paste generated code in <code> element
-        $('[data-dataviz="' + datavizId + '"] code.dataviz-definition').text($("#wizard-code").text());
         var ico = $("#w_dataviz_type option:selected").attr("data-icon");
         //update dataviz element icon (chart for chart, table for table...)
         $('[data-dataviz="' + datavizId + '"] button i').get(0).className = ico;
@@ -455,7 +452,6 @@ wizard = (function () {
         $('[data-dataviz="' + datavizId + '"] button').closest(".tool").addClass("configured");
         //Reset and hide wizard modal
         $("#wizard-result div").remove();
-        $("#wizard-code").text("");
         $("#wizard-panel").modal("hide");
     };
 
@@ -908,7 +904,6 @@ wizard = (function () {
             //Render result in wizard modal
             $("#wizard-result div").remove();
             $("#wizard-result").append(elem);
-            $("#wizard-code").text(elem[0].outerHTML);
             //Draw dataviz with data, type and properties
             report.testViz(viz.data, viz.type, viz.properties);
         }

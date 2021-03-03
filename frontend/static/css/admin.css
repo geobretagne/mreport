@@ -4,7 +4,6 @@
 body {
   padding: 0 !important;
   height: 100%;
-  background-color:#e9ecef;
 }
 
 #composer, .builder.edit, .main, .composition, #report-composition {
@@ -23,12 +22,14 @@ body {
 }
 
 .btn {
-  letter-spacing: .5px;
   border: none;
   border-radius: 2px;
   line-height: 36px;
-  padding: 3px;
+  font-size:13px;
+  padding: 0 10px;
+  font-weight:600;
 }
+
 .btn:not(.notdvz){
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
@@ -63,78 +64,78 @@ h5>.badge {
   margin-left: 10px;
 }
 
-.modal[data-report-state="new"] .badge-success {
+.modal[data-report-state="new"] .mreport-secondary-color-1-bg {
   display: inline-block;
 }
 
-.modal[data-report-state="edit"] .badge-success {
+.modal[data-report-state="edit"] .mreport-secondary-color-1-bg {
   display: none;
 }
 
-.modal[data-report-state="delete"] .badge-success {
+.modal[data-report-state="delete"] .mreport-secondary-color-1-bg {
   display: none;
 }
 
-.modal[data-report-state="new"] .badge-warning {
+.modal[data-report-state="new"] .mreport-secondary-color-2-bg {
   display: none;
 }
 
-.modal[data-report-state="delete"] .badge-warning {
+.modal[data-report-state="delete"] .mreport-secondary-color-2-bg {
   display: none;
 }
 
-.modal[data-report-state="edit"] .badge-warning {
+.modal[data-report-state="edit"] .mreport-secondary-color-2-bg {
   display: inline-block;
 }
 
-.modal[data-report-state="new"] .badge-danger {
+.modal[data-report-state="new"] .mreport-error-color-bg {
   display: none;
 }
-.modal[data-report-state="delete"] .badge-danger {
+.modal[data-report-state="delete"] .mreport-error-color-bg {
   display: inline-block;
 }
 
-.modal[data-report-state="edit"] .badge-danger {
+.modal[data-report-state="edit"] .mreport-error-color-bg {
   display: none;
 }
 
 
-.modal[data-dataviz-state="new"] .badge-success {
+.modal[data-dataviz-state="new"] .mreport-secondary-color-1-bg {
   display: inline-block;
 }
 
-.modal[data-dataviz-state="edit"] .badge-success {
+.modal[data-dataviz-state="edit"] .mreport-secondary-color-1-bg {
   display: none;
 }
 
-.modal[data-dataviz-state="delete"] .badge-success {
+.modal[data-dataviz-state="delete"] .mreport-secondary-color-1-bg {
   display: none;
 }
 
-.modal[data-dataviz-state="new"] .badge-warning {
+.modal[data-dataviz-state="new"] .mreport-secondary-color-2-bg {
   display: none;
 }
 
-.modal[data-dataviz-state="delete"] .badge-warning {
+.modal[data-dataviz-state="delete"] .mreport-secondary-color-2-bg {
   display: none;
 }
 
-.modal[data-dataviz-state="edit"] .badge-warning {
+.modal[data-dataviz-state="edit"] .mreport-error-color-bg {
   display: inline-block;
 }
 
-.modal[data-dataviz-state="new"] .badge-danger {
+.modal[data-dataviz-state="new"] .mreport-error-color-bg {
   display: none;
 }
 
-.modal[data-dataviz-state="delete"] .badge-danger {
+.modal[data-dataviz-state="delete"] .mreport-error-color-bg {
   display: inline-block;
 }
 
-.modal[data-dataviz-state="edit"] .badge-danger {
+.modal[data-dataviz-state="edit"] .mreport-error-color-bg {
   display: none;
 }
-.modal[data-report-state="add"] .badge-success{
+.modal[data-report-state="add"] .mreport-secondary-color-1-bg{
   display: inline-block;
 }
 .container-fluid {
@@ -196,6 +197,7 @@ h5>.badge {
 #filterbutton button {
   margin-bottom: 0;
   background-color: white;
+  font-weight:600;
 }
 
 /*
@@ -326,7 +328,6 @@ h5>.badge {
 */
 #togglePanier {
   position: sticky;
-  background: lightskyblue;
   z-index: 5;
   width: 32px;
   height: 35px;
@@ -342,7 +343,7 @@ h5>.badge {
 
 #togglePanier:hover {
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #FFA80E;
   transition: 0.3s;
 }
 
@@ -376,9 +377,9 @@ h5>.badge {
 
 .green:hover {
   cursor: pointer;
-  background: #03C9A9 !important;
+  background: #006878 !important;
   color: #FFF !important;
-  border: 2px solid #03C9A9;
+  border: 2px solid #006878;
   transition: 0.4s;
 }
 #wizard-result{
@@ -458,15 +459,12 @@ h5>.badge {
   transition: 0.2s;
 }
 .duplicate i {
-  color: black;
   transition: 0.2s;
 }
 .duplicate:hover{
-  background-color: mediumseagreen;
   transition: 0.2s;
 }
 .duplicate:hover i{
-  color: white;
   transition: 0.2s;
 }
 #report-modal-form .modal-body #report-form,
@@ -629,12 +627,11 @@ h5>.badge {
 
 #home h1{
   text-align:center;
-  color:#0094ab;
 }
 
 #home p{
   max-width:315px;
-font-size:15px;
+  font-size:15px;
   margin:0 auto;
   text-align:center;
   margin-top:30px;
@@ -647,7 +644,6 @@ font-size:15px;
 #home .buttons .btn{
   margin:30px 10px;
   width:140px;
-  background: linear-gradient(135deg, #0094ab, #006878);
   -webkit-transition: background-color 2s ease-out;
   -moz-transition: background-color 2s ease-out;
   -o-transition: background-color 2s ease-out;
@@ -655,15 +651,37 @@ font-size:15px;
 }
 
 #home .buttons .btn:hover{
-  background: linear-gradient(135deg,#0094ab, #006878,#00525f);
   cursor:pointer;
 }
+
 #home .buttons a,
 #home .buttons a .btn{
   color:white;
   text-decoration:none;
-  font-size:12px;
 }
+
 #home .images img{
   height:300px;
+}
+
+.text-edit.btn{
+  padding:5px;
+  font-size:15px;
+  line-height:normal;
+  font-variant:all-small-caps;
+  font-style:normal;
+  margin-left:10px;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  background-color:#006878!important;
+  color:white!important;
+}
+
+.swal2-styled.swal2-confirm{
+  background-color:#006878!important;
+}
+
+.swal2-styled.swal2-cancel{
+  background-color:#9FB935!important;
 }
