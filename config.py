@@ -1,8 +1,7 @@
 DEBUG = True
 API_LOCATION = '/api'
 APP_SCHEME = 'http'
-SQLALCHEMY_DATABASE_URI = 'postgresql://mreport_user1:mreport@localhost:5432/dataviz1'
-SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_DATABASE_URI = 'postgresql://mreport:password@localhost:5432/dataviz'
 SCHEMA = "data" ## Comment this line if you don't need schema or if you use SQLite
 MREPORT_REPORTS = "backend/reports"
 MREPORT_LOCATION = "/mreport"
