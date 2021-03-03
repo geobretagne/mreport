@@ -390,12 +390,12 @@ report = (function () {
                     _config.share = false;
                 } else {
                     $("body").append(html);
+                    _printDate();
+                    _print();
                 }
                 //append _config
                 _merge_config();
                 _getData();
-                _printDate();
-                _print();
             },
             error: function (xhr, status, err) {
                 _alert("Erreur avec le fichier report.html de " + APIRequest.base_url + " " + err, "danger", true);
