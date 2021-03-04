@@ -1,7 +1,7 @@
 <!-- Button injected in admin.html-->
 <template id="import_button" data-target="#sticky">
     <div class="col-md-2 col-12">
-        <button type="button" class="btn btn-dark" data-toggle="modal"
+        <button type="button" class="btn mreport-primary-color-1-bg" data-toggle="modal"
             data-target="#import-modal-form">Importer</button>
     </div>
 </template>
@@ -134,7 +134,7 @@
                             <form class="form was-validated" id="dataviz-form2" role="form" autocomplete="off">
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="inputTitle"><span class="badge badge-dark">Nom</span></label>
+                                        <label for="inputTitle"><span class="badge mreport-primary-color-3-bg">Nom</span></label>
                                         <input type="text" class="form-control" name="title" id="inputTitle"
                                             placeholder="Nom de la dataviz" required>
                                             <div class="valid-feedback">Valid.</div>
@@ -142,7 +142,7 @@
 
                                     </div>
                                     <div class="col">
-                                        <label for="inputSource"><span class="badge badge-dark">Source</span></label>
+                                        <label for="inputSource"><span class="badge mreport-primary-color-3-bg">Source</span></label>
                                         <input type="text" class="form-control" name="source" id="inputSource"
                                             placeholder="Source" required>
                                     </div>
@@ -150,7 +150,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="inputDescription"><span class="badge badge-dark">Description</span></label>
+                                        <label for="inputDescription"><span class="badge mreport-primary-color-3-bg">Description</span></label>
                                         <input type="text" class="form-control" name="description" id="inputDescription"
                                             placeholder="Description">
                                     </div>
@@ -158,19 +158,19 @@
 
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="inputYear"><span class="badge badge-dark">millésime</span></label>
+                                        <label for="inputYear"><span class="badge mreport-primary-color-3-bg">millésime</span></label>
                                         <input type="text" class="form-control" name="year" id="inputYear"
                                             placeholder="Millésime">
                                     </div>
                                     <div class="col">
-                                        <label for="inputLevel"><span class="badge badge-dark">Référentiel</span></label>
+                                        <label for="inputLevel"><span class="badge mreport-primary-color-3-bg">Référentiel</span></label>
                                         <select class="form-control" name="level" id="inputLevel"
                                             placeholder="Référentiel" required>
                                             <option disabled selected>...</option>
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <label for="inputUnit"><span class="badge badge-dark">Unité</span></label>
+                                        <label for="inputUnit"><span class="badge mreport-primary-color-3-bg">Unité</span></label>
                                         <input type="text" class="form-control" name="unit" id="inputUnit" placeholder="Unité">
                                     </div>
                                 </div>
@@ -189,10 +189,10 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" id="btn-prev" class="btn btn-success mr-auto" onclick="import_wizard.previous();">Previous</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                <button type="button" id="btn-next" class="btn btn-success" onclick="import_wizard.next();">Next</button>
-                <button id="import_data-btn" type="submit" disabled class="btn btn-primary"
+                <button type="button" id="btn-prev" class="btn mreport-primary-color-2-bg mr-auto" onclick="import_wizard.previous();">Previous</button>
+                <button type="button" class="btn mreport-primary-color-3-bg" data-dismiss="modal">Fermer</button>
+                <button type="button" id="btn-next" class="btn mreport-primary-color-1-bg" onclick="import_wizard.next();">Next</button>
+                <button id="import_data-btn" type="submit" disabled class="btn mreport-primary-color-1-bg"
                     onclick="import_wizard.importData();">Importer</button>
             </div>
         </div>

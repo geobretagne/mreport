@@ -51,7 +51,7 @@ textedit = (function () {
 
         // Button Itself
         var configButton = document.createElement("a");
-        configButton.classList.add("btn", "btn-warning", "notdvz");
+        configButton.classList.add("btn", "mreport-primary-color-2-bg", "notdvz");
         configButton.dataset.toggle = "modal";
         configButton.dataset.target = "#textEdit";
 

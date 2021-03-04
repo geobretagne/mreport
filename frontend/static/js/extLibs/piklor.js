@@ -156,7 +156,7 @@
             temp += "<div class='col-6 px-2 my-2 optional-parameter'><input class='manualColorPicking' placeholder='Saisissez une couleur'></input></div>";
         }
         if(this.options.removeColor){
-            temp+='<div class="col-6 px-2 my-2 optional-parameter"><button type="button" class="btn btn-danger delete-color">Delete Color</button></div>';
+            temp+='<div class="col-6 px-2 my-2 optional-parameter"><button type="button" class="btn mreport-primary-color-3-bg delete-color">Delete Color</button></div>';
         }
         html+='<div class="optional-piklor-parameters row">'+temp+'</div>';
         self.elm.innerHTML = html;

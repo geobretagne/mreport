@@ -45,7 +45,7 @@ admin = (function () {
                         if (element && element.classList) {
                             element.classList.add("used");
                             let span = document.createElement("SPAN");
-                            span.className = "badge badge-light";
+                            span.className = "badge mreport-primary-color-3-bg";
                             span.textContent = key;
                             element.querySelector(".card-footer").append(span);
                         }
@@ -106,7 +106,7 @@ admin = (function () {
                 // data.dataviz = ['epci_title', 'epci_pop'];
                 data.dataviz.forEach(function (dvz) {
                     if (dvz != null)
-                        lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item item2keep"><span>' + dvz.title + '</span><button type="button" class="btn btn-delete btn-danger">Delete</button></li>');
+                        lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item item2keep"><span>' + dvz.title + '</span><button type="button" class="btn btn-delete mreport-error-color-bg">Delete</button></li>');
                 });
                 confirmed.attr("onclick", "admin.updateReport();");
                 confirmed.html("Enregistrer");
@@ -141,12 +141,12 @@ admin = (function () {
                 item.toggleClass("item2keep");
                 if (item.hasClass("item2keep")) {
                     $(this).text("Delete")
-                    $(this).removeClass("btn-success");
-                    $(this).addClass("btn-danger");
+                    $(this).removeClass("mreport-validate-color-bg");
+                    $(this).addClass("mreport-error-color-bg");
                 } else {
                     $(this).text("Keep");
-                    $(this).removeClass("btn-danger");
-                    $(this).addClass("btn-success");
+                    $(this).removeClass("mreport-error-color-bg");
+                    $(this).addClass("mreport-validate-color-bg");
                 }
 
 
@@ -187,11 +187,11 @@ admin = (function () {
                     '<div class="card report" data-dataviz-id="' + elem.report + '">',
                     '<div class="card-body">',
                     '<h6 class="card-title col-9">' + elem.title + '</h6>',
-                    '<a class="btn duplicate col-3"><i class="fa fa-clone" aria-hidden="true"></i>copier</a>',
-                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="edit" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-info"></i> Sourcer</a>',
-                    '<a href="#" class="card-link" data-toggle="modal" data-report-state="delete" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-trash"></i> Supprimer</a>',
-                    '<a href="' + report.getAppConfiguration().location + '/' + elem.report + '" target="_blank" class="card-link"><i class="fas fa-eye"></i> Afficher</a>',
-                    '<a href="#" onclick="composer.compose(\'' + elem.report + '\')" class="card-link"><i class="fas fa-edit"></i> Composer</a>',
+                    '<a class="btn duplicate col-3 mreport-primary-color-1-bg"><i class="fa fa-clone" aria-hidden="true"></i>copier</a>',
+                    '<a href="#" class="card-link mreport-primary-color-1" data-toggle="modal" data-report-state="edit" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-info mreport-secondary-color-1"></i> Sourcer</a>',
+                    '<a href="#" class="card-link mreport-primary-color-1" data-toggle="modal" data-report-state="delete" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>',
+                    '<a href="' + report.getAppConfiguration().location + '/' + elem.report + '" target="_blank" class="card-link mreport-primary-color-1"><i class="fas fa-eye mreport-secondary-color-1"></i> Afficher</a>',
+                    '<a href="#" onclick="composer.compose(\'' + elem.report + '\')" class="card-link mreport-primary-color-1"><i class="fas fa-edit mreport-secondary-color-1"></i> Composer</a>',
                     '</div>',
                     '</div>',
                     '</div>'

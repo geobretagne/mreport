@@ -54,7 +54,7 @@
                                                             data-prop="icon" id="w_icon">
                                                         </input>
                                                         <div class="input-group-append">
-                                                            <button type="button" class="btn btn-primary" onclick="document.querySelector('.card-container').classList.toggle('backcard');">...</button>
+                                                            <button type="button" class="btn mreport-primary-color-1-bg" onclick="document.querySelector('.card-container').classList.toggle('backcard');">...</button>
                                                         </div>
 
                                                     </div>
@@ -212,7 +212,7 @@
 
                                 </div><!--end card body-->
                                 <div class="card-footer">
-                                    <button id="wizard_refresh" class="btn btn-success">Actualiser</button>
+                                    <button id="wizard_refresh" class="btn mreport-primary-color-2-bg">Actualiser</button>
                                 </div>
                             </div> <!-- end card -->
                         </div> <!-- End wizard-parameters-->
@@ -244,27 +244,25 @@
                             </div>
                         </div>
 
-                    </div>
-
-                    <div class="row wizard-code" style="padding-top: 10p;display: none;">
-                        <div class="col">
-                            <div class="card">
-                                <code class="card-body" id="wizard-code">
-                                    <!--code is injected here --></code>
+                        <div class="row wizard-code" style="padding-top: 10p;display: none;">
+                            <div class="col">
+                                <div class="card">
+                                    <code class="card-body" id="wizard-code">
+                                        <!--code is injected here --></code>
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="wizard_add" class="btn btn-primary" onclick="wizard.configureDataviz();">Sauvegarder dans le
+                <button id="wizard_add" class="btn mreport-primary-color-1-bg" onclick="wizard.configureDataviz();">Sauvegarder dans le
                     rapport sélectionné</button>
-                <button id="wizard_toggle_code" class="btn btn-danger"
-                    onclick="$('.wizard-code').toggle();">code</button>
-                <button id="wizard_default_save" class="btn btn-warning">Définir comme
+                <button id="wizard_default_save" class="btn mreport-primary-color-2-bg">Définir comme
                     représentation par défaut</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn mreport-primary-color-3-bg" data-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>

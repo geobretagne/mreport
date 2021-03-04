@@ -19,6 +19,7 @@
     <link href="/static/css/composer.css" rel="stylesheet">
     <link href="/static/css/import.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/fonts/04b_30/stylesheet.css">
+    <link href="/static/css/colors.css" rel="stylesheet">
     <script src="/static/js/extLibs/mustache.min.js"></script>
     <script src="/static/js/extLibs/fuse.min.js"></script>
     <script src="/static/js/extLibs/Sortable.js"></script>
@@ -37,7 +38,7 @@
 
 </head>
 
-<body>
+<body class="mreport-grey6-bg">
     <!-- Navigation start -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">MREPORT - beta1</a>
@@ -67,16 +68,16 @@
     <!-- Navigation end -->
 
     <div class="container-fluid page active" id="home">
-        <h1>Mreport - Accueil</h1>
+        <h1 class="mreport-grey-1">Mreport - Accueil</h1>
         <p>Mreport est un outil simple de <b>reporting web</b> qui permet de composer des rapports combinant <b>chiffres-clés, graphiques, images, textes</b> à partir de
  jeux de données intégrés dans la base de données de la solution. </p>
 
       <div class="buttons">
         <a href="https://github.com/geobretagne/mreport" target="_blank">
-          <button type="button" class="btn" >Github</button>
+          <button type="button" class="btn mreport-primary-color-1-bg" >Github</button>
         </a>
         <a href="https://github.com/geobretagne/mreport/blob/master/docs/PRESENTATION.md" target="_blank">
-          <button type="button" class="btn">Documentation</button>
+          <button type="button" class="btn mreport-primary-color-1-bg">Documentation</button>
         </a>
       </div>
       <div class="images row">
@@ -101,11 +102,11 @@
         <div id="stickycollapse" class="collapse d-md-block sticky">
             <div id="sticky" class="row">
                 <div class="col-md-2 col-12">
-                    <button type="button" class="btn btn-primary toggle-deactivate" data-toggle="modal" data-report-state="new"
+                    <button type="button" class="btn mreport-primary-color-2-bg toggle-deactivate" data-toggle="modal" data-report-state="new"
                         data-target="#report-modal-form">Créer un rapport avec la sélection</button>
                 </div>
                 <div class="col-md-2 col-12">
-                    <button type="button" class="btn btn-success toggle-deactivate" data-toggle="modal" data-report-state="add"
+                    <button type="button" class="btn mreport-primary-color-2-bg toggle-deactivate" data-toggle="modal" data-report-state="add"
                         data-target="#report-modal-form2">Ajouter à un rapport existant</button>
                 </div>
                 <div class="col-md-2 col-12">
@@ -122,7 +123,7 @@
                     <a class="green"><i class="fas fa-shopping-bag"></i> <span class="number">0</span></a>
                 </div>
                 <div class="col-md-2 col-12">
-                     <button id="resetfilters" type="button" class="btn btn-primary"><i class="fas fa-undo"></i> Effacer le filtre</button>
+                     <button id="resetfilters" type="button" class="btn mreport-primary-color-2-bg "><i class="fas fa-undo"></i> Effacer le filtre</button>
                 </div>
             </div>
         </div>
@@ -134,16 +135,16 @@
                     <div class="card dataviz" data-dataviz-id="{{id}}">
                         <div class="card-body">
                             <h6 class="card-title">{{title}}</h6>
-                            <h7 class="card-subtitle mb-2 text-muted"><span class="badge badge-info">{{level}}</span><span class="badge badge-secondary">{{job}}</span></h7>
+                            <h7 class="card-subtitle mb-2 text-muted"><span class="badge mreport-grey1-bg">{{level}}</span><span class="badge badge-secondary">{{job}}</span></h7>
                             <p class="card-text">{{description}}</p>
                             <div class="custom-control custom-checkbox mb-3">
                                 <input type="checkbox" id="{{id}}-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">
                                 <label class="custom-control-label" for="{{id}}-selection">Sélectionner</label>
                             </div>
-                            <a href="#" data-dataviz-state="edit" class="card-link" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-pencil-alt"></i> Editer</a>
-                            <a href="#" data-dataviz-state="delete" class="card-link " data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-trash"></i> Supprimer</a>
-                            <span class="designed-dataviz {{designed}}"  data-toggle="tooltip" data-html="true" title="Ces données ont une dataviz par défaut de configuré"></span>
-                            <span class="certified-dataviz {{certified}}"   data-toggle="tooltip" data-html="true" title="cartified data"></span>
+                            <a href="#" data-dataviz-state="edit" class="card-link mreport-primary-color-1" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-pencil-alt mreport-secondary-color-1"></i> Editer</a>
+                            <a href="#" data-dataviz-state="delete" class="card-link mreport-primary-color-1" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>
+                            <span class="designed-dataviz {{designed}} mreport-secondary-color-2"  data-toggle="tooltip" data-html="true" title="Ces données ont une dataviz par défaut de configuré"></span>
+                            <span class="certified-dataviz {{certified}} mreport-secondary-color-2"   data-toggle="tooltip" data-html="true" title="cartified data"></span>
                         </div>
                         <div class="card-footer">Usages: </div>
                     </div>
@@ -164,9 +165,9 @@
 
     <!-- Composer start -->
     <div class="container-fluid page" id="composer">
-        <button type="button" id="btn_save_report" class="col-3 btn btn-block btn-primary">Enregistrer</button>
+        <button type="button" id="btn_save_report" class="col-3 btn btn-block mreport-primary-color-1-bg"><i class="fas fa-save"></i> Enregistrer</button>
         <div class="builder edit">
-            <div class="sidenav d-flex flex-column">
+            <div class="sidenav d-flex flex-column mreport-grey3-bg">
                 <form class="form" role="form" autocomplete="off">
                     <div class="form-group">
                         <label for="selectedReportComposer">Rapport sélectionné</label>
@@ -225,8 +226,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="datavizModalLabel"><span class="dataviz-title"></span></span><span
-                            class="badge badge-success">New</span><span class="badge badge-warning">Edition</span><span
-                            class="badge badge-danger">Supression</span></h5>
+                            class="badge mreport-secondary-color-1-bg">New</span><span class="badge mreport-secondary-color-2-bg">Edition</span><span
+                            class="badge mreport-error-color-bg">Supression</span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -236,17 +237,17 @@
                     <form class="form" id="dataviz-form" role="form" autocomplete="off">
                         <div class="form-group row">
                             <div class="col">
-                                <label for="inputTitle"><span class="badge badge-dark">Nom</span></label>
+                                <label for="inputTitle"><span class="badge mreport-grey1-bg">Nom</span></label>
                                 <input type="text" class="form-control" name="title" id="inputTitle"
                                     placeholder="Nom de la dataviz">
                             </div>
                             <div class="col">
-                                <label for="inputYear"><span class="badge badge-dark">millésime</span></label>
+                                <label for="inputYear"><span class="badge mreport-grey1-bg">millésime</span></label>
                                 <input type="text" class="form-control" name="year" id="inputYear"
                                     placeholder="Millésime" required="">
                             </div>
                             <div class="col">
-                                <label for="inputSource"><span class="badge badge-dark">Source</span></label>
+                                <label for="inputSource"><span class="badge mreport-grey1-bg">Source</span></label>
                                 <input type="text" class="form-control" name="source" id="inputSource"
                                     placeholder="Source" required="">
                             </div>
@@ -254,7 +255,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col">
-                                <label for="inputDescription"><span class="badge badge-dark">Description</span></label>
+                                <label for="inputDescription"><span class="badge mreport-grey1-bg">Description</span></label>
                                 <input type="text" class="form-control" name="description" id="inputDescription"
                                     placeholder="Description">
                             </div>
@@ -264,13 +265,13 @@
                         </div>
                         <div class="form-group row">
                             <div class="col">
-                                <label for="inputLevel"><span class="badge badge-dark">Niveau</span></label>
+                                <label for="inputLevel"><span class="badge mreport-grey1-bg">Niveau</span></label>
                                 <select class="form-control" name="level" id="inputLevel"
                                     placeholder="Référentiel" required="">
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="inputType"><span class="badge badge-dark">Mode de Réprésentation par défault</span></label>
+                                <label for="inputType"><span class="badge mreport-grey1-bg">Mode de Réprésentation par défault</span></label>
                                 <select class="form-control" name="type" id="inputType" placeholder="Mode de Réprésentation par défault"
                                     required="">
                                     <option value="chart">chart</option>
@@ -284,12 +285,12 @@
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="inputUnit"><span class="badge badge-dark">Unité</span></label>
+                                <label for="inputUnit"><span class="badge mreport-grey1-bg">Unité</span></label>
                                 <input type="text" class="form-control" name="unit" id="inputUnit" placeholder="Type"
                                     required="">
                             </div>
                             <div class="col">
-                                <label for="inputJob"><span class="badge badge-dark">Job</span></label>
+                                <label for="inputJob"><span class="badge mreport-grey1-bg">Job</span></label>
                                 <input type="text" class="form-control" name="job" id="inputJob" placeholder="Type"
                                     required="">
                             </div>
@@ -300,11 +301,11 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button id="dataviz_configure" class="btn btn-dark" data-toggle="modal" data-target="#wizard-panel"
+                    <button id="dataviz_configure" class="btn mreport-grey1-bg" data-toggle="modal" data-target="#wizard-panel"
                         data-component="store" data-related-id=""><i class="fas fa-cog"></i> Configurer la
                         dataviz</button>
-                    <button id="dataviz_confirmed" type="button" class="btn btn-primary">Enregistrer</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button id="dataviz_confirmed" type="button" class="btn mreport-primary-color-1-bg">Enregistrer</button>
+                    <button type="button" class="btn mreport-primary-color-2-bg" data-dismiss="modal">Fermer</button>
                 </div>
             </div>
         </div>
@@ -317,8 +318,8 @@
                 <div class="modal-header">
                     <div class="row col-12">
                       <h5 class="modal-title" id="reportModalLabel">Rapport<span
-                            class="badge badge-success">New</span><span class="badge badge-warning">Edition</span><span
-                            class="badge badge-danger">Supression</span></h5>
+                            class="badge mreport-secondary-color-1-bg">New</span><span class="badge mreport-secondary-color-2-bg">Edition</span><span
+                            class="badge mreport-error-color-bg">Supression</span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -339,7 +340,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button id="report_confirmed" type="button" class="btn btn-primary"
+                    <button id="report_confirmed" type="button" class="btn mreport-primary-color-1-bg"
                         onclick="admin.addReport();">Enregistrer</button>
                 </div>
             </div>
@@ -353,7 +354,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="report2ModalLabel">Rapport
-                        <span class="badge badge-success">Add</span>
+                        <span class="badge mreport-primary-color-1-bg">Add</span>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -374,8 +375,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary" onclick="admin.createReport();">Enregistrer</button>
+                    <button type="button" class="btn mreport-primary-color-2-bg" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn mreport-primary-color-1-bg" onclick="admin.createReport();">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -419,15 +420,15 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" class="text-save btn btn-primary">Enregistrer</button>
+                    <button type="button" class="btn mreport-primary-color-2-bg" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="text-save btn mreport-primary-color-1-bg">Enregistrer</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Cart -->
     <div id="cd-cart">
-        <a id="togglePanier">Fermer</a>
+        <a id="togglePanier" class="mreport-primary-color-1-bg">Fermer</a>
         <h2>Selection</h2>
         <ul class="cd-cart-items">
 
@@ -479,8 +480,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button id="divide_modal_btn" type="button" class="text-save btn btn-primary">Enregistrer</button>
+                    <button type="button" class="btn mreport-primary-color-2-bg" data-dismiss="modal">Fermer</button>
+                    <button id="divide_modal_btn" type="button" class="text-save btn mreport-primary-color-1-bg">Enregistrer</button>
                 </div>
             </div>
         </div>

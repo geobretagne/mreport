@@ -24,11 +24,11 @@ composer = (function () {
 
     var _blockTemplate = [
         '<div class=" structure-bloc list-group-item">',
-        '<span class="drag badge badge-default">',
+        '<span class="drag badge">',
         '<i class="fas fa-arrows-alt"></i>',
         '<p id="drag-tag">drag</p>',
         '</span>',
-        '<span class="remove badge badge-danger">',
+        '<span class="remove badge mreport-primary-color-2-bg">',
         '<i class="fas fa-times"></i> remove',
         '</span>',
         '<span class="structure-description">',
@@ -40,10 +40,10 @@ composer = (function () {
 
     var _dynamicBootstrapBloc = [
         '<div class=" structure-bloc list-group-item disable_dynamic">',
-        '<span class="remove badge badge-danger">',
+        '<span class="remove badge ">',
         '<i class="fas fa-times"></i> remove',
         '</span>',
-        '<span class="drag badge badge-default">',
+        '<span class="drag badge">',
         '<i class="fas fa-arrows-alt"></i>',
         '<p id="drag-tag">drag</p>',
         '</span>',
@@ -66,12 +66,12 @@ composer = (function () {
     var _extraElementTemplate = [
         [
             '<div class="structure-element list-group-item titleBloc" draggable="false" style="">',
-            '<span class="drag badge badge-default">',
+            '<span class="drag badge ">',
             '<i class="fas fa-arrows-alt"></i>',
             '<p id="drag-tag"> drag</p>',
             '</span>',
             '<span class="editable-text">Texte</span>',
-            '<span class="remove badge badge-danger structureElems">',
+            '<span class="remove badge mreport-primary-color-2-bg structureElems">',
             '<i class="fas fa-times"></i> remove',
             '</span>',
             '</div>'
@@ -86,7 +86,7 @@ composer = (function () {
 
     var _datavizTemplate = [
         '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item handle">',
-        '<span class="drag badge badge-default">',
+        '<span class="drag badge ">',
         '<i class="{{icon}}"></i>',
         '<p id="drag-tag"> drag</p>',
         '</span>',
@@ -130,18 +130,18 @@ composer = (function () {
         //Extra html elements needed to edit report (editable text, divide blocs...)
         var divide_element = [
             '<div class="edit_columns">',
-                '<span class="badge badge-success divide_column" data-toggle="modal"',
+                '<span class="badge mreport-primary-color-3-bg divide_column" data-toggle="modal"',
                     'data-target="#divide_form">',
                     '<i class="fas fa-columns"></i> <span>Diviser</span>',
                 '</span>',
-                '<span class="badge badge-danger delete_column">',
+                '<span class="badge mreport-primary-color-3-bg delete_column">',
                     '<i class="fas fa-undo"></i><span>Vider</span>',
                 '</span>',
             '</div>'
         ].join("");
 
         var editable_element = [
-            '<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning">',
+            '<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit btn mreport-primary-color-2-bg">',
                 '<i class="fas fa-edit"></i>edit',
             '</span>'
         ].join("");
@@ -508,7 +508,7 @@ composer = (function () {
                             $(btn).find("i").get(0).className = "fas fa-heading";
                         } else if ($(evt.item).hasClass("structure-element") && $(evt.item).find(".editable-text:contains(edit)").length == 0) {
                             // add edit button near to editable text elements
-                            var btn = $(evt.item).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i>edit</span>').find(".text-edit");
+                            var btn = $(evt.item).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit btn mreport-primary-color-2-bg"><i class="fas fa-edit"></i>edit</span>').find(".text-edit");
                         }
                         /* TO DO FOR RESIZE */
                         // if(!evt.from.classList.contains("list-group")){
@@ -533,7 +533,7 @@ composer = (function () {
                 });
                 if ($(row).find(".editable-text:contains(edit)").length == 0) {
                     // add edit button near to editable text elements
-                    var btn = $(row).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i>edit</span>').find(".text-edit");
+                    var btn = $(row).find(".editable-text").append('<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit btn mreport-primary-color-2-bg"><i class="fas fa-edit"></i>edit</span>').find(".text-edit");
                 }
             });
             $(row).find(".structureElems").click(function (e) {
@@ -544,7 +544,7 @@ composer = (function () {
                 let editText = item.getElementsByClassName("editable-text")[0];
                 if (editText) {
                     var span = document.createElement("span");
-                    span.classList.add("to-remove", "text-edit", "badge", "badge-warning");
+                    span.classList.add("to-remove", "text-edit", "badge", "mreport-grey1-bg");
                     span.dataset.target = "#text-edit";
                     span.dataset.toggle = "modal";
                     span.innerHTML = "edit";
@@ -758,11 +758,11 @@ composer = (function () {
                 structure +=
                     '<div class="col-md-' + elem + ' dividedcolumn customBaseColumn">\
                     <div class="edit_columns">\
-                        <span class="badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
+                        <span class="badge mreport-primary-color-3-bg divide_column" data-toggle="modal" data-target="#divide_form">\
                             <i class="fas fa-columns"></i>\
                             Diviser\
                         </span>\
-                        <span class="badge badge-danger delete_column">\
+                        <span class="badge mreport-primary-color-3-bg delete_column">\
                             <i class="fas fa-undo"></i>\
                         <span>Vider</span>\
                         </span>\
@@ -873,11 +873,11 @@ composer = (function () {
                     structure +=
                         '<div class="col-md-' + column.value + ' dividedcolumn customBaseColumn">\
                         <div class="edit_columns">\
-                            <span class="badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
+                            <span class="badge mreport-primary-color-3-bg divide_column" data-toggle="modal" data-target="#divide_form">\
                                 <i class="fas fa-columns"></i>\
                                 Diviser\
                             </span>\
-                            <span class="badge badge-danger delete_column">\
+                            <span class="badge mreport-primary-color-3-bg delete_column">\
                                 <i class="fas fa-undo"></i>\
                                 <span>Vider</span>\
                             </span>\
@@ -919,11 +919,11 @@ composer = (function () {
                         <div class="row ">\
                         <div class="col-md-12 dividedcolumn customBaseColumn">\
                             <div class="edit_columns">\
-                                <span class="badge badge-success divide_column" data-toggle="modal" data-target="#divide_form">\
+                                <span class="badge mreport-primary-color-3-bg divide_column" data-toggle="modal" data-target="#divide_form">\
                                     <i class="fas fa-columns"></i>\
                                     Diviser\
                                 </span>\
-                                <span class="badge  badge-danger delete_column">\
+                                <span class="badge mreport-primary-color-3-bg delete_column">\
                                     <i class="fas fa-undo"></i>\
                                     <span>Vider</span>\
                                 </span>\
