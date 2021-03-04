@@ -685,3 +685,7 @@ h5>.badge {
 .swal2-styled.swal2-cancel{
   background-color:#9FB935!important;
 }
+
+.dataviz.list-group-item.handle{
+  cursor:grab;
+}
