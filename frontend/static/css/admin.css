@@ -176,6 +176,15 @@ h5>.badge {
   background-color:rgba(233, 236, 239,0.7);
 }
 
+#cd-cart .sticky{
+  background-color:white;
+  top:30px;
+  padding:15px;
+  margin:0px;
+  margin-top:-10px;
+  background-color:rgba(233, 236, 239,0.9);
+}
+
 .sticky-sm {
   z-index: 2;
   position: sticky;
@@ -204,13 +213,11 @@ h5>.badge {
 /*
   Cart css
 */
-#cd-cart.speed-in,
-#cd-filter.speed-in {
+#cd-cart.speed-in {
   right: 0;
 }
 
-#cd-cart,
-#cd-filter {
+#cd-cart {
   right: -100%;
   background: #fff;
   transition: right .6s;
@@ -218,22 +225,19 @@ h5>.badge {
 
 @media only screen and (min-width: 1200px) {
 
-  #cd-cart,
-  #cd-filter {
+  #cd-cart {
     width: 30%;
   }
 }
 
 @media only screen and (min-width: 768px) {
 
-  #cd-cart,
-  #cd-filter {
+  #cd-cart {
     width: 350px;
   }
 }
 
-#cd-cart,
-#cd-filter {
+#cd-cart {
   position: fixed;
   top: 56px;
   height: 100%;
@@ -243,8 +247,7 @@ h5>.badge {
   z-index: 3;
 }
 
-#cd-cart h2,
-#cd-filter h2 {
+#cd-cart h2 {
   font-size: 14px;
   font-size: .875rem;
   font-weight: 700;
@@ -253,14 +256,12 @@ h5>.badge {
 }
 
 @media only screen and (min-width: 1200px) {
-  #cd-cart>*,
-  #cd-filter>* {
+  #cd-cart>* {
     padding: 0 2em;
   }
 }
 
-#cd-cart>*,
-#cd-filter>* {
+#cd-cart>* {
   padding: 0 1em;
 }
 
@@ -268,15 +269,23 @@ h5>.badge {
   padding: 0;
 }
 
+#cd-cart .cd-cart-items h6.card-title {
+  font-size:12px;
+  padding:0;
+  margin:0;
+}
+
+#cd-cart .cd-cart-items #catalog .badge, .cd-cart-items .badge{
+  display:none;
+}
+
 @media only screen and (min-width: 1200px) {
-  #cd-cart>*,
-  #cd-filter>* {
+  #cd-cart>* {
     padding: 0 2em;
   }
 }
 
-#cd-cart>*,
-  #cd-filter>* {
+#cd-cart>*{
   padding: 0 1em;
 }
 
@@ -337,8 +346,7 @@ h5>.badge {
 /*
 * Toggle off cart icon
 */
-#togglePanier,
-#toggleFilter {
+#togglePanier {
   position: sticky;
   z-index: 5;
   width: 32px;
@@ -353,8 +361,7 @@ h5>.badge {
   padding:4px 36px;
 }
 
-#togglePanier:hover,
-#toggleFilter:hover {
+#togglePanier:hover {
   cursor: pointer;
   background-color: #FFA80E;
   transition: 0.3s;
@@ -363,13 +370,12 @@ h5>.badge {
 /*
 * Toggle on cart icon
 */
-.green,
-#toggle-filter {
+.green{
   color: #FFF;
   padding: 6px 12px 6px 12px;
-  border: 2px solid #006878;
+  /*border: 2px solid #006878;*/
   color: #999faf;
-  display: inline-block;
+  /*display: inline-block;*/
   position: relative;
   transition: .4s;
 }
@@ -383,18 +389,17 @@ h5>.badge {
   font-size: 15px;
   font-family: inherit;
   color: black;
-  top: -15px;
-  right: -15px;
+  top: -10px;
+  right: -10px;
   margin:0;
   border: 0px;
 }
 
-.green:hover,
-#toggle-filter:hover {
+.green:hover {
   cursor: pointer;
-  background: #006878 !important;
+  /*background: #006878 !important;*/
   color: #FFF !important;
-  border: 2px solid #006878;
+  /*border: 2px solid #006878;*/
   transition: 0.4s;
 }
 #wizard-result{
