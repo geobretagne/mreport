@@ -24,7 +24,7 @@ composer = (function () {
 
     var _blockTemplate = [
         '<div class=" structure-bloc list-group-item">',
-        '<span class="drag badge">',
+        '<span class="drag badge mreport-primary-color-2-bg">',
         '<i class="fas fa-arrows-alt"></i>',
         '<p id="drag-tag">drag</p>',
         '</span>',

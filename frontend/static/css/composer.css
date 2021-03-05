@@ -188,7 +188,7 @@
 
 #report-composition .drag{
     /*background: #3095b4;*/
-    color: white;
+    /*color: white;*/
     position: absolute;
 }
 
@@ -254,8 +254,16 @@
 }
 
 #structure-models, #dataviz-items {
-    padding: 10px;
+  padding: 10px;
   margin-bottom:1rem;
+}
+
+#structure-models .drag{
+  background-color:white!important;
+}
+
+.dataviz-container li .drag.badge{
+  display:none;
 }
 
 .composition {
