@@ -41,7 +41,6 @@
 <body class="mreport-grey6-bg">
     <!-- Navigation start -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">MREPORT - beta1</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -49,7 +48,12 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active" data-page="home">
+                <li id="logo" class="nav-item" data-page="home">
+                  <a class="navbar-brand nav-link" >
+                    <img src="/static/img/logo.png" class="img-fluid" alt="Mreport logo">
+                  </a>
+                </li>
+                <li id="home-page" class="nav-item active" data-page="home">
                     <a class="nav-link">Accueil</a>
                 </li>
                 <li class="nav-item" data-page="catalog">

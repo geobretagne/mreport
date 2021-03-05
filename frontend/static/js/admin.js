@@ -26,6 +26,9 @@ admin = (function () {
             $(this).on("click", function () {
                 $(".container-fluid.page, .nav-item").removeClass("active");
                 $("#" + $(this).attr("data-page")).addClass("active");
+                if($(this).attr("data-page")=="home"){
+                  $("#home-page").addClass("active");
+                };
                 $(this).addClass("active");
                 if($(this).attr("data-page") == "reports" && $("#cd-cart").hasClass("speed-in") ||
                    $(this).attr("data-page") =="composer" && $("#cd-cart").hasClass("speed-in")){
@@ -242,7 +245,7 @@ admin = (function () {
                     "<li data-dataviz-id=" + id + ">\
                         " + $(this).parent().parent().find("h6")[0].outerHTML + "\
                         " + $(this).parent().parent().find("h7")[0].outerHTML + "\
-                        <a href='#0' class='cd-item-remove cd-img-replace'>Remove</a>\
+                        <a href='#' class='cd-item-remove cd-img-replace'>Remove</a>\
                     </li>"
                 );
               /*deactivate button if no selection*/

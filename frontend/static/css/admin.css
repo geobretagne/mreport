@@ -615,6 +615,14 @@ h5>.badge {
   box-shadow: 0 0 0.3rem #aaa;
 }
 
+.navbar-brand{
+  color:black;
+}
+
+.navbar-brand img{
+  height:30px;
+}
+
 .custom-checkbox .custom-control-label::before{
   margin-top:-0.06rem!important;
 }
