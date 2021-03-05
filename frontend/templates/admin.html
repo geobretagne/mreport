@@ -93,7 +93,8 @@
 
     <!-- Catalog start -->
     <div class="container-fluid page" id="catalog">
-        <h1>Données</h1>
+    <div id="catalog-content">
+        <h1 class="col-12">Données</h1>
         <div id="filterbutton" class="row sticky-sm">
             <button class="btn d-md-none col-12" data-toggle="collapse" data-target="#stickycollapse">
                 Outils<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
@@ -101,29 +102,11 @@
         </div>
         <div id="stickycollapse" class="collapse d-md-block sticky">
             <div id="sticky" class="row">
-                <div class="col-md-2 col-12">
-                    <button type="button" class="btn mreport-primary-color-2-bg toggle-deactivate" data-toggle="modal" data-report-state="new"
-                        data-target="#report-modal-form">Créer un rapport avec la sélection</button>
+                <div class="col-md-1 col-12 text-right p-0">
+                    <a class="green mreport-primary-color-1"><i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span></a>
                 </div>
-                <div class="col-md-2 col-12">
-                    <button type="button" class="btn mreport-primary-color-2-bg toggle-deactivate" data-toggle="modal" data-report-state="add"
-                        data-target="#report-modal-form2">Ajouter à un rapport existant</button>
-                </div>
-                <div class="col-md-2 col-12">
-                    <input id="searchbar" class="form-control" placeholder="Filtrer les données" maxlength="32">
-                </div>
-
-                <div class="col-md-1 col-12">
-                    <div class="custom-control custom-checkbox pt-2">
-                        <input type="checkbox" id="checkAll" class="custom-control-input" name="checkAll">
-                        <label class="custom-control-label" for="checkAll">Tout sélectionner</label>
-                    </div>
-                </div>
-                <div class="col-md-1 col-12">
-                    <a class="green"><i class="fas fa-shopping-bag"></i> <span class="number">0</span></a>
-                </div>
-                <div class="col-md-2 col-12">
-                     <button id="resetfilters" type="button" class="btn mreport-primary-color-2-bg "><i class="fas fa-undo"></i> Effacer le filtre</button>
+                <div class="col-md-1 col-12 text-right p-0">
+                    <a id="toggle-filter" class="mreport-primary-color-1"><i class="fas fa-filter"></i></a>
                 </div>
             </div>
         </div>
@@ -141,10 +124,17 @@
                                 <input type="checkbox" id="{{id}}-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">
                                 <label class="custom-control-label" for="{{id}}-selection">Sélectionner</label>
                             </div>
-                            <a href="#" data-dataviz-state="edit" class="card-link mreport-primary-color-1" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-pencil-alt mreport-secondary-color-1"></i> Editer</a>
-                            <a href="#" data-dataviz-state="delete" class="card-link mreport-primary-color-1" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>
-                            <span class="designed-dataviz {{designed}} mreport-secondary-color-2"  data-toggle="tooltip" data-html="true" title="Ces données ont une dataviz par défaut de configuré"></span>
-                            <span class="certified-dataviz {{certified}} mreport-secondary-color-2"   data-toggle="tooltip" data-html="true" title="cartified data"></span>
+                            <div class="row">
+                              <div class="col-md-9 p-0">
+                                <a href="#" data-dataviz-state="edit" class="col-12 card-link mreport-primary-color-1 p-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-pencil-alt mreport-secondary-color-1"></i> Editer</a>
+                                <a href="#" data-dataviz-state="delete" class="col-12 card-link mreport-primary-color-1 p-0 m-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>
+                              </div>
+                              <div class="col-md-3 p-0 text-right">
+                                <span class="designed-dataviz {{designed}} mreport-secondary-color-2"  data-toggle="tooltip" data-html="true" title="Ces données ont une dataviz par défaut de configuré"></span>
+                                <span class="certified-dataviz {{certified}} mreport-secondary-color-2"   data-toggle="tooltip" data-html="true" title="cartified data"></span>
+                              </div>
+                            </div>
+                            
                         </div>
                         <div class="card-footer">Usages: </div>
                     </div>
@@ -155,11 +145,12 @@
 
         </div>
     </div>
+    </div>
     <!-- Catalog start -->
 
     <!-- Reports start -->
     <div class="container-fluid page" id="reports">
-        <h1>Rapports</h1>
+        <h1 class="col-12">Rapports</h1>
     </div>
     <!-- Reports start -->
 
@@ -429,11 +420,43 @@
     <!-- Cart -->
     <div id="cd-cart">
         <a id="togglePanier" class="mreport-primary-color-1-bg">Fermer</a>
+                <div class="col-12">
+                    <button type="button" class="btn mreport-primary-color-2-bg toggle-deactivate col-12 mt-3" data-toggle="modal" data-report-state="new"
+                        data-target="#report-modal-form">Créer un rapport avec la sélection</button>
+                </div>
+                <div class="col-12">
+                    <button type="button" class="btn mreport-primary-color-2-bg toggle-deactivate col-12 mt-3" data-toggle="modal" data-report-state="add"
+                        data-target="#report-modal-form2">Ajouter à un rapport existant</button>
+                </div>
+                <div class="col-12">
+                    <div class="custom-control custom-checkbox pt-2">
+                        <input type="checkbox" id="checkAll" class="custom-control-input" name="checkAll">
+                        <label class="custom-control-label" for="checkAll">Tout sélectionner</label>
+                    </div>
+                </div>
         <h2>Selection</h2>
         <ul class="cd-cart-items">
-
         </ul>
     </div>
+
+    <!-- Filter -->
+    <div id="cd-filter">
+        <a id="toggleFilter" class="mreport-primary-color-1-bg">Fermer</a>
+        <div class="row">
+          <div class="col-md-6 col-12 p-0">
+            <h2 class="">Filtrer</h2>
+          </div>
+          <div class="col-md-6 col-12 text-right p-0">
+            <button id="resetfilters" type="button" class="btn mreport-primary-color-2-bg "><i class="fas fa-undo"></i> Réinitialiser</button>
+          </div>
+        </div>
+        
+
+          <div class="col-md-12 col-12">
+            <input id="searchbar" class="form-control" placeholder="Filtrer les données" maxlength="32">
+          </div>
+    </div>
+
     <!-- Structure dividing modal -->
     <div class="modal fade" id="divide_form" tabindex="-1" role="dialog" aria-labelledby="divideForm"
         aria-hidden="true">

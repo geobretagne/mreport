@@ -558,13 +558,13 @@ span.text-edit.badge.mreport-secondary-color-2-bg{
 }
 
 span.designed-dataviz {
-    right: 30px;
-    position: absolute;
+    /*right: 30px;*/
+    /*position: absolute;*/
     font-family: "Font Awesome 5 Free";
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 700;
     /*color: #218838;*/
-    margin-top: -10px;
+    /*margin-top: -10px;*/
 }
 
 span.designed-dataviz:before {

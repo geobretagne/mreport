@@ -154,9 +154,9 @@ h5>.badge {
 
 
 .cards {
-  padding-left: 5px;
+  /*padding-left: 5px;*/
   padding-bottom: 15px;
-  padding-top: 5px;
+  padding-top: 15px;
 }
 
 .row {
@@ -167,12 +167,13 @@ h5>.badge {
 .sticky {
   z-index: 2;
   position: sticky;
-  top: 0;
+  top: 56px;
   /*background: white;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);*/
-  padding: 10px;
+  padding: 15px 0;
   margin-right: 15px;
   margin-bottom: 15px;
+  background-color:rgba(233, 236, 239,0.7);
 }
 
 .sticky-sm {
@@ -203,11 +204,13 @@ h5>.badge {
 /*
   Cart css
 */
-#cd-cart.speed-in {
+#cd-cart.speed-in,
+#cd-filter.speed-in {
   right: 0;
 }
 
-#cd-cart {
+#cd-cart,
+#cd-filter {
   right: -100%;
   background: #fff;
   transition: right .6s;
@@ -215,19 +218,22 @@ h5>.badge {
 
 @media only screen and (min-width: 1200px) {
 
-  #cd-cart {
+  #cd-cart,
+  #cd-filter {
     width: 30%;
   }
 }
 
 @media only screen and (min-width: 768px) {
 
-  #cd-cart {
+  #cd-cart,
+  #cd-filter {
     width: 350px;
   }
 }
 
-#cd-cart {
+#cd-cart,
+#cd-filter {
   position: fixed;
   top: 56px;
   height: 100%;
@@ -237,7 +243,8 @@ h5>.badge {
   z-index: 3;
 }
 
-#cd-cart h2 {
+#cd-cart h2,
+#cd-filter h2 {
   font-size: 14px;
   font-size: .875rem;
   font-weight: 700;
@@ -246,12 +253,14 @@ h5>.badge {
 }
 
 @media only screen and (min-width: 1200px) {
-  #cd-cart>* {
+  #cd-cart>*,
+  #cd-filter>* {
     padding: 0 2em;
   }
 }
 
-#cd-cart>* {
+#cd-cart>*,
+#cd-filter>* {
   padding: 0 1em;
 }
 
@@ -260,12 +269,14 @@ h5>.badge {
 }
 
 @media only screen and (min-width: 1200px) {
-  #cd-cart>* {
+  #cd-cart>*,
+  #cd-filter>* {
     padding: 0 2em;
   }
 }
 
-#cd-cart>* {
+#cd-cart>*,
+  #cd-filter>* {
   padding: 0 1em;
 }
 
@@ -326,7 +337,8 @@ h5>.badge {
 /*
 * Toggle off cart icon
 */
-#togglePanier {
+#togglePanier,
+#toggleFilter {
   position: sticky;
   z-index: 5;
   width: 32px;
@@ -341,7 +353,8 @@ h5>.badge {
   padding:4px 36px;
 }
 
-#togglePanier:hover {
+#togglePanier:hover,
+#toggleFilter:hover {
   cursor: pointer;
   background-color: #FFA80E;
   transition: 0.3s;
@@ -350,10 +363,11 @@ h5>.badge {
 /*
 * Toggle on cart icon
 */
-.green {
+.green,
+#toggle-filter {
   color: #FFF;
   padding: 6px 12px 6px 12px;
-  border: 2px solid #999faf;
+  border: 2px solid #006878;
   color: #999faf;
   display: inline-block;
   position: relative;
@@ -361,21 +375,22 @@ h5>.badge {
 }
 
 .green .number {
-  padding: 2px 7px;
-  background: #999faf;
+  width:25px;
+  height:25px;
   position: absolute;
   border-radius: 50px;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 15px;
   font-family: inherit;
-  color: #FFF;
-  top: -20px;
-  right: -20px;
+  color: black;
+  top: -15px;
+  right: -15px;
   margin:0;
-  border: 2px solid #FFF;
+  border: 0px;
 }
 
-.green:hover {
+.green:hover,
+#toggle-filter:hover {
   cursor: pointer;
   background: #006878 !important;
   color: #FFF !important;

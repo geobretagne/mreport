@@ -251,7 +251,7 @@ import_wizard = (function () {
                _html.querySelectorAll("template").forEach(function(template) {
                     if (template.dataset.target) {
                         //inject import modal and button in admin.html
-                        document.querySelector(template.dataset.target).appendChild(template.content.firstElementChild);
+                        document.querySelector(template.dataset.target).prepend(template.content.firstElementChild);
                     }
 
                });
