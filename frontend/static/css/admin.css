@@ -275,7 +275,8 @@ h5>.badge {
   margin:0;
 }
 
-#cd-cart .cd-cart-items #catalog .badge, .cd-cart-items .badge{
+.cd-cart-items .badge,
+#catalog .badge.badge-secondary{
   display:none;
 }
 
