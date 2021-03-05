@@ -12,93 +12,115 @@ composer = (function () {
     var _HTMLTemplates = {};
 
     /*
+     * _composerTemplates - {object}. This var store html templates to render composer structure and actions buttons.
+     */
+
+    var _composerTemplates = {
+        /*
+         * blockTemplate - Array. This var is used to construct bloc elements and append it
+         * to dom with selected HTMLTemplate
+         */
+        blockTemplate: [
+            '<div class=" structure-bloc list-group-item">',
+            '<span class="drag badge badge-default">',
+            '<i class="fas fa-arrows-alt"></i>',
+            '<p id="drag-tag">drag</p>',
+            '</span>',
+            '<span class="remove badge badge-danger">',
+            '<i class="fas fa-times"></i> remove',
+            '</span>',
+            '<span class="structure-description">',
+            '{{{DESCRIPTION}}}',
+            '</span>',
+            '<div class="structure-html">{{{HTML}}}</div>',
+            '</div>'
+        ].join("")
+        ,
+        dynamicBootstrapBloc: [
+            '<div class=" structure-bloc list-group-item disable_dynamic">',
+            '<span class="remove badge badge-danger">',
+            '<i class="fas fa-times"></i> remove',
+            '</span>',
+            '<span class="drag badge badge-default">',
+            '<i class="fas fa-arrows-alt"></i>',
+            '<p id="drag-tag">drag</p>',
+            '</span>',
+            '<span class="structure-description">',
+             '<input id="bootstrap_columns" type="text" class="form-control col-8" placeholder="Ex : 6 6">',
+            '<p id="nb_columns" class="d-none"></p>',
+            '</span>',
+            '<div class="structure-html">',
+            '<div class="row  bloc-content">',
+            '</div>',
+            '</div>',
+            '</div>'
+        ].join("")
+        ,
+        /*
+         * _extraElementTemplate - Array. This var is used to construct extra elements and append it
+         * to dom with selected HTMLTemplate
+         */
+        extraElementTemplate: [
+            [
+                '<div class="structure-element list-group-item titleBloc" draggable="false" style="">',
+                '<span class="drag badge badge-default">',
+                '<i class="fas fa-arrows-alt"></i>',
+                '<p id="drag-tag"> drag</p>',
+                '</span>',
+                '<span class="editable-text">Texte</span>',
+                '<span class="remove badge badge-danger structureElems">',
+                '<i class="fas fa-times"></i> remove',
+                '</span>',
+                '</div>'
+            ].join("")
+        ]
+        ,
+        /*
+         * _datavizTemplate - Array. This var is used to construct dataviz items and append them to dom
+         * in #dataviz-items list
+         */
+
+        datavizTemplate: [
+            '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item handle">',
+            '<span class="drag badge badge-default">',
+            '<i class="{{icon}}"></i>',
+            '<p id="drag-tag"> drag</p>',
+            '</span>',
+            '<div class="tool">',
+            '<button class="btn btn-default" data-toggle="modal" data-component="report" data-related-id="{{id}}" data-target="#wizard-panel">',
+            '<i class="fas fa-cog"></i>',
+            '</button>',
+            '</div>',
+            '<span>{{dvz}}</span>',
+            '<code class="dataviz-definition"></code>',
+            '</li>'
+        ]
+        ,
+        divide_element: [
+            '<div class="edit_columns">',
+                '<span class="badge badge-success divide_column" data-toggle="modal"',
+                    'data-target="#divide_form">',
+                    '<i class="fas fa-columns"></i> <span>Diviser</span>',
+                '</span>',
+                '<span class="badge badge-danger delete_column">',
+                    '<i class="fas fa-undo"></i><span>Vider</span>',
+                '</span>',
+            '</div>'
+        ].join("")
+        ,
+        editable_element: [
+            '<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning">',
+                '<i class="fas fa-edit"></i>edit',
+            '</span>'
+        ].join("")
+
+    };
+
+    /*
      * _activeHTMLTemplate - string. This var store template selected id
      */
 
     var _activeHTMLTemplate = "";
-
-    /*
-     * _blockTemplate - Array. This var is used to construct bloc elements and append it
-     * to dom with selected HTMLTemplate
-     */
-
-    var _blockTemplate = [
-        '<div class=" structure-bloc list-group-item">',
-        '<span class="drag badge badge-default">',
-        '<i class="fas fa-arrows-alt"></i>',
-        '<p id="drag-tag">drag</p>',
-        '</span>',
-        '<span class="remove badge badge-danger">',
-        '<i class="fas fa-times"></i> remove',
-        '</span>',
-        '<span class="structure-description">',
-        '{{{DESCRIPTION}}}',
-        '</span>',
-        '<div class="structure-html">{{{HTML}}}</div>',
-        '</div>'
-    ].join("");
-
-    var _dynamicBootstrapBloc = [
-        '<div class=" structure-bloc list-group-item disable_dynamic">',
-        '<span class="remove badge badge-danger">',
-        '<i class="fas fa-times"></i> remove',
-        '</span>',
-        '<span class="drag badge badge-default">',
-        '<i class="fas fa-arrows-alt"></i>',
-        '<p id="drag-tag">drag</p>',
-        '</span>',
-        '<span class="structure-description">',
-         '<input id="bootstrap_columns" type="text" class="form-control col-8" placeholder="Ex : 6 6">',
-        '<p id="nb_columns" class="d-none"></p>',
-        '</span>',
-        '<div class="structure-html">',
-        '<div class="row  bloc-content">',
-        '</div>',
-        '</div>',
-        '</div>'
-    ].join("");
-
-    /*
-     * _extraElementTemplate - Array. This var is used to construct extra elements and append it
-     * to dom with selected HTMLTemplate
-     */
-
-    var _extraElementTemplate = [
-        [
-            '<div class="structure-element list-group-item titleBloc" draggable="false" style="">',
-            '<span class="drag badge badge-default">',
-            '<i class="fas fa-arrows-alt"></i>',
-            '<p id="drag-tag"> drag</p>',
-            '</span>',
-            '<span class="editable-text">Texte</span>',
-            '<span class="remove badge badge-danger structureElems">',
-            '<i class="fas fa-times"></i> remove',
-            '</span>',
-            '</div>'
-        ].join("")
-    ];
-
-
-    /*
-     * _datavizTemplate - Array. This var is used to construct dataviz items and append them to dom
-     * in #dataviz-items list
-     */
-
-    var _datavizTemplate = [
-        '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item handle">',
-        '<span class="drag badge badge-default">',
-        '<i class="{{icon}}"></i>',
-        '<p id="drag-tag"> drag</p>',
-        '</span>',
-        '<div class="tool">',
-        '<button class="btn btn-default" data-toggle="modal" data-component="report" data-related-id="{{id}}" data-target="#wizard-panel">',
-        '<i class="fas fa-cog"></i>',
-        '</button>',
-        '</div>',
-        '<span>{{dvz}}</span>',
-        '<code class="dataviz-definition"></code>',
-        '</li>'
-    ];
 
     var _selectedCustomColumn = false;
     /*
@@ -127,25 +149,6 @@ composer = (function () {
      */
 
     var _parseTemplate = function (templateid, html) {
-        //Extra html elements needed to edit report (editable text, divide blocs...)
-        var divide_element = [
-            '<div class="edit_columns">',
-                '<span class="badge badge-success divide_column" data-toggle="modal"',
-                    'data-target="#divide_form">',
-                    '<i class="fas fa-columns"></i> <span>Diviser</span>',
-                '</span>',
-                '<span class="badge badge-danger delete_column">',
-                    '<i class="fas fa-undo"></i><span>Vider</span>',
-                '</span>',
-            '</div>'
-        ].join("");
-
-        var editable_element = [
-            '<span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning">',
-                '<i class="fas fa-edit"></i>edit',
-            '</span>'
-        ].join("");
-
         // get data- linked to the template
         var parameters = $(html).data(); /* eg data-colors... */
         if (parameters.colors) {
@@ -164,11 +167,11 @@ composer = (function () {
             var elem = $(template).prop('content').firstElementChild;
             //add button to editable-text
             elem.querySelectorAll(".editable-text").forEach(function (t) {
-                $(t).append(editable_element);
+                $(t).append(_composerTemplates.editable_element);
             })
             //add button to divide columns
             elem.querySelectorAll(".dividedcolumn.customBaseColumn").forEach(function (c) {
-                $(c).prepend(divide_element);
+                $(c).prepend(_composerTemplates.divide_element);
             })
             var description = elem.getAttribute("data-model-title");
             blocs.push({
@@ -180,16 +183,16 @@ composer = (function () {
         var structure = [];
         var extra_elements = [];
         blocs.forEach(function (elem) {
-            structure.push(_blockTemplate.replace("{{{HTML}}}", elem.html).replace("{{{DESCRIPTION}}}", elem.description));
+            structure.push(_composerTemplates.blockTemplate.replace("{{{HTML}}}", elem.html).replace("{{{DESCRIPTION}}}", elem.description));
         });
-        structure.push(_dynamicBootstrapBloc);
+        structure.push(_composerTemplates.dynamicBootstrapBloc);
         //Retrieve all dataviz components
         var dataviz_components = {};
         ["figure", "chart", "table", "title", "text", "iframe", "image", "map"].forEach(function (component) {
             var element = $(html).find("template.report-component.report-" + component).prop('content').firstElementChild;
             dataviz_components[component] = $.trim(element.outerHTML);
         });
-        _extraElementTemplate.forEach(elem => extra_elements.push(elem));
+        _composerTemplates.extraElementTemplate.forEach(elem => extra_elements.push(elem));
         //Populate _HTMLTemplates with object
         _HTMLTemplates[templateid] = {
             id: templateid,
@@ -340,7 +343,7 @@ composer = (function () {
                     })
                     if (isAbsent) {
                         if (dvz != null)
-                            var dvztpl = _datavizTemplate.join("");
+                            var dvztpl = _composerTemplates.datavizTemplate.join("");
                         dvztpl = dvztpl.replace(/{{dvz}}/g, dvz.title);
                         dvztpl = dvztpl.replace(/{{id}}/g, dvz.id);
                         dvztpl = dvztpl.replace(/{{reportId}}/g, reportId);
@@ -962,7 +965,7 @@ composer = (function () {
                 return oldDvz.dataset.dataviz !== dvz.dataset.dataviz;
             })
             if (isAbsent) {
-                var dvztpl = _datavizTemplate.join("");
+                var dvztpl = _composerTemplates.datavizTemplate.join("");
                 dvztpl = dvztpl.replace(/{{dvz}}/g, dvz.title);
                 dvztpl = dvztpl.replace(/{{id}}/g, dvz.dataset.dataviz);
                 dvztpl = dvztpl.replace(/{{reportId}}/g, dvz.reportId);
@@ -982,6 +985,7 @@ composer = (function () {
         models: /* used for test pupose */ function () {
             return _HTMLTemplates;
         },
+        templates: _composerTemplates
     }; // fin return
 
 })();
