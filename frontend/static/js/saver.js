@@ -153,15 +153,28 @@ saver = (function () {
 
 
     };
-    
+
+    var _html2json = function (document_url) {
+
+        $.ajax({
+            url: document_url,
+            dataType: "text",
+            success: function (html) {
+               var _html = $("<div></div>").append(html)[0];
+               console.log(_html);
+            }
+        });
+    };
+
     /*
      * Public
      */
 
     return {
-        saveJsonReport: _saveJsonReport
+        saveJsonReport: _saveJsonReport,
+        html2json: _html2json
 
-        
+
     }; // fin return
 
 })();
