@@ -54,7 +54,7 @@
 
 /*Colors for color*/
 .mreport-primary-color-1{
-  color:#006878;
+  color:#006878!important;
 }
 
 .mreport-primary-color-2{
@@ -66,7 +66,7 @@
 }
 
 .mreport-secondary-color-1{
-  color:#FFA80E;
+  color:#FFA80E!important;
 }
 
 .mreport-secondary-color-2{
