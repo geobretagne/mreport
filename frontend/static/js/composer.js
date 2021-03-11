@@ -210,7 +210,7 @@ composer = (function () {
 
     var _initComposer = function () {
         //TODO use config file to load html templates instead of ["a","b"]
-        ["a", "b"].forEach(function (m) {
+        ["b"].forEach(function (m) {
             $.ajax({
                 url: "/static/html/model-" + m + ".html",
                 dataType: "text",
