@@ -213,7 +213,7 @@ composer = (function () {
 
     var _initComposer = function () {
         //TODO use config file to load html templates instead of ["a","b"]
-        ["a", "b"].forEach(function (m) {
+        ["b"].forEach(function (m) {
             $.ajax({
                 url: "/static/html/model-" + m + ".html",
                 dataType: "text",
@@ -580,7 +580,7 @@ composer = (function () {
      */
 
     var _exportHTML = function () {
-        saver.saveJsonReport();
+        saver.saveJsonReport(document.getElementById("report-composition"));
         var html = [];
         // Get first title
         $("#report-composition .report-bloc-title").each(function (id, title) {
