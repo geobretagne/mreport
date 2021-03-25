@@ -192,10 +192,17 @@ saver = (function () {
     };
 
     var _createDefinition = function (report) {
-        console.log(report);
-        report.structure.blocs.forEach(function(bloc) {
-            console.log(bloc);
+        let definition = {};
+        report.structure.blocs.forEach(function(bloc, blocidx) {
+            definition[blocidx] = {};
+            let level = 0;
+            bloc.divisions.forEach(function(division, divisionidx) {
+                //first level
+                definition[blocidx][`${level}_${divisionidx}`] = {};
+            });
         });
+        report.structure.definition = definition;
+        console.log(report);
     }
 
     var _composition2json = function (document_url) {
