@@ -33,10 +33,19 @@ saver = (function () {
 
     */
 
+    /*
+
+    pour tester l'encodage json, lancer dans la console : saver.composition2json("/mreport/eclusetrafic/report_composer.html")
+    pour tester la reconstruction html, lancer : saver.test()
+
+    */
+
     class Bloc {
         constructor(columns) {
           this.divisions = [];
           this.totalContainers = 0;
+          this.definition = {};
+          this.sources = {}
         }
 
       }
@@ -46,8 +55,7 @@ saver = (function () {
         constructor() {
           this.structure = {
             title: "",
-            blocs:[],
-            definition: {}
+            blocs:[]
         }
         this.configuration = {};
         this.theme =  "";
@@ -101,29 +109,6 @@ saver = (function () {
         return results;
     };
 
-    _formula = function (b) {
-        /*
-         *   distibution = "|"
-         *   colonne = "@"
-         *   division verticale = "\"
-         *   division horizontale = "/"
-         *   Exemple1: @|@
-         *  exemple 2 : @|@/2|@\2
-         *
-         */
-        _pattern = new Array(b.divisions.length);
-        b.divisions.forEach(function (d,index) {
-            if (d.isContainer) {
-            _pattern[index] = "@";
-            } else if (d.divisions) {
-                let _type = (d.divisions[0].type === "V")? "\\":"/";
-                let _nb = d.divisions.length;
-                _pattern[index] = "@" + _type + _nb;
-            }
-
-        })
-        return _pattern.join("|");
-    };
 
     var _saveJsonReport = function (composition, theme) {
         //Work in progress
@@ -132,7 +117,7 @@ saver = (function () {
         xxx.structure.title = $(composition).find(".report-bloc-title .dataviz-container>.dataviz").attr("data-dataviz");
         //Loop on blocs
         var blocs = [];
-        $(composition).find(".report-bloc").each(function (id, bloc) {
+        $(composition).find(".report-bloc").each(function (blocidx, bloc) {
             let _bloc = new Bloc();
             //count dataviz containers in Bloc
             _bloc.totalContainers =  $(bloc).find(".dataviz-container").length;
@@ -141,18 +126,18 @@ saver = (function () {
             let level_1 = _getDivisions($(bloc).find(">.bloc-content>.row"));
             //Hack division from col-md-12
             if (level_1.divisions.length === 1 && !level_1.divisions[0].isContainer) {
-                console.log(level_1);
                 level_1.divisions = _getDivisions(level_1.divisions[0].childrens).divisions;
             }
-            level_1.divisions.forEach(function(c) {
+            level_1.divisions.forEach(function(c, divisionidx) {
                 if (c.isContainer) {
                     containersToFind -= 1;
                 }
                 if (c.childrens) {
                     c.divisions = _getDivisions(c.childrens).divisions;
-                    c.divisions.forEach(function(c) {
+                    c.divisions.forEach(function(c, divisionidx) {
                         if (c.isContainer) {
-                            containersToFind -= 1;                        }
+                            containersToFind -= 1;
+                        }
                         if (c.childrens) {
                             c.divisions = _getDivisions(c.childrens).divisions;
                             c.divisions.forEach(function(c) {
@@ -179,31 +164,37 @@ saver = (function () {
                 delete c.childrens;
             });
 
-            //_bloc.formula = _formula(_bloc);
+            _setBlocDefinition(_bloc);
             blocs.push(_bloc);
 
         });
         xxx.structure.blocs = blocs;
 
-        _createDefinition(xxx);
+        $(composition).find("code.dataviz-definition").each(function (idx, definition) {
+            let parser = new DOMParser();
+            let datavizid = definition.parentElement.dataset.dataviz;
+            let configuration = {
+                dataviz: datavizid,
+                properties: parser.parseFromString(definition.textContent, "text/html").querySelector(".dataviz").dataset
+            };
+            xxx.configuration[datavizid] = configuration;
+        });
+
+
+
+
+        console.log(xxx);
+        //test html reconstruction
+        xxx.structure.blocs.forEach(function (bloc) {
+            _createBlocStructure(bloc.definition);
+        });
+
+
         console.log(composer.templates.blockTemplate);
 
 
     };
 
-    var _createDefinition = function (report) {
-        let definition = {};
-        report.structure.blocs.forEach(function(bloc, blocidx) {
-            definition[blocidx] = {};
-            let level = 0;
-            bloc.divisions.forEach(function(division, divisionidx) {
-                //first level
-                definition[blocidx][`${level}_${divisionidx}`] = {};
-            });
-        });
-        report.structure.definition = definition;
-        console.log(report);
-    }
 
     var _composition2json = function (document_url) {
 
@@ -218,75 +209,55 @@ saver = (function () {
         });
     };
 
-    var _formula2HTML = function (formula) {
-        /* example with
-            @
-            @\2
-            @|@\2
-            @|@\2|@/2
-        */
+    _setBlocDefinition = function (bloc) {
+        //Get first level
+        bloc.divisions.forEach(function (div0, div0idx) {
+            let properties0 = {"w":div0.style.replace( /^\D+/g, ''), "division_type":div0.type};
+            if (div0.dataviz) {
+                properties0.dataviz =  { id: div0.dataviz, options: {} };
+            } else if (div0.isContainer) {
+                properties0.dataviz = false;
+            }
+            bloc.definition[`${div0idx}_0`] = properties0;
+            //Get next level
+            if (!div0.isContainer && div0.divisions) {
+                div0.divisions.forEach(function (div1,div1idx) {
+                    let properties1 = {"w":"", "division_type":div1.type};
+                    if (div1.type === "H") {
+                        properties1.w = div1.style.replace( /\D+/g, '');
+                    } else {
+                        //vertical div
+                        properties1.h = div1.style.replace( /\D+/g, '');
+                        //get subdivisions
+                        if (!div1.isContainer && div1.divisions) {
+                            div1.divisions.forEach(function (div11,div11idx) {
+                                //properties1 = {"w":"", "division_type":div1.type};
+                                if (div11.type === "H") {
+                                    properties1.w = div11.style.replace( /\D+/g, '');
+                                }
+                                if (div1.type === 'V') {
+                                    properties1.h = div1.style.replace( /\D+/g, '');
+                                }
+                                if (div11.dataviz) {
+                                    properties1.dataviz =  { id: div11.dataviz, options: {} };
+                                } else if (div11.isContainer) {
+                                    properties1.dataviz = false;
+                                }
+                            });
+                        }
+                    }
+                    if (div1.dataviz) {
+                        properties1.dataviz =  { id: div1.dataviz, options: {} };
+                    } else if (div1.isContainer) {
+                        properties1.dataviz = false;
+                    }
+                    bloc.definition[`${div0idx}_${div1idx + 1}`] = properties1;
 
+                });
+            }
+        });
     }
 
-    var _test = function () {
-        let bloc = {
-            properties: {
-                "0_0": {
-                    w: 4,
-                    division_type: "H",
-                    dataviz: {
-                        id: "dvz1",
-                        options: {}
-                    }
-                },
-                "1_0": {
-                    w: 4,
-                    division_type: "H",
-                },
-                "1_1": {
-                    w: 12,
-                    division_type: "V",
-                    dataviz: {
-                        id: "dvz2",
-                        options: {}
-                    }
-                },
-                "1_2": {
-                    w: 12,
-                    division_type: "V",
-                    dataviz: {
-                        id: "dvz3",
-                        options: {}
-                    }
-                },
-                "2_0": {
-                    w: 4,
-                    division_type: "H"
-                },
-                "2_1": {
-                    w: 6,
-                    division_type: "H",
-                    dataviz: {
-                        id: "dvz4",
-                        options: {}
-                    }
-                },
-                "2_2": {
-                    w: 6,
-                    division_type: "H",
-                    dataviz: {
-                        id: "dvz1",
-                        options: {}
-                    }
-                }
-            }
-        };
-
-
-        _createBlocStructure(bloc.properties);
-
-
-    };
 
     var _createBlocStructure = function (bloc_properties) {
         let tpls = {
@@ -351,8 +322,7 @@ saver = (function () {
     return {
         saveJsonReport: _saveJsonReport,
         composition2json: _composition2json,
-        Report2composition: _json2composition,
-        test: _test
+        Report2composition: _json2composition
 
 
     }; // fin return
