@@ -35,7 +35,7 @@ saver = (function () {
 
     /*
 
-    pour tester l'encodage json, lancer dans la console : saver.composition2json("/mreport/eclusetrafic/report_composer.html")
+    pour tester l'encodage json, lancer dans la console : saver.composition2json("/mreport/epci_population/report_composer.html")
     pour tester la reconstruction html, lancer : saver.test()
 
     */
@@ -45,7 +45,8 @@ saver = (function () {
           this.divisions = [];
           this.totalContainers = 0;
           this.definition = {};
-          this.sources = {}
+          this.sources = "";
+          this.title = {};
         }
 
       }
@@ -122,7 +123,22 @@ saver = (function () {
             //count dataviz containers in Bloc
             _bloc.totalContainers =  $(bloc).find(".dataviz-container").length;
             let containersToFind = _bloc.totalContainers;
-            //get columns level 1
+            //get bloc-sources if present
+            let title = bloc.querySelector(".bloc-title.editable-text");
+            if (title && title.firstChild && title.firstChild.nodeType === 3 && title.firstChild.textContent) {
+                let style = false;
+                if (title.className.match(/titre-\d/)) {
+                    style = title.className.match(/titre-\d/)[0];
+                }
+                _bloc.title = { "title": title.firstChild.textContent.trim(), "style": style };
+            }
+            //get bloc-sources if present
+            let sources = bloc.querySelector(".bloc-sources .editable-text");
+            if (sources && sources.firstChild && sources.firstChild.nodeType === 3 && sources.firstChild.textContent) {
+                _bloc.sources = sources.firstChild.textContent.trim();
+            }
+
+            //get columns first level of bloc-content
             let level_1 = _getDivisions($(bloc).find(">.bloc-content>.row"));
             //Hack division from col-md-12
             if (level_1.divisions.length === 1 && !level_1.divisions[0].isContainer) {
@@ -173,11 +189,18 @@ saver = (function () {
         $(composition).find("code.dataviz-definition").each(function (idx, definition) {
             let parser = new DOMParser();
             let datavizid = definition.parentElement.dataset.dataviz;
-            let configuration = {
-                dataviz: datavizid,
-                properties: parser.parseFromString(definition.textContent, "text/html").querySelector(".dataviz").dataset
-            };
-            xxx.configuration[datavizid] = configuration;
+            if (datavizid) {
+                let properties = false;
+                if (definition.textContent) {
+                    properties = parser.parseFromString(definition.textContent, "text/html").querySelector(".dataviz").dataset;
+                }
+                let configuration = {
+                    dataviz: datavizid,
+                    properties: properties
+                };
+                xxx.configuration[datavizid] = configuration;
+            }
+
         });
 
 
@@ -185,9 +208,12 @@ saver = (function () {
 
         console.log(xxx);
         //test html reconstruction
+        let structure = [];
         xxx.structure.blocs.forEach(function (bloc) {
-            _createBlocStructure(bloc.definition);
+            structure.push(_createBlocStructure(bloc.definition));
         });
+        console.log(structure.map(e => e.innerHTML).join(""));
+
 
 
         console.log(composer.templates.blockTemplate);
@@ -297,21 +323,14 @@ saver = (function () {
         parts.forEach(function (part) {
             blocElement.append(part);
         });
-        console.log(blocElement);
+        return blocElement;
 
 
     };
 
 
     var _json2composition = function (report) {
-        report.structure.blocs.forEach(function(bloc, index) {
-            //each bloc
-            console.log("Bloc " + index);
-            bloc.divisions.forEach(function(division) {
-                //first level
-                console.log(division.style, division.isContainer);
-            });
-        });
+
 
     };
 
