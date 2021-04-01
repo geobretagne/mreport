@@ -43,7 +43,6 @@ saver = (function () {
     class Bloc {
         constructor() {
           this.divisions = [];
-          this.totalContainers = 0;
           this.definition = {};
           this.sources = "";
           this.title = {};
@@ -86,16 +85,16 @@ saver = (function () {
             divisions: []
         };
 
-        $(element).find(">.verticalDivision").each(function (id, verticalDivision) {
+        element.querySelectorAll(":scope > .verticalDivision").forEach(function(verticalDivision) {
             let properties = {
                 style: verticalDivision.className.replace("verticalDivisionlumn","").replace("lyrow","").trim(),
-                childrens: $(verticalDivision).find(".customBaseColumn").parent()[0],
+                childrens: verticalDivision.querySelector(".customBaseColumn").parentElement,
                 type: "V"
             }
             results.divisions.push(properties);
         });
 
-        $(element).find(">.customBaseColumn").each(function (id, baseColumn) {
+        element.querySelectorAll(":scope > .customBaseColumn").forEach(function(baseColumn) {
             //check if maincolumn is divided or if contains container
             let properties = {
                 style: "",
@@ -106,19 +105,18 @@ saver = (function () {
             }
             properties.style = baseColumn.className.replace("customBaseColumn","").replace("dividedcolumn","").trim();
 
-            if ($(baseColumn).find(">.dataviz-container").length > 0) {
+            if (baseColumn.querySelectorAll(":scope > .dataviz-container").length > 0) {
                 properties.isContainer = true;
-                properties.dataviz = $(baseColumn).find(".dataviz").attr("data-dataviz") || false;
+                properties.dataviz = baseColumn.querySelector(".dataviz").dataset.dataviz || false;
                 properties.childrens = false;
             } else {
                 properties.isContainer = false;
-                if ($(baseColumn).find(">.verticalDivision,>.customBaseColumn").length > 0) {
+                if (baseColumn.querySelectorAll(".verticalDivision, .customBaseColumn").length > 0) {
                     properties.childrens = baseColumn;
-
-                } else if ($(baseColumn).find(">.lyrow>.view>.row").length > 0) {
-                    properties.childrens = $(baseColumn).find(">.lyrow>.view>.row")[0];
+                } else if (baseColumn.querySelectorAll(":scope > .lyrow>.view>.row").length > 0) {
+                    properties.childrens = baseColumn.querySelector(":scope > .lyrow>.view>.row");
                 } else {
-                    properties.childrens = $(baseColumn).find(".customBaseColumn").parent()[0];
+                    properties.childrens = baseColumn.querySelector(".customBaseColumn").parentElement;
                 }
 
             }
@@ -133,7 +131,6 @@ saver = (function () {
         //Work in progress
         var xxx = new Report();
         //xxx.theme = theme || composer.activeModel().id;
-        xxx.structure.title = $(composition).find(".report-bloc-title .dataviz-container>.dataviz").attr("data-dataviz");
         //Loop on blocs
         var blocs = [];
         composition.querySelectorAll("#report-composition > .list-group-item").forEach(function (bloc_item, blocidx) {
@@ -159,7 +156,7 @@ saver = (function () {
                     }
 
                     //get columns first level of bloc-content
-                    let level_1 = _getDivisions($(bloc).find(">.bloc-content>.row"));
+                    let level_1 = _getDivisions(bloc.querySelector("div > .bloc-content > .row"));
                     //Hack division from col-md-12
                     if (level_1.divisions.length === 1 && !level_1.divisions[0].isContainer) {
                         level_1.divisions = _getDivisions(level_1.divisions[0].childrens).divisions;
@@ -222,7 +219,7 @@ saver = (function () {
 
         xxx.structure.blocs = blocs;
 
-        $(composition).find("code.dataviz-definition").each(function (idx, definition) {
+        composition.querySelectorAll("code.dataviz-definition").forEach(function (definition) {
             let parser = new DOMParser();
             let datavizid = definition.parentElement.dataset.dataviz;
             if (datavizid) {
@@ -292,9 +289,11 @@ saver = (function () {
             url: document_url,
             dataType: "text",
             success: function (html) {
-               var _html = $('<div id="report-composition"></div>').append(html)[0];
-               console.log('Contenu récupéré à traiter : ', _html);
-               _saveJsonReport(_html);
+                let _html = document.createElement("div");
+                _html.id = "report-composition";
+                _html.innerHTML = html;
+                console.log('Contenu récupéré à traiter : ', _html);
+                _saveJsonReport(_html);
             }
         });
     };
