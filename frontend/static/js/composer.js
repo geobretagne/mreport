@@ -67,7 +67,7 @@ composer = (function () {
                 '<i class="fas fa-arrows-alt"></i>',
                 '<p id="drag-tag"> drag</p>',
                 '</span>',
-                '<span class="editable-text">Texte</span>',
+                '<span class="editable-text {{{CLASSE}}}">{{{TEXT}}}</span>',
                 '<span class="remove badge badge-danger structureElems">',
                 '<i class="fas fa-times"></i> remove',
                 '</span>',
@@ -83,12 +83,11 @@ composer = (function () {
         datavizTemplate: [
             '<li data-dataviz="{{id}}" title="{{dvz}}" data-report="{{reportId}}" class="dataviz list-group-item handle">',
             '<span class="drag badge badge-default">',
-            '<i class="{{icon}}"></i>',
             '<p id="drag-tag"> drag</p>',
             '</span>',
             '<div class="tool">',
             '<button class="btn btn-default" data-toggle="modal" data-component="report" data-related-id="{{id}}" data-target="#wizard-panel">',
-            '<i class="fas fa-cog"></i>',
+            '<i class="{{icon}}"></i>',
             '</button>',
             '</div>',
             '<span>{{dvz}}</span>',
@@ -136,7 +135,7 @@ composer = (function () {
         $("#structure-models .list-group-item").remove();
         $("#structure-models").append(_HTMLTemplates[m].elements);
         $("#element-models .list-group-item").remove();
-        $("#element-models").append(_HTMLTemplates[m].extra_elements);
+        $("#element-models").append(_HTMLTemplates[m].extra_elements[0].replace("{{{TEXT}}}", "Texte").replace("{{{CLASSE}}}", ""));
         //update style in wizard modal
         wizard.updateStyle(_HTMLTemplates[m]);
         //update icon store in wizard modal
@@ -985,7 +984,8 @@ composer = (function () {
         models: /* used for test pupose */ function () {
             return _HTMLTemplates;
         },
-        templates: _composerTemplates
+        templates: _composerTemplates,
+        getDatavizTypeIcon: _getDatavizTypeIcon
     }; // fin return
 
 })();
