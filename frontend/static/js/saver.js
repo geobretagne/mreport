@@ -408,8 +408,61 @@ saver = (function () {
         } catch {
             console.log('le rapport au format json est illisible');
         }
-        console.log(config);
 
+        let parser = new DOMParser();
+        let composition = document.createElement("div");
+        composition.id = "report-composition";
+        let structure = [];
+        let _composer_template = "";
+        let model = "b";
+        config.structure.blocs.forEach(function(bloc) {
+            let _bloc = "";
+            switch (bloc.type) {
+                case "BlocTitle":
+                    //create model container
+                    // bad way. Need to update. Not sure that first element template is title
+                    // Caution with composer.templates.blockTemplate
+                    _composer_template = composer.models()[model].elements[0];
+                    //add dataviz template to container
+                    //Same than composer.js
+                    let dvz = config.configuration[bloc.title];
+                    let dvztpl = composer.templates.datavizTemplate.join("");
+                    dvztpl = dvztpl.replace(/{{dvz}}/g, bloc.title);
+                    dvztpl = dvztpl.replace(/{{id}}/g, bloc.title);
+                    //dvztpl = dvztpl.replace(/{{reportId}}/g, reportId);
+                    dvztpl = dvztpl.replace(/{{type}}/g, dvz.dataviz_class);
+                    dvztpl = dvztpl.replace(/{{icon}}/g, composer.getDatavizTypeIcon(dvz.dataviz_class));
+                    //Create Element based on composer dataviz template
+                    let dvzConfig = parser.parseFromString(dvztpl, "text/html").querySelector("li");
+                    //Populate dataviz-definition with dataviz outerHTML element
+                    let dvzElement = parser.parseFromString(composer.models()[model].dataviz_components.title.replace("{{dataviz}}",bloc.title), "text/html").querySelector("div");
+
+                    dvzConfig.querySelector("code.dataviz-definition").append(dvzElement.outerHTML);
+
+
+                    let structure_bloc = parser.parseFromString(_composer_template, "text/html").querySelector("div.structure-bloc");
+                    structure_bloc.querySelector(".dataviz-container").appendChild(dvzConfig);
+                    //stringify bloc element
+                    _bloc = structure_bloc.outerHTML;
+                    break;
+                case "Bloc":
+                    _structure = "TODO2"
+                    _bloc = composer.templates.blockTemplate.replace("{{{HTML}}}", _structure);
+                    break;
+                case "BlocElement":
+                    _structure = "TODO3"
+                    _bloc = composer.templates.extraElementTemplate[0].replace("{{{TEXT}}}", bloc.text).replace("{{{CLASSE}}}", bloc.style);
+                    break;
+            }
+            structure.push(_bloc);
+        });
+
+        let elements = parser.parseFromString(structure.join(""), "text/html").querySelectorAll("body > div");
+        elements.forEach(function(element) {
+            composition.appendChild(element);
+        });
+
+        console.log(composition);
     };
 
     /*
