@@ -110,7 +110,8 @@ Son rendu sour forme de chart:
 ![chart_1](img/chart_1.png?raw=true  "chart_1")
 
 
-**Exemple de tableau** 
+Exemple de tableau
+------------------
 
 *dataset* sert lorsqu'il y a deux données parallèles sur le même *order*
 
