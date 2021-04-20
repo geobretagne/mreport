@@ -798,6 +798,7 @@ report = (function () {
         if (el && data[chiffrecle.id]) {
             var figure_cc = el.getElementsByClassName("report-figure-chiffre")[0];
             figure_cc.textContent = _format(data[chiffrecle.id].data[0]) + unit;
+            figure_cc.dataset.value = figure_cc.textContent;
             if (el.getElementsByClassName("report-figure-caption").length > 0) {
                 var figure = el.getElementsByClassName("report-figure-caption")[0];
                 figure.textContent = data[chiffrecle.id].label[0];
