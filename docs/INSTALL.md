@@ -111,7 +111,7 @@ Use the same parameters as used in the [database section !](#set-database-variab
 
 ### Launch application in dev or test mode
 
-mreport backend and frontend can be served by flask at same time with tje following command
+mreport backend and frontend can be served by flask at same time with the following command
 
 with **mreport** user in ~/mreport folder with **venv** activated
 
