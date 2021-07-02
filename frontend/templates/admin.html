@@ -107,6 +107,8 @@
         <div id="stickycollapse" class="collapse d-md-block sticky">
             <div id="sticky" class="row">
               <div class="col-md-6 col-12 text-right">
+                <button type="button" id="sortDatavizByName"class="btn mreport-primary-color-2-bg col-2">
+                    <i class="fas fa-sort-alpha-down"></i> Tri A-Z</button>
                 <a class="green">
                   <button type="button" class="btn mreport-primary-color-1-bg col-4">
                     <i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span>
@@ -158,13 +160,18 @@
       <div class="">
         <div id="reports-content">
           <h1 class="col-12">Rapports</h1>
-            <div class="text-right collapse d-md-block sticky">
+          <div class="d-flex align-items-end flex-column">
+            <div class="text-right collapse d-md-block sticky col-md-6 ">
+              <button type="button" id="sortReportByName"class="btn mreport-primary-color-2-bg col-2">
+                  <i class="fas fa-sort-alpha-down"></i> Tri A-Z
+              </button>
               <a class="report-option" id="report-option-button">
-              <button type="button" class="btn mreport-primary-color-1-bg col-2">
+              <button type="button" class="btn mreport-primary-color-1-bg col-4">
                 <i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span>
                 Options</button>
               </a>
             </div>
+          </div>  
         </div>
       </div>
     </div>
@@ -219,7 +226,7 @@
                 </div>
                 <div>
                   <h6>Eléments</h6>
-                  <div class="rows list-group" id="element-models">
+                  <div class="" id="element-models">
                        <!-- appended by code -->
                   </div>
                 </div>

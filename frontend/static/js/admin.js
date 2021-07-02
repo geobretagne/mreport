@@ -284,7 +284,7 @@ admin = (function () {
         });
         objArray.forEach(function (elem) {
             cards.push(
-                ['<div class="col-md-3 col-sm-12 cards ">',
+                ['<div class="col-md-3 col-sm-12 cards d-inline-block">',
                     '<div class="card report" data-report-id="' + elem.report + '">',
                     '<div class="card-body ">',
                     '<h6 class="card-title col-12 text-center">' + elem.title + '</h6>',

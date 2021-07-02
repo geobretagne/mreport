@@ -409,6 +409,10 @@ h5>.badge {
   transition: .4s;
 }
 
+.report-option{
+  padding: 6px 12px 6px 12px;
+}
+
 .green{
   color: #FFF;
   padding: 6px 12px 6px 12px;
