@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="fr">
 <meta charset="utf-8">
 
@@ -107,7 +107,7 @@
         <div id="stickycollapse" class="collapse d-md-block sticky">
             <div id="sticky" class="row">
               <div class="col-md-6 col-12 text-right">
-                <button type="button" id="sortDatavizByName"class="btn mreport-primary-color-2-bg col-2">
+                <button type="button" id="sortDatavizByName"class="btn mreport-primary-color-2-bg col-3">
                     <i class="fas fa-sort-alpha-down"></i> Tri A-Z</button>
                 <a class="green">
                   <button type="button" class="btn mreport-primary-color-1-bg col-4">
@@ -157,28 +157,30 @@
 
     <!-- Reports start -->
     <div class="container-fluid page" id="reports">
-      <div class="">
-        <div id="reports-content">
-          <h1 class="col-12">Rapports</h1>
-          <div class="d-flex align-items-end flex-column">
-            <div class="text-right collapse d-md-block sticky col-md-6 ">
-              <button type="button" id="sortReportByName"class="btn mreport-primary-color-2-bg col-2">
-                  <i class="fas fa-sort-alpha-down"></i> Tri A-Z
-              </button>
-              <a class="report-option" id="report-option-button">
-              <button type="button" class="btn mreport-primary-color-1-bg col-4">
-                <i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span>
-                Options</button>
-              </a>
-            </div>
-          </div>  
+    <div class="">
+    <div id="reports-content">
+      <h1 class="col-12">Rapports</h1>
+        <div class="d-flex align-items-end flex-column">
+          <div class="text-right collapse d-md-block sticky col-md-6 ">
+            <button type="button" id="sortReportByName"class="btn mreport-primary-color-2-bg col-3">
+                <i class="fas fa-sort-alpha-down"></i> Tri A-Z
+            </button>
+            <a class="report-option" id="report-option-button">
+            <button type="button" class="btn mreport-primary-color-1-bg col-4">
+              <i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span>
+              Options</button>
+            </a>
+          </div>
         </div>
-      </div>
     </div>
+    
+    </div>
+  </div>
     <!-- Reports start -->
 
     <!-- Composer start -->
     <div class="container-fluid page" id="composer">
+        
         <div class="builder edit">
             <div class="row mreport-grey6-bg" id="ComposerOptionsSelectRow">
               <!--<form class="form row" role="form" autocomplete="off">-->
@@ -195,7 +197,7 @@
                           <i class="fas fa-history mreport-secondary-color-1"></i>
                           Version sélectionné
                         </label>
-                        <select class="form-control" id="selectedReportVersionComposer" disabled>
+                        <select class="form-control" id="selectedReportVersionComposer">
                         </select>
                     </div>
                     <div class="form-group col-3">
@@ -207,27 +209,34 @@
                             <option disabled value selected>Modèle</option>
                         </select>
                     </div>
-                </form>
+              <!--</form>-->
             <div class="col-3">
               <button type="button" id="btn_save_report" class=" btn btn-block mreport-primary-color-1-bg">
                 <i class="fas fa-save"></i>
                 Enregistrer
               </button>
             </div>
-
+              
             </div>
             <div class="sidenav d-flex flex-column ">
                 <div class="sidenav-content">
+                <div >
+                  <h6>Affichage du bloc sans données:</h6>
+                  <div id="nodata-option">
+                    <select class="form-control" id="#noDataOption">
+                      <option value="0" selected>Affichage du message: "Absence de données"</option>
+                      <option value="1" >Cacher tout le bloc</option>
+                  </select>
+                </div>
+                  
+                </div>
                 <div>
                   <h6>Blocs structurants</h6>
                   <div class="rows list-group" id="structure-models">
                       <!-- appended by code -->
-                  </div>
-                </div>
-                <div>
-                  <h6>Eléments</h6>
-                  <div class="" id="element-models">
-                       <!-- appended by code -->
+                      <div class="" id="element-models">
+                          <!-- appended by code -->
+                      </div>
                   </div>
                 </div>
                 <div>
@@ -236,8 +245,8 @@
                       <!-- appended by code -->
                   </div>
                 </div>
+                </div>
             </div>
-</div>
 
             <div class="main">
                 <div class="row">
@@ -358,18 +367,16 @@
                       <h5 class="modal-title" id="reportModalLabel">Rapport<span
                             class="badge mreport-secondary-color-1-bg">New</span><span class="badge mreport-secondary-color-2-bg">Edition</span><span
                             class="badge mreport-error-color-bg">Supression</span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
                 </div>
                 <div class="modal-body">
                     <div class="form-group ">
-                        <label for="reportInputTitre">Titre du rapport</label>
-                        <h4>
-                          <input type="text" class="form-control" name="title" id="reportInputTitre"
+                        <h4><label for="reportInputTitre">Titre du rapport</label></h4>
+                        <input type="text" class="form-control" name="title" id="reportInputTitre"
                               placeholder="Titre" required="true">
-                        </h4>
                         <label for="reportInputDescription" class="pt-2">Description du rapport</label>
                         <input type="text" class="form-control" name="description" id="reportInputDescription"
                               placeholder="Description" required="true">
@@ -513,6 +520,10 @@
           <div class="col-md-12 col-12">
             <input id="searchbar" class="form-control" placeholder="Filtrer les données" maxlength="32">
           </div>
+            <div class="col-md-12 col-12 mt-2">
+              <button type="button" class="btn mreport-primary-color-2-bg col-12"
+                data-target="" id="advancedFilterCatalog">Filtre avancé</button>
+            </div>
           <h2>Selection</h2>
           <div class="col-12">
             <button type="button" class="btn mreport-primary-color-2-bg toggle-deactivate col-12" data-toggle="modal" data-report-state="new"
@@ -534,6 +545,7 @@
         </ul>
     </div>
 
+    
   <!-- Report select slide in -->
   <div id="report-select-options">
     <a id="toggle-report-select-option" class="mreport-primary-color-1-bg">Fermer</a>
@@ -568,15 +580,45 @@
   </div>
 
     <!--version list -->
-    <div id="version-list" class="sticky-top">
-      <a id="closeVersions" class="mreport-primary-color-1-bg">Fermer</a>
-      <div class="sticky"> 
-        <h2>Versions</h6>
+    <div id="version-list" class="">
+      <div id="version-list-content">
+        <a id="closeVersions" class="mreport-primary-color-1-bg">Fermer</a>
+        <div class="sticky"> 
+          <h2>Versions</h6>
+        </div>
+        <div>
+          <ul id="version-items">
+          </ul>
+        </div>
       </div>
-      <div>
-        <ul id="version-items">
-        </ul>
-      </div>
+    </div>
+
+    <div id="advancedFilterCatalogOptions">
+        <a id="toggleAdvancedFilter" class="mreport-primary-color-1-bg">Fermer</a>
+        <div class="sticky">
+        <div id="returnToOptionsCatalog"><i class="fas fa-arrow-left"></i> Retour aux options</div>
+          <div class="row">
+            <div class="col-md-6 col-12 p-0">
+              <h2 class="">Filtre avancé</h2>
+            </div>
+            <div class="col-md-6 col-12 text-right p-0">
+              <button id="resetAdvancedCatalogfilters" type="button" class="btn mreport-secondary-color-2-bg "><i class="fas fa-undo"></i> Réinitialiser</button>
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div>
+              <label>Filtrer les données par mot clé</label>
+              <input id="filterSearchAdvancedCatalog" class="form-control" placeholder="Filtrer les données" maxlength="32">
+            </div>
+            <div>
+              <label for ="filterLevelCatalog">Filtrer les données par référentiel</label>
+              <select id="filterLevelCatalog" class="form-control">
+                <option value="0" selected="true" disabled="disabled">Veuillez choisir une option</option>
+              </select>
+            </div>
+
+          </div> 
+        </div>
     </div>
 
     <!-- Structure dividing modal -->

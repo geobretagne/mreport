@@ -179,7 +179,8 @@ h5>.badge {
 
 #cd-cart .sticky,
 #version-list .sticky,
-#report-select-options .sticky{
+#report-select-options .sticky,
+#advancedFilterCatalogOptions .sticky{
   top:30px;
   padding:15px;
   margin:0px;
@@ -217,16 +218,26 @@ h5>.badge {
 */
 #cd-cart.speed-in,
 #version-list.speed-in,
-#report-select-options.speed-in{
+#report-select-options.speed-in,
+#advancedFilterCatalogOptions.speed-in{
   right: 0;
 }
 
 #cd-cart,
 #version-list,
-#report-select-options {
+#report-select-options,
+#advancedFilterCatalogOptions {
   right: -100%;
   background: #fff;
   transition: right .6s;
+  position: fixed;
+  top: 56px;
+  height: 100%;
+  width: 350px;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+  z-index: 3;
+  padding-bottom:56px;
 }
 
 @media only screen and (min-width: 1200px) {
@@ -243,26 +254,15 @@ h5>.badge {
   }
 }
 
-#cd-cart,
-#version-list,
-#report-select-options {
-  position: fixed;
-  top: 56px;
-  height: 100%;
-  width: 350px;
-  overflow-y: auto;
-  box-shadow: 0 0 20px rgba(0, 0, 0, .2);
-  z-index: 3;
-  padding-bottom:56px;
-}
-
 #version-list-content{
   overflow-y:auto;
   height:100%;
 }
 
 #cd-cart h2,
-#version-list h2 {
+#version-list h2,
+#report-select-options h2,
+#advancedFilterCatalogOptions h2 {
   font-size: 14px;
   font-size: .875rem;
   font-weight: 700;
@@ -377,7 +377,8 @@ h5>.badge {
 */
 #togglePanier,
 #closeVersions,
-#toggle-report-select-option {
+#toggle-report-select-option,
+#toggleAdvancedFilter {
   position: sticky;
   z-index: 5;
   width: 32px;
@@ -394,7 +395,9 @@ h5>.badge {
 
 #togglePanier:hover,
 #closeVersions:hover,
-#toggle-report-select-option:hover {
+#toggle-report-select-option:hover,
+#toggleAdvancedFilter:hover,
+#returnToOptionsCatalog:hover {
   cursor: pointer;
   /* background-color: #FFA80E; */
   transition: 0.3s;

@@ -128,7 +128,7 @@ admin = (function () {
             $(e.currentTarget).attr("data-report-state", newReport);
             var title = $(e.currentTarget).find('input[name="title"]');
             var description = $(e.currentTarget).find('input[name="description"]');
-            var descriptionlabel = $(e.currentTarget).find('label[for="reportInputDescription"]');
+ var descriptionlabel = $(e.currentTarget).find('label[for="reportInputDescription"]');
             var confirmed = $("#report_confirmed");
             titre.find("b").remove();
 
@@ -575,10 +575,57 @@ admin = (function () {
                             "job"
                         ]
                     };
+                    var optionsLevel = {
+                      tokenize: false,
+                      threshold: 0.0,
+                      distance: 500,
+                      minMatchCharLength: 2,
+                      keys: [
+                        "level",
+                      ]
+                    };
                     var fuse = new Fuse(data.datavizs, options);
+                    var fuseLevels = new Fuse(data.datavizs, optionsLevel);
                     $("#searchbar").on("keyup", function () {
+                      $("#filterSearchAdvancedCatalog").val("");
                         $("#checkAll").prop('checked', false);
                         var result = fuse.search($(this).val());
+                        var divs = $(".card.dataviz");
+                        if ($(this).val() != "") {
+                            divs.parent().addClass("hidden");
+                            result.forEach(function (elem) {
+                                divs.each(function () {
+                                    if (elem.dataviz == $(this).attr("data-dataviz-id")) {
+                                        $(this).parent().removeClass("hidden");
+                                    }
+                                });
+                            });
+                        } else {
+                            divs.parent().removeClass("hidden");
+                        }
+                    });
+                    $("#filterSearchAdvancedCatalog").on("keyup", function () {
+                      $("#searchbar").val("");
+                        $("#checkAll").prop('checked', false);
+                        var result = fuse.search($(this).val());
+                        var divs = $(".card.dataviz");
+                        if ($(this).val() != "") {
+                            divs.parent().addClass("hidden");
+                            result.forEach(function (elem) {
+                                divs.each(function () {
+                                    if (elem.dataviz == $(this).attr("data-dataviz-id")) {
+                                        $(this).parent().removeClass("hidden");
+                                    }
+                                });
+                            });
+                        } else {
+                            divs.parent().removeClass("hidden");
+                        }
+                    });
+
+                    $('#filterLevelCatalog').on("change", function () {
+                       $("#checkAll").prop('checked', false);
+                        var result = fuseLevels.search($(this).val());
                         var divs = $(".card.dataviz");
                         if ($(this).val() != "") {
                             divs.parent().addClass("hidden");
@@ -658,6 +705,11 @@ admin = (function () {
             $("#checkAll").prop('checked', false);
             $("#searchbar").val("").trigger("keyup");
         });
+        $("#resetAdvancedCatalogfilters").click(function () {
+            $("#filterSearchAdvancedCatalog").val("").trigger("keyup");
+            $('#filterLevelCatalog').val("0");
+        });
+
         /* Toggle the cart to appear */
         $(".green").click(function () {
             $("#cd-cart").toggleClass("speed-in");
@@ -693,6 +745,57 @@ admin = (function () {
 
         }
       });
+
+      $("#advancedFilterCatalog").click(function () {
+        $("#cd-cart").toggleClass("speed-in");
+        $("#advancedFilterCatalogOptions").toggleClass("speed-in");
+      });
+
+        /* Toggle the cart to disappear */
+        $("#toggleAdvancedFilter").click(function () {
+            $("#advancedFilterCatalogOptions").toggleClass("speed-in");
+            $( "#catalog-content" ).css('margin-right','0');
+            $( "#catalog-content" ).css('transition','margin-right .6s');
+        });
+
+      $("#returnToOptionsCatalog").click(function(){
+        $("#advancedFilterCatalogOptions").toggleClass("speed-in");
+        $("#cd-cart").toggleClass("speed-in");
+      });   
+
+
+      $.ajax({
+            dataType: "json",
+            url: [report.getAppConfiguration().api, "level"].join("/"),
+            success: function (data) {
+                if (data.response === "success") {
+                    _levels = data.levels;
+                    let options = [];
+                    data.levels.forEach(function (level) {
+                        options.push(`<option value="${level}">${level}</option>`);
+                    })
+                    $("#filterLevelCatalog").append(options.join(""));
+
+
+                } else {
+                    var err = data.error || data.response;
+                    Swal.fire(
+                        'Une erreur s\'est produite',
+                        'La liste des référentiels n\'a pas pu être chargée <br> (' + err + ')',
+                        'error'
+                    );
+                }
+            },
+            error: function (xhr, status, error) {
+                var err = _parseError(xhr.responseText);
+                Swal.fire(
+                    'Une erreur s\'est produite',
+                    'L\'API ne réponds pas <br> (' + err + ')',
+                    'error'
+                );
+            }
+        });
+      
     }
 
     _addDatavizToReport = function (report_id, report_data) {
