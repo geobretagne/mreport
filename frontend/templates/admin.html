@@ -161,22 +161,45 @@
 
     <!-- Composer start -->
     <div class="container-fluid page" id="composer">
-        <button type="button" id="btn_save_report" class="col-3 btn btn-block mreport-primary-color-1-bg"><i class="fas fa-save"></i> Enregistrer</button>
         <div class="builder edit">
-            <div class="sidenav d-flex flex-column mreport-grey3-bg">
-                <form class="form" role="form" autocomplete="off">
-                    <div class="form-group">
-                        <label for="selectedReportComposer">Rapport sélectionné</label>
+            <div class="row mreport-grey6-bg" id="ComposerOptionsSelectRow">
+              <!--<form class="form row" role="form" autocomplete="off">-->
+                    <div class="form-group col-3">
+                        <label for="selectedReportComposer">
+                          <i class="fas fa-file-alt mreport-secondary-color-1"></i>
+                          Rapport sélectionné
+                        </label>
                         <select class="form-control" id="selectedReportComposer">
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="selectedModelComposer">Modèle sélectionné</label>
+                    <div class="form-group col-3">
+                        <label for="selectedReportVersionComposer">
+                          <i class="fas fa-history mreport-secondary-color-1"></i>
+                          Version sélectionné
+                        </label>
+                        <select class="form-control" id="selectedReportVersionComposer" disabled>
+                        </select>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="selectedModelComposer">
+                          <i class="fas fa-palette mreport-secondary-color-1"></i>
+                          Modèle sélectionné
+                        </label>
                         <select class="form-control" id="selectedModelComposer">
                             <option disabled value selected>Modèle</option>
                         </select>
                     </div>
                 </form>
+            <div class="col-3">
+              <button type="button" id="btn_save_report" class=" btn btn-block mreport-primary-color-1-bg">
+                <i class="fas fa-save"></i>
+                Enregistrer
+              </button>
+            </div>
+
+            </div>
+            <div class="sidenav d-flex flex-column ">
+                <div class="sidenav-content">
                 <div>
                   <h6>Blocs structurants</h6>
                   <div class="rows list-group" id="structure-models">
@@ -196,6 +219,7 @@
                   </div>
                 </div>
             </div>
+</div>
 
             <div class="main">
                 <div class="row">

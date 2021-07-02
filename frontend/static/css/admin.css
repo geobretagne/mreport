@@ -141,6 +141,7 @@ h5>.badge {
 .container-fluid {
   padding: 15px;
   padding-right: 0;
+  padding-left: 0;
 }
 
 .card-body {
@@ -245,6 +246,12 @@ h5>.badge {
   overflow-y: auto;
   box-shadow: 0 0 20px rgba(0, 0, 0, .2);
   z-index: 3;
+  padding-bottom:56px;
+}
+
+#version-list-content{
+  overflow-y:auto;
+  height:100%;
 }
 
 #cd-cart h2 {
@@ -580,9 +587,8 @@ h5>.badge {
   cursor: pointer;
 }
 
-
 .page{
-  padding-top:65px;
+  padding-top:59px;
 }
 
 #catalog .badge,
@@ -648,11 +654,11 @@ h5>.badge {
   margin-top:-0.06rem!important;
 }
 
-#btn_save_report{
+/* #btn_save_report{
     position: fixed;
     z-index: 99;
     right: 10px;
-}
+} */
 
 #home h1{
   text-align:center;
