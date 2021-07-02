@@ -177,8 +177,9 @@ h5>.badge {
   background-color:rgba(233, 236, 239,0.7);
 }
 
-#cd-cart .sticky{
-  background-color:white;
+#cd-cart .sticky,
+#version-list .sticky,
+#report-select-options .sticky{
   top:30px;
   padding:15px;
   margin:0px;
@@ -214,11 +215,15 @@ h5>.badge {
 /*
   Cart css
 */
-#cd-cart.speed-in {
+#cd-cart.speed-in,
+#version-list.speed-in,
+#report-select-options.speed-in{
   right: 0;
 }
 
-#cd-cart {
+#cd-cart,
+#version-list,
+#report-select-options {
   right: -100%;
   background: #fff;
   transition: right .6s;
@@ -238,7 +243,9 @@ h5>.badge {
   }
 }
 
-#cd-cart {
+#cd-cart,
+#version-list,
+#report-select-options {
   position: fixed;
   top: 56px;
   height: 100%;
@@ -254,7 +261,8 @@ h5>.badge {
   height:100%;
 }
 
-#cd-cart h2 {
+#cd-cart h2,
+#version-list h2 {
   font-size: 14px;
   font-size: .875rem;
   font-weight: 700;
@@ -272,14 +280,22 @@ h5>.badge {
   padding: 0 1em;
 }
 
-#cd-cart .cd-cart-items {
+#cd-cart .cd-cart-items,
+#report-select-options .report-options-items {
   padding: 0;
 }
 
-#cd-cart .cd-cart-items h6.card-title {
+#cd-cart .cd-cart-items h6.card-title,
+#version-items h6.card-title
+#report-select-options .report-options-items h6.card-title{
   font-size:12px;
   padding:0;
   margin:0;
+}
+
+#version-items .versionList-item p{
+  font-size:12px;
+  font-weight:700;
 }
 
 .cd-cart-items .badge,
@@ -298,7 +314,8 @@ h5>.badge {
 }
 
 @media only screen and (min-width: 1200px) {
-  #cd-cart .cd-cart-items li {
+  #cd-cart .cd-cart-items li,
+  #version-items li {
     padding: 1em 2em;
   }
 }
@@ -306,7 +323,9 @@ h5>.badge {
 /*
 * Cart Items
 */
-#cd-cart .cd-cart-items li {
+#cd-cart .cd-cart-items li,
+#version-items li,
+#report-select-options .report-options-items li {
   position: relative;
   padding: 1em;
   border-top: 1px solid #e0e6ef;
@@ -326,7 +345,8 @@ h5>.badge {
 /*
 * Remove Icon
 */
-#cd-cart .cd-item-remove {
+#cd-cart .cd-item-remove,
+#report-select-options .cd-item-remove {
   position: absolute;
   right: 1em;
   top: 50%;
@@ -339,8 +359,9 @@ h5>.badge {
   transition: 0.3s;
 }
 
-.cd-item-remove:hover {
-  background-color: grey !important;
+.cd-item-remove:hover,
+#report-select-options .cd-item-remove:hover {
+  background-color: #7FC9D4 !important;
   transition: 0.3s !important;
 }
 
@@ -354,7 +375,9 @@ h5>.badge {
 /*
 * Toggle off cart icon
 */
-#togglePanier {
+#togglePanier,
+#closeVersions,
+#toggle-report-select-option {
   position: sticky;
   z-index: 5;
   width: 32px;
@@ -369,15 +392,23 @@ h5>.badge {
   padding:4px 36px;
 }
 
-#togglePanier:hover {
+#togglePanier:hover,
+#closeVersions:hover,
+#toggle-report-select-option:hover {
   cursor: pointer;
-  background-color: #FFA80E;
+  /* background-color: #FFA80E; */
   transition: 0.3s;
 }
 
 /*
 * Toggle on cart icon
 */
+.report-option{
+  position: relative;
+  right:0;
+  transition: .4s;
+}
+
 .green{
   color: #FFF;
   padding: 6px 12px 6px 12px;
@@ -388,8 +419,9 @@ h5>.badge {
   transition: .4s;
 }
 
-.green .number {
-  width:25px;
+.green .number,
+.report-option .number {
+  /* width:25px; */
   height:25px;
   position: absolute;
   border-radius: 50px;
@@ -480,11 +512,11 @@ h5>.badge {
   margin-top: 10px;
 }
 .duplicate{
-  position: absolute;
+  /* position: absolute;
   top:10px;
   right: 10px;
   background-color: white;
-  transition: 0.2s;
+  transition: 0.2s; */
 }
 .duplicate i {
   transition: 0.2s;
@@ -611,15 +643,14 @@ h5>.badge {
 }
 
 .card-body a.duplicate{
-  font-size:0.75rem;
+  /* font-size:0.75rem;
   font-weight:700;
   line-height: 1rem;
-  padding: 0.3rem 1rem;
-
+  padding: 0.3rem 1rem; */
 }
 
 .card-body a.duplicate i{
-  margin-right:0.3rem;
+  /* margin-right:0.3rem; */
 }
 
 .card-footer{

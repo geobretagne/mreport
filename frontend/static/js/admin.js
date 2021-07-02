@@ -37,6 +37,36 @@ admin = (function () {
                     $( "#catalog-content" ).css('margin-right','0');
                     $( "#catalog-content" ).css('transition','margin-right .6s');
                 };
+                if($(this).attr("data-page") == "reports" ||
+                  $(this).attr("data-page") =="composer" ||
+                  $(this).attr("data-page") =="home" ){
+                    $(".dataviz-selection").prop('checked', false).trigger("change");
+                    $("#checkAll").prop('checked', false);
+                    $("#searchbar").val("").trigger("keyup");
+                };
+                if($(this).attr("data-page") == "catalog" && $("#version-list").hasClass("speed-in") ||
+                  $(this).attr("data-page") =="composer" && $("#version-list").hasClass("speed-in")||
+                  $(this).attr("data-page") =="home" && $("#version-list").hasClass("speed-in")){
+                    $("#version-list").toggleClass("speed-in");
+                    $( "#reports-content" ).css('margin-right','0');
+                    $( "#reports-content" ).css('transition','margin-right .6s');
+                };
+                if($(this).attr("data-page") == "catalog" && $("#report-select-options").hasClass("speed-in") ||
+                  $(this).attr("data-page") =="composer" && $("#report-select-options").hasClass("speed-in")||
+                  $(this).attr("data-page") =="home" && $("#report-select-options").hasClass("speed-in")){
+                    $("#report-select-options").toggleClass("speed-in");
+                    $( "#reports-content" ).css('margin-right','0');
+                    $( "#reports-content" ).css('transition','margin-right .6s');
+                };
+                if($(this).attr("data-page") == "catalog"||
+                  $(this).attr("data-page") =="composer"||
+                  $(this).attr("data-page") =="home" ){
+                    $(".rapport-selection").prop('checked', false).trigger("change");
+                    $("#checkAllReports").prop('checked', false).trigger("change");
+                    $("#searchbarReports").val("").trigger("keyup");
+                    $('ul.report-options-items').empty();
+                    $("#report-option-button .number").html($(".report-options-items li").length);
+                };
             });
         });
     };
@@ -68,8 +98,9 @@ admin = (function () {
             success: function (data) {
                 if (data.response === "success") {
                     _report_data = _arr2dic(data.reports, "report");
-                    _appendReports();
+                    _appendReports(data);
                     _setDatavizUsed(_report_data);
+
                 } else {
                     var err = data.error || data.response;
                     Swal.fire(
@@ -133,9 +164,9 @@ admin = (function () {
                 title.val(data.title);
                 title.prop("disabled", true);
                 data.dataviz.forEach(function (dvz) {
-                    if (dvz != null)
+                  if (dvz != null)
                         lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item">' + dvz.title+ '</li>');
-                });
+                  });
                 confirmed.attr("onclick", "admin.deleteReport();");
                 confirmed.attr("data-report-id", reportId)
                 confirmed.html("Supprimer");
@@ -154,8 +185,6 @@ admin = (function () {
                     $(this).removeClass("mreport-error-color-bg");
                     $(this).addClass("mreport-validate-color-bg");
                 }
-
-
             });
         });
         $('#report-modal-form2').on('show.bs.modal', function (e) {
@@ -171,10 +200,76 @@ admin = (function () {
             });
             $(".reports-dataviz-exist").append(lst.join(""));
         });
+
+        $('#report-modal-delete').on('show.bs.modal', function (e) {
+          console.log("log");
+          $("#reports-modal-delete-multiple .list-group-item").remove();
+          var confirmed = $("#confirm_delete_reports");
+          var lst = Array.from($('#report-select-options .report-options-items li'));
+          confirmed.attr("onclick", "admin.deleteReports();");
+
+          lst.forEach(function(element){
+            var report_name = element.children[0].innerText;
+            var report_id = element.dataset.reportId;
+            $("#reports-modal-delete-multiple").append('<li data-report="' + report_id + '" class="list-group-item">' + report_name + '</li>');
+
+          });
+
+        });
+
     };
 
-    var _appendReports = function () {
+    var _initReportOptions = function(){
+        //toggle report select options
+        $('#report-option-button button').click(function (event) {
+          event.stopPropagation();
+          console.log('message');
 
+          $("#report-select-options").toggleClass("speed-in");
+          if($("#report-select-options").hasClass("speed-in") == false){
+            $("#reports-content" ).css('margin-right','0');
+            $("#reports-content" ).css('transition','margin-right .6s');
+          }else{
+            $( "#reports-content" ).css('margin-right','360px');
+            $( "#reports-content" ).css('transition','margin-right .6s');
+          }
+          if($('#version-list').hasClass("speed-in") == true){
+            $("#version-list").toggleClass("speed-in");
+          }
+
+        });
+
+        /* Toggle report-select-options to disappear */
+        $("#toggle-report-select-option").click(function (event) {
+            $("#searchbarReports").val("").trigger("keyup");
+            $("#report-select-options").toggleClass("speed-in");
+            $( "#reports-content" ).css('margin-right','0');
+            $( "#reports-content" ).css('transition','margin-right .6s');
+        });
+
+         $("#sortReportByName").click(function () {
+          // console.log("sort");
+          if($("#sortReportByName i").hasClass("fa-sort-alpha-down")){
+            $("#sortReportByName i").removeClass("fa-sort-alpha-down");
+            $("#sortReportByName i").addClass("fa-sort-alpha-up");
+
+            $('#reports-content .cards').sort(function(a,b) {
+              return $(a).find(".card-title").text() > $(b).find(".card-title").text() ? 1 : -1;
+            }).appendTo("#reports-content");
+          }else{
+            $("#sortReportByName i").removeClass("fa-sort-alpha-up");
+            $("#sortReportByName i").addClass("fa-sort-alpha-down");
+
+            $('#reports-content .cards').sort(function(a,b) {
+              return $(a).find(".card-title").text() < $(b).find(".card-title").text() ? 1 : -1;
+            }).appendTo("#reports-content");
+
+          }
+        });
+    }
+
+    var _appendReports = function (data) {
+        var dataReport = data.reports;
         var cards = [];
         var options = ['<option value="" selected disabled>Rapport...</option>'];
         $("#reports .row").remove();
@@ -189,15 +284,22 @@ admin = (function () {
         });
         objArray.forEach(function (elem) {
             cards.push(
-                ['<div class="col-md-4 col-sm-12  cards">',
-                    '<div class="card report" data-dataviz-id="' + elem.report + '">',
-                    '<div class="card-body">',
-                    '<h6 class="card-title col-9">' + elem.title + '</h6>',
-                    '<a class="btn duplicate col-3 mreport-primary-color-1-bg"><i class="fa fa-clone" aria-hidden="true"></i>copier</a>',
-                    '<a href="#" class="card-link mreport-primary-color-1" data-toggle="modal" data-report-state="edit" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-info mreport-secondary-color-1"></i> Sourcer</a>',
-                    '<a href="#" class="card-link mreport-primary-color-1" data-toggle="modal" data-report-state="delete" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>',
-                    '<a href="' + report.getAppConfiguration().location + '/' + elem.report + '" target="_blank" class="card-link mreport-primary-color-1"><i class="fas fa-eye mreport-secondary-color-1"></i> Afficher</a>',
-                    '<a href="#" onclick="composer.compose(\'' + elem.report + '\')" class="card-link mreport-primary-color-1"><i class="fas fa-edit mreport-secondary-color-1"></i> Composer</a>',
+                ['<div class="col-md-3 col-sm-12 cards ">',
+                    '<div class="card report" data-report-id="' + elem.report + '">',
+                    '<div class="card-body ">',
+                    '<h6 class="card-title col-12 text-center">' + elem.title + '</h6>',
+                    '<div class="custom-control custom-checkbox mb-3">',
+                    '<input type="checkbox" id="' + elem.report + '-selection" class="rapport-selection custom-control-input" name="rapport-selection">',
+                    '<label class="custom-control-label" for="' + elem.report + '-selection">Sélectionner</label>',
+                    '</div> ',
+                    '<a href="' + report.getAppConfiguration().location + '/' + elem.report + '" target="_blank" class="card-link mreport-primary-color-1 d-block mx-0 pb-2"><i class="fas fa-eye mreport-secondary-color-1"></i> Afficher</a>',
+                    '<a href="#" class="card-link mreport-primary-color-1 d-block mx-0 pb-2" data-toggle="modal" data-report-state="edit" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-pencil-alt mreport-secondary-color-1"></i> Editer</a>',
+                    '<a href="#" onclick="composer.compose(\'' + elem.report + '\',null)" class="card-link mreport-primary-color-1  d-block mx-0 pb-2"><i class="fas fa-edit mreport-secondary-color-1"></i> Composer</a>',                    
+                    '<a href="#" class="card-link mreport-primary-color-1 d-block mx-0 pb-2" data-toggle="modal" data-report-state="delete" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>',
+                    '<span class="card-link mreport-grey5 d-block mx-0 pb-2"><i class="fas fa-history mreport-grey5"></i> Versions</span>',
+                    // Enabled for future versions functionnality
+                    //'<a href="#" class="card-link mreport-primary-color-1 d-block mx-0 pb-2 displayVersions " data-report-id="' + elem.report + '"><i class="fas fa-history mreport-secondary-color-1"></i> Versions</a>',
+                    '<a class="duplicate card-link mreport-primary-color-1 d-block mx-0 pb-2"><i class="fa fa-clone mreport-secondary-color-1" aria-hidden="true"></i> Copier</a>',
                     '</div>',
                     '</div>',
                     '</div>'
@@ -206,9 +308,120 @@ admin = (function () {
             options.push('<option value="' + elem.report + '">' + elem.title + '</option>');
         });
 
-        $("#reports").append('<div class="row">' + cards.join("") + '</div>');
+
+        $("#reports-content").append('<div class="row" id="report-cards">' + cards.join("") + '</div>');
+
         $("#selectedReport, #selectedReportComposer").html(options.join(""));
         $('.duplicate').on('click', _duplicateReport);
+        $('.displayVersions').on('click', _displayVersions);
+
+       
+        // Reset inputs and report-select-options 
+        $("#resetReportfilters").click(function () {
+            // console.log("reset");
+            $("#report-cards .cards:not(.hidden) .rapport-selection").prop('checked', false);
+            $("#checkAllReports").prop('checked', false).trigger("change");;
+            $("#searchbarReports").val("").trigger("keyup");
+            $('ul.report-options-items').empty();
+            $("#report-option-button .number").html($(".report-options-items li").length);
+        });
+
+        // Add event to all checkbox to add them into the cart
+        $('#report-cards input[type="checkbox"]').change(function () {
+            var id = $(this).parent().parent().parent().data().reportId;
+            // console.log(id);
+            
+            if ($(this).is(":checked")) {
+            // console.log($(this).parent().parent().find("h6")[0].outerHTML);
+                $("#report-select-options .report-options-items").append(
+                    "<li data-report-id=" + id + ">\
+                         " + $(this).parent().parent().find("h6")[0].outerHTML + "\
+                        <a href='#' class='cd-item-remove cd-img-replace'>Remove</a>\
+                    </li>"
+                );
+              /*deactivate button if no selection*/
+              if($("ul.report-options-items li").length < 1 ){
+                $('.report-toggle-deactivate').prop('disabled', true);
+              }else if($("ul.report-options-items li").length >= 1 ){
+                $('.report-toggle-deactivate').prop('disabled', false);
+              }
+            } else {
+                $("#report-select-options .report-options-items li[data-report-id|=" + id + "]").remove();
+              /*deactivate button if no selection*/
+              if($("ul.report-options-items li").length < 1 ){
+                $('.report-toggle-deactivate').prop('disabled', true);
+              }else if($("ul.report-options-items li").length >= 1 ){
+                $('.report-toggle-deactivate').prop('disabled', false);
+              }
+            }
+            $("#report-option-button .number").html($(".report-options-items li").length);
+        });
+
+        // deactivate button if no selection
+        if($("ul.report-options-items li").length < 1 ){
+          $('.report-toggle-deactivate').prop('disabled', true);
+        }else if($("ul.report-options-items li").length >= 1 ){
+          $('.report-toggle-deactivate').prop('disabled', false);
+        }
+
+        // Remove event from the 'select all' checkbox because we do not want to add it to the cart 
+        $("#checkAllReports").off("change");
+
+        // Bind event to dynamically generated cart items in order to delete them from the cart and unselect them in the list
+        $(document).on('click', "#report-select-options .report-options-items li .cd-item-remove", function () {
+            var id = $(this).parent().data().reportId;
+            $("#report-cards div[data-report-id|=" + id + "] input[type='checkbox']").prop('checked', false);
+            $(this).parent().remove();
+            $("#report-option-button .number").html($(".report-options-items li").length);
+
+        });
+
+        // Select all visible items in the list and trigger the change event on checkbox to add them in the cart
+        $("#checkAllReports").click(function () {
+            var rpt = $("#report-cards .cards:not(.hidden) .rapport-selection");
+            var checked = $(this).prop('checked');
+            rpt.each(function () {
+                if (!$(this).prop('checked') == checked) {
+                    $(this).prop('checked', checked).trigger('change');
+                } else {
+                    $(this).prop('checked', checked);
+                }
+            });
+            $("#report-option-button .number").html($(".report-options-items li").length);
+        });
+
+        // Search for report in Rapports page
+        var options = {
+          tokenize: false,
+          threshold: 0.3,
+          distance: 500,
+          findAllMatches:true,
+          minMatchCharLength: 2,
+          keys: [
+            "title",
+            "report", 
+          ]
+        };
+        var fuse = new Fuse(dataReport, options);
+
+        $("#searchbarReports").on("keyup", function () {
+          $("#checkAllReports").prop('checked', false);
+          var result = fuse.search($(this).val());
+          var divs = $(".card.report");
+          if ($(this).val() != "") {
+            divs.parent().addClass("hidden");
+            result.forEach(function (elem) {
+              divs.each(function () {
+                if (elem.report == $(this).attr("data-report-id")) {
+                  $(this).parent().removeClass("hidden");
+                }
+              });
+            });
+          } else {
+            divs.parent().removeClass("hidden");
+          }
+        });
+
     };
 
     var _showDataviz = function () {
@@ -341,6 +554,7 @@ admin = (function () {
                         threshold: 0.1,
                         distance: 500,
                         minMatchCharLength: 2,
+                        findAllMatches:true,
                         keys: [
                             "title",
                             "description",
@@ -387,7 +601,10 @@ admin = (function () {
                 );
             }
         });
-        $('#dataviz-modal-form').on('show.bs.modal', function (e) {
+    };
+
+    _initCatalogOptions  = function () {
+      $('#dataviz-modal-form').on('show.bs.modal', function (e) {
             var newDataviz = $(e.relatedTarget).attr('data-dataviz-state');
             $(e.currentTarget).attr("data-dataviz-state", newDataviz);
             var title = $(e.currentTarget).find('.form-control');
@@ -446,8 +663,26 @@ admin = (function () {
             $( "#catalog-content" ).css('margin-right','0');
             $( "#catalog-content" ).css('transition','margin-right .6s');
         });
+      $("#sortDatavizByName").click(function () {
+        // console.log("sort");
+        if($("#sortDatavizByName i").hasClass("fa-sort-alpha-down")){
+          $("#sortDatavizByName i").removeClass("fa-sort-alpha-down");
+          $("#sortDatavizByName i").addClass("fa-sort-alpha-up");
 
-    };
+          $('#dataviz-cards .cards').sort(function(a,b) {
+            return $(a).find(".card-title").text() > $(b).find(".card-title").text() ? 1 : -1;
+          }).appendTo("#dataviz-cards");
+        }else{
+          $("#sortDatavizByName i").removeClass("fa-sort-alpha-up");
+          $("#sortDatavizByName i").addClass("fa-sort-alpha-down");
+
+          $('#dataviz-cards .cards').sort(function(a,b) {
+            return $(a).find(".card-title").text() < $(b).find(".card-title").text() ? 1 : -1;
+          }).appendTo("#dataviz-cards");
+
+        }
+      });
+    }
 
     _addDatavizToReport = function (report_id, report_data) {
         $.ajax({
@@ -459,7 +694,7 @@ admin = (function () {
             success: function (data) {
                 if (data.response === "success") {
                     //update local data
-                    console.log(data);
+                    // console.log(data);
                     _initReports();
 
                 } else {
@@ -517,7 +752,7 @@ admin = (function () {
                     //add dataviz to report
 
                     var datavizs = [];
-                    $(".reports-dataviz .list-group-item").each(function (id, dvz) {
+                    $("#reports-dataviz-modal-event.reports-dataviz .list-group-item").each(function (id, dvz) {
                         datavizs.push({
                             "dataviz": $(dvz).attr("data-dataviz")
                         });
@@ -708,9 +943,9 @@ admin = (function () {
             icon: 'warning',
             showCancelButton: true,
             cancelButtonText: 'Annuler',
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: '#B0252E',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Confirmer'
+            confirmButtonText: 'Supprimer'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
@@ -752,9 +987,90 @@ admin = (function () {
 
             }
         })
-
-
     };
+
+    _deleteReports = function () {
+      var lst= Array.from($('#report-select-options .report-options-items li'));
+      var titles = [];
+      var deleted=[];
+      var successDelete = false;
+
+      lst.forEach(function(element){
+        titles.push(element.children[0].innerText);
+      });
+
+      console.log(lst);
+      console.log(titles);
+
+        Swal.fire({
+            title: 'Voulez vous supprimer les rapports \'' + titles.join() + '\' ?',
+            text: "Vous ne pourrez pas revenir en arrière !",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Annuler',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmer'
+        }).then((result) => {
+            if (result.value) {
+              lst.forEach(function(element){
+                var report_name = element.children[0].innerText;
+                var report_id = element.dataset.reportId;
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "DELETE",
+                    url: [report.getAppConfiguration().api, "report", report_id].join("/"),
+                    success: function (data) {
+                        if (data.response === "success") {
+                          successDelete = true;
+                          deleted.push(report_name);
+                          // console.log('DELETED');
+                          // console.log(deleted)
+
+                        } else {
+                            $('#report-modal-form').modal('hide');
+                            var err = data.error || data.response;
+                            Swal.fire(
+                                'Une erreur s\'est produite',
+                                err,
+                                'error'
+                            );
+                        }
+                    },
+                    complete: function () {
+                        _initReports();
+                    },
+                    error: function (xhr, status, error) {
+                        $('#report-modal-form').modal('hide');
+                        var err = _parseError(xhr.responseText);
+                        Swal.fire(
+                            'Une erreur s\'est produite',
+                            err,
+                            'error'
+                        )
+                    }
+                });
+              });
+            }
+          if(successDelete == true){ 
+            Swal.fire(
+            'Supprimé',
+            'Les rapports \'' + deleted.join() + '\' ont été supprimé',
+              'success'
+            )
+          }
+        })
+        $('#report-modal-delete').modal('hide');
+        $("#report-cards .cards:not(.hidden) .rapport-selection").prop('checked', false);
+        $("#checkAllReports").prop('checked', false);
+        $("#searchbarReports").val("").trigger("keyup");
+        $('ul.report-options-items').empty();
+        $("#report-option-button .number").html($(".report-options-items li").length);
+        // console.log(deleted)
+      
+    }
+
     _deleteDataviz = function () {
         var dataviz_title = $(".dataviz-title").first().text();
         //Delete Report in db
@@ -921,7 +1237,9 @@ admin = (function () {
 
     };
     var _duplicateReport = function (event) {
-        var report_title = event.currentTarget.previousElementSibling.innerHTML;
+        var parent = event.currentTarget.parentNode
+        var report_title = parent.firstElementChild.innerHTML;
+        console.log(report_title);
         Swal.fire({
             title: 'Voulez vous copier le rapport \'' + report_title + '\' ?',
             icon: 'question',
@@ -987,12 +1305,77 @@ admin = (function () {
 
             }
         })
-
-
-
-
-
     }
+
+    var _displayVersions = function(event) {
+      if($("#version-items").children.length >0){
+        $("#version-items").empty();
+      }
+        /* Toggle the version list to appear */
+            $("#version-list").addClass("speed-in");
+            $("#report-select-options").removeClass("speed-in");
+            $("#reports-content").css('margin-right','360px');
+            $("#reports-content").css('transition','margin-right .6s');
+          if($("#version-list").hasClass("speed-in") == false){
+            $("#reports-content").css('margin-right','0');
+            $("#reports-content").css('transition','margin-right .6s');
+          }
+
+        /* Toggle the versions list to disappear */
+        $("#closeVersions").click(function () {
+            $("#version-list").removeClass("speed-in");
+            $("#reports-content").css('margin-right','0');
+            $("#reports-content").css('transition','margin-right .6s');
+        });
+      
+
+      var report_id = event.currentTarget.getAttribute('data-report-id');
+      console.log("event="+event);
+      console.log("report_id="+report_id);
+
+      _initReportsVersion(report_id)
+    }
+
+
+    var _initReportsVersion = function (report_id) {
+          $.ajax({
+            dataType: "json",
+            contentType: "application/json",
+            type: "GET",
+            url: [report.getAppConfiguration().api, "backup", report_id].join("/"),
+
+            success: function (data) {
+                if (data.response === "success") {
+                    console.log(data);
+                    console.log(data.report_backups.save_date);
+                    let numberVersion =data.report_backups.length+1;
+                    for(const item of data.report_backups){
+                      numberVersion = numberVersion -1 ;
+                      $("#version-items").append('<div class="row"><li class="versionList-item w-100" id=' + report_id + '"><h6 class="card-title">'+ numberVersion + '- '+ report_id + '</h6><p class="mreport-grey4">'+item.save_date+'</p><a href="#" class="card-link mreport-primary-color-1 d-block mx-0 pb-2" onclick="composer.compose(\'' + report_id + '\',\''+ item.id+'\')"><i class="fas fa-edit mreport-secondary-color-1"></i>Composer</a></li></div>');
+                    }
+                } else {
+                    var err = data.error || data.response;
+                    Swal.fire(
+                        'Une erreur s\'est produite',
+                        'Les versions du rapport n\'ont pas pu être chargé <br> (' + err + ')',
+                        'error'
+                    );
+                }
+
+            },
+            error: function (xhr, status, error) {
+                var err = _parseError(xhr.responseText);
+                Swal.fire(
+                    'Une erreur s\'est produite',
+                    'L\'API ne réponds pas <br> (' + err + ')',
+                    'error'
+                );
+            },
+            complete: function () {
+            
+            },
+        });
+    };
 
     /*
      * Public
@@ -1005,6 +1388,7 @@ admin = (function () {
         addReport: _addReport,
         updateReport: _updateReport,
         deleteReport: _deleteReport,
+        deleteReports: _deleteReports,
         deleteDataviz: _deleteDataviz,
         updateDataviz: _updateDataviz,
         getDataviz: _getDataviz,
@@ -1012,7 +1396,10 @@ admin = (function () {
         getReportData: _getReportData,
         visualizeDataviz: _visualizeDataviz,
         saveVisualization: _saveDataviz,
-        initLevels: _initLevels
+        initLevels: _initLevels,
+        initReportsVersion: _initReportsVersion,
+        initReportOptions: _initReportOptions,
+        initCatalogOptions: _initCatalogOptions
     }; // fin return
 
 })();
@@ -1022,5 +1409,7 @@ $(document).ready(function () {
     admin.initReports();
     admin.initMenu();
     admin.initLevels();
+    admin.initReportOptions();
+    admin.initCatalogOptions();
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 });

@@ -110,7 +110,7 @@
                 <a class="green">
                   <button type="button" class="btn mreport-primary-color-1-bg col-4">
                     <i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span>
-                  Séléctionner</button>
+                  Options</button>
                 </a> 
               </div>
             </div>
@@ -136,7 +136,7 @@
                               </div>
                               <div class="col-md-3 p-0 text-right">
                                 <span class="designed-dataviz {{designed}} mreport-secondary-color-2"  data-toggle="tooltip" data-html="true" title="Ces données ont une dataviz par défaut de configuré"></span>
-                                <span class="certified-dataviz {{certified}} mreport-secondary-color-2"   data-toggle="tooltip" data-html="true" title="cartified data"></span>
+                                <span class="certified-dataviz {{certified}} mreport-secondary-color-2"   data-toggle="tooltip" data-html="true" title="certified data"></span>
                               </div>
                             </div>
                             
@@ -155,7 +155,18 @@
 
     <!-- Reports start -->
     <div class="container-fluid page" id="reports">
-        <h1 class="col-12">Rapports</h1>
+      <div class="">
+        <div id="reports-content">
+          <h1 class="col-12">Rapports</h1>
+            <div class="text-right collapse d-md-block sticky">
+              <a class="report-option" id="report-option-button">
+              <button type="button" class="btn mreport-primary-color-1-bg col-2">
+                <i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span>
+                Options</button>
+              </a>
+            </div>
+        </div>
+      </div>
     </div>
     <!-- Reports start -->
 
@@ -348,13 +359,15 @@
                 <div class="modal-body">
                     <div class="form-group ">
                         <label for="reportInputTitre">Titre du rapport</label>
-                        <input type="text" class="form-control" name="title" id="reportInputTitre"
+                        <h4>
+                          <input type="text" class="form-control" name="title" id="reportInputTitre"
                               placeholder="Titre" required="true">
+                        </h4>
                     </div>
                     <form class="form" id="report-form" role="form" autocomplete="off">
 
                         <h5>Sources de données associées</h5>
-                        <ul class="reports-dataviz list-group">
+                        <ul id="reports-dataviz-modal-event" class="reports-dataviz list-group">
                         </ul>
                     </form>
                 </div>
@@ -362,6 +375,35 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button id="report_confirmed" type="button" class="btn mreport-primary-color-1-bg"
                         onclick="admin.addReport();">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Report Supression-->
+    <div class="modal fade" id="report-modal-delete" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row col-12">
+                      <h5 class="modal-title" id="reportModalDeleteLabel">Rapports
+                        <span class="badge mreport-error-color-bg">Supression</span>
+                      </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form" id="list-reports-delete" role="form" autocomplete="off">
+                        <h5>Liste des rapports qui vont être supprimé</h5>
+                        <ul id="reports-modal-delete-multiple" class="reports-dataviz list-group">
+                        </ul>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button id="confirm_delete_reports" type="button" class="btn mreport-primary-color-1-bg">Supprimer</button>
                 </div>
             </div>
         </div>
@@ -482,6 +524,50 @@
         </ul>
     </div>
 
+  <!-- Report select slide in -->
+  <div id="report-select-options">
+    <a id="toggle-report-select-option" class="mreport-primary-color-1-bg">Fermer</a>
+    <div class="sticky">
+      <div class="row">
+        <div class="col-md-6 col-12 p-0">
+          <h2 class="">Filtrer</h2>
+        </div>
+        <div class="col-md-6 col-12 text-right p-0">
+          <button id="resetReportfilters" type="button" class="btn mreport-secondary-color-2-bg "><i class="fas fa-undo"></i>
+            Réinitialiser</button>
+        </div>
+      </div>
+      <div class="col-md-12 col-12">
+        <input id="searchbarReports" class="form-control" placeholder="Filtrer les rapports" maxlength="32">
+      </div>
+      <h2>Selection</h2>
+      <div class="col-12">
+        <button type="button" class="btn mreport-primary-color-2-bg report-toggle-deactivate col-12" data-toggle="modal"
+          data-target="#report-modal-delete">Supprimer la sélection</button>
+      </div>
+      <div class="col-12">
+        <div class="custom-control custom-checkbox mt-3">
+          <input type="checkbox" id="checkAllReports" class="custom-control-input" name="checkAllReports">
+          <label class="custom-control-label" for="checkAllReports">Tout sélectionner</label>
+        </div>
+      </div>
+
+    </div>
+    <ul class="report-options-items">
+    </ul>
+  </div>
+
+    <!--version list -->
+    <div id="version-list" class="sticky-top">
+      <a id="closeVersions" class="mreport-primary-color-1-bg">Fermer</a>
+      <div class="sticky"> 
+        <h2>Versions</h6>
+      </div>
+      <div>
+        <ul id="version-items">
+        </ul>
+      </div>
+    </div>
 
     <!-- Structure dividing modal -->
     <div class="modal fade" id="divide_form" tabindex="-1" role="dialog" aria-labelledby="divideForm"
