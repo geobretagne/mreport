@@ -111,6 +111,19 @@ class Report_composition(db.Model):
     )
     def __repr__(self):
         return '<Report_composition {}>'.format(self.report)
+
+class Report_definition(db.Model):
+    id = db.Column(db.Integer, autoincrement=True)
+    json = db.Column(db.JSON, nullable=False)
+    save_date = db.Column(db.TIMESTAMP, nullable=False)
+    report = db.Column(db.String(50),db.ForeignKey(schema+'report.report'),nullable=False)
+    __table_args__ = (
+        db.PrimaryKeyConstraint('report', 'id'),
+        tableschema
+    )
+    def __repr__(self):
+        return '<Report_definition {}>'.format(self.report)
+
 #/MODELS
 
 
@@ -144,6 +157,7 @@ picto = api.namespace('picto', description='Pictos')
 report_composition = api.namespace('report_composition', description='Composition des rapports')
 report_html = api.namespace('report_html', description='Structure html des rapports')
 level = api.namespace('level', description='Liste des référentiels')
+backup = api.namespace('backup', description='Versionning des Rapports')
 
 @level.route('/',doc={'description':'Récupération des réferentiels'})
 class GetLevels(Resource):
@@ -484,5 +498,12 @@ class GetReportComposition(Resource):
                 else:
                     data = {"response": "ERROR mauvais données associés"}
                     return data, 405
+
+@backup.route('/',doc={'description':'Sauvegarde des rapports + versionning'})
+class GetReportDef(Resource):
+    def get(self):
+        result = db.session.query(Report_definition).all()
+        data = {'response':'success','report backups': json.loads(json.dumps([row2dict(r) for r in result]))}
+        return jsonify(**data)
 
 #    return app
