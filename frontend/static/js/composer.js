@@ -65,7 +65,7 @@ composer = (function () {
 
     var _extraElementTemplate = [
         [
-            '<div class="structure-element list-group-item titleBloc" draggable="false" style="">',
+            '<div class="structure-bloc list-group-item titleBloc" draggable="false" style="">',
             '<span class="drag badge ">',
             '<i class="fas fa-arrows-alt"></i>',
             '<p id="drag-tag"> drag</p>',

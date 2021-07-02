@@ -456,7 +456,7 @@ span.text-edit.badge.mreport-secondary-color-2-bg{
 }
 
 #element-models{
-    margin: 10px;
+    /* margin: 10px; */
 }
 #element-models .titleBloc {
   line-height:1.5rem;
@@ -646,7 +646,7 @@ span.designed-dataviz.disabled {
   position: fixed;
   width:100%;
   z-index: 99;
-  top:58px;
+  top:56px;
 }
 
 #ComposerOptionsSelectRow .form-group{
