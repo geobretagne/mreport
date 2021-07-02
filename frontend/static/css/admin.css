@@ -646,6 +646,9 @@ h5>.badge {
   padding: 1rem 1rem 1rem 1rem;
 }
 
+#reports .card-text{
+  font-size:14px;
+}
 .card-body a.duplicate{
   /* font-size:0.75rem;
   font-weight:700;

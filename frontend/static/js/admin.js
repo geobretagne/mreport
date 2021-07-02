@@ -127,6 +127,8 @@ admin = (function () {
             var newReport = $(e.relatedTarget).attr('data-report-state');
             $(e.currentTarget).attr("data-report-state", newReport);
             var title = $(e.currentTarget).find('input[name="title"]');
+            var description = $(e.currentTarget).find('input[name="description"]');
+            var descriptionlabel = $(e.currentTarget).find('label[for="reportInputDescription"]');
             var confirmed = $("#report_confirmed");
             titre.find("b").remove();
 
@@ -139,6 +141,9 @@ admin = (function () {
                 var data = _report_data[reportId];
                 // populate data
                 title.val(data.title);
+                description.prop("disabled", false);
+                description.prop("hidden", false);
+                description.val(data.description);
                 title.prop("disabled", false);
                 // data.dataviz = ['epci_title', 'epci_pop'];
                 data.dataviz.forEach(function (dvz) {
@@ -149,6 +154,9 @@ admin = (function () {
                 confirmed.html("Enregistrer");
             } else if (newReport === "new") {
                 title.prop("disabled", false);
+                description.prop("disabled", true);
+                description.prop("hidden", true);
+                descriptionlabel.prop("hidden",true);
                 $("input.dataviz-selection:checked").each(function (id, dvz) {
                     var card = $(dvz).closest(".card.dataviz");
                     var id  = card.attr("data-dataviz-id");
@@ -163,6 +171,8 @@ admin = (function () {
                 var data = _report_data[reportId];
                 title.val(data.title);
                 title.prop("disabled", true);
+                description.prop("disabled", false);
+                description.prop("hidden", false);
                 data.dataviz.forEach(function (dvz) {
                   if (dvz != null)
                         lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item">' + dvz.title+ '</li>');
@@ -288,6 +298,7 @@ admin = (function () {
                     '<div class="card report" data-report-id="' + elem.report + '">',
                     '<div class="card-body ">',
                     '<h6 class="card-title col-12 text-center">' + elem.title + '</h6>',
+                    '<p class="card-text">' + elem.description + '</p>',
                     '<div class="custom-control custom-checkbox mb-3">',
                     '<input type="checkbox" id="' + elem.report + '-selection" class="rapport-selection custom-control-input" name="rapport-selection">',
                     '<label class="custom-control-label" for="' + elem.report + '-selection">Sélectionner</label>',
@@ -805,6 +816,7 @@ admin = (function () {
         var report_id = $("#selectedReport").val();
         var report_name = $("#selectedReport option[value=" + report_id + "]").text();
         var datavizs = [];
+        var report_description = $("#reportInputDescription").val();
         $(".reports-dataviz-exist .list-group-item").each(function (id, dvz) {
             datavizs.push({
                 "dataviz": $(dvz).attr("data-dataviz")
@@ -814,7 +826,9 @@ admin = (function () {
             dataType: "json",
             contentType: "application/json",
             type: "PUT",
-            data: JSON.stringify(datavizs),
+            data: JSON.stringify({
+                    datavizs, 
+                    "description": report_description}),
             url: [report.getAppConfiguration().api, "report_composition", report_id].join("/"),
             success: function (data) {
                 $('#report-modal-form2').modal('hide');
@@ -879,6 +893,7 @@ admin = (function () {
     }
     _updateReport = function () {
         var report_name = $("#reportInputTitre").val();
+        var report_description = $("#reportInputDescription").val();
         var report_id = $("#report_confirmed").attr("data-report-id");
         var dataviz2delete = $(".reports-dataviz li:not(.item2keep)");
         var resultArray = [];
@@ -892,7 +907,8 @@ admin = (function () {
             contentType: "application/json",
             type: "POST",
             data: JSON.stringify({
-                "title": report_name
+                "title": report_name,
+                "description": report_description
             }),
             url: [report.getAppConfiguration().api, "report", report_id].join("/"),
             success: function (data) {

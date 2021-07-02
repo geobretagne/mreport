@@ -98,6 +98,7 @@ class Rawdata(db.Model):
 class Report(db.Model):
     report = db.Column(db.String(50),primary_key=True)
     title = db.Column(db.String(250),nullable=False)
+    description = db.Column(db.String(500),nullable=True)
     report_composition_rep = db.relationship('Report_composition', backref="report2", cascade="all, delete-orphan" , lazy='dynamic')
     __table_args__ = (tableschema)
     def __repr__(self):
@@ -111,7 +112,7 @@ class Report_composition(db.Model):
         tableschema
     )
     def __repr__(self):
-        return '<Report_composition {}>'.format(self.report)
+        return '<report_composition {}>'.format(self.report)
 
 class Report_definition(db.Model):
     id = db.Column(db.Integer, autoincrement=True)
@@ -321,12 +322,13 @@ class GetReports(Resource):
         '''
         data = dict_builder(result)
         res = defaultdict(list)
-        for values in data: res[values['report'],values['title']].append({"id":values['dataviz'],"title":values['datavizTitle'],"type":values['datavizType']})
-        data = {'response':'success','reports': [{'report':report[0],'title':report[1], 'dataviz':dataviz} for report,dataviz in res.items()]}
+        for values in data: res[values['report'],values['title'],values['description']].append({"id":values['dataviz'],"title":values['datavizTitle'],"type":values['datavizType']})
+        data = {'response':'success','reports': [{'report':report[0],'title':report[1],'description':report[2], 'dataviz':dataviz} for report,dataviz in res.items()]}
         return jsonify(**data)
 
 report_fields = api.model('Report', {
     'title': fields.String(max_length=250,required=True),
+    'description': fields.String(max_length=500,required=False),
     'copy': fields.Boolean(False,required=False)
 })
 @report.route('/<report_id>', doc={'description':'Récupération/Création/Modification/Suppression d\'un rapport'})
@@ -387,7 +389,7 @@ class GetReport(Resource):
         else:
             if Report.query.get(report_id):
                 rep = Report.query.get(report_id)
-                for fld in ["title"]:
+                for fld in ["title","description"]:
                     value = data.get(fld)
                     if value:
                         setattr(rep, fld, value)
