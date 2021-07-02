@@ -304,7 +304,7 @@ span.structure-description {
 }
 
 #report-composition {
-    outline: dashed;
+    outline: 2px dashed;
     outline-color: grey;
     min-height:200px;
 }
@@ -321,7 +321,7 @@ span.structure-description {
 
 .composition .report-bloc .dataviz-container {
     /*border: #007bff;*/
-    border-style: ridge;
+    border: 1px solid #bbb;
     min-height: 200px;
     width: 100%;
 }
@@ -367,6 +367,10 @@ span.text-edit.badge.mreport-secondary-color-2-bg{
 
 .report-bloc-title .tool .btn {
     cursor: auto;
+}
+
+#report-composition .btn{
+padding:5px 10px;
 }
 
 #dataviz-items code.dataviz-definition {
@@ -443,7 +447,7 @@ span.text-edit.badge.mreport-secondary-color-2-bg{
     position: unset !important;
 }
 .composition .row{
-    height: 100%;
+    /* height: 100%; */
 }
 .dataviz-container{
     display: flex;
@@ -657,4 +661,14 @@ span.designed-dataviz.disabled {
 #ComposerOptionsSelectRow .form-group label{
   font-size:12px;
 font-weight:700;
+}
+
+.report-bloc .dataviz-container {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}
+
+.bloc-sources {
+    font-size: 12px;
 }

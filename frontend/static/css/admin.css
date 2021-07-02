@@ -764,4 +764,5 @@ h5>.badge {
 
 .dataviz.list-group-item.handle{
   cursor:grab;
+  height:100%;
 }
