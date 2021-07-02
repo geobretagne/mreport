@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, jsonify, request
-from flask_restplus import Api, Resource, fields
+from flask_restplus import Api, Resource, fields, marshal
 from sqlalchemy import create_engine, bindparam, Integer, String, event, func,desc
 #from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.sql import text
@@ -10,7 +10,8 @@ from sqlalchemy.schema import CreateSchema, DropSchema
 from backend.functions_inc import *
 from collections import defaultdict
 #from backend.models import *
-
+from datetime import datetime, date
+from json import JSONEncoder
 
 
 #def create_app(test_config=None):
@@ -114,8 +115,10 @@ class Report_composition(db.Model):
 
 class Report_definition(db.Model):
     id = db.Column(db.Integer, autoincrement=True)
-    json = db.Column(db.JSON, nullable=False)
-    save_date = db.Column(db.TIMESTAMP, nullable=False)
+    json = db.Column(db.Text, nullable=False)
+    save_date = db.Column(db.DateTime, 
+                          default=datetime.utcnow, 
+                          onupdate=datetime.utcnow)
     report = db.Column(db.String(50),db.ForeignKey(schema+'report.report'),nullable=False)
     __table_args__ = (
         db.PrimaryKeyConstraint('report', 'id'),
@@ -499,11 +502,50 @@ class GetReportComposition(Resource):
                     data = {"response": "ERROR mauvais données associés"}
                     return data, 405
 
-@backup.route('/',doc={'description':'Sauvegarde des rapports + versionning'})
+backup_put = api.model('Backup_put', {
+    'json': fields.String(max_length=5000,required=True)
+})
+
+@backup.route('/<report_id>',doc={'description':'Liste des versions d\'un rapport'})
+@backup.doc(params={'report_id': 'identifiant du rapport'})
+
 class GetReportDef(Resource):
-    def get(self):
-        result = db.session.query(Report_definition).all()
-        data = {'response':'success','report backups': json.loads(json.dumps([row2dict(r) for r in result]))}
+    def get(self,report_id):
+        result = db.session.query(Report_definition).filter(Report_definition.report == report_id).order_by(Report_definition.save_date.desc()).all()
+        data = {'response':'success','report_backups':  json.loads(json.dumps([row2dict(r) for r in result]))}
+        return jsonify(**data)
+
+    @backup.expect(backup_put)
+    def put(self, report_id):
+        data = request.get_json()
+        if not data:
+            data = {"response": "ERROR no data supplied"}
+            return data, 405
+        else:
+            if not Report.query.get(report_id):
+                return {"response": "rapport n'existe pas."}, 404
+            else:
+                data.update({'report':report_id})
+                ct = datetime.now()
+                class DateTimeEncoder(JSONEncoder):
+                    def default(self, obj):
+                        if isinstance(obj, (date, datetime)):
+                            return obj.isoformat()
+                data.update({'save_date':DateTimeEncoder().encode(ct)})
+                try:
+                    save = Report_definition(**data)
+                except TypeError as err:
+                    return {"response": str(err)}, 400
+                db.session.add(save)
+                db.session.commit()
+            return {"response": "success" , "data": data}
+
+@backup.route('/<report_id>/<report_definition_id>',doc={'description':'Recupère une version d\'un rapport'})
+@backup.doc(params={'report_id': 'identifiant du rapport', 'report_definition_id': 'identifiant de la version du rapport'})
+class GetReportDefId(Resource):
+    def get(self,report_id,report_definition_id):
+        result = db.session.query(Report_definition).filter(Report_definition.id == report_definition_id)
+        data = {'response':'success','report backups':  json.loads(json.dumps([row2dict(r) for r in result]))}
         return jsonify(**data)
 
 #    return app
