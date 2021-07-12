@@ -326,8 +326,8 @@ span.structure-description {
     width: 100%;
 }
 
-.composition .report-bloc-title  .dataviz-container {
-    height: 100px
+.composition .report-bloc-title .dataviz-container {
+    height: 135px
 }
 .composition .bloc-content>.dataviz-container {
     min-height: 150px;
@@ -428,10 +428,7 @@ padding:5px 10px;
     transition: 0.2s;
 }
 #report-composition .dataviz-container{
-    padding-left : 20px;
-    padding-right : 20px;
-    padding-top:5px;
-    padding-bottom:5px;
+    padding:35px;
 }
 #report-composition .customBaseColumn {
     padding: 0;
@@ -642,7 +639,7 @@ span.designed-dataviz.disabled {
 }
 
 #btn_save_report{
-  margin-top:40px;
+  margin-top:35px;
 }
 
 #ComposerOptionsSelectRow{

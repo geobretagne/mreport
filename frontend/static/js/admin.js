@@ -303,7 +303,7 @@ admin = (function () {
         });
         objArray.forEach(function (elem) {
             cards.push(
-                ['<div class="col-md-3 col-sm-12 cards d-inline-block">',
+                ['<div class="col-md-3 col-sm-12 cards">',
                     '<div class="card report" data-report-id="' + elem.report + '">',
                     '<div class="card-body ">',
                     '<h6 class="card-title col-12 text-center">' + elem.title + '</h6>',
@@ -329,7 +329,7 @@ admin = (function () {
         });
 
 
-        $("#reports-content").append('<div class="row" id="report-cards">' + cards.join("") + '</div>');
+        $("#reports-content").append(cards.join(""));
 
         $("#selectedReport, #selectedReportComposer").html(options.join(""));
         $('.duplicate').on('click', _duplicateReport);
