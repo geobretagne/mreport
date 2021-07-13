@@ -329,7 +329,7 @@ admin = (function () {
         });
 
 
-        $("#reports-content").append(cards.join(""));
+        $("#reports-content").append('<div class="row" id="report-cards">' + cards.join("") + '</div>');
 
         $("#selectedReport, #selectedReportComposer").html(options.join(""));
         $('.duplicate').on('click', _duplicateReport);
@@ -398,7 +398,7 @@ admin = (function () {
 
         // Select all visible items in the list and trigger the change event on checkbox to add them in the cart
         $("#checkAllReports").click(function () {
-            var rpt = $("#report-cards .cards:not(.hidden) .rapport-selection");
+            var rpt = $("#reports-content .cards:not(.hidden) .rapport-selection");
             var checked = $(this).prop('checked');
             rpt.each(function () {
                 if (!$(this).prop('checked') == checked) {
