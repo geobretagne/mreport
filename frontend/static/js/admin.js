@@ -91,7 +91,7 @@ admin = (function () {
                             element.classList.add("used");
                             let span = document.createElement("SPAN");
                             span.className = "badge mreport-primary-color-3-bg";
-                            span.textContent = key;
+                            span.textContent = report.title;
                             element.querySelector(".card-footer").append(span);
                         }
                     })
