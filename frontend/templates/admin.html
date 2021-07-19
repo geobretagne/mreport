@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <meta charset="utf-8">
 
@@ -107,13 +107,22 @@
         <div id="stickycollapse" class="collapse d-md-block sticky">
             <div id="sticky" class="row">
               <div class="col-md-6 col-12 text-right">
-                <button type="button" id="sortDatavizByName"class="btn mreport-primary-color-2-bg col-3">
-                    <i class="fas fa-sort-alpha-down"></i> Tri A-Z</button>
+                <!-- <button type="button" id="sortDatavizByName"class="btn mreport-primary-color-2-bg col-3">
+                    <i class="fas fa-sort-alpha-down"></i> Tri A-Z</button> -->
+                <button id="catalogTri"class="btn mreport-primary-color-2-bg col-3"><i class="fas fa-filter"></i> Trier</button>
                 <a class="green">
                   <button type="button" class="btn mreport-primary-color-1-bg col-4">
                     <i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span>
                   Options</button>
                 </a> 
+              </div>
+            </div>
+        </div>
+        <div id="stickyCatalogTri" class="collapse sticky">
+            <div class="row">
+              <div class="col-12 text-right">
+                <button type="button" id="sortDatavizByName"class="btn mreport-primary-color-2-bg col-2">
+                    <i class="fas fa-sort-alpha-down"></i> Tri A-Z</button> 
               </div>
             </div>
         </div>
@@ -133,8 +142,8 @@
                             </div>
                             <div class="row">
                               <div class="col-md-9 p-0">
-                                <a href="#" data-dataviz-state="edit" class="col-12 card-link mreport-primary-color-1 p-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-pencil-alt mreport-secondary-color-1"></i> Editer</a>
-                                <a href="#" data-dataviz-state="delete" class="col-12 card-link mreport-primary-color-1 p-0 m-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>
+                                <a href="#" data-dataviz-state="edit" class="pb-2 col-12 card-link mreport-primary-color-1 p-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-pencil-alt mreport-secondary-color-1"></i> Editer</a>
+                                <a href="#" data-dataviz-state="delete" class="pb-2 col-12 card-link mreport-primary-color-1 p-0 m-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>
                               </div>
                               <div class="col-md-3 p-0 text-right">
                                 <span class="designed-dataviz {{designed}} mreport-secondary-color-2"  data-toggle="tooltip" data-html="true" title="Ces données ont une dataviz par défaut de configuré"></span>

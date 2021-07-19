@@ -178,6 +178,16 @@ h5>.badge {
   background-color:rgba(233, 236, 239,0.7);
 }
 
+#stickyCatalogTri.sticky,
+#stickyReportTri.sticky{
+  top:122;
+}
+
+#stickyCatalogTri
+#stickyReportTri{
+  display:none;
+}
+
 #cd-cart .sticky,
 #version-list .sticky,
 #report-select-options .sticky,
@@ -531,6 +541,7 @@ h5>.badge {
 }
 .duplicate:hover{
   transition: 0.2s;
+  cursor:pointer;
 }
 .duplicate:hover i{
   transition: 0.2s;

@@ -137,7 +137,7 @@ admin = (function () {
             $(e.currentTarget).attr("data-report-state", newReport);
             var title = $(e.currentTarget).find('input[name="title"]');
             var description = $(e.currentTarget).find('input[name="description"]');
- var descriptionlabel = $(e.currentTarget).find('label[for="reportInputDescription"]');
+            var descriptionlabel = $(e.currentTarget).find('label[for="reportInputDescription"]');
             var confirmed = $("#report_confirmed");
             titre.find("b").remove();
 
@@ -272,7 +272,7 @@ admin = (function () {
             $("#sortReportByName i").removeClass("fa-sort-alpha-down");
             $("#sortReportByName i").addClass("fa-sort-alpha-up");
 
-            $('#reports-content .cards').sort(function(a,b) {
+            $('#report-cards .cards').sort(function(a,b) {
               return $(a).find(".card-title").text() > $(b).find(".card-title").text() ? 1 : -1;
             }).appendTo("#reports-content");
           }else{
@@ -285,6 +285,11 @@ admin = (function () {
 
           }
         });
+
+      $('#reportTri').click(function(){
+        $('#stickyReportTri').toggle();
+      });
+
     }
 
     var _appendReports = function (data) {
@@ -804,6 +809,10 @@ admin = (function () {
                 );
             }
         });
+
+      $('#catalogTri').click(function(){
+        $('#stickyCatalogTri').toggle();
+      });
       
     }
 
