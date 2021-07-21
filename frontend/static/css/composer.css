@@ -310,13 +310,17 @@ span.structure-description {
 }
 
 #report-composition:empty:after {
-    content: "Déposer ici des blocs structurants après avoir sélectionné un rapport et un modèle";
+    content: "Séléctionner un rapport et un modèle. Puis déposer ici des blocs structrants et des dataviz.";
     text-align: center;
-    top: 30%;
+    top: 50%;
+left:50%;
+transform:translate(-50%,-50%);
     position: absolute;
     padding-left: 20px;
     padding-right: 20px;
-    /*color:grey;*/
+    color:#006878;
+font-size:20px;
+font-weight:700;
 }
 
 .composition .report-bloc .dataviz-container {
