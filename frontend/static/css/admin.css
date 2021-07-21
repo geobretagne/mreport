@@ -1,4 +1,4 @@
-﻿html {
+html {
   height: 100%;
 }
 body {
@@ -728,14 +728,16 @@ h5>.badge {
 
 #home .buttons{
   text-align:center;
+  max-width:50%;
+  margin:30px auto;
 }
 #home .buttons .btn{
-  margin:30px 10px;
-  width:140px;
+  margin:15px auto;
   -webkit-transition: background-color 2s ease-out;
   -moz-transition: background-color 2s ease-out;
   -o-transition: background-color 2s ease-out;
   transition: background-color 2s ease-out;
+width:100%;
 }
 
 #home .buttons .btn:hover{
@@ -749,7 +751,7 @@ h5>.badge {
 }
 
 #home .images img{
-  height:300px;
+  max-width: 100%;
 }
 
 .text-edit.btn{
