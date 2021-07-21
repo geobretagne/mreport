@@ -73,19 +73,19 @@
 
     <div class="container-fluid page active" id="home">
       <div class="row py-5">
-        <div class="col-md-6 col-sm-12 ">
-              <h1 class="mreport-grey-1">Mreport</h1>
-              <p>Mreport est un outil simple de <b>reporting web</b> qui permet de composer des rapports combinant <b>chiffres-clés, graphiques, images, textes</b> à partir de jeux de données intégrés dans la base de données de la solution. </p>
+        <div class="col-md-7 col-sm-12 ">
+              <h1 class="mreport-primary-color-1">Mreport</h1>
+              <p>Mreport est un outil simple de <b class="mreport-secondary-color-1">reporting web</b> qui permet de composer des rapports combinant <b class="mreport-secondary-color-1">chiffres-clés, graphiques, images, textes</b> à partir de jeux de données intégrés dans la base de données de la solution. </p>
             </div>
-            <div class="col-md-6 col-sm-12">
-      <div class="buttons">
-        <a href="https://github.com/geobretagne/mreport" target="_blank">
-          <button type="button" class="btn mreport-primary-color-1-bg" >Github</button>
-        </a>
-        <a href="https://github.com/geobretagne/mreport/blob/master/docs/PRESENTATION.md" target="_blank">
-          <button type="button" class="btn mreport-primary-color-1-bg">Documentation</button>
-        </a>
-      </div>
+            <div class="col-md-5 col-sm-12">
+              <div class="buttons">
+                    <a href="https://github.com/geobretagne/mreport" target="_blank">
+                      <button type="button" class="btn mreport-primary-color-1-bg" >Github</button>
+                    </a>
+                    <a href="https://github.com/geobretagne/mreport/blob/master/docs/PRESENTATION.md" target="_blank">
+                      <button type="button" class="btn mreport-primary-color-1-bg">Documentation</button>
+                    </a>
+                  </div>
             </div>
       </div>
       <div class="images row w-75 my-0 mx-auto">
@@ -138,7 +138,7 @@
                     <div class="card dataviz" data-dataviz-id="{{id}}">
                         <div class="card-body">
                             <h6 class="card-title">{{title}}</h6>
-                            <h7 class="card-subtitle mb-2 text-muted"><span class="badge mreport-grey1-bg">{{level}}</span><span class="badge badge-secondary">{{job}}</span></h7>
+                            <h7 class="card-subtitle mb-2 text-muted"><span class="badge mreport-grey5-bg">{{level}}</span><span class="badge badge-secondary">{{job}}</span></h7>
                             <p class="card-text">{{description}}</p>
                             <div class="custom-control custom-checkbox mb-3">
                                 <input type="checkbox" id="{{id}}-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">
@@ -316,6 +316,7 @@
                         <div class="form-group row">
                             <div class="col">
                                 <label for="inputDescription"><span class="badge mreport-grey1-bg">Description</span></label>
+                                <p class="invalid-feedback">500 caractères max.</p>
                                 <input type="text" class="form-control" name="description" id="inputDescription"
                                     placeholder="Description">
                             </div>
@@ -390,9 +391,13 @@
                         <h4><label for="reportInputTitre">Titre du rapport</label></h4>
                         <input type="text" class="form-control" name="title" id="reportInputTitre"
                               placeholder="Titre" required="true">
+                              <div class="valid-feedback">Champ validé.</div>
+                              <div class="invalid-feedback">Champ obligatoire.</div>
                         <label for="reportInputDescription" class="pt-2">Description du rapport</label>
+                        <p class="invalid-feedback">500 caractères max.</p>
                         <input type="text" class="form-control" name="description" id="reportInputDescription"
                               placeholder="Description" required="true">
+                        
                     </div>
                     <form class="form" id="report-form" role="form" autocomplete="off">
 
