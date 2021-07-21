@@ -267,21 +267,20 @@ admin = (function () {
         });
 
          $("#sortReportByName").click(function () {
-          // console.log("sort");
           if($("#sortReportByName i").hasClass("fa-sort-alpha-down")){
             $("#sortReportByName i").removeClass("fa-sort-alpha-down");
             $("#sortReportByName i").addClass("fa-sort-alpha-up");
 
             $('#report-cards .cards').sort(function(a,b) {
               return $(a).find(".card-title").text() > $(b).find(".card-title").text() ? 1 : -1;
-            }).appendTo("#reports-content");
+            }).appendTo("#report-cards");
           }else{
             $("#sortReportByName i").removeClass("fa-sort-alpha-up");
             $("#sortReportByName i").addClass("fa-sort-alpha-down");
 
-            $('#reports-content .cards').sort(function(a,b) {
+            $('#report-cards .cards').sort(function(a,b) {
               return $(a).find(".card-title").text() < $(b).find(".card-title").text() ? 1 : -1;
-            }).appendTo("#reports-content");
+            }).appendTo("#report-cards");
 
           }
         });
