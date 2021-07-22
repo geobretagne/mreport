@@ -1386,7 +1386,7 @@ admin = (function () {
             confirmButtonText: 'Confirmer'
         }).then((result) => {
             if (result.value) {
-                var reportDataset = event.currentTarget.nextElementSibling.dataset;
+                var reportDataset = event.currentTarget.parentNode.children[4].dataset;
                 var reportId = reportDataset.reportId;
                 var reportData = _report_data[reportId];
                 var datavizs = [];
