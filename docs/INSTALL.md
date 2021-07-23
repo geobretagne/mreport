@@ -82,7 +82,7 @@ Install Flask and dependencies
 
 ``pip install -r requirements.txt``
 
-*To install requirements, you need to be disconnected from any proxy*
+*To install wheel and requirements, you need to be disconnected from any proxy*
 
 
 ### Configure application
