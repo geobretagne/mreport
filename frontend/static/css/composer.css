@@ -330,9 +330,9 @@ font-weight:700;
     width: 100%;
 }
 
-.composition .report-bloc-title .dataviz-container {
+/* .composition .report-bloc-title .dataviz-container {
     height: 135px
-}
+} */
 .composition .bloc-content>.dataviz-container {
     min-height: 150px;
 }
@@ -436,6 +436,7 @@ padding:5px 10px;
 }
 #report-composition .customBaseColumn {
     padding: 0;
+    height:100%;
 }
 .dividedcolumn:hover .divide_column,
 .dividedcolumn:hover .delete_column{
@@ -447,8 +448,9 @@ padding:5px 10px;
 .drag_column{
     position: unset !important;
 }
-.composition .row{
-    /* height: 100%; */
+.composition .row,
+.composition .view{
+    height: 100%;
 }
 .dataviz-container{
     display: flex;
