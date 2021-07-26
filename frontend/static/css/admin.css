@@ -647,6 +647,10 @@ h5>.badge {
   padding-top:59px;
 }
 
+#catalog .badge{
+  white-space: unset;
+}
+
 #catalog .badge,
 .cd-cart-items .badge{
   margin: 0.3rem;
