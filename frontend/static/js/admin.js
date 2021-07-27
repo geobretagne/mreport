@@ -924,7 +924,7 @@ admin = (function () {
                 $('#report-modal-form').modal('hide');
                 var err = _parseError(xhr.responseText);
                 Swal.fire(
-                    'Une erreur s\'est produite',
+                    'Une erreur s\'est produite avec la création du rapport.',
                     err,
                     'error'
                 );
@@ -936,19 +936,17 @@ admin = (function () {
         var report_id = $("#selectedReport").val();
         var report_name = $("#selectedReport option[value=" + report_id + "]").text();
         var datavizs = [];
-        var report_description = $("#reportInputDescription").val();
+        //var report_description = $("#reportInputDescription").val();
         $(".reports-dataviz-exist .list-group-item").each(function (id, dvz) {
             datavizs.push({
-                "dataviz": $(dvz).attr("data-dataviz")
+              "dataviz": $(dvz).attr("data-dataviz")
             });
         });
         $.ajax({
             dataType: "json",
             contentType: "application/json",
             type: "PUT",
-            data: JSON.stringify({
-                    datavizs, 
-                    "description": report_description}),
+            data: JSON.stringify(datavizs),
             url: [report.getAppConfiguration().api, "report_composition", report_id].join("/"),
             success: function (data) {
                 $('#report-modal-form2').modal('hide');
@@ -960,10 +958,11 @@ admin = (function () {
                 _initReports();
             },
             error: function (xhr, status, error) {
+           
                 $('#report-modal-form2').modal('hide');
                 var err = _parseError(xhr.responseText);
                 Swal.fire(
-                    'Une erreur s\'est produite',
+                    'Une erreur s\'est produite. La dataviz n\'a pu être ajouté',
                     err,
                     'error'
                 )
