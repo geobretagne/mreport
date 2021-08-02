@@ -423,7 +423,8 @@ admin = (function () {
           minMatchCharLength: 2,
           keys: [
             "title",
-            "report", 
+            "report",
+            "description"
           ]
         };
         var fuse = new Fuse(dataReport, options);
