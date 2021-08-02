@@ -272,14 +272,18 @@ admin = (function () {
             $("#sortReportByName i").addClass("fa-sort-alpha-up");
 
             $('#report-cards .cards').sort(function(a,b) {
-              return $(a).find(".card-title").text() > $(b).find(".card-title").text() ? 1 : -1;
+              var c = $(a).find(".card-title").text().toLowerCase();
+              var d = $(b).find(".card-title").text().toLowerCase();
+              return new Intl.Collator('fr', { caseFirst: 'upper' } ).compare(c,d);
             }).appendTo("#report-cards");
           }else{
             $("#sortReportByName i").removeClass("fa-sort-alpha-up");
             $("#sortReportByName i").addClass("fa-sort-alpha-down");
 
             $('#report-cards .cards').sort(function(a,b) {
-              return $(a).find(".card-title").text() < $(b).find(".card-title").text() ? 1 : -1;
+              var c = $(a).find(".card-title").text().toLowerCase();
+              var d = $(b).find(".card-title").text().toLowerCase();
+              return new Intl.Collator('fr', { caseFirst: 'upper' } ).compare(d,c);
             }).appendTo("#report-cards");
 
           }
@@ -722,6 +726,7 @@ admin = (function () {
         $("#resetAdvancedCatalogfilters").click(function () {
             $("#filterSearchAdvancedCatalog").val("").trigger("keyup");
             $('#filterLevelCatalog').val("0");
+$(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalog");
         });
 
         /* Toggle the cart to appear */
@@ -741,22 +746,22 @@ admin = (function () {
             $( "#catalog-content" ).css('transition','margin-right .6s');
         });
       $("#sortDatavizByName").click(function () {
-        // console.log("sort");
         if($("#sortDatavizByName i").hasClass("fa-sort-alpha-down")){
           $("#sortDatavizByName i").removeClass("fa-sort-alpha-down");
           $("#sortDatavizByName i").addClass("fa-sort-alpha-up");
-
           $('#dataviz-cards .cards').sort(function(a,b) {
-            return $(a).find(".card-title").text() > $(b).find(".card-title").text() ? 1 : -1;
+            var c = $(a).find(".card-title").text().toLowerCase();
+            var d = $(b).find(".card-title").text().toLowerCase();
+            return new Intl.Collator('fr', { caseFirst: 'upper' } ).compare(c,d);
           }).appendTo("#dataviz-cards");
         }else{
           $("#sortDatavizByName i").removeClass("fa-sort-alpha-up");
           $("#sortDatavizByName i").addClass("fa-sort-alpha-down");
-
           $('#dataviz-cards .cards').sort(function(a,b) {
-            return $(a).find(".card-title").text() < $(b).find(".card-title").text() ? 1 : -1;
+            var c = $(a).find(".card-title").text().toLowerCase();
+            var d = $(b).find(".card-title").text().toLowerCase();
+            return new Intl.Collator('fr', { caseFirst: 'upper' } ).compare(d,c);
           }).appendTo("#dataviz-cards");
-
         }
       });
 
