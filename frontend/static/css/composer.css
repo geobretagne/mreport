@@ -313,14 +313,14 @@ span.structure-description {
     content: "Séléctionner un rapport et un modèle. Puis déposer ici des blocs structrants et des dataviz.";
     text-align: center;
     top: 50%;
-left:50%;
-transform:translate(-50%,-50%);
+    left:50%;
+    transform:translate(-50%,-50%);
     position: absolute;
     padding-left: 20px;
     padding-right: 20px;
     color:#006878;
-font-size:20px;
-font-weight:700;
+    font-size:20px;
+    font-weight:700;
 }
 
 .composition .report-bloc .dataviz-container {
@@ -436,7 +436,6 @@ padding:5px 10px;
 }
 #report-composition .customBaseColumn {
     padding: 0;
-    height:100%;
 }
 .dividedcolumn:hover .divide_column,
 .dividedcolumn:hover .delete_column{
@@ -451,6 +450,7 @@ padding:5px 10px;
 .composition .row,
 .composition .view{
     height: 100%;
+    line-height:0.75rem;
 }
 .dataviz-container{
     display: flex;
