@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <meta charset="utf-8">
 
@@ -72,23 +72,27 @@
     <!-- Navigation end -->
 
     <div class="container-fluid page active" id="home">
-        <h1 class="mreport-grey-1">Mreport - Accueil</h1>
-        <p>Mreport est un outil simple de <b>reporting web</b> qui permet de composer des rapports combinant <b>chiffres-clés, graphiques, images, textes</b> à partir de
- jeux de données intégrés dans la base de données de la solution. </p>
-
-      <div class="buttons">
-        <a href="https://github.com/geobretagne/mreport" target="_blank">
-          <button type="button" class="btn mreport-primary-color-1-bg" >Github</button>
-        </a>
-        <a href="https://github.com/geobretagne/mreport/blob/master/docs/PRESENTATION.md" target="_blank">
-          <button type="button" class="btn mreport-primary-color-1-bg">Documentation</button>
-        </a>
+      <div class="row py-5">
+        <div class="col-md-7 col-sm-12 ">
+              <h1 class="mreport-primary-color-1">Mreport</h1>
+              <p>Mreport est un outil simple de <b class="mreport-secondary-color-1">reporting web</b> qui permet de composer des rapports combinant <b class="mreport-secondary-color-1">chiffres-clés, graphiques, images, textes</b> à partir de jeux de données intégrés dans la base de données de la solution. </p>
+            </div>
+            <div class="col-md-5 col-sm-12">
+              <div class="buttons">
+                    <a href="https://github.com/geobretagne/mreport" target="_blank">
+                      <button type="button" class="btn mreport-primary-color-1-bg" >Github</button>
+                    </a>
+                    <a href="https://github.com/geobretagne/mreport/blob/master/docs/PRESENTATION.md" target="_blank">
+                      <button type="button" class="btn mreport-primary-color-1-bg">Documentation</button>
+                    </a>
+                  </div>
+            </div>
       </div>
-      <div class="images row">
-        <div class="col-md-6 col-12 text-right">
+      <div class="images row w-75 my-0 mx-auto">
+        <div class="col-md-6 col-12 text-center">
           <img src="/static/img/graph1.png" class="img-fluid" alt="Responsive image">
         </div>
-        <div class="col-md-6 col-12 text-left">
+        <div class="col-md-6 col-12 text-center">
           <img src="/static/img/graph2.png" class="img-fluid" alt="Responsive image">
         </div>
       </div>
@@ -107,11 +111,22 @@
         <div id="stickycollapse" class="collapse d-md-block sticky">
             <div id="sticky" class="row">
               <div class="col-md-6 col-12 text-right">
+                <!-- <button type="button" id="sortDatavizByName"class="btn mreport-primary-color-2-bg col-3">
+                    <i class="fas fa-sort-alpha-down"></i> Tri A-Z</button> -->
+                <button id="catalogTri"class="btn mreport-primary-color-2-bg col-3"><i class="fas fa-filter"></i> Trier</button>
                 <a class="green">
                   <button type="button" class="btn mreport-primary-color-1-bg col-4">
                     <i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span>
-                  Séléctionner</button>
+                  Options</button>
                 </a> 
+              </div>
+            </div>
+        </div>
+        <div id="stickyCatalogTri" class="collapse sticky">
+            <div class="row">
+              <div class="col-12 text-right">
+                <button type="button" id="sortDatavizByName"class="btn mreport-primary-color-2-bg col-2">
+                    <i class="fas fa-sort-alpha-down"></i> Tri A-Z</button> 
               </div>
             </div>
         </div>
@@ -123,7 +138,7 @@
                     <div class="card dataviz" data-dataviz-id="{{id}}">
                         <div class="card-body">
                             <h6 class="card-title">{{title}}</h6>
-                            <h7 class="card-subtitle mb-2 text-muted"><span class="badge mreport-grey1-bg">{{level}}</span><span class="badge badge-secondary">{{job}}</span></h7>
+                            <h7 class="card-subtitle mb-2 text-muted"><span class="badge mreport-grey5-bg">{{level}}</span><span class="badge badge-secondary">{{job}}</span></h7>
                             <p class="card-text">{{description}}</p>
                             <div class="custom-control custom-checkbox mb-3">
                                 <input type="checkbox" id="{{id}}-selection" class="dataviz-selection custom-control-input" name="dataviz-selection">
@@ -131,17 +146,17 @@
                             </div>
                             <div class="row">
                               <div class="col-md-9 p-0">
-                                <a href="#" data-dataviz-state="edit" class="col-12 card-link mreport-primary-color-1 p-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-pencil-alt mreport-secondary-color-1"></i> Editer</a>
-                                <a href="#" data-dataviz-state="delete" class="col-12 card-link mreport-primary-color-1 p-0 m-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>
+                                <a href="#" data-dataviz-state="edit" class="pb-2 col-12 card-link mreport-primary-color-1 p-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-pencil-alt mreport-secondary-color-1"></i> Editer</a>
+                                <a href="#" data-dataviz-state="delete" class="pb-2 col-12 card-link mreport-primary-color-1 p-0 m-0 d-inline-block" data-toggle="modal" data-related-id="{{id}}" data-target="#dataviz-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>
                               </div>
                               <div class="col-md-3 p-0 text-right">
                                 <span class="designed-dataviz {{designed}} mreport-secondary-color-2"  data-toggle="tooltip" data-html="true" title="Ces données ont une dataviz par défaut de configuré"></span>
-                                <span class="certified-dataviz {{certified}} mreport-secondary-color-2"   data-toggle="tooltip" data-html="true" title="cartified data"></span>
+                                <span class="certified-dataviz {{certified}} mreport-secondary-color-2"   data-toggle="tooltip" data-html="true" title="certified data"></span>
                               </div>
                             </div>
                             
                         </div>
-                        <div class="card-footer">Usages: </div>
+                        <div class="card-footer">Utilisé dans: </div>
                     </div>
                 </div>
                 {{/cards}}
@@ -155,38 +170,86 @@
 
     <!-- Reports start -->
     <div class="container-fluid page" id="reports">
-        <h1 class="col-12">Rapports</h1>
+    <div class="">
+    <div id="reports-content">
+      <h1 class="col-12">Rapports</h1>
+        <div class="d-flex align-items-end flex-column sticky">
+          <div class="text-right collapse d-md-block col-md-6 ">
+            <button type="button" id="sortReportByName"class="btn mreport-primary-color-2-bg col-3">
+                <i class="fas fa-sort-alpha-down"></i> Tri A-Z
+            </button>
+            <a class="report-option" id="report-option-button">
+            <button type="button" class="btn mreport-primary-color-1-bg col-4">
+              <i class="fas fa-check-square"></i><span class="number mreport-secondary-color-1-bg">0</span>
+              Options</button>
+            </a>
+          </div>
+        </div>
     </div>
+    
+    </div>
+  </div>
     <!-- Reports start -->
 
     <!-- Composer start -->
     <div class="container-fluid page" id="composer">
-        <button type="button" id="btn_save_report" class="col-3 btn btn-block mreport-primary-color-1-bg"><i class="fas fa-save"></i> Enregistrer</button>
+        
         <div class="builder edit">
-            <div class="sidenav d-flex flex-column mreport-grey3-bg">
-                <form class="form" role="form" autocomplete="off">
-                    <div class="form-group">
-                        <label for="selectedReportComposer">Rapport sélectionné</label>
+            <div class="row mreport-grey6-bg" id="ComposerOptionsSelectRow">
+              <!--<form class="form row" role="form" autocomplete="off">-->
+                    <div class="form-group col-3">
+                        <label for="selectedReportComposer">
+                          <i class="fas fa-file-alt mreport-secondary-color-1"></i>
+                          Rapport sélectionné
+                        </label>
                         <select class="form-control" id="selectedReportComposer">
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="selectedModelComposer">Modèle sélectionné</label>
+                    <div class="form-group col-3">
+                        <label for="selectedReportVersionComposer">
+                          <i class="fas fa-history mreport-secondary-color-1"></i>
+                          Version sélectionné
+                        </label>
+                        <select class="form-control" id="selectedReportVersionComposer" disabled>
+                        </select>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="selectedModelComposer">
+                          <i class="fas fa-palette mreport-secondary-color-1"></i>
+                          Modèle sélectionné
+                        </label>
                         <select class="form-control" id="selectedModelComposer">
                             <option disabled value selected>Modèle</option>
                         </select>
                     </div>
-                </form>
+              <!--</form>-->
+            <div class="col-3">
+              <button type="button" id="btn_save_report" class=" btn btn-block mreport-primary-color-1-bg">
+                <i class="fas fa-save"></i>
+                Enregistrer
+              </button>
+            </div>
+              
+            </div>
+            <div class="sidenav d-flex flex-column ">
+                <div class="sidenav-content">
+                <div >
+                  <!-- <h6>Affichage du bloc sans données:</h6>
+                  <div id="nodata-option">
+                    <select class="form-control" id="#noDataOption">
+                      <option value="0" selected>Affichage du message: "Absence de données"</option>
+                      <option value="1" >Cacher tout le bloc</option>
+                  </select>
+                </div>  -->
+                  
+                </div>
                 <div>
                   <h6>Blocs structurants</h6>
                   <div class="rows list-group" id="structure-models">
                       <!-- appended by code -->
-                  </div>
-                </div>
-                <div>
-                  <h6>Eléments</h6>
-                  <div class="rows list-group" id="element-models">
-                       <!-- appended by code -->
+                      <div class="" id="element-models">
+                          <!-- appended by code -->
+                      </div>
                   </div>
                 </div>
                 <div>
@@ -194,6 +257,7 @@
                   <div class="list-group" id="dataviz-items">
                       <!-- appended by code -->
                   </div>
+                </div>
                 </div>
             </div>
 
@@ -252,6 +316,7 @@
                         <div class="form-group row">
                             <div class="col">
                                 <label for="inputDescription"><span class="badge mreport-grey1-bg">Description</span></label>
+                                <p class="invalid-feedback">500 caractères max.</p>
                                 <input type="text" class="form-control" name="description" id="inputDescription"
                                     placeholder="Description">
                             </div>
@@ -316,21 +381,28 @@
                       <h5 class="modal-title" id="reportModalLabel">Rapport<span
                             class="badge mreport-secondary-color-1-bg">New</span><span class="badge mreport-secondary-color-2-bg">Edition</span><span
                             class="badge mreport-error-color-bg">Supression</span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
                 </div>
                 <div class="modal-body">
                     <div class="form-group ">
-                        <label for="reportInputTitre">Titre du rapport</label>
+                        <h4><label for="reportInputTitre">Titre du rapport</label></h4>
                         <input type="text" class="form-control" name="title" id="reportInputTitre"
                               placeholder="Titre" required="true">
+                              <div class="valid-feedback">Champ validé.</div>
+                              <div class="invalid-feedback">Champ obligatoire.</div>
+                        <label for="reportInputDescription" class="pt-2">Description du rapport</label>
+                        <p class="invalid-feedback">500 caractères max.</p>
+                        <input type="text" class="form-control" name="description" id="reportInputDescription"
+                              placeholder="Description" required="true">
+                        
                     </div>
                     <form class="form" id="report-form" role="form" autocomplete="off">
 
                         <h5>Sources de données associées</h5>
-                        <ul class="reports-dataviz list-group">
+                        <ul id="reports-dataviz-modal-event" class="reports-dataviz list-group">
                         </ul>
                     </form>
                 </div>
@@ -338,6 +410,35 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button id="report_confirmed" type="button" class="btn mreport-primary-color-1-bg"
                         onclick="admin.addReport();">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Report Supression-->
+    <div class="modal fade" id="report-modal-delete" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row col-12">
+                      <h5 class="modal-title" id="reportModalDeleteLabel">Rapports
+                        <span class="badge mreport-error-color-bg">Supression</span>
+                      </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form" id="list-reports-delete" role="form" autocomplete="off">
+                        <h5>Liste des rapports qui vont être supprimé</h5>
+                        <ul id="reports-modal-delete-multiple" class="reports-dataviz list-group">
+                        </ul>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button id="confirm_delete_reports" type="button" class="btn mreport-primary-color-1-bg">Supprimer</button>
                 </div>
             </div>
         </div>
@@ -437,6 +538,10 @@
           <div class="col-md-12 col-12">
             <input id="searchbar" class="form-control" placeholder="Filtrer les données" maxlength="32">
           </div>
+            <div class="col-md-12 col-12 mt-2">
+              <button type="button" class="btn mreport-primary-color-2-bg col-12"
+                data-target="" id="advancedFilterCatalog">Filtre avancé</button>
+            </div>
           <h2>Selection</h2>
           <div class="col-12">
             <button type="button" class="btn mreport-primary-color-2-bg toggle-deactivate col-12" data-toggle="modal" data-report-state="new"
@@ -458,6 +563,81 @@
         </ul>
     </div>
 
+    
+  <!-- Report select slide in -->
+  <div id="report-select-options">
+    <a id="toggle-report-select-option" class="mreport-primary-color-1-bg">Fermer</a>
+    <div class="sticky">
+      <div class="row">
+        <div class="col-md-6 col-12 p-0">
+          <h2 class="">Filtrer</h2>
+        </div>
+        <div class="col-md-6 col-12 text-right p-0">
+          <button id="resetReportfilters" type="button" class="btn mreport-secondary-color-2-bg "><i class="fas fa-undo"></i>
+            Réinitialiser</button>
+        </div>
+      </div>
+      <div class="col-md-12 col-12">
+        <input id="searchbarReports" class="form-control" placeholder="Filtrer les rapports" maxlength="32">
+      </div>
+      <h2>Selection</h2>
+      <div class="col-12">
+        <button type="button" class="btn mreport-primary-color-2-bg report-toggle-deactivate col-12" data-toggle="modal"
+          data-target="#report-modal-delete">Supprimer la sélection</button>
+      </div>
+      <div class="col-12">
+        <div class="custom-control custom-checkbox mt-3">
+          <input type="checkbox" id="checkAllReports" class="custom-control-input" name="checkAllReports">
+          <label class="custom-control-label" for="checkAllReports">Tout sélectionner</label>
+        </div>
+      </div>
+
+    </div>
+    <ul class="report-options-items">
+    </ul>
+  </div>
+
+    <!--version list -->
+    <div id="version-list" class="">
+      <div id="version-list-content">
+        <a id="closeVersions" class="mreport-primary-color-1-bg">Fermer</a>
+        <div class="sticky"> 
+          <h2>Versions</h6>
+        </div>
+        <div>
+          <ul id="version-items">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="advancedFilterCatalogOptions">
+        <a id="toggleAdvancedFilter" class="mreport-primary-color-1-bg">Fermer</a>
+        <div class="sticky">
+        <div id="returnToOptionsCatalog"><i class="fas fa-arrow-left"></i> Retour aux options</div>
+          <div class="row">
+            <div class="col-md-6 col-12 p-0">
+              <h2 class="">Filtre avancé</h2>
+            </div>
+            <div class="col-md-6 col-12 text-right p-0">
+              <button id="resetAdvancedCatalogfilters" type="button" class="btn mreport-secondary-color-2-bg "><i class="fas fa-undo"></i> Réinitialiser</button>
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div>
+              <label>Filtrer les données par mot clé</label>
+              <input id="filterSearchAdvancedCatalog" class="form-control" placeholder="Filtrer les données" maxlength="32">
+            </div>
+            <div>
+              <label for ="filterLevelCatalog">Filtrer les données par référentiel</label>
+              <select id="filterLevelCatalog" class="form-control">
+                <option value="0" selected="true" disabled="disabled">Veuillez choisir une option</option>
+              </select>
+            </div>
+
+          </div> 
+        </div>
+    </div>
 
     <!-- Structure dividing modal -->
     <div class="modal fade" id="divide_form" tabindex="-1" role="dialog" aria-labelledby="divideForm"

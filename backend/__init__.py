@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, jsonify, request
-from flask_restplus import Api, Resource, fields
+from flask_restplus import Api, Resource, fields, marshal
 from sqlalchemy import create_engine, bindparam, Integer, String, event, func,desc
 #from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.sql import text
@@ -10,7 +10,8 @@ from sqlalchemy.schema import CreateSchema, DropSchema
 from backend.functions_inc import *
 from collections import defaultdict
 #from backend.models import *
-
+from datetime import datetime, date
+from json import JSONEncoder
 
 
 #def create_app(test_config=None):
@@ -97,6 +98,7 @@ class Rawdata(db.Model):
 class Report(db.Model):
     report = db.Column(db.String(50),primary_key=True)
     title = db.Column(db.String(250),nullable=False)
+    description = db.Column(db.String(500),nullable=True)
     report_composition_rep = db.relationship('Report_composition', backref="report2", cascade="all, delete-orphan" , lazy='dynamic')
     __table_args__ = (tableschema)
     def __repr__(self):
@@ -110,7 +112,22 @@ class Report_composition(db.Model):
         tableschema
     )
     def __repr__(self):
-        return '<Report_composition {}>'.format(self.report)
+        return '<report_composition {}>'.format(self.report)
+
+class Report_definition(db.Model):
+    id = db.Column(db.Integer, autoincrement=True)
+    json = db.Column(db.Text, nullable=False)
+    save_date = db.Column(db.DateTime, 
+                          default=datetime.utcnow, 
+                          onupdate=datetime.utcnow)
+    report = db.Column(db.String(50),db.ForeignKey(schema+'report.report'),nullable=False)
+    __table_args__ = (
+        db.PrimaryKeyConstraint('report', 'id'),
+        tableschema
+    )
+    def __repr__(self):
+        return '<Report_definition {}>'.format(self.report)
+
 #/MODELS
 
 
@@ -144,6 +161,7 @@ picto = api.namespace('picto', description='Pictos')
 report_composition = api.namespace('report_composition', description='Composition des rapports')
 report_html = api.namespace('report_html', description='Structure html des rapports')
 level = api.namespace('level', description='Liste des référentiels')
+backup = api.namespace('backup', description='Versionning des Rapports')
 
 @level.route('/',doc={'description':'Récupération des réferentiels'})
 class GetLevels(Resource):
@@ -304,12 +322,13 @@ class GetReports(Resource):
         '''
         data = dict_builder(result)
         res = defaultdict(list)
-        for values in data: res[values['report'],values['title']].append({"id":values['dataviz'],"title":values['datavizTitle'],"type":values['datavizType']})
-        data = {'response':'success','reports': [{'report':report[0],'title':report[1], 'dataviz':dataviz} for report,dataviz in res.items()]}
+        for values in data: res[values['report'],values['title'],values['description']].append({"id":values['dataviz'],"title":values['datavizTitle'],"type":values['datavizType']})
+        data = {'response':'success','reports': [{'report':report[0],'title':report[1],'description':report[2], 'dataviz':dataviz} for report,dataviz in res.items()]}
         return jsonify(**data)
 
 report_fields = api.model('Report', {
     'title': fields.String(max_length=250,required=True),
+    'description': fields.String(max_length=500,required=False),
     'copy': fields.Boolean(False,required=False)
 })
 @report.route('/<report_id>', doc={'description':'Récupération/Création/Modification/Suppression d\'un rapport'})
@@ -370,7 +389,7 @@ class GetReport(Resource):
         else:
             if Report.query.get(report_id):
                 rep = Report.query.get(report_id)
-                for fld in ["title"]:
+                for fld in ["title","description"]:
                     value = data.get(fld)
                     if value:
                         setattr(rep, fld, value)
@@ -484,5 +503,51 @@ class GetReportComposition(Resource):
                 else:
                     data = {"response": "ERROR mauvais données associés"}
                     return data, 405
+
+backup_put = api.model('Backup_put', {
+    'json': fields.String(max_length=5000,required=True)
+})
+
+@backup.route('/<report_id>',doc={'description':'Liste des versions d\'un rapport'})
+@backup.doc(params={'report_id': 'identifiant du rapport'})
+
+class GetReportDef(Resource):
+    def get(self,report_id):
+        result = db.session.query(Report_definition).filter(Report_definition.report == report_id).order_by(Report_definition.save_date.desc()).all()
+        data = {'response':'success','report_backups':  json.loads(json.dumps([row2dict(r) for r in result]))}
+        return jsonify(**data)
+
+    @backup.expect(backup_put)
+    def put(self, report_id):
+        data = request.get_json()
+        if not data:
+            data = {"response": "ERROR no data supplied"}
+            return data, 405
+        else:
+            if not Report.query.get(report_id):
+                return {"response": "rapport n'existe pas."}, 404
+            else:
+                data.update({'report':report_id})
+                ct = datetime.now()
+                class DateTimeEncoder(JSONEncoder):
+                    def default(self, obj):
+                        if isinstance(obj, (date, datetime)):
+                            return obj.isoformat()
+                data.update({'save_date':DateTimeEncoder().encode(ct)})
+                try:
+                    save = Report_definition(**data)
+                except TypeError as err:
+                    return {"response": str(err)}, 400
+                db.session.add(save)
+                db.session.commit()
+            return {"response": "success" , "data": data}
+
+@backup.route('/<report_id>/<report_definition_id>',doc={'description':'Recupère une version d\'un rapport'})
+@backup.doc(params={'report_id': 'identifiant du rapport', 'report_definition_id': 'identifiant de la version du rapport'})
+class GetReportDefId(Resource):
+    def get(self,report_id,report_definition_id):
+        result = db.session.query(Report_definition).filter(Report_definition.id == report_definition_id)
+        data = {'response':'success','report backups':  json.loads(json.dumps([row2dict(r) for r in result]))}
+        return jsonify(**data)
 
 #    return app

@@ -2,8 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.9 (Debian 11.9-0+deb10u1)
--- Dumped by pg_dump version 11.9 (Debian 11.9-0+deb10u1)
+-- Dumped from database version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 13.0
+
+-- Started on 2021-07-02 14:57:11
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -17,6 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- TOC entry 8 (class 2615 OID 163844)
 -- Name: data; Type: SCHEMA; Schema: -; Owner: :user
 --
 
@@ -30,6 +33,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- TOC entry 197 (class 1259 OID 163845)
 -- Name: dataid; Type: TABLE; Schema: data; Owner: :user
 --
 
@@ -43,6 +47,7 @@ CREATE TABLE :schema.dataid (
 ALTER TABLE :schema.dataid OWNER TO :user;
 
 --
+-- TOC entry 198 (class 1259 OID 163848)
 -- Name: dataviz; Type: TABLE; Schema: data; Owner: :user
 --
 
@@ -63,6 +68,8 @@ CREATE TABLE :schema.dataviz (
 ALTER TABLE :schema.dataviz OWNER TO :user;
 
 --
+-- TOC entry 2932 (class 0 OID 0)
+-- Dependencies: 198
 -- Name: COLUMN dataviz.viz; Type: COMMENT; Schema: data; Owner: :user
 --
 
@@ -70,6 +77,7 @@ COMMENT ON COLUMN :schema.dataviz.viz IS 'Champ destiné à contenir la représe
 
 
 --
+-- TOC entry 199 (class 1259 OID 163854)
 -- Name: level_type; Type: TABLE; Schema: data; Owner: :user
 --
 
@@ -81,6 +89,7 @@ CREATE TABLE :schema.level_type (
 ALTER TABLE :schema.level_type OWNER TO :user;
 
 --
+-- TOC entry 200 (class 1259 OID 163857)
 -- Name: rawdata; Type: TABLE; Schema: data; Owner: :user
 --
 
@@ -97,18 +106,21 @@ CREATE TABLE :schema.rawdata (
 ALTER TABLE :schema.rawdata OWNER TO :user;
 
 --
+-- TOC entry 201 (class 1259 OID 163863)
 -- Name: report; Type: TABLE; Schema: data; Owner: :user
 --
 
 CREATE TABLE :schema.report (
     report character varying(50) NOT NULL,
-    title character varying(250) NOT NULL
+    title character varying(250) NOT NULL,
+    description character varying(255)
 );
 
 
 ALTER TABLE :schema.report OWNER TO :user;
 
 --
+-- TOC entry 202 (class 1259 OID 163866)
 -- Name: report_composition; Type: TABLE; Schema: data; Owner: :user
 --
 
@@ -121,6 +133,23 @@ CREATE TABLE :schema.report_composition (
 ALTER TABLE :schema.report_composition OWNER TO :user;
 
 --
+-- TOC entry 203 (class 1259 OID 163907)
+-- Name: report_definition; Type: TABLE; Schema: data; Owner: admin
+--
+
+CREATE TABLE :schema.report_definition (
+    id integer NOT NULL,
+    report character varying(50) NOT NULL,
+    save_date timestamp without time zone NOT NULL,
+    json character varying(5000) NOT NULL
+);
+
+
+ALTER TABLE :schema.report_definition OWNER TO admin;
+
+--
+-- TOC entry 2920 (class 0 OID 163845)
+-- Dependencies: 197
 -- Data for Name: dataid; Type: TABLE DATA; Schema: data; Owner: :user
 --
 
@@ -500,6 +529,8 @@ ECL_NB076	Hilvern	ecluse
 
 
 --
+-- TOC entry 2921 (class 0 OID 163848)
+-- Dependencies: 198
 -- Data for Name: dataviz; Type: TABLE DATA; Schema: data; Owner: :user
 --
 
@@ -540,6 +571,8 @@ ecluse_title	Nom de l'écluse	\N	région Bretagne	\N	\N	title	ecluse	ecluse	\N
 
 
 --
+-- TOC entry 2922 (class 0 OID 163854)
+-- Dependencies: 199
 -- Data for Name: level_type; Type: TABLE DATA; Schema: data; Owner: :user
 --
 
@@ -550,6 +583,8 @@ ecluse
 
 
 --
+-- TOC entry 2923 (class 0 OID 163857)
+-- Dependencies: 200
 -- Data for Name: rawdata; Type: TABLE DATA; Schema: data; Owner: :user
 --
 
@@ -607,6 +642,7 @@ ecluse_photo	ECL_IR23	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-b
 ecluse_photo	ECL_IR24	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_IR24.jpg
 ecluse_photo	ECL_IR25	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_IR25.jpg
 ecluse_photo	ECL_IR27	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_IR27.jpg
+ecluse_trafic_heure	ECL_IR01	ecluse_trafic_heure	10	18h-19h	18
 ecluse_photo	ECL_IR28	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_IR28.jpg
 ecluse_photo	ECL_IR29	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_IR29.jpg
 ecluse_photo	ECL_IR30	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_IR30.jpg
@@ -659,6 +695,7 @@ ecluse_photo	ECL_NB048	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-
 ecluse_photo	ECL_NB049	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_NB049.jpg
 ecluse_photo	ECL_NB052	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_NB052.jpg
 ecluse_photo	ECL_NB053	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_NB053.jpg
+ecluse_trafic_heure	ECL_IR01	ecluse_trafic_heure	11	19h-20h	1
 ecluse_photo	ECL_NB055	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_NB055.jpg
 ecluse_photo	ECL_NB056	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_NB056.jpg
 ecluse_photo	ECL_NB059	ecluse_photo	1	Photo de l'écluse	https://kartenn.region-bretagne.fr/img/vn/ecluse/ECL_NB059.jpg
@@ -715,8 +752,6 @@ ecluse_trafic_heure	ECL_IR01	ecluse_trafic_heure	6	14h-15h	59
 ecluse_trafic_heure	ECL_IR01	ecluse_trafic_heure	7	15h-16h	53
 ecluse_trafic_heure	ECL_IR01	ecluse_trafic_heure	8	16h-17h	61
 ecluse_trafic_heure	ECL_IR01	ecluse_trafic_heure	9	17h-18h	45
-ecluse_trafic_heure	ECL_IR01	ecluse_trafic_heure	10	18h-19h	18
-ecluse_trafic_heure	ECL_IR01	ecluse_trafic_heure	11	19h-20h	1
 ecluse_trafic_heure	ECL_IR02	ecluse_trafic_heure	1	9h-10h	25
 ecluse_trafic_heure	ECL_IR02	ecluse_trafic_heure	2	10h-11h	82
 ecluse_trafic_heure	ECL_IR02	ecluse_trafic_heure	3	11h-12h	80
@@ -2734,6 +2769,7 @@ ecluse_trafic_type_embarcation	ECL_IR24	ecluse_trafic_type_embarcation	1	Canoë/
 ecluse_trafic_type_embarcation	ECL_IR24	ecluse_trafic_type_embarcation	2	Location	21.0
 ecluse_trafic_type_embarcation	ECL_IR24	ecluse_trafic_type_embarcation	3	Particulier	78.2
 ecluse_trafic_type_embarcation	ECL_IR24	ecluse_trafic_type_embarcation	4	Service	0.6
+ecluse_trafic_agent	ECL_IR22	ecluse_trafic_agent	1	Saisonnier	35.8
 ecluse_trafic_type_embarcation	ECL_IR25	ecluse_trafic_type_embarcation	1	Canoë/Kayak	0.3
 ecluse_trafic_type_embarcation	ECL_IR25	ecluse_trafic_type_embarcation	2	Location	20.3
 ecluse_trafic_type_embarcation	ECL_IR25	ecluse_trafic_type_embarcation	3	Particulier	79.1
@@ -3284,7 +3320,6 @@ ecluse_trafic_agent	ECL_IR20	ecluse_trafic_agent	1	Saisonnier	52.7
 ecluse_trafic_agent	ECL_IR20	ecluse_trafic_agent	2	Titulaire	47.3
 ecluse_trafic_agent	ECL_IR21	ecluse_trafic_agent	1	Saisonnier	35.8
 ecluse_trafic_agent	ECL_IR21	ecluse_trafic_agent	2	Titulaire	64.2
-ecluse_trafic_agent	ECL_IR22	ecluse_trafic_agent	1	Saisonnier	35.8
 ecluse_trafic_agent	ECL_IR22	ecluse_trafic_agent	2	Titulaire	64.2
 ecluse_trafic_agent	ECL_IR23	ecluse_trafic_agent	1	Saisonnier	57.0
 ecluse_trafic_agent	ECL_IR23	ecluse_trafic_agent	2	Titulaire	43.0
@@ -7972,6 +8007,7 @@ ecluse_graphe_trafic_annuel	ECL_NB237	ecluse_graphe_trafic_annuel	2016	2016	610
 ecluse_graphe_trafic_annuel	ECL_NB237	ecluse_graphe_trafic_annuel	2017	2017	0
 ecluse_graphe_trafic_annuel	ECL_NB237	ecluse_graphe_trafic_annuel	2018	2018	0
 ecluse_graphe_trafic_annuel	ECL_NB237	ecluse_graphe_trafic_annuel	2019	2019	0
+epci_pop_evolution	200070662	pop_evolution	2007	2007	29009
 ecluse_graphe_trafic_annuel	ECL_NB237	ecluse_graphe_trafic_annuel	2020	2020	357
 ecluse_graphe_trafic_annuel	ECL_V01	ecluse_graphe_trafic_annuel	2002	2002	0
 ecluse_graphe_trafic_annuel	ECL_V01	ecluse_graphe_trafic_annuel	2003	2003	0
@@ -9133,6 +9169,7 @@ ecluse_graphe_trafic_mensuel	ECL_IR48	ecluse_graphe_trafic_mensuel	10	Octobre	23
 ecluse_graphe_trafic_mensuel	ECL_IR48	ecluse_graphe_trafic_mensuel	11	Novembre	0
 ecluse_graphe_trafic_mensuel	ECL_IR48	ecluse_graphe_trafic_mensuel	12	Décembre	0
 ecluse_graphe_trafic_mensuel	ECL_NB018	ecluse_graphe_trafic_mensuel	1	Janvier	0
+epci_pop_evolution	242900561	pop_evolution	2007	2007	14982
 ecluse_graphe_trafic_mensuel	ECL_NB018	ecluse_graphe_trafic_mensuel	2	Février	0
 ecluse_graphe_trafic_mensuel	ECL_NB018	ecluse_graphe_trafic_mensuel	3	Mars	0
 ecluse_graphe_trafic_mensuel	ECL_NB018	ecluse_graphe_trafic_mensuel	4	Avril	0
@@ -9275,6 +9312,7 @@ ecluse_graphe_trafic_mensuel	ECL_NB028	ecluse_graphe_trafic_mensuel	8	Août	524
 ecluse_graphe_trafic_mensuel	ECL_NB028	ecluse_graphe_trafic_mensuel	9	Septembre	289
 ecluse_graphe_trafic_mensuel	ECL_NB028	ecluse_graphe_trafic_mensuel	10	Octobre	57
 ecluse_graphe_trafic_mensuel	ECL_NB028	ecluse_graphe_trafic_mensuel	11	Novembre	0
+epci_pop_evolution	243500667	pop_evolution	2017	2017	36302
 ecluse_graphe_trafic_mensuel	ECL_NB028	ecluse_graphe_trafic_mensuel	12	Décembre	0
 ecluse_graphe_trafic_mensuel	ECL_NB029	ecluse_graphe_trafic_mensuel	1	Janvier	0
 ecluse_graphe_trafic_mensuel	ECL_NB029	ecluse_graphe_trafic_mensuel	2	Février	0
@@ -11074,6 +11112,7 @@ ecluse_graphe_trafic_mensuel	ECL_V13	ecluse_graphe_trafic_mensuel	5	Mai	6
 ecluse_graphe_trafic_mensuel	ECL_V13	ecluse_graphe_trafic_mensuel	6	Juin	102
 ecluse_graphe_trafic_mensuel	ECL_V13	ecluse_graphe_trafic_mensuel	7	Juillet	338
 ecluse_graphe_trafic_mensuel	ECL_V13	ecluse_graphe_trafic_mensuel	8	Août	460
+ecluse_title	ECL_IR10	ecluse_title	1	Fresnay	Fresnay
 ecluse_graphe_trafic_mensuel	ECL_V13	ecluse_graphe_trafic_mensuel	9	Septembre	251
 ecluse_graphe_trafic_mensuel	ECL_V13	ecluse_graphe_trafic_mensuel	10	Octobre	78
 ecluse_graphe_trafic_mensuel	ECL_V13	ecluse_graphe_trafic_mensuel	11	Novembre	0
@@ -12724,7 +12763,6 @@ ecluse_graphe_trafic_journalier	ECL_IR11	ecluse_graphe_trafic_journalier	192	11-
 ecluse_graphe_trafic_journalier	ECL_IR11	ecluse_graphe_trafic_journalier	193	12-juil.-2018	5
 ecluse_graphe_trafic_journalier	ECL_IR11	ecluse_graphe_trafic_journalier	194	13-juil.-2018	5
 ecluse_graphe_trafic_journalier	ECL_IR11	ecluse_graphe_trafic_journalier	195	14-juil.-2018	1
-epci_pop_evolution	200070662	pop_evolution	2007	2007	29009
 ecluse_graphe_trafic_journalier	ECL_IR11	ecluse_graphe_trafic_journalier	197	16-juil.-2018	3
 ecluse_graphe_trafic_journalier	ECL_IR11	ecluse_graphe_trafic_journalier	198	17-juil.-2018	2
 ecluse_graphe_trafic_journalier	ECL_IR11	ecluse_graphe_trafic_journalier	199	18-juil.-2018	4
@@ -13515,6 +13553,7 @@ ecluse_graphe_trafic_journalier	ECL_IR16	ecluse_graphe_trafic_journalier	273	30-
 ecluse_graphe_trafic_journalier	ECL_IR16	ecluse_graphe_trafic_journalier	274	01-oct.-2018	1
 ecluse_graphe_trafic_journalier	ECL_IR16	ecluse_graphe_trafic_journalier	277	04-oct.-2018	1
 ecluse_graphe_trafic_journalier	ECL_IR16	ecluse_graphe_trafic_journalier	282	09-oct.-2018	1
+ecluse_title	ECL_IR11	ecluse_title	1	Saint-Germain	Saint-Germain
 ecluse_graphe_trafic_journalier	ECL_IR16	ecluse_graphe_trafic_journalier	285	12-oct.-2018	1
 ecluse_graphe_trafic_journalier	ECL_IR16	ecluse_graphe_trafic_journalier	286	13-oct.-2018	2
 ecluse_graphe_trafic_journalier	ECL_IR16	ecluse_graphe_trafic_journalier	288	15-oct.-2018	1
@@ -14769,7 +14808,6 @@ ecluse_graphe_trafic_journalier	ECL_IR25	ecluse_graphe_trafic_journalier	258	15-
 ecluse_graphe_trafic_journalier	ECL_IR25	ecluse_graphe_trafic_journalier	259	16-sept.-2018	3
 ecluse_graphe_trafic_journalier	ECL_IR25	ecluse_graphe_trafic_journalier	260	17-sept.-2018	3
 ecluse_graphe_trafic_journalier	ECL_IR25	ecluse_graphe_trafic_journalier	261	18-sept.-2018	2
-epci_pop_evolution	242900561	pop_evolution	2007	2007	14982
 ecluse_graphe_trafic_journalier	ECL_IR25	ecluse_graphe_trafic_journalier	263	20-sept.-2018	6
 ecluse_graphe_trafic_journalier	ECL_IR25	ecluse_graphe_trafic_journalier	267	24-sept.-2018	1
 ecluse_graphe_trafic_journalier	ECL_IR25	ecluse_graphe_trafic_journalier	268	25-sept.-2018	1
@@ -17597,6 +17635,7 @@ ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	122	02
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	123	03-mai-2018	12
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	124	04-mai-2018	15
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	125	05-mai-2018	8
+ecluse_title	ECL_IR12	ecluse_title	1	Bouessay	Bouessay
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	126	06-mai-2018	22
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	127	07-mai-2018	20
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	128	08-mai-2018	13
@@ -17723,6 +17762,7 @@ ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	250	07
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	251	08-sept.-2018	22
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	252	09-sept.-2018	27
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	253	10-sept.-2018	10
+ecluse_title	ECL_IR13	ecluse_title	1	Saint Médard	Saint Médard
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	254	11-sept.-2018	11
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	255	12-sept.-2018	17
 ecluse_graphe_trafic_journalier	ECL_NB018	ecluse_graphe_trafic_journalier	256	13-sept.-2018	12
@@ -17913,6 +17953,7 @@ ecluse_graphe_trafic_journalier	ECL_NB019	ecluse_graphe_trafic_journalier	251	08
 ecluse_graphe_trafic_journalier	ECL_NB019	ecluse_graphe_trafic_journalier	252	09-sept.-2018	21
 ecluse_graphe_trafic_journalier	ECL_NB019	ecluse_graphe_trafic_journalier	253	10-sept.-2018	16
 ecluse_graphe_trafic_journalier	ECL_NB019	ecluse_graphe_trafic_journalier	254	11-sept.-2018	20
+ecluse_title	ECL_IR14	ecluse_title	1	Dialay	Dialay
 ecluse_graphe_trafic_journalier	ECL_NB019	ecluse_graphe_trafic_journalier	255	12-sept.-2018	10
 ecluse_graphe_trafic_journalier	ECL_NB019	ecluse_graphe_trafic_journalier	256	13-sept.-2018	15
 ecluse_graphe_trafic_journalier	ECL_NB019	ecluse_graphe_trafic_journalier	257	14-sept.-2018	14
@@ -18103,6 +18144,7 @@ ecluse_graphe_trafic_journalier	ECL_NB021	ecluse_graphe_trafic_journalier	248	05
 ecluse_graphe_trafic_journalier	ECL_NB021	ecluse_graphe_trafic_journalier	249	06-sept.-2018	14
 ecluse_graphe_trafic_journalier	ECL_NB021	ecluse_graphe_trafic_journalier	250	07-sept.-2018	14
 ecluse_graphe_trafic_journalier	ECL_NB021	ecluse_graphe_trafic_journalier	251	08-sept.-2018	11
+ecluse_title	ECL_IR15	ecluse_title	1	Ille	Ille
 ecluse_graphe_trafic_journalier	ECL_NB021	ecluse_graphe_trafic_journalier	252	09-sept.-2018	22
 ecluse_graphe_trafic_journalier	ECL_NB021	ecluse_graphe_trafic_journalier	253	10-sept.-2018	14
 ecluse_graphe_trafic_journalier	ECL_NB021	ecluse_graphe_trafic_journalier	254	11-sept.-2018	11
@@ -19193,6 +19235,7 @@ ecluse_graphe_trafic_journalier	ECL_NB028	ecluse_graphe_trafic_journalier	202	21
 ecluse_graphe_trafic_journalier	ECL_NB028	ecluse_graphe_trafic_journalier	203	22-juil.-2018	7
 ecluse_graphe_trafic_journalier	ECL_NB028	ecluse_graphe_trafic_journalier	204	23-juil.-2018	16
 ecluse_graphe_trafic_journalier	ECL_NB028	ecluse_graphe_trafic_journalier	205	24-juil.-2018	15
+ecluse_title	ECL_IR16	ecluse_title	1	Haute-Roche	Haute-Roche
 ecluse_graphe_trafic_journalier	ECL_NB028	ecluse_graphe_trafic_journalier	206	25-juil.-2018	30
 ecluse_graphe_trafic_journalier	ECL_NB028	ecluse_graphe_trafic_journalier	207	26-juil.-2018	22
 ecluse_graphe_trafic_journalier	ECL_NB028	ecluse_graphe_trafic_journalier	208	27-juil.-2018	4
@@ -19321,6 +19364,7 @@ ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	138	18
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	139	19-mai-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	140	20-mai-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	141	21-mai-2018	5
+ecluse_title	ECL_IR17	ecluse_title	1	Lengager	Lengager
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	142	22-mai-2018	8
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	143	23-mai-2018	8
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	144	24-mai-2018	5
@@ -19385,6 +19429,7 @@ ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	208	27
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	209	28-juil.-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	210	29-juil.-2018	6
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	211	30-juil.-2018	19
+ecluse_title	ECL_IR18	ecluse_title	1	Chanclin	Chanclin
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	212	31-juil.-2018	23
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	213	01-août-2018	24
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	214	02-août-2018	11
@@ -19448,6 +19493,7 @@ ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	271	28
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	272	29-sept.-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	273	30-sept.-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	274	01-oct.-2018	5
+ecluse_title	ECL_IR19	ecluse_title	1	Courgalais	Courgalais
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	275	02-oct.-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	276	03-oct.-2018	3
 ecluse_graphe_trafic_journalier	ECL_NB029	ecluse_graphe_trafic_journalier	277	04-oct.-2018	5
@@ -19513,6 +19559,7 @@ ecluse_graphe_trafic_journalier	ECL_NB030	ecluse_graphe_trafic_journalier	147	27
 ecluse_graphe_trafic_journalier	ECL_NB030	ecluse_graphe_trafic_journalier	148	28-mai-2018	7
 ecluse_graphe_trafic_journalier	ECL_NB030	ecluse_graphe_trafic_journalier	149	29-mai-2018	9
 ecluse_graphe_trafic_journalier	ECL_NB030	ecluse_graphe_trafic_journalier	150	30-mai-2018	4
+ecluse_title	ECL_IR20	ecluse_title	1	Villemorin	Villemorin
 ecluse_graphe_trafic_journalier	ECL_NB030	ecluse_graphe_trafic_journalier	151	31-mai-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB030	ecluse_graphe_trafic_journalier	152	01-juin-2018	2
 ecluse_graphe_trafic_journalier	ECL_NB030	ecluse_graphe_trafic_journalier	153	02-juin-2018	1
@@ -19706,6 +19753,7 @@ ecluse_graphe_trafic_journalier	ECL_NB031	ecluse_graphe_trafic_journalier	160	09
 ecluse_graphe_trafic_journalier	ECL_NB031	ecluse_graphe_trafic_journalier	164	13-juin-2018	1
 ecluse_graphe_trafic_journalier	ECL_NB031	ecluse_graphe_trafic_journalier	165	14-juin-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB031	ecluse_graphe_trafic_journalier	166	15-juin-2018	7
+ecluse_title	ECL_IR21	ecluse_title	1	La Ségerie	La Ségerie
 ecluse_graphe_trafic_journalier	ECL_NB031	ecluse_graphe_trafic_journalier	167	16-juin-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB031	ecluse_graphe_trafic_journalier	168	17-juin-2018	10
 ecluse_graphe_trafic_journalier	ECL_NB031	ecluse_graphe_trafic_journalier	169	18-juin-2018	9
@@ -19900,6 +19948,7 @@ ecluse_graphe_trafic_journalier	ECL_NB032	ecluse_graphe_trafic_journalier	175	24
 ecluse_graphe_trafic_journalier	ECL_NB032	ecluse_graphe_trafic_journalier	176	25-juin-2018	10
 ecluse_graphe_trafic_journalier	ECL_NB032	ecluse_graphe_trafic_journalier	177	26-juin-2018	8
 ecluse_graphe_trafic_journalier	ECL_NB032	ecluse_graphe_trafic_journalier	178	27-juin-2018	11
+ecluse_title	ECL_IR22	ecluse_title	1	Malabrie	Malabrie
 ecluse_graphe_trafic_journalier	ECL_NB032	ecluse_graphe_trafic_journalier	179	28-juin-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB032	ecluse_graphe_trafic_journalier	180	29-juin-2018	4
 epci_pop_evolution	242900835	pop_evolution	2017	2017	64133
@@ -20094,6 +20143,7 @@ ecluse_graphe_trafic_journalier	ECL_NB033	ecluse_graphe_trafic_journalier	187	06
 ecluse_graphe_trafic_journalier	ECL_NB033	ecluse_graphe_trafic_journalier	188	07-juil.-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB033	ecluse_graphe_trafic_journalier	189	08-juil.-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB033	ecluse_graphe_trafic_journalier	190	09-juil.-2018	12
+ecluse_title	ECL_IR23	ecluse_title	1	La Péchetière	La Péchetière
 ecluse_graphe_trafic_journalier	ECL_NB033	ecluse_graphe_trafic_journalier	191	10-juil.-2018	14
 ecluse_graphe_trafic_journalier	ECL_NB033	ecluse_graphe_trafic_journalier	192	11-juil.-2018	18
 ecluse_graphe_trafic_journalier	ECL_NB033	ecluse_graphe_trafic_journalier	193	12-juil.-2018	11
@@ -20350,6 +20400,7 @@ ecluse_graphe_trafic_journalier	ECL_NB034	ecluse_graphe_trafic_journalier	264	21
 ecluse_graphe_trafic_journalier	ECL_NB034	ecluse_graphe_trafic_journalier	265	22-sept.-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB034	ecluse_graphe_trafic_journalier	266	23-sept.-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB034	ecluse_graphe_trafic_journalier	267	24-sept.-2018	4
+ecluse_title	ECL_IR24	ecluse_title	1	La Charronnerie	La Charronnerie
 ecluse_graphe_trafic_journalier	ECL_NB034	ecluse_graphe_trafic_journalier	268	25-sept.-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB034	ecluse_graphe_trafic_journalier	269	26-sept.-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB034	ecluse_graphe_trafic_journalier	270	27-sept.-2018	4
@@ -20415,6 +20466,7 @@ ecluse_graphe_trafic_journalier	ECL_NB035	ecluse_graphe_trafic_journalier	141	21
 ecluse_graphe_trafic_journalier	ECL_NB035	ecluse_graphe_trafic_journalier	142	22-mai-2018	8
 ecluse_graphe_trafic_journalier	ECL_NB035	ecluse_graphe_trafic_journalier	143	23-mai-2018	6
 ecluse_graphe_trafic_journalier	ECL_NB035	ecluse_graphe_trafic_journalier	144	24-mai-2018	5
+ecluse_title	ECL_IR25	ecluse_title	1	La Parfraire	La Parfraire
 ecluse_graphe_trafic_journalier	ECL_NB035	ecluse_graphe_trafic_journalier	145	25-mai-2018	3
 ecluse_graphe_trafic_journalier	ECL_NB035	ecluse_graphe_trafic_journalier	146	26-mai-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB035	ecluse_graphe_trafic_journalier	147	27-mai-2018	5
@@ -20608,6 +20660,7 @@ ecluse_graphe_trafic_journalier	ECL_NB036	ecluse_graphe_trafic_journalier	166	15
 ecluse_graphe_trafic_journalier	ECL_NB036	ecluse_graphe_trafic_journalier	167	16-juin-2018	4
 ecluse_graphe_trafic_journalier	ECL_NB036	ecluse_graphe_trafic_journalier	168	17-juin-2018	6
 ecluse_graphe_trafic_journalier	ECL_NB036	ecluse_graphe_trafic_journalier	169	18-juin-2018	6
+ecluse_title	ECL_IR26	ecluse_title	1	Ecluse N° 26	Ecluse N° 26
 ecluse_graphe_trafic_journalier	ECL_NB036	ecluse_graphe_trafic_journalier	170	19-juin-2018	9
 ecluse_graphe_trafic_journalier	ECL_NB036	ecluse_graphe_trafic_journalier	171	20-juin-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB036	ecluse_graphe_trafic_journalier	172	21-juin-2018	4
@@ -21990,7 +22043,6 @@ ecluse_graphe_trafic_journalier	ECL_NB046	ecluse_graphe_trafic_journalier	228	16
 ecluse_graphe_trafic_journalier	ECL_NB046	ecluse_graphe_trafic_journalier	229	17-août-2018	3
 ecluse_graphe_trafic_journalier	ECL_NB046	ecluse_graphe_trafic_journalier	230	18-août-2018	1
 ecluse_graphe_trafic_journalier	ECL_NB046	ecluse_graphe_trafic_journalier	231	19-août-2018	1
-epci_pop_evolution	243500667	pop_evolution	2017	2017	36302
 ecluse_graphe_trafic_journalier	ECL_NB046	ecluse_graphe_trafic_journalier	232	20-août-2018	5
 ecluse_graphe_trafic_journalier	ECL_NB046	ecluse_graphe_trafic_journalier	233	21-août-2018	3
 ecluse_graphe_trafic_journalier	ECL_NB046	ecluse_graphe_trafic_journalier	234	22-août-2018	5
@@ -23432,6 +23484,7 @@ ecluse_graphe_trafic_journalier	ECL_V02	ecluse_graphe_trafic_journalier	276	03-o
 ecluse_graphe_trafic_journalier	ECL_V02	ecluse_graphe_trafic_journalier	278	05-oct.-2018	1
 ecluse_graphe_trafic_journalier	ECL_V02	ecluse_graphe_trafic_journalier	280	07-oct.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V02	ecluse_graphe_trafic_journalier	282	09-oct.-2018	2
+ecluse_title	ECL_IR27	ecluse_title	1	La Jaunaie	La Jaunaie
 ecluse_graphe_trafic_journalier	ECL_V02	ecluse_graphe_trafic_journalier	283	10-oct.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V02	ecluse_graphe_trafic_journalier	285	12-oct.-2018	1
 ecluse_graphe_trafic_journalier	ECL_V02	ecluse_graphe_trafic_journalier	286	13-oct.-2018	3
@@ -23761,6 +23814,7 @@ ecluse_graphe_trafic_journalier	ECL_V04	ecluse_graphe_trafic_journalier	274	01-o
 ecluse_graphe_trafic_journalier	ECL_V04	ecluse_graphe_trafic_journalier	275	02-oct.-2018	1
 ecluse_graphe_trafic_journalier	ECL_V04	ecluse_graphe_trafic_journalier	276	03-oct.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V04	ecluse_graphe_trafic_journalier	278	05-oct.-2018	1
+ecluse_title	ECL_IR28	ecluse_title	1	La Madeleine	La Madeleine
 ecluse_graphe_trafic_journalier	ECL_V04	ecluse_graphe_trafic_journalier	280	07-oct.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V04	ecluse_graphe_trafic_journalier	282	09-oct.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V04	ecluse_graphe_trafic_journalier	284	11-oct.-2018	1
@@ -23892,6 +23946,7 @@ ecluse_graphe_trafic_journalier	ECL_V05	ecluse_graphe_trafic_journalier	248	05-s
 ecluse_graphe_trafic_journalier	ECL_V05	ecluse_graphe_trafic_journalier	249	06-sept.-2018	3
 ecluse_graphe_trafic_journalier	ECL_V05	ecluse_graphe_trafic_journalier	250	07-sept.-2018	3
 ecluse_graphe_trafic_journalier	ECL_V05	ecluse_graphe_trafic_journalier	251	08-sept.-2018	6
+ecluse_title	ECL_NB073	ecluse_title	1	Kervézo	Kervézo
 ecluse_graphe_trafic_journalier	ECL_V05	ecluse_graphe_trafic_journalier	252	09-sept.-2018	1
 ecluse_graphe_trafic_journalier	ECL_V05	ecluse_graphe_trafic_journalier	253	10-sept.-2018	4
 ecluse_graphe_trafic_journalier	ECL_V05	ecluse_graphe_trafic_journalier	254	11-sept.-2018	7
@@ -24089,6 +24144,7 @@ ecluse_graphe_trafic_journalier	ECL_V06	ecluse_graphe_trafic_journalier	277	04-o
 ecluse_graphe_trafic_journalier	ECL_V06	ecluse_graphe_trafic_journalier	278	05-oct.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V06	ecluse_graphe_trafic_journalier	279	06-oct.-2018	3
 ecluse_graphe_trafic_journalier	ECL_V06	ecluse_graphe_trafic_journalier	280	07-oct.-2018	4
+ecluse_title	ECL_NB074	ecluse_title	1	Le Douaren	Le Douaren
 ecluse_graphe_trafic_journalier	ECL_V06	ecluse_graphe_trafic_journalier	281	08-oct.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V06	ecluse_graphe_trafic_journalier	282	09-oct.-2018	3
 ecluse_graphe_trafic_journalier	ECL_V06	ecluse_graphe_trafic_journalier	284	11-oct.-2018	3
@@ -24220,6 +24276,7 @@ ecluse_graphe_trafic_journalier	ECL_V07	ecluse_graphe_trafic_journalier	237	25-a
 ecluse_graphe_trafic_journalier	ECL_V07	ecluse_graphe_trafic_journalier	238	26-août-2018	4
 ecluse_graphe_trafic_journalier	ECL_V07	ecluse_graphe_trafic_journalier	239	27-août-2018	6
 ecluse_graphe_trafic_journalier	ECL_V07	ecluse_graphe_trafic_journalier	240	28-août-2018	8
+ecluse_title	ECL_NB075	ecluse_title	1	Grand Pré	Grand Pré
 ecluse_graphe_trafic_journalier	ECL_V07	ecluse_graphe_trafic_journalier	241	29-août-2018	2
 ecluse_graphe_trafic_journalier	ECL_V07	ecluse_graphe_trafic_journalier	242	30-août-2018	5
 ecluse_graphe_trafic_journalier	ECL_V07	ecluse_graphe_trafic_journalier	243	31-août-2018	4
@@ -24285,6 +24342,7 @@ ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	124	04-m
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	125	05-mai-2018	1
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	126	06-mai-2018	6
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	127	07-mai-2018	7
+ecluse_title	ECL_NB076	ecluse_title	1	Hilvern	Hilvern
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	128	08-mai-2018	5
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	129	09-mai-2018	7
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	130	10-mai-2018	8
@@ -24416,6 +24474,7 @@ ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	267	24-s
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	269	26-sept.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	270	27-sept.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	272	29-sept.-2018	1
+ecluse_title	ECL_NB077	ecluse_title	1	La Pépinière	La Pépinière
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	273	30-sept.-2018	1
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	274	01-oct.-2018	1
 ecluse_graphe_trafic_journalier	ECL_V08	ecluse_graphe_trafic_journalier	275	02-oct.-2018	3
@@ -24613,6 +24672,7 @@ ecluse_graphe_trafic_journalier	ECL_V09	ecluse_graphe_trafic_journalier	298	25-o
 ecluse_graphe_trafic_journalier	ECL_V09	ecluse_graphe_trafic_journalier	299	26-oct.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	106	16-avril-2018	1
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	107	17-avril-2018	4
+ecluse_title	ECL_NB078	ecluse_title	1	Bel Air	Bel Air
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	108	18-avril-2018	2
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	110	20-avril-2018	2
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	111	21-avril-2018	5
@@ -24744,6 +24804,7 @@ ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	247	04-s
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	248	05-sept.-2018	6
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	249	06-sept.-2018	4
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	250	07-sept.-2018	3
+ecluse_title	ECL_NB079	ecluse_title	1	Keroret	Keroret
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	251	08-sept.-2018	10
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	252	09-sept.-2018	6
 ecluse_graphe_trafic_journalier	ECL_V10	ecluse_graphe_trafic_journalier	253	10-sept.-2018	2
@@ -24941,6 +25002,7 @@ ecluse_graphe_trafic_journalier	ECL_V11	ecluse_graphe_trafic_journalier	271	28-s
 ecluse_graphe_trafic_journalier	ECL_V11	ecluse_graphe_trafic_journalier	272	29-sept.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V11	ecluse_graphe_trafic_journalier	273	30-sept.-2018	2
 ecluse_graphe_trafic_journalier	ECL_V11	ecluse_graphe_trafic_journalier	274	01-oct.-2018	3
+ecluse_title	ECL_NB080	ecluse_title	1	Er Houët	Er Houët
 ecluse_graphe_trafic_journalier	ECL_V11	ecluse_graphe_trafic_journalier	275	02-oct.-2018	3
 ecluse_graphe_trafic_journalier	ECL_V11	ecluse_graphe_trafic_journalier	276	03-oct.-2018	1
 ecluse_graphe_trafic_journalier	ECL_V11	ecluse_graphe_trafic_journalier	279	06-oct.-2018	3
@@ -25204,6 +25266,7 @@ ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	162	11-j
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	170	19-juin-2018	2
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	171	20-juin-2018	11
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	172	21-juin-2018	8
+ecluse_title	ECL_NB081	ecluse_title	1	Kerivy	Kerivy
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	173	22-juin-2018	15
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	174	23-juin-2018	12
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	175	24-juin-2018	14
@@ -25269,6 +25332,7 @@ ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	235	23-a
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	236	24-août-2018	24
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	237	25-août-2018	15
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	238	26-août-2018	15
+ecluse_title	ECL_NB082	ecluse_title	1	Parc-Er-Lann	Parc-Er-Lann
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	239	27-août-2018	14
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	240	28-août-2018	9
 ecluse_graphe_trafic_journalier	ECL_V13	ecluse_graphe_trafic_journalier	241	29-août-2018	8
@@ -25604,6 +25668,7 @@ ecluse_trafic_jour_estival	ECL_IR13	ecluse_trafic_jour_estival	1	Moyenne estival
 ecluse_trafic_jour_estival	ECL_IR14	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	2.2
 ecluse_trafic_jour_estival	ECL_IR15	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	2.3
 ecluse_trafic_jour_estival	ECL_IR16	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	2.6
+ecluse_title	ECL_NB083	ecluse_title	1	Kerihoué	Kerihoué
 ecluse_trafic_jour_estival	ECL_IR17	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	2.2
 ecluse_trafic_jour_estival	ECL_IR18	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	2.2
 ecluse_trafic_jour_estival	ECL_IR19	ecluse_trafic_jour_estival	1	Moyenne estivale de passages de bâteaux pour l'année 2020	2.3
@@ -25903,6 +25968,7 @@ ecluse_trafic_jour_moyen	ECL_NB038	ecluse_trafic_jour_moyen	1	Moyenne journaliè
 ecluse_trafic_jour_moyen	ECL_NB039	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.8
 ecluse_trafic_jour_moyen	ECL_NB040	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.8
 ecluse_trafic_jour_moyen	ECL_NB041	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.8
+ecluse_carte	ECL_B27	ecluse_carte	1	Gorets	POINT(-3.26337303590552 47.8213614933948)
 ecluse_trafic_jour_moyen	ECL_NB042	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.7
 ecluse_trafic_jour_moyen	ECL_NB043	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.6
 ecluse_trafic_jour_moyen	ECL_NB044	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.6
@@ -25952,6 +26018,7 @@ ecluse_trafic_jour_moyen	ECL_NB087	ecluse_trafic_jour_moyen	1	Moyenne journaliè
 ecluse_trafic_jour_moyen	ECL_NB088	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.2
 ecluse_trafic_jour_moyen	ECL_NB089	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.2
 ecluse_trafic_jour_moyen	ECL_NB090	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.2
+ecluse_carte	ECL_B28	ecluse_carte	1	Polvern	POINT(-3.27645781473947 47.8211968639982)
 ecluse_trafic_jour_moyen	ECL_NB091	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.2
 ecluse_trafic_jour_moyen	ECL_NB092	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.2
 ecluse_trafic_jour_moyen	ECL_NB093	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0.2
@@ -26001,6 +26068,7 @@ ecluse_trafic_jour_moyen	ECL_NB216	ecluse_trafic_jour_moyen	1	Moyenne journaliè
 ecluse_trafic_jour_moyen	ECL_NB217	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0
 ecluse_trafic_jour_moyen	ECL_NB218	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0
 ecluse_trafic_jour_moyen	ECL_NB219	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0
+ecluse_carte	ECL_IR01	ecluse_carte	1	Le Mail	POINT(-1.68601226227506 48.1104996353823)
 ecluse_trafic_jour_moyen	ECL_NB220	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0
 ecluse_trafic_jour_moyen	ECL_NB221	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0
 ecluse_trafic_jour_moyen	ECL_NB222	ecluse_trafic_jour_moyen	1	Moyenne journalière de passages de bâteaux pour l'année 2020	0
@@ -26057,9 +26125,6 @@ ecluse_carte	ECL_B23	ecluse_carte	1	Kerrous	POINT(-3.20882152443118 47.833300074
 ecluse_carte	ECL_B24	ecluse_carte	1	Quelennec	POINT(-3.2195613669146 47.8303856817997)
 ecluse_carte	ECL_B25	ecluse_carte	1	Lochrist	POINT(-3.24495959372225 47.8275131233163)
 ecluse_carte	ECL_B26	ecluse_carte	1	Grand Barrage	POINT(-3.25997133346302 47.8209750410698)
-ecluse_carte	ECL_B27	ecluse_carte	1	Gorets	POINT(-3.26337303590552 47.8213614933948)
-ecluse_carte	ECL_B28	ecluse_carte	1	Polvern	POINT(-3.27645781473947 47.8211968639982)
-ecluse_carte	ECL_IR01	ecluse_carte	1	Le Mail	POINT(-1.68601226227506 48.1104996353823)
 ecluse_carte	ECL_IR02	ecluse_carte	1	Saint Martin	POINT(-1.68199113186525 48.1210586672435)
 ecluse_carte	ECL_IR03	ecluse_carte	1	Saint Grégoire	POINT(-1.67942379704834 48.1505315351877)
 ecluse_carte	ECL_IR04	ecluse_carte	1	Charbonniere	POINT(-1.65991390870859 48.1523201553971)
@@ -26507,25 +26572,6 @@ ecluse_title	ECL_IR06	ecluse_title	1	Haut-Chalet	Haut-Chalet
 ecluse_title	ECL_IR07	ecluse_title	1	Les Brosses	Les Brosses
 ecluse_title	ECL_IR08	ecluse_title	1	Grugedaine	Grugedaine
 ecluse_title	ECL_IR09	ecluse_title	1	Les Cours	Les Cours
-ecluse_title	ECL_IR10	ecluse_title	1	Fresnay	Fresnay
-ecluse_title	ECL_IR11	ecluse_title	1	Saint-Germain	Saint-Germain
-ecluse_title	ECL_IR12	ecluse_title	1	Bouessay	Bouessay
-ecluse_title	ECL_IR13	ecluse_title	1	Saint Médard	Saint Médard
-ecluse_title	ECL_IR14	ecluse_title	1	Dialay	Dialay
-ecluse_title	ECL_IR15	ecluse_title	1	Ille	Ille
-ecluse_title	ECL_IR16	ecluse_title	1	Haute-Roche	Haute-Roche
-ecluse_title	ECL_IR17	ecluse_title	1	Lengager	Lengager
-ecluse_title	ECL_IR18	ecluse_title	1	Chanclin	Chanclin
-ecluse_title	ECL_IR19	ecluse_title	1	Courgalais	Courgalais
-ecluse_title	ECL_IR20	ecluse_title	1	Villemorin	Villemorin
-ecluse_title	ECL_IR21	ecluse_title	1	La Ségerie	La Ségerie
-ecluse_title	ECL_IR22	ecluse_title	1	Malabrie	Malabrie
-ecluse_title	ECL_IR23	ecluse_title	1	La Péchetière	La Péchetière
-ecluse_title	ECL_IR24	ecluse_title	1	La Charronnerie	La Charronnerie
-ecluse_title	ECL_IR25	ecluse_title	1	La Parfraire	La Parfraire
-ecluse_title	ECL_IR26	ecluse_title	1	Ecluse N° 26	Ecluse N° 26
-ecluse_title	ECL_IR27	ecluse_title	1	La Jaunaie	La Jaunaie
-ecluse_title	ECL_IR28	ecluse_title	1	La Madeleine	La Madeleine
 ecluse_title	ECL_IR29	ecluse_title	1	Petite Madeleine	Petite Madeleine
 ecluse_title	ECL_IR30	ecluse_title	1	Guéhardiere	Guéhardiere
 ecluse_title	ECL_IR31	ecluse_title	1	Dialais	Dialais
@@ -26614,17 +26660,6 @@ ecluse_title	ECL_NB069	ecluse_title	1	Toulhouët	Toulhouët
 ecluse_title	ECL_NB070	ecluse_title	1	La Ville Perro	La Ville Perro
 ecluse_title	ECL_NB071	ecluse_title	1	Le Gouvly	Le Gouvly
 ecluse_title	ECL_NB072	ecluse_title	1	Le Pont Saint-Gonnery	Le Pont Saint-Gonnery
-ecluse_title	ECL_NB073	ecluse_title	1	Kervézo	Kervézo
-ecluse_title	ECL_NB074	ecluse_title	1	Le Douaren	Le Douaren
-ecluse_title	ECL_NB075	ecluse_title	1	Grand Pré	Grand Pré
-ecluse_title	ECL_NB076	ecluse_title	1	Hilvern	Hilvern
-ecluse_title	ECL_NB077	ecluse_title	1	La Pépinière	La Pépinière
-ecluse_title	ECL_NB078	ecluse_title	1	Bel Air	Bel Air
-ecluse_title	ECL_NB079	ecluse_title	1	Keroret	Keroret
-ecluse_title	ECL_NB080	ecluse_title	1	Er Houët	Er Houët
-ecluse_title	ECL_NB081	ecluse_title	1	Kerivy	Kerivy
-ecluse_title	ECL_NB082	ecluse_title	1	Parc-Er-Lann	Parc-Er-Lann
-ecluse_title	ECL_NB083	ecluse_title	1	Kerihoué	Kerihoué
 ecluse_title	ECL_NB084	ecluse_title	1	Parc-Lann-Buhan	Parc-Lann-Buhan
 ecluse_title	ECL_NB085	ecluse_title	1	Lann Vras	Lann Vras
 ecluse_title	ECL_NB086	ecluse_title	1	Parc Buisson	Parc Buisson
@@ -26911,6 +26946,7 @@ epci_revenu_taux_pauvrete	200067247	epci_revenu_taux_pauvrete	1	Taux de pauvret�
 epci_revenu_taux_pauvrete	200067460	epci_revenu_taux_pauvrete	1	Taux de pauvreté 2017 (moyenne Bretagne 10,9 %)	12.9
 epci_revenu_taux_pauvrete	200067932	epci_revenu_taux_pauvrete	1	Taux de pauvreté 2017 (moyenne Bretagne 10,9 %)	9.9
 epci_revenu_taux_pauvrete	200067981	epci_revenu_taux_pauvrete	1	Taux de pauvreté 2017 (moyenne Bretagne 10,9 %)	14.5
+epci_pop_categorie_csp_en_cours	200070688	Région	3	CS3	6.1
 epci_revenu_taux_pauvrete	200068120	epci_revenu_taux_pauvrete	1	Taux de pauvreté 2017 (moyenne Bretagne 10,9 %)	11.1
 epci_revenu_taux_pauvrete	200068989	epci_revenu_taux_pauvrete	1	Taux de pauvreté 2017 (moyenne Bretagne 10,9 %)	10.6
 epci_revenu_taux_pauvrete	200069086	epci_revenu_taux_pauvrete	1	Taux de pauvreté 2017 (moyenne Bretagne 10,9 %)	10.3
@@ -27182,7 +27218,6 @@ epci_pop_categorie_csp_en_cours	200070688	Région	1	CS1	1.1
 epci_pop_categorie_csp_en_cours	200070688	EPCI	2	CS2	2.6
 epci_pop_categorie_csp_en_cours	200070688	Région	2	CS2	2.9
 epci_pop_categorie_csp_en_cours	200070688	EPCI	3	CS3	2.7
-epci_pop_categorie_csp_en_cours	200070688	Région	3	CS3	6.1
 epci_pop_categorie_csp_en_cours	200070688	EPCI	4	CS4	8.7
 epci_pop_categorie_csp_en_cours	200070688	Région	4	CS4	11.2
 epci_pop_categorie_csp_en_cours	200070688	EPCI	5	CS5	11.7
@@ -27306,6 +27341,7 @@ epci_pop_logement_hlm_taux_en_cours	242900744	epci_pop_logement_hlm_taux	1	Part 
 epci_pop_logement_hlm_taux_en_cours	242900751	epci_pop_logement_hlm_taux	1	Part des logements HLM dans le parc de résidence principale en 2017 (moyenne Bretagne 10.5 %)	6.2
 epci_pop_densite_en_cours	200043123	densite_epci	1	Densité de population 2017 (moyenne Bretagne 122 hab./km²)	161
 epci_pop_logement_hlm_taux_en_cours	242900769	epci_pop_logement_hlm_taux	1	Part des logements HLM dans le parc de résidence principale en 2017 (moyenne Bretagne 10.5 %)	10.2
+epci_pop_logement_statut_en_cours	242200715	EPCI	3	Log. vacants	15.3
 epci_pop_logement_hlm_taux_en_cours	242900793	epci_pop_logement_hlm_taux	1	Part des logements HLM dans le parc de résidence principale en 2017 (moyenne Bretagne 10.5 %)	5.2
 epci_pop_logement_hlm_taux_en_cours	242900801	epci_pop_logement_hlm_taux	1	Part des logements HLM dans le parc de résidence principale en 2017 (moyenne Bretagne 10.5 %)	8.5
 epci_pop_logement_hlm_taux_en_cours	242900835	epci_pop_logement_hlm_taux	1	Part des logements HLM dans le parc de résidence principale en 2017 (moyenne Bretagne 10.5 %)	8.3
@@ -27451,6 +27487,7 @@ epci_pop_logement_statut_en_cours	200039022	EPCI	3	Log. vacants	7.3
 epci_pop_logement_statut_en_cours	200042174	EPCI	1	Rés. principale	84.9
 epci_pop_logement_statut_en_cours	200042174	EPCI	2	Rés. secondaire	8.1
 epci_pop_logement_statut_en_cours	200042174	EPCI	3	Log. vacants	7
+epci_pop_categorie_age_en_cours	200070688	Région	2	15-29 ans	16.4
 epci_pop_densite_en_cours	245600465	densite_epci	1	Densité de population 2017 (moyenne Bretagne 122 hab./km²)	61
 epci_pop_densite_en_cours	245614383	densite_epci	1	Densité de population 2017 (moyenne Bretagne 122 hab./km²)	71
 epci_pop_densite_en_cours	245614417	densite_epci	1	Densité de population 2017 (moyenne Bretagne 122 hab./km²)	32
@@ -27525,7 +27562,6 @@ epci_pop_logement_statut_en_cours	200072452	EPCI	2	Rés. secondaire	2.9
 epci_pop_logement_statut_en_cours	200072452	EPCI	3	Log. vacants	9
 epci_pop_logement_statut_en_cours	242200715	EPCI	1	Rés. principale	68.2
 epci_pop_logement_statut_en_cours	242200715	EPCI	2	Rés. secondaire	16.5
-epci_pop_logement_statut_en_cours	242200715	EPCI	3	Log. vacants	15.3
 epci_pop_logement_statut_en_cours	200027027	Région	1	Rés. principale	79.2
 epci_pop_logement_statut_en_cours	200027027	Région	2	Rés. secondaire	13.2
 epci_pop_logement_statut_en_cours	200027027	Région	3	Log. vacants	7.7
@@ -28004,7 +28040,6 @@ epci_pop_categorie_age_en_cours	200070670	Région	4	45-59 ans	20.0
 epci_pop_categorie_age_en_cours	200070670	Région	5	60-74 ans	17.6
 epci_pop_categorie_age_en_cours	200070670	Région	6	75 ans et plus	10.5
 epci_pop_categorie_age_en_cours	200070688	Région	1	0-14 ans	17.6
-epci_pop_categorie_age_en_cours	200070688	Région	2	15-29 ans	16.4
 epci_pop_categorie_age_en_cours	200070688	Région	3	30-44 ans	17.8
 epci_pop_categorie_age_en_cours	200070688	Région	4	45-59 ans	20.0
 epci_pop_categorie_age_en_cours	200070688	Région	5	60-74 ans	17.6
@@ -29011,6 +29046,8 @@ epci_pop_formation_sans_diplome_en_cours	243500741	epci_pop_formation_sans_diplo
 epci_pop_formation_sans_diplome_en_cours	242900702	epci_pop_formation_sans_diplome	1	Part de la population non scolarisée, sans diplôme ou avec au plus un brevet des collèges en 2017 (moyenne Bretagne 25,1 %)	26.7
 epci_pop_formation_sans_diplome_en_cours	200070670	epci_pop_formation_sans_diplome	1	Part de la population non scolarisée, sans diplôme ou avec au plus un brevet des collèges en 2017 (moyenne Bretagne 25,1 %)	34.2
 epci_pop_formation_sans_diplome_en_cours	200069086	epci_pop_formation_sans_diplome	1	Part de la population non scolarisée, sans diplôme ou avec au plus un brevet des collèges en 2017 (moyenne Bretagne 25,1 %)	25.5
+epci_pop_logement_statut_en_cours	242900629	EPCI	3	Log. vacants	6.3
+epci_pop_logement_statut_en_cours	242900645	EPCI	1	Rés. principale	73.7
 epci_pop_formation_sans_diplome_en_cours	200067932	epci_pop_formation_sans_diplome	1	Part de la population non scolarisée, sans diplôme ou avec au plus un brevet des collèges en 2017 (moyenne Bretagne 25,1 %)	21.7
 epci_pop_formation_sans_diplome_en_cours	200067072	epci_pop_formation_sans_diplome	1	Part de la population non scolarisée, sans diplôme ou avec au plus un brevet des collèges en 2017 (moyenne Bretagne 25,1 %)	28.1
 epci_pop_formation_sans_diplome_en_cours	243500725	epci_pop_formation_sans_diplome	1	Part de la population non scolarisée, sans diplôme ou avec au plus un brevet des collèges en 2017 (moyenne Bretagne 25,1 %)	24.7
@@ -29065,8 +29102,6 @@ epci_pop_logement_statut_en_cours	242900561	EPCI	2	Rés. secondaire	14.6
 epci_pop_logement_statut_en_cours	242900561	EPCI	3	Log. vacants	11.4
 epci_pop_logement_statut_en_cours	242900629	EPCI	1	Rés. principale	59.6
 epci_pop_logement_statut_en_cours	242900629	EPCI	2	Rés. secondaire	34.1
-epci_pop_logement_statut_en_cours	242900629	EPCI	3	Log. vacants	6.3
-epci_pop_logement_statut_en_cours	242900645	EPCI	1	Rés. principale	73.7
 epci_pop_logement_statut_en_cours	242900645	EPCI	2	Rés. secondaire	15.4
 epci_pop_logement_statut_en_cours	242900645	EPCI	3	Log. vacants	10.8
 epci_pop_logement_statut_en_cours	242900660	EPCI	1	Rés. principale	64.8
@@ -29806,16 +29841,20 @@ epci_pop_menage_famillemono_en_cours	245614433	epci_pop_menage_famillemono	1	Par
 
 
 --
+-- TOC entry 2924 (class 0 OID 163863)
+-- Dependencies: 201
 -- Data for Name: report; Type: TABLE DATA; Schema: data; Owner: :user
 --
 
-COPY :schema.report (report, title) FROM stdin;
-eclusetrafic	Ecluse trafic
-epci_population	Fiche population des EPCI
+COPY :schema.report (report, title, description) FROM stdin;
+eclusetrafic	Ecluse trafic	\N
+epci_population	Fiche population des EPCI	\N
 \.
 
 
 --
+-- TOC entry 2925 (class 0 OID 163866)
+-- Dependencies: 202
 -- Data for Name: report_composition; Type: TABLE DATA; Schema: data; Owner: :user
 --
 
@@ -29856,6 +29895,17 @@ eclusetrafic	ecluse_title
 
 
 --
+-- TOC entry 2926 (class 0 OID 163907)
+-- Dependencies: 203
+-- Data for Name: report_definition; Type: TABLE DATA; Schema: data; Owner: admin
+--
+
+COPY :schema.report_definition (id, report, save_date, json) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2778 (class 2606 OID 163870)
 -- Name: dataid dataid_pkey; Type: CONSTRAINT; Schema: data; Owner: :user
 --
 
@@ -29864,6 +29914,7 @@ ALTER TABLE ONLY :schema.dataid
 
 
 --
+-- TOC entry 2781 (class 2606 OID 163872)
 -- Name: dataviz dataviz_pkey; Type: CONSTRAINT; Schema: data; Owner: :user
 --
 
@@ -29872,6 +29923,7 @@ ALTER TABLE ONLY :schema.dataviz
 
 
 --
+-- TOC entry 2785 (class 2606 OID 163874)
 -- Name: level_type level_type_pkey; Type: CONSTRAINT; Schema: data; Owner: :user
 --
 
@@ -29880,6 +29932,16 @@ ALTER TABLE ONLY :schema.level_type
 
 
 --
+-- TOC entry 2793 (class 2606 OID 163914)
+-- Name: report_definition pk_person; Type: CONSTRAINT; Schema: data; Owner: admin
+--
+
+ALTER TABLE ONLY :schema.report_definition
+    ADD CONSTRAINT pk_person PRIMARY KEY (report, id);
+
+
+--
+-- TOC entry 2787 (class 2606 OID 163876)
 -- Name: rawdata pkey_rawdata; Type: CONSTRAINT; Schema: data; Owner: :user
 --
 
@@ -29888,6 +29950,7 @@ ALTER TABLE ONLY :schema.rawdata
 
 
 --
+-- TOC entry 2791 (class 2606 OID 163878)
 -- Name: report_composition report_composition_pkey; Type: CONSTRAINT; Schema: data; Owner: :user
 --
 
@@ -29896,6 +29959,7 @@ ALTER TABLE ONLY :schema.report_composition
 
 
 --
+-- TOC entry 2789 (class 2606 OID 163880)
 -- Name: report report_pkey; Type: CONSTRAINT; Schema: data; Owner: :user
 --
 
@@ -29904,6 +29968,7 @@ ALTER TABLE ONLY :schema.report
 
 
 --
+-- TOC entry 2782 (class 1259 OID 163881)
 -- Name: fki_FKEY_level_type; Type: INDEX; Schema: data; Owner: :user
 --
 
@@ -29911,6 +29976,7 @@ CREATE INDEX "fki_FKEY_level_type" ON :schema.dataviz USING btree (level);
 
 
 --
+-- TOC entry 2783 (class 1259 OID 163882)
 -- Name: idx_dataviz; Type: INDEX; Schema: data; Owner: :user
 --
 
@@ -29918,6 +29984,7 @@ CREATE INDEX idx_dataviz ON :schema.dataviz USING btree (dataviz);
 
 
 --
+-- TOC entry 2779 (class 1259 OID 163883)
 -- Name: ix_data_dataid_dataid; Type: INDEX; Schema: data; Owner: :user
 --
 
@@ -29925,6 +29992,7 @@ CREATE INDEX ix_data_dataid_dataid ON :schema.dataid USING btree (dataid);
 
 
 --
+-- TOC entry 2795 (class 2606 OID 163884)
 -- Name: dataviz FKEY_level_type; Type: FK CONSTRAINT; Schema: data; Owner: :user
 --
 
@@ -29933,6 +30001,7 @@ ALTER TABLE ONLY :schema.dataviz
 
 
 --
+-- TOC entry 2794 (class 2606 OID 163889)
 -- Name: dataid FKEY_leveltype; Type: FK CONSTRAINT; Schema: data; Owner: :user
 --
 
@@ -29941,6 +30010,7 @@ ALTER TABLE ONLY :schema.dataid
 
 
 --
+-- TOC entry 2796 (class 2606 OID 163894)
 -- Name: rawdata fkey_dataviz; Type: FK CONSTRAINT; Schema: data; Owner: :user
 --
 
@@ -29949,12 +30019,24 @@ ALTER TABLE ONLY :schema.rawdata
 
 
 --
+-- TOC entry 2797 (class 2606 OID 163899)
 -- Name: report_composition fkey_report; Type: FK CONSTRAINT; Schema: data; Owner: :user
 --
 
 ALTER TABLE ONLY :schema.report_composition
     ADD CONSTRAINT fkey_report FOREIGN KEY (report) REFERENCES :schema.report(report);
 
+
+--
+-- TOC entry 2798 (class 2606 OID 163915)
+-- Name: report_definition report_definition_report_fkey; Type: FK CONSTRAINT; Schema: data; Owner: admin
+--
+
+ALTER TABLE ONLY :schema.report_definition
+    ADD CONSTRAINT report_definition_report_fkey FOREIGN KEY (report) REFERENCES :schema.report(report);
+
+
+-- Completed on 2021-07-02 14:57:12
 
 --
 -- PostgreSQL database dump complete

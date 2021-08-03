@@ -4,16 +4,16 @@
 
 L'interface admin se décompose en 3 pages:
 
-* Le catalogue 
+* Les données
 * Les rapports
 * Le composeur
 
 
-## Catalogue
+## Données
 
 ![Catalogue](img/catalogue.png "Catalogue")
 
-Le catalogue affiche chaque jeux de donnée qui se trouve dans la table dataviz de la base de données.
+La page données affiche chaque jeux de donnée qui se trouve dans la table dataviz de la base de données.
 
 Ici vous pouvez sélectionner les jeux de données à utiliser dans un rapport.
 
@@ -21,33 +21,38 @@ Ici vous pouvez sélectionner les jeux de données à utiliser dans un rapport.
 
 A partir de cette séléction il a possible de créer un nouveau rapport ou d'ajouter ces données à un rapport existant.
 
-![Creation rapport](img/ajouter_rapport.png =100x "Création d'un rapport")
+![CreationRapport](img/creation_rapport.png "Création d'un rapport")
 
 ou
 
-![Ajouter à un rapport](img/creation_rapport.png =1"Ajouter à un rapport")
+![AjouterARapport](img/ajouter_rapport.png "Ajouter à un rapport")
 
-Comme autre fonctionnalité ici vous pouvez chercher un jeux de données ou de réintisaliser la séléction.
+Comme autre fonctionnalité ici vous pouvez chercher un jeux de données avec un filtre et avec le filtre avancé il est possible de filtre les dataviz selon leur référentiel.
+
+![FiltrerDataviz](img/filtre_avance_dataviz.png "Filtre avancé des dataviz")
+
+Vous pouvez aussi rinitaliser la séléction et trier par ordre alphabétique les dataviz.
 
 
 ## Rapports
 
 ![Rapports](img/rapport.png "Rapports")
 
-Sur la page rapport nous pouvons voir les rapports qui se trouvent dans la table report de la base de données. 
+Sur la page rapports nous pouvons voir les rapports qui se trouvent dans la table report de la base de données. 
 
 Pour un rapport c'est possible de modifier les jeux de données qui le composent
 
 ![Sourcer apport](img/sourcer_rapport.png "Sourcer les données")
 
-A ce même endroit il y a les options de supprimer, afficher ou composer le rapport ainsi que le copier.
+A ce même endroit il y a les options de supprimer un par un les rapports ou par lot, afficher ou composer le rapport ainsi que le copier/dupliquer.
 
+Comme pour la page données vous pouvez trier les rapports par leur titre ou encore filtrer les rapports avec une recherche
 
 ## Composeur
 
 ![Composeur](img/composeur.png "Composeur")
 
-Dans le composeur il y a deux blocs, les options à gauche et la structuration du rapport sur le reste de la page. 
+Dans le composeur il y a trois blocs, les options en dessous le menu, les blocs structrants et données à gauche et la structuration du rapport sur le reste de la page. 
 
 En ce qui concernce les options il faut dans un premier temps choisir quel rapport utiliser:
 
@@ -56,6 +61,8 @@ En ce qui concernce les options il faut dans un premier temps choisir quel rappo
 Ensuite choisir un modèle de mise en page.
 
 ![Modèle du rapport](img/modele_rapport.png "Séléction d'un modeèle de mise en page")
+
+Dans une version future il sera possible de choisir quel version du rapport utilsier, et donc re basculer sur un rapport antérieur si besoin. ca ser un système de versionnement.
 
 Avec un glisser déposer des élements à gauche, il faut ajouter les blocs qui vont structurer le rapport dans la section princpale.
 

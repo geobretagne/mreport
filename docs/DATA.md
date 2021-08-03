@@ -4,15 +4,19 @@
 ## 1 - La base de données
 
 
-La base de données de l'application est constituée de 5 tables.
+La base de données de l'application est constituée de 7 tables.
 
 * Les 2 tables **dataviz** et **rawdata** contiennent les données qui servant à réaliser les dataviz utilisé dans la génération de reports.
-* La table **dataid** liste tous les identités disponibles (Communes, EPCI, gares, ...).
+* La table **dataid** liste tous les identités des réferentiels disponibles (Communes, EPCI, gares, ...).
 * Les tables **report** et **report_composition** sont des tables de configuration propres à l'application (Qui sont respectivement les noms des rapports et la source des données).
+* La table **level_type** liste tous les enitités des réferentiels (Communes, EPCI, gares, ...).
+* La table **report_definition** sera utiliser pour la fonctionnalité de versionnement des rapports. Pour l'instant elle n'est pas utilisé.
 
 Ci-dessous le MCD de la base de donnée. Les relations '1,1' de rawdata avec dataviz et dataid montre que rawdata a besoin d'utiliser les données des deux autres tables. Il y a un ordre d'alimentation des tables à respecter selon les cardinalités.
 
 L'association '0,n' entre dataviz et report fait la table d'association report_composition. Cela permet de lier un report et un dataviz.
+
+Entre level_type, dataviz et dataid il y a une contrainte de simultaneité. Un élement level_type qui existe dans dataviz va forcement exister dans dataid et inversement.
 
 ![MCD](img/mcd.png "MCD")
 

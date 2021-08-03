@@ -22,6 +22,7 @@
 /* sources des blocs */
 .bloc-sources {
     font-size: 12px;
+    margin-top:10px;
 }
 .bloc-sources p {
     padding-left: 20px;
@@ -68,6 +69,12 @@
     flex-direction: column;
     width: 100%;
 }
+
+.editable-text .badge{
+  font-size:15px;;
+  margin-left:10px;
+}
+
 /* FROM MREPORT.CSS */
 .editable-text {
     margin-bottom: 0 !important;

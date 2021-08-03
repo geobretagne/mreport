@@ -58,7 +58,7 @@
 
                             <form id="import-file-form" class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="import-file-input" onclick="import_wizard.selectLocalFile();" onchange="import_wizard.importLoadLocalFile();">
+                                    <input type="file" class="custom-file-input " id="import-file-input" onclick="import_wizard.selectLocalFile();" onchange="import_wizard.importLoadLocalFile();">
                                     <label class="custom-file-label" for="import-file-input" data-browse="Parcourir">Sélectionner un fichier</label>
                                 </div>
                                 <span class="input-group-btn">
@@ -137,14 +137,16 @@
                                         <label for="inputTitle"><span class="badge mreport-primary-color-3-bg">Nom</span></label>
                                         <input type="text" class="form-control" name="title" id="inputTitle"
                                             placeholder="Nom de la dataviz" required>
-                                            <div class="valid-feedback">Valid.</div>
-                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                            <div class="valid-feedback">Champ validé.</div>
+                                            <div class="invalid-feedback">Champ obligatoire.</div>
 
                                     </div>
                                     <div class="col">
                                         <label for="inputSource"><span class="badge mreport-primary-color-3-bg">Source</span></label>
                                         <input type="text" class="form-control" name="source" id="inputSource"
                                             placeholder="Source" required>
+                                            <div class="valid-feedback">Champ validé.</div>
+                                            <div class="invalid-feedback">Champ obligatoire.</div>
                                     </div>
 
                                 </div>
@@ -153,14 +155,16 @@
                                         <label for="inputDescription"><span class="badge mreport-primary-color-3-bg">Description</span></label>
                                         <input type="text" class="form-control" name="description" id="inputDescription"
                                             placeholder="Description">
+                                            <div class="valid-feedback">Champ non obligatoire.</div>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label for="inputYear"><span class="badge mreport-primary-color-3-bg">millésime</span></label>
+                                        <label for="inputYear"><span class="badge mreport-primary-color-3-bg">Millésime</span></label>
                                         <input type="text" class="form-control" name="year" id="inputYear"
                                             placeholder="Millésime">
+                                            <div class="valid-feedback">Champ non obligatoire.</div>
                                     </div>
                                     <div class="col">
                                         <label for="inputLevel"><span class="badge mreport-primary-color-3-bg">Référentiel</span></label>
@@ -168,10 +172,12 @@
                                             placeholder="Référentiel" required>
                                             <option disabled selected>...</option>
                                         </select>
+                                        <div class="valid-feedback">Champ non obligatoire.</div>
                                     </div>
                                     <div class="col">
                                         <label for="inputUnit"><span class="badge mreport-primary-color-3-bg">Unité</span></label>
                                         <input type="text" class="form-control" name="unit" id="inputUnit" placeholder="Unité">
+                                        <div class="valid-feedback">Champ non obligatoire.</div>
                                     </div>
                                 </div>
 
@@ -189,7 +195,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" id="btn-prev" class="btn mreport-primary-color-2-bg mr-auto" onclick="import_wizard.previous();">Previous</button>
+                <button type="button" id="btn-prev" class="btn mreport-primary-color-2-bg mr-auto" onclick="import_wizard.previous();">Précédent</button>
                 <button type="button" class="btn mreport-primary-color-3-bg" data-dismiss="modal">Fermer</button>
                 <button type="button" id="btn-next" class="btn mreport-primary-color-1-bg" onclick="import_wizard.next();">Next</button>
                 <button id="import_data-btn" type="submit" disabled class="btn mreport-primary-color-1-bg"

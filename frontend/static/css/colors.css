@@ -39,9 +39,11 @@
 }
 .mreport-grey4-bg{
   background-color:#778A9C;
+  color:#22282E  
 }
 .mreport-grey5-bg{
   background-color:#B0BBC6;
+  color:#4B5967;
 }
 .mreport-grey6-bg{
   background-color:#e9ecef;
@@ -81,7 +83,7 @@
 
 .mreport-primary-color-2-bg{
   background-color:#7FC9D4;
-  color:#010101;
+  color:#4B5967;
 }
 
 .mreport-primary-color-3-bg{

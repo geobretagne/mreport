@@ -1,14 +1,22 @@
-﻿.sidenav {
+.sidenav {
     height: 100%;
-    width: 250px;
+    width: 200px;
     position: fixed;
     z-index: 1;
-    top: 55px;
+    top:155px;
     left: 0;
-    /*background-color: #455461;*/
     overflow-x: hidden;
     overflow-y: auto;
-    padding-bottom: 60px;
+    padding-bottom: 155px;
+}
+
+.sidenav-content{
+  overflow-y:auto;
+  height:100%;
+}
+
+.sidenav-content select{
+  margin-top:0;
 }
 
 .sidenav a {
@@ -20,7 +28,7 @@
 }
 
 .sidenav h6 {
-    color: #fff;
+    color: black;
     padding:0 10px;
 }
 
@@ -29,9 +37,10 @@
 }
 
 .main {
-  margin-left: 230px; /* Same as the width of the sidenav */
+  margin-left: 200px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
+  margin-top:90px;
 }
 
 @media screen and (max-height: 450px) {
@@ -61,7 +70,7 @@
 .builder.edit .composition {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin-left: 0px;
-    margin-top: 50px;
+    margin-top: 15px;
     padding: 20px;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
@@ -179,7 +188,7 @@
     right: 5px;*/
     cursor: grab;
     padding: 6px;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .sidenav #drag-tag{
@@ -295,31 +304,35 @@ span.structure-description {
 }
 
 #report-composition {
-    outline: dashed;
+    outline: 2px dashed;
     outline-color: grey;
     min-height:200px;
 }
 
 #report-composition:empty:after {
-    content: "Déposer ici des blocs structurants après avoir sélectionné un rapport et un modèle";
+    content: "Séléctionner un rapport et un modèle. Puis déposer ici des blocs structrants et des dataviz.";
     text-align: center;
-    top: 30%;
+    top: 50%;
+    left:50%;
+    transform:translate(-50%,-50%);
     position: absolute;
     padding-left: 20px;
     padding-right: 20px;
-    /*color:grey;*/
+    color:#006878;
+    font-size:20px;
+    font-weight:700;
 }
 
 .composition .report-bloc .dataviz-container {
     /*border: #007bff;*/
-    border-style: ridge;
+    border: 1px solid #bbb;
     min-height: 200px;
     width: 100%;
 }
 
-.composition .report-bloc-title  .dataviz-container {
-    height: 100px
-}
+/* .composition .report-bloc-title .dataviz-container {
+    height: 135px
+} */
 .composition .bloc-content>.dataviz-container {
     min-height: 150px;
 }
@@ -358,6 +371,10 @@ span.text-edit.badge.mreport-secondary-color-2-bg{
 
 .report-bloc-title .tool .btn {
     cursor: auto;
+}
+
+#report-composition .btn{
+padding:5px 10px;
 }
 
 #dataviz-items code.dataviz-definition {
@@ -415,10 +432,7 @@ span.text-edit.badge.mreport-secondary-color-2-bg{
     transition: 0.2s;
 }
 #report-composition .dataviz-container{
-    padding-left : 20px;
-    padding-right : 20px;
-    padding-top:5px;
-    padding-bottom:5px;
+    padding:35px;
 }
 #report-composition .customBaseColumn {
     padding: 0;
@@ -433,8 +447,10 @@ span.text-edit.badge.mreport-secondary-color-2-bg{
 .drag_column{
     position: unset !important;
 }
-.composition .row{
+.composition .row,
+.composition .view{
     height: 100%;
+    line-height:0.75rem;
 }
 .dataviz-container{
     display: flex;
@@ -447,7 +463,7 @@ span.text-edit.badge.mreport-secondary-color-2-bg{
 }
 
 #element-models{
-    margin: 10px;
+    /* margin: 10px; */
 }
 #element-models .titleBloc {
   line-height:1.5rem;
@@ -580,13 +596,14 @@ span.designed-dataviz:before {
 }
 
 span.certified-dataviz {
-    right: 70px;
-    position: absolute;
+    /* right: 70px; */
+    /* position: absolute; */
     font-family: "Font Awesome 5 Free";
     font-size: 20px;
     font-weight: 700;
+    margin-left:15px;
     /*color:#8cb871;*/
-    margin-top: -10px;
+    /* margin-top: -10px; */
 }
 
 span.certified-dataviz:before {
@@ -617,4 +634,46 @@ span.designed-dataviz.disabled {
 .custom-control-input:checked~.custom-control-label::before{
   background-color:#006878;
   border-color: #006878;
+}
+
+.sidenav a.composerVersions{
+  font-size:12px;
+  color:white;
+}
+
+.sidenav a.composerVersions:hover{
+  cursor:pointer
+}
+
+#btn_save_report{
+  margin-top:35px;
+}
+
+#ComposerOptionsSelectRow{
+  /*box-shadow: 0 5px 10px rgb(0 0 0 / 20%);*/
+  position: fixed;
+  width:100%;
+  z-index: 99;
+  top:56px;
+}
+
+#ComposerOptionsSelectRow .form-group{
+  margin-top: .5rem;
+  margin-bottom: .75rem;
+}
+
+#ComposerOptionsSelectRow .form-group label{
+  font-size:12px;
+font-weight:700;
+}
+
+.report-bloc .dataviz-container {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}
+
+.bloc-sources {
+    margin-top:10px;
+    font-size: 12px;
 }
