@@ -2,7 +2,7 @@
 
 *Pour expliquer au mieux les différentes pages de l'admin nous utilisons les données demo qui sont présent demo.sql*
 
-L'interface admin se décompose en 3 pages:
+L'interface admin se décompose en 3 pages :
 
 * Les données
 * Les rapports
@@ -33,6 +33,31 @@ Comme autre fonctionnalité ici vous pouvez chercher un jeux de données avec un
 
 Vous pouvez aussi rinitaliser la séléction et trier par ordre alphabétique les dataviz.
 
+### Import de données
+
+Dans cette même page, le bouton Importer en haut à gauche permet d'importer des données dans la base de données pour une réutilisation dans les rapports.
+Tout d'abord en important un fichier CSV :
+
+![Donnée source](img/import1.png "Import de la donnée source")
+
+Ce fichier CSV devra contenir au moins 3 informations que l'on associera aux champs existants dans la base (data, label, code_geo) :
+- le code identifiant l'entité sur laquelle porte la dataviz
+- le nom de l'entité
+- la donnée
+
+![Transformation](img/import2.png "Transformation pour intégration comme dataviz")
+
+Et enfin, les détails sur la dataviz :
+- le nom
+- la source
+- la description
+- le millésime
+- le référentiel
+- l'unité
+
+![Détails](img/import3.png "Information générales sur la dataviz")
+
+En cliquant sur Importer, la dataviz sera importée en base de données et pourra être réutilisée dans les rapports.
 
 ## Rapports
 
