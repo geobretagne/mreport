@@ -624,6 +624,7 @@ span.designed-dataviz.disabled {
 #report-composition .dataviz-container:empty:after {
     content: "Glisser-déposer une donnée ici";
     /*color: #818181;*/
+    line-height:2rem;
 }
 
 #report-composition .report-bloc-title .dataviz-container {
