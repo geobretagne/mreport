@@ -2,7 +2,7 @@
 
 ## Prerequis
 
-You need to have a running instance of postgres installed
+You need to have a running instance of postgres installed and this process is for Linux systems.
 
 
 ## 1 - Create and configure database
