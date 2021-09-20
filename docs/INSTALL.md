@@ -33,7 +33,7 @@ Create database user with password (Enter it to times at prompt).
 
 Create database
 
- ``createdb -O $DATABASE_USER $DATABASE_NAME -T template0 -E 'UTF8'``
+ ``createdb -p $DATABASE_PORT -O $DATABASE_USER $DATABASE_NAME -T template0 -E 'UTF8'``
 
 Create database schema and populate it with demo data
 
