@@ -13,7 +13,9 @@ In this part of documentation we will see how to configure mreport to :
 Mreport installed as detailed in [INSTALL.md](INSTALL.md)
 
 Apache2 installed (or an other server web)
-Extension proxy_http : a2enmod proxy_http && systemctl restart apache2
+Extension proxy_http 
+
+``sudo a2enmod proxy_http && systemctl restart apache2``
 
 ## Manage backend with system service
 
