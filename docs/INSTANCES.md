@@ -21,8 +21,11 @@ et en remplaçant 0.0.0.0:5000 par le port que vous avez à l'étape précédent
 
 ### Frontend
 Instances servies par apache (un vhost par instance)
-cd /etc/apache2/sites-available
-wget  https://raw.githubusercontent.com/geobretagne/mreport/master/server_configurations/apache2/mreport.conf
+
+``cd /etc/apache2/sites-available``
+
+``wget  https://raw.githubusercontent.com/geobretagne/mreport/master/server_configurations/apache2/mreport.conf``
+
 Modifier si nécessaire <VirtualHost *:80>  par <VirtualHost *:81> si choix du port 81, vérifier que la ligne listen 81 est bien active dans
 /etc/apache2/ports.conf 
 modifier la ligne Define MREPORT_LOCATION /home/mreport/mreport2 pour pointer sur le bon dépôt
