@@ -34,7 +34,7 @@ Instances servies par apache (un vhost par instance)
 
 ``cd /etc/apache2/sites-available``
 
-``wget  -O mreport2.conf https://raw.githubusercontent.com/geobretagne/mreport/master/server_configurations/apache2/mreport.conf``
+``wget https://raw.githubusercontent.com/geobretagne/mreport/master/server_configurations/apache2/mreport.conf -O mreport2.conf``
 
 Modifier si nécessaire <VirtualHost *:80>  par <VirtualHost *:82> si choix du port 82, vérifier que la ligne listen 82 est bien active dans
 /etc/apache2/ports.conf 
