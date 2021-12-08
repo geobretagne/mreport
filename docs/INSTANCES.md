@@ -6,6 +6,10 @@ ex:
 * /home/mreport/mreport
 * /home/mreport/mreport2
 
+et pour chaque clone installer et configurer l'application :
+* https://github.com/geobretagne/mreport/blob/master/docs/INSTALL.md#install-mreport-application
+* https://github.com/geobretagne/mreport/blob/master/docs/INSTALL.md#configure-application
+
 Chaque instance tournera sur un port http particulier en configurant un vhost dédié
 ex:
 * http://mreport.com:80
