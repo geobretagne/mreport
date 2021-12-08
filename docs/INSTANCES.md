@@ -38,7 +38,8 @@ Instances servies par apache (un vhost par instance)
 
 Modifier si nécessaire <VirtualHost *:80>  par <VirtualHost *:82> si choix du port 82, vérifier que la ligne listen 82 est bien active dans
 /etc/apache2/ports.conf 
-modifier la ligne Define MREPORT_LOCATION /home/mreport/mreport2 pour pointer sur le bon dépôt
+modifier la ligne Define MREPORT_LOCATION /home/mreport/mreport pour pointer sur le bon dépôt
+modifier les 2 lignes AuthUserFile /etc/apache2/.mreport pour pointer vers le bon fichier authentification apache (``sudo htpasswd -c /etc/apache2/.mreport2 demo``)
 
 ``sudo a2ensite mreport2.conf``
 
