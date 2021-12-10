@@ -14,6 +14,7 @@ Outre l'aspect reporting, mreport dispose d'une **API** permettant de réutilise
 * Interface d'administration [ADMIN.md](docs/ADMIN.md)
 * Principes [PRINCIPES.md](docs/PRINCIPES.md)
 * Production [PRODUCTION.md](docs/PRODUCTION.md)
+* Multiples instances [INSTANCES.md](docs/INSTANCES.md)
 
 
 ## Capture
