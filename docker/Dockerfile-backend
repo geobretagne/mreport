@@ -11,13 +11,9 @@ WORKDIR /home/apprunner
 
 COPY requirements.txt .
 COPY config.py .
-RUN pip install --user -r requirements.txt
+RUN pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org --user -r requirements.txt
 
 COPY --chown=apprunner:apprunner backend backend
-RUN pip install --user backend && pip install --user gunicorn
-
-
-VOLUME [ "/home/apprunner/backend/reports" ]
-
+RUN pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org --user backend && pip install --user gunicorn
 
 CMD ["gunicorn", "-w 4", "-b 0.0.0.0:8000", "backend:app"]

@@ -1,0 +1,5 @@
+FROM httpd:2.4
+RUN mkdir -p /usr/local/apache2/mreport
+COPY ./frontend/static/ /usr/local/apache2/mreport/static/
+COPY ./frontend/templates/ /usr/local/apache2/mreport/templates/
+
