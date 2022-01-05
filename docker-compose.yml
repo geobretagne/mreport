@@ -46,13 +46,15 @@ services:
 
 
   frontend:
-      image: nginx:1.17.9
+      image: nginx:1.19
       volumes:
-        - "./docker/nginx-default.conf:/etc/nginx/conf.d/default.conf"
+        - "./docker/nginx:/etc/nginx/templates"
         - "reports:/var/www/reports"
-        - "./frontend/static/:/var/www/static
-        - "./frontend/templates/:/var/www/templates
+        - "./frontend/static/:/var/www/static"
+        - "./frontend/templates/:/var/www/templates"
+      environment:
+        - NGINX_PORT
       ports:
-        - "${MREPORT_WEB_HOST_PORT}:89"
+        - ${MREPORT_WEB_HOST_PORT}:${NGINX_PORT}
       depends_on:
       - "backend"

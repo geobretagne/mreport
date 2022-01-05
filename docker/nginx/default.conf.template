@@ -4,7 +4,7 @@ upstream back {
 
 
 server {
-    listen       89;
+    listen ${NGINX_PORT};
     server_name  localhost;
     root /var/www;
     
@@ -22,14 +22,10 @@ server {
         index admin.html;
     }
 
-    location /mreport {
-	if ($request_filename !~* .(html|json|css|csv)$ ) {
-		rewrite ^(/.*[^/])$ $1/ permanent;
-        }        
+    location /mreport {	
         alias /var/www/reports;
         index /templates/index.html;
-	    try_files $uri /templates/index.html;
+        try_files $uri $uri/ /templates/index.html;
     }
 
-    
 }
