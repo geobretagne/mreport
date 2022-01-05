@@ -44,15 +44,15 @@ services:
     depends_on:
       - "db"
 
+
   frontend:
-    image: frontend:custom
-    build:
-      context: .
-      dockerfile: docker/Dockerfile-frontend
-    depends_on:
+      image: nginx:1.17.9
+      volumes:
+        - "./docker/nginx-default.conf:/etc/nginx/conf.d/default.conf"
+        - "reports:/var/www/reports"
+        - "./frontend/static/:/var/www/static
+        - "./frontend/templates/:/var/www/templates
+      ports:
+        - "${MREPORT_WEB_HOST_PORT}:89"
+      depends_on:
       - "backend"
-    ports:
-      - ${MREPORT_WEB_HOST_PORT}:80
-    volumes:
-      - "./server_configurations/apache2/docker-httpd.conf:/usr/local/apache2/conf/httpd.conf"
-      - "reports:/usr/local/apache2/mreport/reports"
