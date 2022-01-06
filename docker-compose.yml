@@ -31,7 +31,7 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile-backend
-    image: backend:custom
+    image: mviewer/mreport:latest
     environment:
       - MREPORT_DATABASE_HOST
       - MREPORT_DATABASE_HOST_PORT
