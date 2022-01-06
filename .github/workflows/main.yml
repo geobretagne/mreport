@@ -25,7 +25,7 @@ jobs:
 
       - name: "build the docker containers"        
         run: |
-          docker-compose up
+          docker-compose up -d
 
       - name: "Log in to docker hub"
         uses: azure/docker-login@v1
