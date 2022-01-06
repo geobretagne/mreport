@@ -25,16 +25,18 @@ jobs:
 
       - name: "build the docker containers"        
         run: |
-          docker-compose up -d
+          docker-compose build
 
       - name: "Log in to docker hub"
         uses: azure/docker-login@v1
-        if: github.repository == 'mviewer/mreport'
+        if: github.repository == 'geobretagne/mreport'
         with:
           username: '${{ secrets.DOCKER_HUB_USERNAME }}'
           password: '${{ secrets.DOCKER_HUB_PASSWORD }}'      
 
-      - name: push containers
-        if: github.ref == 'refs/heads/master' && github.repository == 'mviewer/mreport'
-        run: |
-          docker-compose push
+      - name: List images
+        run: docker images
+      
+      - name: Push images
+        run: docker-compose push --ignore-push-failures      
+      
