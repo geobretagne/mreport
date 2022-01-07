@@ -1,4 +1,4 @@
-name: "Building & push docker image for master branch"
+name: "Building & push docker image for master branch xxx"
 on:
   push:
     branches:
