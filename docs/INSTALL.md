@@ -89,13 +89,13 @@ Install Flask and dependencies
 
 Edit config.py and set and be sure that MREPORT_DATABASE_VARIABLES are correctly set in the next variable
 
-* ```
-DB_USER = getenv('MREPORT_DATABASE_USER', 'mreport_user')
-DB_PWD = getenv('MREPORT_DATABASE_PWD', 'yoursecretpassword')
-DB_HOST = getenv('MREPORT_DATABASE_HOST', 'localhost')
-DB_PORT = getenv('MREPORT_DATABASE_HOST_PORT', '5432')
-DB_NAME = getenv('MREPORT_DATABASE_NAME', 'dataviz')
-SCHEMA = getenv('MREPORT_DATABASE_SCHEMA', 'data')
+```
+* DB_USER = getenv('MREPORT_DATABASE_USER', 'mreport_user')
+* DB_PWD = getenv('MREPORT_DATABASE_PWD', 'yoursecretpassword')
+* DB_HOST = getenv('MREPORT_DATABASE_HOST', 'localhost')
+* DB_PORT = getenv('MREPORT_DATABASE_HOST_PORT', '5432')
+* DB_NAME = getenv('MREPORT_DATABASE_NAME', 'dataviz')
+* SCHEMA = getenv('MREPORT_DATABASE_SCHEMA', 'data')
 ```
 
 
