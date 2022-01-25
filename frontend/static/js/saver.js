@@ -446,11 +446,10 @@ saver = (function () {
                     _bloc = structure_bloc.outerHTML;
                     break;
                 case "Bloc":
-                    _structure = "TODO2"
-                    _bloc = composer.templates.blockTemplate.replace("{{{HTML}}}", _structure);
+                    _structure = _createBlocStructure(bloc.layout);
+                    _bloc = composer.templates.blockTemplate.replace("{{{HTML}}}", _structure.outerHTML);
                     break;
                 case "BlocElement":
-                    _structure = "TODO3"
                     _bloc = composer.templates.extraElementTemplate[0].replace("{{{TEXT}}}", bloc.text).replace("{{{CLASSE}}}", bloc.style);
                     break;
             }
