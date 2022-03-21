@@ -22,10 +22,24 @@ server {
         index admin.html;
     }
 
+    location = /mreport {        
+        return 301 https://$host$uri/;
+    }
+
+
+
+    location ~ /mreport/(\w+([\-])?(\w+)?)$ {
+        return 301 https://$host/mreport/$1/;
+    }
+
+
     location /mreport {	
         alias /var/www/reports;
         index /templates/index.html;
-        try_files $uri $uri/ /templates/index.html;
+        location ~ config\.json {
+            try_files $uri =404;            }
+        }
+        try_files $uri /templates/index.html;
     }
 
 }
