@@ -37,7 +37,7 @@ server {
         alias /var/www/reports;
         index /templates/index.html;
         location ~ config\.json {
-            try_files $uri =404;            }
+            try_files $uri =404;
         }
         try_files $uri /templates/index.html;
     }
