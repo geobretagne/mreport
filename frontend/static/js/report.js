@@ -691,18 +691,16 @@ report = (function () {
                 };
             }
             if (el.dataset.begin0 && el.dataset.begin0 === "true") {
-                var opt = {
-                    "yAxes": [{
-                        "ticks": {
-                            "beginAtZero": true
-                        }
-                    }]
-                };
-                if (commonOptions.scales && commonOptions.scales.yAxes) {
-                    commonOptions.scales.yAxes.push(opt.yAxes[0]);
+                var axe = "yAxes"
+                if (chart.type === "horizontalBar") {
+                    axe = "xAxes"
+                }
+                var opt = `{ "${axe}": [{ "ticks": { "beginAtZero": true } }]}`;
+                if (commonOptions.scales && commonOptions.scales[axe]) {
+                    commonOptions.scales[axe].push(JSON.parse(opt[axe][0]));
 
                 } else {
-                    commonOptions.scales = opt;
+                    commonOptions.scales = JSON.parse(opt);
                 }
             }
 
