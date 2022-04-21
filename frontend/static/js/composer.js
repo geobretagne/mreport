@@ -396,21 +396,60 @@ composer = (function () {
      */
 
     var _onTextEdit = function (a) {
-        //Get selected text element
-        var source = a.relatedTarget.parentNode;
+        var source;
+        var content;
         var oldtext;
         var oldtype;
-        //store old text
-        //check html content
-        if (source.firstElementChild.nodeName === "DIV") {
-            //HTMLcontent
-            oldtext = source.firstChild.innerHTML;
-            oldtype = "html";
-        } else if (source.firstChild.nodeType === Node.TEXT_NODE){
-            //TEXT CONTENT
-            oldtext = source.firstChild.nodeValue.trim();
+        var cas = 0;
+
+
+        if (a.relatedTarget.parentNode.classList.contains("bloc-title")) {
+            //Cad 1 Titles
+            cas = 1;
+            source = a.relatedTarget.parentNode;
+            if (source.firstChild.nodeType === Node.TEXT_NODE) {
+                content = source.firstChild;
+            } else if  (source.firstChild.nodeType === Node.COMMENT_NODE) {
+                source.firstChild.remove();
+                var txt = document.createTextNode("");
+                source.appendChild(txt);
+                content = source.firstChild;
+            }
+            content = source.firstChild;
+            oldtext = content.nodeValue.trim();
+            oldtype = "text";
+            //content = source.querySelector("p.text-htm");
+            //Désactivation html
+            document.querySelector("#text-edit input[value='html']").disabled = true;
+            document.querySelector("#text-edit input[value='text']").checked = true;
+
+        } else if (a.relatedTarget.parentNode.closest(".text-edit-content")) {
+            //Cas 2 sources nouveau template
+            cas = 2;
+            document.querySelector("#text-edit input[value='html']").disabled = false;
+            source = a.relatedTarget.parentNode.closest(".text-edit-content");
+            content = source.querySelector("p.text-htm");
+            if (content.classList.contains("html")) {
+                //HTMLcontent
+                oldtext = content.innerHTML;
+                oldtype = "html";
+
+            } else if (content.classList.contains("text")) {
+                //TEXT CONTENT
+                oldtext = content.firstChild.nodeValue.trim();
+                oldtype = "text";
+            }
+        } else {
+            //cas3 sources ancien template
+            cas = 3;
+            source = a.relatedTarget.parentNode;
+            document.querySelector("#text-edit input[value='html']").disabled = false;
+            oldtext = source.parentElement.textContent.trim().split("\n")[0];
             oldtype = "text";
         }
+
+        document.querySelector("#text-edit input[value='"+oldtype+"']").checked = true
+        $("#text-edit-value").val(oldtext);
 
         var getStyle = function () {
             let style = "undefined";
@@ -434,8 +473,8 @@ composer = (function () {
             }
 
         }
+        //Get selected text element
 
-        $("#text-edit-value").val(oldtext);
         //get style value or Set default style
         $("#text-edit-level").val(getStyle());
         //Get save button and remove existing handlers
@@ -449,25 +488,35 @@ composer = (function () {
             //get type content (text or html)
             var type = $('#text-edit input[name=typeedit]:checked').val();
             if (type === "text") {
-                //DElete old div node
-                if (oldtype === "html") {
-                    source.querySelector("div").remove();
+                if (cas === 2)  {
+                    content.classList.remove("html");
+                    content.classList.add("text");
+                    content.innerHTML = "";
+                    var txt = document.createTextNode(text.trim());
+                    content.appendChild(txt);
+                } else if (cas === 1){
+                    content.nodeValue = text.trim();
+                } else {
+                    //cas 3
+                    //destroy old structure
+                    source.parentElement.innerHTML = `
+                        <div class="text-edit-content">
+                            <p class="text-htm text">${text.trim()}</p>
+                            <i class="editable-text">
+                            <span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i>edit                        </span>
+                            </i>
+                        </div>`
                 }
-                source.firstChild.nodeValue = text.trim();
+
+
                 setStyle(newstyle);
             } else if (type === "html") {
-                //Check if div exists
-                if (oldtype === "html") {
-                    source.firstChild.innerHTML = text;
-                } else {
-                    //Create div element to store html
-                    let div = document.createElement("div");
-                    div.innerHTML = text;
-                    //delete old texte node
-                    source.firstChild.nodeValue = "";
-                    //Use insert before to keep span child
-                    source.insertBefore(div, source.firstChild);
+                if (cas === 2)  {
+                    content.classList.remove("text");
+                    content.classList.add("html");
                 }
+
+                content.innerHTML = text;
                 setStyle(newstyle);
             }
             //close modal
