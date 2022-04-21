@@ -70,13 +70,19 @@ composer = (function () {
             '<i class="fas fa-arrows-alt"></i>',
             '<p id="drag-tag"> drag</p>',
             '</span>',
-            '<span class="editable-text">Texte</span>',
+            '<div class="text-edit-content dataviz-container">',
+                '<p class="text-htm text">Texte</strong></p>',
+                '<i class="editable-text"></i>',
+            '</div>',
             '<span class="remove badge mreport-primary-color-2-bg structureElems">',
             '<i class="fas fa-times"></i> remove',
             '</span>',
             '</div>'
         ].join("")
     ];
+
+
+
 
 
     /*
