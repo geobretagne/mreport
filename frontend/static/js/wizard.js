@@ -222,11 +222,12 @@ wizard = (function () {
         }
         // Many datasets => table, chart
         if (dataset_nb > 1) {
-            options.push(["table", "fas fa-table"]);
+            options.push(["chart", "fas fa-table"]);
             if (significative_label) {
-                options.push(["chart", "fas fa-chart-bar"]);
+                options.push(["table", "fas fa-chart-bar"]);
             }
         } else {
+            //One dataset only
             if (data_nb === 1) {
                 // 1 dataset une seule ligne => figure, text, iframe, image
                 if (data_type === "text") {
