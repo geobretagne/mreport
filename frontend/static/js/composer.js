@@ -140,8 +140,11 @@ composer = (function () {
                     'data-target="#divide_form">',
                     '<i class="fas fa-columns"></i> <span>Diviser</span>',
                 '</span>',
-                '<span class="badge mreport-primary-color-3-bg delete_column">',
+                '<span class="badge mreport-primary-color-3-bg empty_column">',
                     '<i class="fas fa-undo"></i><span>Vider</span>',
+                '</span>',
+                '<span class="badge mreport-primary-color-3-bg delete_column">',
+                    '<i class="fas fa-trash"></i><span>Fusionner</span>',
                 '</span>',
             '</div>'
         ].join("");
@@ -293,7 +296,8 @@ composer = (function () {
         $('#dimensions_division').on('change', _changeDivideColumns);
         $(document).on('show.bs.modal', '#divide_form', _displayDivideModal);
         $(document).on('click', '#divide_modal_btn', _saveDivideConfig);
-        $(document).on('click', 'span.delete_column', _deleteDvzFromComposer);
+        $(document).on('click', 'span.empty_column', _deleteDvzFromComposer);
+        $(document).on('click', 'span.delete_column', _deleteCellFromComposer);
 
 
 
@@ -817,9 +821,12 @@ composer = (function () {
                             <i class="fas fa-columns"></i>\
                             Diviser\
                         </span>\
-                        <span class="badge mreport-primary-color-3-bg delete_column">\
+                        <span class="badge mreport-primary-color-3-bg empty_column">\
                             <i class="fas fa-undo"></i>\
                         <span>Vider</span>\
+                        </span>\
+                        <span class="badge mreport-primary-color-3-bg delete_column">\
+                            <i class="fas fa-trash"></i><span>Fusionner</span>\
                         </span>\
                     </div>\
                     <div class="dataviz-container card list-group-item">\
@@ -932,9 +939,13 @@ composer = (function () {
                                 <i class="fas fa-columns"></i>\
                                 Diviser\
                             </span>\
-                            <span class="badge mreport-primary-color-3-bg delete_column">\
+                            <span class="badge mreport-primary-color-3-bg empty_column">\
                                 <i class="fas fa-undo"></i>\
                                 <span>Vider</span>\
+                            </span>\
+                            <span class="badge mreport-primary-color-3-bg delete_column">\
+                                <i class="fas fa-trash"></i>\
+                                <span>Fusionner</span>\
                             </span>\
                         </div>\
                         <div class="dataviz-container card list-group-item">\
@@ -978,9 +989,13 @@ composer = (function () {
                                     <i class="fas fa-columns"></i>\
                                     Diviser\
                                 </span>\
-                                <span class="badge mreport-primary-color-3-bg delete_column">\
+                                <span class="badge mreport-primary-color-3-bg empty_column">\
                                     <i class="fas fa-undo"></i>\
                                     <span>Vider</span>\
+                                </span>\
+                                <span class="badge mreport-primary-color-3-bg delete_column">\
+                                    <i class="fas fa-trash"></i>\
+                                    <span>Fusionner</span>\
                                 </span>\
                             </div>\
                             <div class="dataviz-container card list-group-item">\
@@ -1007,6 +1022,15 @@ composer = (function () {
 
 
     }
+
+    var _deleteCellFromComposer = function (e) {
+        var parent = e.currentTarget.parentNode.nextElementSibling.parentNode.closest(".row");
+        var niv = parseInt(parent.firstElementChild.className.match(/\d/)[0]);
+        e.currentTarget.parentNode.nextElementSibling.parentNode.remove();
+        parent.closest(".row").firstElementChild.className = parent.closest(".row").firstElementChild.className.replace(niv, niv*2);
+
+    }
+
     var _deleteDvzFromComposer = function (e) {
         var deleteBtn = e.currentTarget;
         var linkedDvz = deleteBtn.parentNode.nextElementSibling.querySelectorAll(".dataviz");

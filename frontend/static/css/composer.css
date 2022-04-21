@@ -424,6 +424,7 @@ padding:5px 10px;
   margin-right:5px;
 }
 .divide_column,
+.empty_column,
 .delete_column{
     cursor: pointer;
     font-size: 15px;
