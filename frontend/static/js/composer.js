@@ -636,6 +636,10 @@ composer = (function () {
      */
 
     var _exportHTML = function () {
+        if (!_HTMLTemplates[_activeHTMLTemplate]) {
+            alert("Veuillez sélectionner un template");
+            return;
+        }
         var html = [];
         // Get first title
         $("#report-composition .report-bloc-title").each(function (id, title) {
