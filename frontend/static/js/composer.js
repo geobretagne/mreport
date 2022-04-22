@@ -421,12 +421,18 @@ composer = (function () {
                 content = source.firstChild;
             } else if  (source.firstChild.nodeType === Node.COMMENT_NODE) {
                 source.firstChild.remove();
-                var txt = document.createTextNode("");
-                source.appendChild(txt);
-                content = source.firstChild;
+                if (source.firstChild.nodeType !== Node.TEXT_NODE) {
+                    var txt = document.createTextNode("Title");
+                    source.insertBefore(txt,source.firstElementChild);
+                }
+
             }
             content = source.firstChild;
-            oldtext = content.nodeValue.trim();
+            try {
+                oldtext = content.nodeValue.trim();
+            } catch (error) {
+                console.log(error);
+            }
             oldtype = "text";
             //content = source.querySelector("p.text-htm");
             //Désactivation html
@@ -524,10 +530,26 @@ composer = (function () {
                 if (cas === 2)  {
                     content.classList.remove("text");
                     content.classList.add("html");
+                    content.innerHTML = text;
+
+                } else if (cas === 3) {
+                    //destroy old structure
+                    if (source.parentElement.closest("div")) {
+                        source.parentElement.closest("div").innerHTML = `
+                        <div class="text-edit-content">
+                            <p class="text-htm html">${text.trim()}</p>
+                            <i class="editable-text">
+                            <span data-toggle="modal" data-target="#text-edit" class="to-remove text-edit badge badge-warning"><i class="fas fa-edit"></i>edit                        </span>
+                            </i>
+                        </div>`
+                    content = source.querySelector("p");
+                    } else {
+                        console.log ("cas non géré")
+                        return;
+                    }
+
                 }
 
-                content.innerHTML = text;
-                setStyle(newstyle);
             }
             //close modal
             $("#text-edit").modal("hide");
