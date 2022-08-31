@@ -16,7 +16,7 @@ from json import JSONEncoder
 
 #def create_app(test_config=None):
 class CherrokeeFix(object):
-
+    
     def __init__(self, app, script_name, scheme):
         self.app = app
         self.script_name = script_name
@@ -62,6 +62,12 @@ class Dataviz(db.Model):
     type = db.Column(db.String(200),nullable=False)
     level = db.Column(db.String(50),db.ForeignKey(schema+'level_type.level'))
     job = db.Column(db.String(50))
+
+    MAJ = db.Column(db.String(30))
+    theme = db.Column(db.String(30))
+    premier_millésime = db.Column(db.String(30))
+    dernier_millésime = db.Column(db.String(30))
+
     viz = db.Column(db.String(2000))
     report_composition_dvz = db.relationship('Report_composition', backref="report1", cascade="all, delete-orphan" , lazy='dynamic')
     rawdata_dvz = db.relationship('Rawdata', backref="rawdata1", cascade="all, delete-orphan", lazy='dynamic')
@@ -196,6 +202,13 @@ dataviz_put = store.model('Dataviz_put', {
     'type': fields.String(max_length=200,required=True),
     'level': fields.String(max_length=50,required=True),
     'job': fields.String(max_length=50,required=False),
+    
+    
+    'MAJ': fields.String(max_length=30,required=False),
+    'theme': fields.String(max_length=30,required=False),
+    'premier_millésime': fields.String(max_length=30,required=False),
+    'dernier_millésime': fields.String(max_length=30,required=False),
+
     'viz': fields.String(max_length=2000,required=False)
 })
 dataviz_post = api.model('Dataviz_post', {
@@ -207,6 +220,13 @@ dataviz_post = api.model('Dataviz_post', {
     'type': fields.String(max_length=200),
     'level': fields.String(max_length=50),
     'job': fields.String(max_length=50),
+    'test': fields.String(max_length=20),
+
+    'MAJ': fields.String(max_length=20),
+    'theme': fields.String(max_length=20),
+    'premier_millésime': fields.String(max_length=20),
+    'dernier_millésime': fields.String(max_length=20),
+    
     'viz': fields.String(max_length=2000)
 })
 
@@ -289,7 +309,7 @@ class DatavizManagement(Resource):
         else:
             if Dataviz.query.get(dataviz_id):
                 dvz = Dataviz.query.get(dataviz_id)
-                for fld in ["title", "description", "source", "year", "type", "level", "unit", "job", "viz"]:
+                for fld in ["title", "description", "source", "year", "type", "level", "unit", "job", "viz","MAJ", "theme", "premier_millésime", "dernier_millésime"]:
                     value = data.get(fld)
                     if value:
                         setattr(dvz, fld, value)
