@@ -7,6 +7,7 @@ admin = (function () {
 
     var _report_data = {};
 
+
     /* convert [{id:"a"; msg:"xxx"}, {id:"b"; msg:"yyy"}] into
         {
             a: {id:"a"; msg:"xxx"},
@@ -26,50 +27,50 @@ admin = (function () {
             $(this).on("click", function () {
                 $(".container-fluid.page, .nav-item").removeClass("active");
                 $("#" + $(this).attr("data-page")).addClass("active");
-                if($(this).attr("data-page")=="home"){
-                  $("#home-page").addClass("active");
+                if ($(this).attr("data-page") == "home") {
+                    $("#home-page").addClass("active");
                 };
                 $(this).addClass("active");
-                if($(this).attr("data-page") == "reports" && $("#cd-cart").hasClass("speed-in") ||
-                  $(this).attr("data-page") =="composer" && $("#cd-cart").hasClass("speed-in") ||
-                  $(this).attr("data-page") =="home" && $("#cd-cart").hasClass("speed-in")){
+                if ($(this).attr("data-page") == "reports" && $("#cd-cart").hasClass("speed-in") ||
+                    $(this).attr("data-page") == "composer" && $("#cd-cart").hasClass("speed-in") ||
+                    $(this).attr("data-page") == "home" && $("#cd-cart").hasClass("speed-in")) {
                     $("#cd-cart").toggleClass("speed-in");
-                    $( "#catalog-content" ).css('margin-right','0');
-                    $( "#catalog-content" ).css('transition','margin-right .6s');
+                    $("#catalog-content").css('margin-right', '0');
+                    $("#catalog-content").css('transition', 'margin-right .6s');
                 };
-                if($(this).attr("data-page") == "reports" && $("#advancedFilterCatalogOptions").hasClass("speed-in") ||                
-                  $(this).attr("data-page") =="home" && $("#advancedFilterCatalogOptions").hasClass("speed-in") ||
-                   $(this).attr("data-page") =="composer" && $("#advancedFilterCatalogOptions").hasClass("speed-in")
-                  ){
+                if ($(this).attr("data-page") == "reports" && $("#advancedFilterCatalogOptions").hasClass("speed-in") ||
+                    $(this).attr("data-page") == "home" && $("#advancedFilterCatalogOptions").hasClass("speed-in") ||
+                    $(this).attr("data-page") == "composer" && $("#advancedFilterCatalogOptions").hasClass("speed-in")
+                ) {
                     $("#advancedFilterCatalogOptions").toggleClass("speed-in");
-                    $( "#catalog-content" ).css('margin-right','0');
-                    $( "#catalog-content" ).css('transition','margin-right .6s');
+                    $("#catalog-content").css('margin-right', '0');
+                    $("#catalog-content").css('transition', 'margin-right .6s');
                     $('#filterLevelCatalog').val("0");
                 };
-                if($(this).attr("data-page") == "reports" ||
-                  $(this).attr("data-page") =="composer" ||
-                  $(this).attr("data-page") =="home" ){
+                if ($(this).attr("data-page") == "reports" ||
+                    $(this).attr("data-page") == "composer" ||
+                    $(this).attr("data-page") == "home") {
                     $(".dataviz-selection").prop('checked', false).trigger("change");
                     $("#checkAll").prop('checked', false);
                     $("#searchbar").val("").trigger("keyup");
                 };
-                if($(this).attr("data-page") == "catalog" && $("#version-list").hasClass("speed-in") ||
-                  $(this).attr("data-page") =="composer" && $("#version-list").hasClass("speed-in")||
-                  $(this).attr("data-page") =="home" && $("#version-list").hasClass("speed-in")){
+                if ($(this).attr("data-page") == "catalog" && $("#version-list").hasClass("speed-in") ||
+                    $(this).attr("data-page") == "composer" && $("#version-list").hasClass("speed-in") ||
+                    $(this).attr("data-page") == "home" && $("#version-list").hasClass("speed-in")) {
                     $("#version-list").toggleClass("speed-in");
-                    $( "#reports-content" ).css('margin-right','0');
-                    $( "#reports-content" ).css('transition','margin-right .6s');
+                    $("#reports-content").css('margin-right', '0');
+                    $("#reports-content").css('transition', 'margin-right .6s');
                 };
-                if($(this).attr("data-page") == "catalog" && $("#report-select-options").hasClass("speed-in") ||
-                  $(this).attr("data-page") =="composer" && $("#report-select-options").hasClass("speed-in")||
-                  $(this).attr("data-page") =="home" && $("#report-select-options").hasClass("speed-in")){
+                if ($(this).attr("data-page") == "catalog" && $("#report-select-options").hasClass("speed-in") ||
+                    $(this).attr("data-page") == "composer" && $("#report-select-options").hasClass("speed-in") ||
+                    $(this).attr("data-page") == "home" && $("#report-select-options").hasClass("speed-in")) {
                     $("#report-select-options").toggleClass("speed-in");
-                    $( "#reports-content" ).css('margin-right','0');
-                    $( "#reports-content" ).css('transition','margin-right .6s');
+                    $("#reports-content").css('margin-right', '0');
+                    $("#reports-content").css('transition', 'margin-right .6s');
                 };
-                if($(this).attr("data-page") == "catalog"||
-                  $(this).attr("data-page") =="composer"||
-                  $(this).attr("data-page") =="home" ){
+                if ($(this).attr("data-page") == "catalog" ||
+                    $(this).attr("data-page") == "composer" ||
+                    $(this).attr("data-page") == "home") {
                     $(".rapport-selection").prop('checked', false).trigger("change");
                     $("#checkAllReports").prop('checked', false).trigger("change");
                     $("#searchbarReports").val("").trigger("keyup");
@@ -85,8 +86,8 @@ admin = (function () {
             document.querySelectorAll("#dataviz-cards .dataviz.used").length === 0) {
             for (const [key, report] of Object.entries(reports)) {
                 if (report && report.dataviz && report.dataviz.length > 0) {
-                    report.dataviz.forEach(function(dataviz) {
-                        let element = document.querySelector("#dataviz-cards .dataviz[data-dataviz-id='"+dataviz.id+"']");
+                    report.dataviz.forEach(function (dataviz) {
+                        let element = document.querySelector("#dataviz-cards .dataviz[data-dataviz-id='" + dataviz.id + "']");
                         if (element && element.classList) {
                             element.classList.add("used");
                             let span = document.createElement("SPAN");
@@ -100,6 +101,15 @@ admin = (function () {
         }
     }
 
+    /* ZONE CATALOGUE */
+
+
+
+
+
+
+
+
     var _initReports = function () {
         $.ajax({
             dataType: "json",
@@ -109,6 +119,7 @@ admin = (function () {
                     _report_data = _arr2dic(data.reports, "report");
                     _appendReports(data);
                     _setDatavizUsed(_report_data);
+
 
                 } else {
                     var err = data.error || data.response;
@@ -165,10 +176,10 @@ admin = (function () {
                 title.prop("disabled", false);
                 description.prop("disabled", true);
                 description.prop("hidden", true);
-                descriptionlabel.prop("hidden",true);
+                descriptionlabel.prop("hidden", true);
                 $("input.dataviz-selection:checked").each(function (id, dvz) {
                     var card = $(dvz).closest(".card.dataviz");
-                    var id  = card.attr("data-dataviz-id");
+                    var id = card.attr("data-dataviz-id");
                     var title = card.find(".card-title").text();
                     lst.push('<li data-dataviz="' + id + '" class="list-group-item">' + title + '</li>');
                 });
@@ -183,9 +194,9 @@ admin = (function () {
                 description.prop("disabled", false);
                 description.prop("hidden", false);
                 data.dataviz.forEach(function (dvz) {
-                  if (dvz != null)
-                        lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item">' + dvz.title+ '</li>');
-                  });
+                    if (dvz != null)
+                        lst.push('<li data-dataviz="' + dvz.id + '" data-report="' + reportId + '" class="list-group-item">' + dvz.title + '</li>');
+                });
                 confirmed.attr("onclick", "admin.deleteReport();");
                 confirmed.attr("data-report-id", reportId)
                 confirmed.html("Supprimer");
@@ -213,7 +224,7 @@ admin = (function () {
             var lst = []
             $("input.dataviz-selection:checked").each(function (id, dvz) {
                 var card = $(dvz).closest(".card.dataviz");
-                var id  = card.attr("data-dataviz-id");
+                var id = card.attr("data-dataviz-id");
                 var title = card.find(".card-title").text();
                 lst.push('<li data-dataviz="' + id + '" class="list-group-item">' + title + '</li>');
             });
@@ -221,40 +232,40 @@ admin = (function () {
         });
 
         $('#report-modal-delete').on('show.bs.modal', function (e) {
-          console.log("log");
-          $("#reports-modal-delete-multiple .list-group-item").remove();
-          var confirmed = $("#confirm_delete_reports");
-          var lst = Array.from($('#report-select-options .report-options-items li'));
-          confirmed.attr("onclick", "admin.deleteReports();");
+            console.log("log");
+            $("#reports-modal-delete-multiple .list-group-item").remove();
+            var confirmed = $("#confirm_delete_reports");
+            var lst = Array.from($('#report-select-options .report-options-items li'));
+            confirmed.attr("onclick", "admin.deleteReports();");
 
-          lst.forEach(function(element){
-            var report_name = element.children[0].innerText;
-            var report_id = element.dataset.reportId;
-            $("#reports-modal-delete-multiple").append('<li data-report="' + report_id + '" class="list-group-item">' + report_name + '</li>');
+            lst.forEach(function (element) {
+                var report_name = element.children[0].innerText;
+                var report_id = element.dataset.reportId;
+                $("#reports-modal-delete-multiple").append('<li data-report="' + report_id + '" class="list-group-item">' + report_name + '</li>');
 
-          });
+            });
 
         });
 
     };
 
-    var _initReportOptions = function(){
+    var _initReportOptions = function () {
         //toggle report select options
         $('#report-option-button button').click(function (event) {
-          event.stopPropagation();
-          console.log('message');
+            event.stopPropagation();
+            console.log('message');
 
-          $("#report-select-options").toggleClass("speed-in");
-          if($("#report-select-options").hasClass("speed-in") == false){
-            $("#reports-content" ).css('margin-right','0');
-            $("#reports-content" ).css('transition','margin-right .6s');
-          }else{
-            $( "#reports-content" ).css('margin-right','360px');
-            $( "#reports-content" ).css('transition','margin-right .6s');
-          }
-          if($('#version-list').hasClass("speed-in") == true){
-            $("#version-list").toggleClass("speed-in");
-          }
+            $("#report-select-options").toggleClass("speed-in");
+            if ($("#report-select-options").hasClass("speed-in") == false) {
+                $("#reports-content").css('margin-right', '0');
+                $("#reports-content").css('transition', 'margin-right .6s');
+            } else {
+                $("#reports-content").css('margin-right', '360px');
+                $("#reports-content").css('transition', 'margin-right .6s');
+            }
+            if ($('#version-list').hasClass("speed-in") == true) {
+                $("#version-list").toggleClass("speed-in");
+            }
 
         });
 
@@ -262,36 +273,36 @@ admin = (function () {
         $("#toggle-report-select-option").click(function (event) {
             $("#searchbarReports").val("").trigger("keyup");
             $("#report-select-options").toggleClass("speed-in");
-            $( "#reports-content" ).css('margin-right','0');
-            $( "#reports-content" ).css('transition','margin-right .6s');
+            $("#reports-content").css('margin-right', '0');
+            $("#reports-content").css('transition', 'margin-right .6s');
         });
 
-         $("#sortReportByName").click(function () {
-          if($("#sortReportByName i").hasClass("fa-sort-alpha-down")){
-            $("#sortReportByName i").removeClass("fa-sort-alpha-down");
-            $("#sortReportByName i").addClass("fa-sort-alpha-up");
+        $("#sortReportByName").click(function () {
+            if ($("#sortReportByName i").hasClass("fa-sort-alpha-down")) {
+                $("#sortReportByName i").removeClass("fa-sort-alpha-down");
+                $("#sortReportByName i").addClass("fa-sort-alpha-up");
 
-            $('#report-cards .cards').sort(function(a,b) {
-              var c = $(a).find(".card-title").text().toLowerCase();
-              var d = $(b).find(".card-title").text().toLowerCase();
-              return new Intl.Collator('fr', { caseFirst: 'upper' } ).compare(c,d);
-            }).appendTo("#report-cards");
-          }else{
-            $("#sortReportByName i").removeClass("fa-sort-alpha-up");
-            $("#sortReportByName i").addClass("fa-sort-alpha-down");
+                $('#report-cards .cards').sort(function (a, b) {
+                    var c = $(a).find(".card-title").text().toLowerCase();
+                    var d = $(b).find(".card-title").text().toLowerCase();
+                    return new Intl.Collator('fr', { caseFirst: 'upper' }).compare(c, d);
+                }).appendTo("#report-cards");
+            } else {
+                $("#sortReportByName i").removeClass("fa-sort-alpha-up");
+                $("#sortReportByName i").addClass("fa-sort-alpha-down");
 
-            $('#report-cards .cards').sort(function(a,b) {
-              var c = $(a).find(".card-title").text().toLowerCase();
-              var d = $(b).find(".card-title").text().toLowerCase();
-              return new Intl.Collator('fr', { caseFirst: 'upper' } ).compare(d,c);
-            }).appendTo("#report-cards");
+                $('#report-cards .cards').sort(function (a, b) {
+                    var c = $(a).find(".card-title").text().toLowerCase();
+                    var d = $(b).find(".card-title").text().toLowerCase();
+                    return new Intl.Collator('fr', { caseFirst: 'upper' }).compare(d, c);
+                }).appendTo("#report-cards");
 
-          }
+            }
         });
 
-      $('#reportTri').click(function(){
-        $('#stickyReportTri').toggle();
-      });
+        $('#reportTri').click(function () {
+            $('#stickyReportTri').toggle();
+        });
 
     }
 
@@ -322,7 +333,7 @@ admin = (function () {
                     '</div> ',
                     '<a href="' + report.getAppConfiguration().location + '/' + elem.report + '" target="_blank" class="card-link mreport-primary-color-1 d-block mx-0 pb-2"><i class="fas fa-eye mreport-secondary-color-1"></i> Afficher</a>',
                     '<a href="#" class="card-link mreport-primary-color-1 d-block mx-0 pb-2" data-toggle="modal" data-report-state="edit" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-pencil-alt mreport-secondary-color-1"></i> Editer</a>',
-                    '<a href="#" onclick="composer.compose(\'' + elem.report + '\',null)" class="card-link mreport-primary-color-1  d-block mx-0 pb-2"><i class="fas fa-edit mreport-secondary-color-1"></i> Composer</a>',                    
+                    '<a href="#" onclick="composer.compose(\'' + elem.report + '\',null)" class="card-link mreport-primary-color-1  d-block mx-0 pb-2"><i class="fas fa-edit mreport-secondary-color-1"></i> Composer</a>',
                     '<a href="#" class="card-link mreport-primary-color-1 d-block mx-0 pb-2" data-toggle="modal" data-report-state="delete" data-report-id="' + elem.report + '" data-target="#report-modal-form"><i class="fas fa-trash mreport-secondary-color-1"></i> Supprimer</a>',
                     '<span class="card-link mreport-grey5 d-block mx-0 pb-2"><i class="fas fa-history mreport-grey5"></i> Versions</span>',
                     // Enabled for future versions functionnality
@@ -343,7 +354,7 @@ admin = (function () {
         $('.duplicate').on('click', _duplicateReport);
         $('.displayVersions').on('click', _displayVersions);
 
-       
+
         // Reset inputs and report-select-options 
         $("#resetReportfilters").click(function () {
             // console.log("reset");
@@ -358,38 +369,38 @@ admin = (function () {
         $('#report-cards input[type="checkbox"]').change(function () {
             var id = $(this).parent().parent().parent().data().reportId;
             // console.log(id);
-            
+
             if ($(this).is(":checked")) {
-            // console.log($(this).parent().parent().find("h6")[0].outerHTML);
+                // console.log($(this).parent().parent().find("h6")[0].outerHTML);
                 $("#report-select-options .report-options-items").append(
                     "<li data-report-id=" + id + ">\
                          " + $(this).parent().parent().find("h6")[0].outerHTML + "\
                         <a href='#' class='cd-item-remove cd-img-replace'>Remove</a>\
                     </li>"
                 );
-              /*deactivate button if no selection*/
-              if($("ul.report-options-items li").length < 1 ){
-                $('.report-toggle-deactivate').prop('disabled', true);
-              }else if($("ul.report-options-items li").length >= 1 ){
-                $('.report-toggle-deactivate').prop('disabled', false);
-              }
+                /*deactivate button if no selection*/
+                if ($("ul.report-options-items li").length < 1) {
+                    $('.report-toggle-deactivate').prop('disabled', true);
+                } else if ($("ul.report-options-items li").length >= 1) {
+                    $('.report-toggle-deactivate').prop('disabled', false);
+                }
             } else {
                 $("#report-select-options .report-options-items li[data-report-id|=" + id + "]").remove();
-              /*deactivate button if no selection*/
-              if($("ul.report-options-items li").length < 1 ){
-                $('.report-toggle-deactivate').prop('disabled', true);
-              }else if($("ul.report-options-items li").length >= 1 ){
-                $('.report-toggle-deactivate').prop('disabled', false);
-              }
+                /*deactivate button if no selection*/
+                if ($("ul.report-options-items li").length < 1) {
+                    $('.report-toggle-deactivate').prop('disabled', true);
+                } else if ($("ul.report-options-items li").length >= 1) {
+                    $('.report-toggle-deactivate').prop('disabled', false);
+                }
             }
             $("#report-option-button .number").html($(".report-options-items li").length);
         });
 
         // deactivate button if no selection
-        if($("ul.report-options-items li").length < 1 ){
-          $('.report-toggle-deactivate').prop('disabled', true);
-        }else if($("ul.report-options-items li").length >= 1 ){
-          $('.report-toggle-deactivate').prop('disabled', false);
+        if ($("ul.report-options-items li").length < 1) {
+            $('.report-toggle-deactivate').prop('disabled', true);
+        } else if ($("ul.report-options-items li").length >= 1) {
+            $('.report-toggle-deactivate').prop('disabled', false);
         }
 
         // Remove event from the 'select all' checkbox because we do not want to add it to the cart 
@@ -420,35 +431,35 @@ admin = (function () {
 
         // Search for report in Rapports page
         var options = {
-          tokenize: false,
-          threshold: 0.3,
-          distance: 500,
-          findAllMatches:true,
-          minMatchCharLength: 2,
-          keys: [
-            "title",
-            "report",
-            "description"
-          ]
+            tokenize: false,
+            threshold: 0.3,
+            distance: 500,
+            findAllMatches: true,
+            minMatchCharLength: 2,
+            keys: [
+                "title",
+                "report",
+                "description"
+            ]
         };
         var fuse = new Fuse(dataReport, options);
 
         $("#searchbarReports").on("keyup", function () {
-          $("#checkAllReports").prop('checked', false);
-          var result = fuse.search($(this).val());
-          var divs = $(".card.report");
-          if ($(this).val() != "") {
-            divs.parent().addClass("hidden");
-            result.forEach(function (elem) {
-              divs.each(function () {
-                if (elem.report == $(this).attr("data-report-id")) {
-                  $(this).parent().removeClass("hidden");
-                }
-              });
-            });
-          } else {
-            divs.parent().removeClass("hidden");
-          }
+            $("#checkAllReports").prop('checked', false);
+            var result = fuse.search($(this).val());
+            var divs = $(".card.report");
+            if ($(this).val() != "") {
+                divs.parent().addClass("hidden");
+                result.forEach(function (elem) {
+                    divs.each(function () {
+                        if (elem.report == $(this).attr("data-report-id")) {
+                            $(this).parent().removeClass("hidden");
+                        }
+                    });
+                });
+            } else {
+                divs.parent().removeClass("hidden");
+            }
         });
 
     };
@@ -461,7 +472,7 @@ admin = (function () {
         Object.entries(_dataviz_data).forEach(function (a) {
             var id = a[0];
             var data = a[1];
-            var designedDataviz = (data.viz.length > 0)? 'enabled':'disabled';
+            var designedDataviz = (data.viz.length > 0) ? 'enabled' : 'disabled';
             var certifiedDataviz = 'disabled';
             if (data.description && data.description.includes("[certified]")) {
                 certifiedDataviz = 'enabled';
@@ -480,8 +491,8 @@ admin = (function () {
 
         });
         let render = Mustache.render(template, cards);
-       $(container).append(render);
-       _setDatavizUsed(_report_data);
+        $(container).append(render);
+        _setDatavizUsed(_report_data);
         /* Add event to all checkbox to add them into the cart */
         $('#dataviz-cards input[type="checkbox"]').change(function () {
             var id = $(this).parent().parent().parent().data().datavizId;
@@ -493,28 +504,28 @@ admin = (function () {
                         <a href='#' class='cd-item-remove cd-img-replace'>Remove</a>\
                     </li>"
                 );
-              /*deactivate button if no selection*/
-              if($("ul.cd-cart-items li").length < 1 ){
-                $('.toggle-deactivate').prop('disabled', true);
-              }else if($("ul.cd-cart-items li").length >= 1 ){
-                $('.toggle-deactivate').prop('disabled', false);
-              }
+                /*deactivate button if no selection*/
+                if ($("ul.cd-cart-items li").length < 1) {
+                    $('.toggle-deactivate').prop('disabled', true);
+                } else if ($("ul.cd-cart-items li").length >= 1) {
+                    $('.toggle-deactivate').prop('disabled', false);
+                }
             } else {
                 $("#cd-cart .cd-cart-items li[data-dataviz-id|=" + id + "]").remove();
-              /*deactivate button if no selection*/
-              if($("ul.cd-cart-items li").length < 1 ){
-                $('.toggle-deactivate').prop('disabled', true);
-              }else if($("ul.cd-cart-items li").length >= 1 ){
-                $('.toggle-deactivate').prop('disabled', false);
-              }
+                /*deactivate button if no selection*/
+                if ($("ul.cd-cart-items li").length < 1) {
+                    $('.toggle-deactivate').prop('disabled', true);
+                } else if ($("ul.cd-cart-items li").length >= 1) {
+                    $('.toggle-deactivate').prop('disabled', false);
+                }
             }
             $(".green .number").html($(".cd-cart-items li").length);
         });
         /*deactivate button if no selection*/
-        if($("ul.cd-cart-items li").length < 1 ){
-          $('.toggle-deactivate').prop('disabled', true);
-        }else if($("ul.cd-cart-items li").length >= 1 ){
-          $('.toggle-deactivate').prop('disabled', false);
+        if ($("ul.cd-cart-items li").length < 1) {
+            $('.toggle-deactivate').prop('disabled', true);
+        } else if ($("ul.cd-cart-items li").length >= 1) {
+            $('.toggle-deactivate').prop('disabled', false);
         }
         /* Remove event from the 'select all' checkbox because we do not want to add it to the cart */
         $("#checkAll").off("change");
@@ -536,7 +547,7 @@ admin = (function () {
     };
 
     var _initLevels = function () {
-         //get levels list
+        //get levels list
         $.ajax({
             dataType: "json",
             url: [report.getAppConfiguration().api, "level"].join("/"),
@@ -583,7 +594,7 @@ admin = (function () {
                         threshold: 0.1,
                         distance: 500,
                         minMatchCharLength: 2,
-                        findAllMatches:true,
+                        findAllMatches: true,
                         keys: [
                             "title",
                             "description",
@@ -594,18 +605,18 @@ admin = (function () {
                         ]
                     };
                     var optionsLevel = {
-                      tokenize: false,
-                      threshold: 0.0,
-                      distance: 500,
-                      minMatchCharLength: 2,
-                      keys: [
-                        "level",
-                      ]
+                        tokenize: false,
+                        threshold: 0.0,
+                        distance: 500,
+                        minMatchCharLength: 2,
+                        keys: [
+                            "level",
+                        ]
                     };
                     var fuse = new Fuse(data.datavizs, options);
                     var fuseLevels = new Fuse(data.datavizs, optionsLevel);
                     $("#searchbar").on("keyup", function () {
-                      $("#filterSearchAdvancedCatalog").val("");
+                        $("#filterSearchAdvancedCatalog").val("");
                         $("#checkAll").prop('checked', false);
                         var result = fuse.search($(this).val());
                         var divs = $(".card.dataviz");
@@ -623,7 +634,7 @@ admin = (function () {
                         }
                     });
                     $("#filterSearchAdvancedCatalog").on("keyup", function () {
-                      $("#searchbar").val("");
+                        $("#searchbar").val("");
                         $("#checkAll").prop('checked', false);
                         var result = fuse.search($(this).val());
                         var divs = $(".card.dataviz");
@@ -642,7 +653,7 @@ admin = (function () {
                     });
 
                     $('#filterLevelCatalog').on("change", function () {
-                       $("#checkAll").prop('checked', false);
+                        $("#checkAll").prop('checked', false);
                         var result = fuseLevels.search($(this).val());
                         var divs = $(".card.dataviz");
                         if ($(this).val() != "") {
@@ -679,8 +690,8 @@ admin = (function () {
         });
     };
 
-    _initCatalogOptions  = function () {
-      $('#dataviz-modal-form').on('show.bs.modal', function (e) {
+    _initCatalogOptions = function () {
+        $('#dataviz-modal-form').on('show.bs.modal', function (e) {
             var newDataviz = $(e.relatedTarget).attr('data-dataviz-state');
             $(e.currentTarget).attr("data-dataviz-state", newDataviz);
             var title = $(e.currentTarget).find('.form-control');
@@ -726,64 +737,64 @@ admin = (function () {
         $("#resetAdvancedCatalogfilters").click(function () {
             $("#filterSearchAdvancedCatalog").val("").trigger("keyup");
             $('#filterLevelCatalog').val("0");
-$(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalog");
+            $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalog");
         });
 
         /* Toggle the cart to appear */
         $(".green").click(function () {
             $("#cd-cart").toggleClass("speed-in");
-            $( "#catalog-content" ).css('margin-right','360px');
-            $( "#catalog-content" ).css('transition','margin-right .6s');
-          if($("#cd-cart").hasClass("speed-in") == false){
-            $("#catalog-content" ).css('margin-right','0');
-            $("#catalog-content" ).css('transition','margin-right .6s');
-          }
+            $("#catalog-content").css('margin-right', '360px');
+            $("#catalog-content").css('transition', 'margin-right .6s');
+            if ($("#cd-cart").hasClass("speed-in") == false) {
+                $("#catalog-content").css('margin-right', '0');
+                $("#catalog-content").css('transition', 'margin-right .6s');
+            }
         });
         /* Toggle the cart to disappear */
         $("#togglePanier").click(function () {
             $("#cd-cart").toggleClass("speed-in");
-            $( "#catalog-content" ).css('margin-right','0');
-            $( "#catalog-content" ).css('transition','margin-right .6s');
+            $("#catalog-content").css('margin-right', '0');
+            $("#catalog-content").css('transition', 'margin-right .6s');
         });
-      $("#sortDatavizByName").click(function () {
-        if($("#sortDatavizByName i").hasClass("fa-sort-alpha-down")){
-          $("#sortDatavizByName i").removeClass("fa-sort-alpha-down");
-          $("#sortDatavizByName i").addClass("fa-sort-alpha-up");
-          $('#dataviz-cards .cards').sort(function(a,b) {
-            var c = $(a).find(".card-title").text().toLowerCase();
-            var d = $(b).find(".card-title").text().toLowerCase();
-            return new Intl.Collator('fr', { caseFirst: 'upper' } ).compare(c,d);
-          }).appendTo("#dataviz-cards");
-        }else{
-          $("#sortDatavizByName i").removeClass("fa-sort-alpha-up");
-          $("#sortDatavizByName i").addClass("fa-sort-alpha-down");
-          $('#dataviz-cards .cards').sort(function(a,b) {
-            var c = $(a).find(".card-title").text().toLowerCase();
-            var d = $(b).find(".card-title").text().toLowerCase();
-            return new Intl.Collator('fr', { caseFirst: 'upper' } ).compare(d,c);
-          }).appendTo("#dataviz-cards");
-        }
-      });
+        $("#sortDatavizByName").click(function () {
+            if ($("#sortDatavizByName i").hasClass("fa-sort-alpha-down")) {
+                $("#sortDatavizByName i").removeClass("fa-sort-alpha-down");
+                $("#sortDatavizByName i").addClass("fa-sort-alpha-up");
+                $('#dataviz-cards .cards').sort(function (a, b) {
+                    var c = $(a).find(".card-title").text().toLowerCase();
+                    var d = $(b).find(".card-title").text().toLowerCase();
+                    return new Intl.Collator('fr', { caseFirst: 'upper' }).compare(c, d);
+                }).appendTo("#dataviz-cards");
+            } else {
+                $("#sortDatavizByName i").removeClass("fa-sort-alpha-up");
+                $("#sortDatavizByName i").addClass("fa-sort-alpha-down");
+                $('#dataviz-cards .cards').sort(function (a, b) {
+                    var c = $(a).find(".card-title").text().toLowerCase();
+                    var d = $(b).find(".card-title").text().toLowerCase();
+                    return new Intl.Collator('fr', { caseFirst: 'upper' }).compare(d, c);
+                }).appendTo("#dataviz-cards");
+            }
+        });
 
-      $("#advancedFilterCatalog").click(function () {
-        $("#cd-cart").toggleClass("speed-in");
-        $("#advancedFilterCatalogOptions").toggleClass("speed-in");
-      });
+        $("#advancedFilterCatalog").click(function () {
+            $("#cd-cart").toggleClass("speed-in");
+            $("#advancedFilterCatalogOptions").toggleClass("speed-in");
+        });
 
         /* Toggle the cart to disappear */
         $("#toggleAdvancedFilter").click(function () {
             $("#advancedFilterCatalogOptions").toggleClass("speed-in");
-            $( "#catalog-content" ).css('margin-right','0');
-            $( "#catalog-content" ).css('transition','margin-right .6s');
+            $("#catalog-content").css('margin-right', '0');
+            $("#catalog-content").css('transition', 'margin-right .6s');
         });
 
-      $("#returnToOptionsCatalog").click(function(){
-        $("#advancedFilterCatalogOptions").toggleClass("speed-in");
-        $("#cd-cart").toggleClass("speed-in");
-      });   
+        $("#returnToOptionsCatalog").click(function () {
+            $("#advancedFilterCatalogOptions").toggleClass("speed-in");
+            $("#cd-cart").toggleClass("speed-in");
+        });
 
 
-      $.ajax({
+        $.ajax({
             dataType: "json",
             url: [report.getAppConfiguration().api, "level"].join("/"),
             success: function (data) {
@@ -815,10 +826,10 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
             }
         });
 
-      $('#catalogTri').click(function(){
-        $('#stickyCatalogTri').toggle();
-      });
-      
+        $('#catalogTri').click(function () {
+            $('#stickyCatalogTri').toggle();
+        });
+
     }
 
     _addDatavizToReport = function (report_id, report_data) {
@@ -945,7 +956,7 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
         //var report_description = $("#reportInputDescription").val();
         $(".reports-dataviz-exist .list-group-item").each(function (id, dvz) {
             datavizs.push({
-              "dataviz": $(dvz).attr("data-dataviz")
+                "dataviz": $(dvz).attr("data-dataviz")
             });
         });
         $.ajax({
@@ -964,7 +975,7 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
                 _initReports();
             },
             error: function (xhr, status, error) {
-           
+
                 $('#report-modal-form2').modal('hide');
                 var err = _parseError(xhr.responseText);
                 Swal.fire(
@@ -1131,17 +1142,17 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
     };
 
     _deleteReports = function () {
-      var lst= Array.from($('#report-select-options .report-options-items li'));
-      var titles = [];
-      var deleted=[];
-      var successDelete = false;
+        var lst = Array.from($('#report-select-options .report-options-items li'));
+        var titles = [];
+        var deleted = [];
+        var successDelete = false;
 
-      lst.forEach(function(element){
-        titles.push(element.children[0].innerText);
-      });
+        lst.forEach(function (element) {
+            titles.push(element.children[0].innerText);
+        });
 
-      console.log(lst);
-      console.log(titles);
+        console.log(lst);
+        console.log(titles);
 
         Swal.fire({
             title: 'Voulez vous supprimer les rapports \'' + titles.join() + '\' ?',
@@ -1154,53 +1165,53 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
             confirmButtonText: 'Confirmer'
         }).then((result) => {
             if (result.value) {
-              lst.forEach(function(element){
-                var report_name = element.children[0].innerText;
-                var report_id = element.dataset.reportId;
-                $.ajax({
-                    dataType: "json",
-                    contentType: "application/json",
-                    type: "DELETE",
-                    url: [report.getAppConfiguration().api, "report", report_id].join("/"),
-                    success: function (data) {
-                        if (data.response === "success") {
-                          successDelete = true;
-                          deleted.push(report_name);
-                          // console.log('DELETED');
-                          // console.log(deleted)
+                lst.forEach(function (element) {
+                    var report_name = element.children[0].innerText;
+                    var report_id = element.dataset.reportId;
+                    $.ajax({
+                        dataType: "json",
+                        contentType: "application/json",
+                        type: "DELETE",
+                        url: [report.getAppConfiguration().api, "report", report_id].join("/"),
+                        success: function (data) {
+                            if (data.response === "success") {
+                                successDelete = true;
+                                deleted.push(report_name);
+                                // console.log('DELETED');
+                                // console.log(deleted)
 
-                        } else {
+                            } else {
+                                $('#report-modal-form').modal('hide');
+                                var err = data.error || data.response;
+                                Swal.fire(
+                                    'Une erreur s\'est produite',
+                                    err,
+                                    'error'
+                                );
+                            }
+                        },
+                        complete: function () {
+                            _initReports();
+                        },
+                        error: function (xhr, status, error) {
                             $('#report-modal-form').modal('hide');
-                            var err = data.error || data.response;
+                            var err = _parseError(xhr.responseText);
                             Swal.fire(
                                 'Une erreur s\'est produite',
                                 err,
                                 'error'
-                            );
+                            )
                         }
-                    },
-                    complete: function () {
-                        _initReports();
-                    },
-                    error: function (xhr, status, error) {
-                        $('#report-modal-form').modal('hide');
-                        var err = _parseError(xhr.responseText);
-                        Swal.fire(
-                            'Une erreur s\'est produite',
-                            err,
-                            'error'
-                        )
-                    }
+                    });
                 });
-              });
             }
-          if(successDelete == true){ 
-            Swal.fire(
-            'Supprimé',
-            'Les rapports \'' + deleted.join() + '\' ont été supprimé',
-              'success'
-            )
-          }
+            if (successDelete == true) {
+                Swal.fire(
+                    'Supprimé',
+                    'Les rapports \'' + deleted.join() + '\' ont été supprimé',
+                    'success'
+                )
+            }
         })
         $('#report-modal-delete').modal('hide');
         $("#report-cards .cards:not(.hidden) .rapport-selection").prop('checked', false);
@@ -1209,7 +1220,7 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
         $('ul.report-options-items').empty();
         $("#report-option-button .number").html($(".report-options-items li").length);
         // console.log(deleted)
-      
+
     }
 
     _deleteDataviz = function () {
@@ -1355,6 +1366,7 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
                 if (response.response === "success" && response.data.viz) {
                     //Append local stored viz
                     admin.getDataviz(datavizId).viz = response.data.viz;
+
                     //Refresh dataviz in dataviz-modal-form
                     if (document.getElementById("dataviz-modal-form").classList.contains("show")) {
                         visualization.value = response.data.viz;
@@ -1448,38 +1460,38 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
         })
     }
 
-    var _displayVersions = function(event) {
-      if($("#version-items").children.length >0){
-        $("#version-items").empty();
-      }
+    var _displayVersions = function (event) {
+        if ($("#version-items").children.length > 0) {
+            $("#version-items").empty();
+        }
         /* Toggle the version list to appear */
-            $("#version-list").addClass("speed-in");
-            $("#report-select-options").removeClass("speed-in");
-            $("#reports-content").css('margin-right','360px');
-            $("#reports-content").css('transition','margin-right .6s');
-          if($("#version-list").hasClass("speed-in") == false){
-            $("#reports-content").css('margin-right','0');
-            $("#reports-content").css('transition','margin-right .6s');
-          }
+        $("#version-list").addClass("speed-in");
+        $("#report-select-options").removeClass("speed-in");
+        $("#reports-content").css('margin-right', '360px');
+        $("#reports-content").css('transition', 'margin-right .6s');
+        if ($("#version-list").hasClass("speed-in") == false) {
+            $("#reports-content").css('margin-right', '0');
+            $("#reports-content").css('transition', 'margin-right .6s');
+        }
 
         /* Toggle the versions list to disappear */
         $("#closeVersions").click(function () {
             $("#version-list").removeClass("speed-in");
-            $("#reports-content").css('margin-right','0');
-            $("#reports-content").css('transition','margin-right .6s');
+            $("#reports-content").css('margin-right', '0');
+            $("#reports-content").css('transition', 'margin-right .6s');
         });
-      
 
-      var report_id = event.currentTarget.getAttribute('data-report-id');
-      console.log("event="+event);
-      console.log("report_id="+report_id);
 
-      _initReportsVersion(report_id)
+        var report_id = event.currentTarget.getAttribute('data-report-id');
+        console.log("event=" + event);
+        console.log("report_id=" + report_id);
+
+        _initReportsVersion(report_id)
     }
 
 
     var _initReportsVersion = function (report_id) {
-          $.ajax({
+        $.ajax({
             dataType: "json",
             contentType: "application/json",
             type: "GET",
@@ -1489,10 +1501,10 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
                 if (data.response === "success") {
                     console.log(data);
                     console.log(data.report_backups.save_date);
-                    let numberVersion =data.report_backups.length+1;
-                    for(const item of data.report_backups){
-                      numberVersion = numberVersion -1 ;
-                      $("#version-items").append('<div class="row"><li class="versionList-item w-100" id=' + report_id + '"><h6 class="card-title">'+ numberVersion + '- '+ report_id + '</h6><p class="mreport-grey4">'+item.save_date+'</p><a href="#" class="card-link mreport-primary-color-1 d-block mx-0 pb-2" onclick="composer.compose(\'' + report_id + '\',\''+ item.id+'\')"><i class="fas fa-edit mreport-secondary-color-1"></i>Composer</a></li></div>');
+                    let numberVersion = data.report_backups.length + 1;
+                    for (const item of data.report_backups) {
+                        numberVersion = numberVersion - 1;
+                        $("#version-items").append('<div class="row"><li class="versionList-item w-100" id=' + report_id + '"><h6 class="card-title">' + numberVersion + '- ' + report_id + '</h6><p class="mreport-grey4">' + item.save_date + '</p><a href="#" class="card-link mreport-primary-color-1 d-block mx-0 pb-2" onclick="composer.compose(\'' + report_id + '\',\'' + item.id + '\')"><i class="fas fa-edit mreport-secondary-color-1"></i>Composer</a></li></div>');
                     }
                 } else {
                     var err = data.error || data.response;
@@ -1513,7 +1525,7 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
                 );
             },
             complete: function () {
-            
+
             },
         });
     };
@@ -1522,7 +1534,63 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
      * Public
      */
 
+    /* -- PAGE CATALOGUE -- */
+    var catalogue = function (_initReports) {
+
+
+
+        $.ajax({
+            dataType: "json",
+            url: [report.getAppConfiguration().api, "store"].join("/"),
+            success: function (data) {
+                if (data.response === "success") {
+                    console.log(data.datavizs[1].viz)
+                    new Tabulator("#table-catalogue", {
+                        
+                        height: "700px",
+                        layout: "fitColumns",
+                        data: data.datavizs,
+                        progressiveLoad: "scroll",
+                        paginationSize: 20,
+                        placeholder: "No Data Set",
+                        columns: [
+                            { title: "thématique", field: "theme", sorter: "string", width: 100 , headerFilter: "input"},
+                            { title: "Nom", field: "title", sorter: "string", width: 250, headerFilter: "input" },
+                            { title:"Dimention géographique", field:"level", editor:"input", headerFilter:"list", headerFilterParams:{valuesLookup:true, clearable:true}},
+                            { title: "premier millésime", field: "premier_millésime", sorter: "string", width: 200 , headerFilter: "input"},
+                            { title: "dernier millésime", field: "dernier_millésime", sorter: "string", width: 200 , headerFilter: "input"},
+                            { title: "dernier Mise à jour", field: "MAJ", sorter: "string", width: 200, headerFilter: "input"},
+                            { title:"Source", field:"source", editor:"input", headerFilter:"list", headerFilterParams:{valuesLookup:true, clearable:true}},
+                            { title: "description", field: "description", sorter: "string", width: 400, headerFilter: "input" },
+                        ],
+                    });
+                    
+                }
+            }
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    
+
+
+
+    /* --  FIN PAGE CATALOGUE -- */
     return {
+        initCatalogue: catalogue,
         initCatalog: _initCatalog,
         initReports: _initReports,
         initMenu: _initMenu,
@@ -1547,10 +1615,13 @@ $(".card.dataviz").parent().removeClass("hidden").removeClass("filterLevelCatalo
 
 $(document).ready(function () {
     admin.initCatalog();
+    admin.initCatalogue();
     admin.initReports();
     admin.initMenu();
+    admin.initCatalogue();
     admin.initLevels();
     admin.initReportOptions();
     admin.initCatalogOptions();
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 });
+
