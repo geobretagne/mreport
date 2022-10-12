@@ -54,6 +54,7 @@ services:
         - "./frontend/templates/:/var/www/templates"
       environment:
         - NGINX_PORT
+        - MREPORT_WEB_HOST_PORT
       ports:
         - ${MREPORT_WEB_HOST_PORT}:${NGINX_PORT}
       depends_on:
