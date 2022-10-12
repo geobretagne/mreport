@@ -8,6 +8,10 @@ server {
     server_name  localhost;
     root /var/www;
     
+    location = / {
+        return 301 $scheme://$host:${NGINX_PORT}/mreport/;
+    }
+    
     location /api {
         proxy_pass http://back/api;
         proxy_redirect off;
@@ -23,13 +27,13 @@ server {
     }
 
     location = /mreport {        
-        return 301 https://$host$uri/;
+        return 301 $scheme://$host:${NGINX_PORT}$uri/;
     }
 
 
 
     location ~ /mreport/(\w+([\-])?(\w+)?)$ {
-        return 301 https://$host/mreport/$1/;
+        return 301 $scheme://$host:${NGINX_PORT}/mreport/$1/;
     }
 
 
